@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Super Sans';
+    src: url('SuperSans-SemiBold.woff2') format('woff2'),
+        url('SuperSans-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Super Sans';
+    src: url('SuperSans-Heavy.woff2') format('woff2'),
+        url('SuperSans-Heavy.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Super Sans';
+    src: url('SuperSans-Regular.woff2') format('woff2'),
+        url('SuperSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
