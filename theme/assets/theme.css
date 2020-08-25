@@ -4972,10 +4972,6 @@ select::-ms-expand {
   color: #ffffff;
 }
 
-.social-media__item svg {
-  opacity: 1;
-}
-
 .footer__block-list {
   display: flex;
   flex-direction: column;
@@ -10866,6 +10862,7 @@ select::-ms-expand {
   display: flex;
   flex-wrap: wrap;
   margin: -5px;
+  margin-top: 10px;
 }
 
 .social-media__item {
@@ -10880,7 +10877,7 @@ select::-ms-expand {
 .social-media__item svg {
   width: 28px;
   height: 28px;
-  opacity: 0.4;
+  opacity: 1;
   transition: color 0.25s ease-in-out, opacity 0.25s ease-in-out;
   will-change: opacity;
 }
