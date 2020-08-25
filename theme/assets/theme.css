@@ -4965,6 +4965,11 @@ select::-ms-expand {
 .footer {
   padding: 10px 0 30px 0;
   border-top: 1px solid var(--border-color);
+  background-color: #0e326f;
+}
+
+.footer * {
+  color: #ffffff;
 }
 
 .footer__block-list {
@@ -4979,6 +4984,8 @@ select::-ms-expand {
   width: 100%;
   margin-bottom: 0.85em;
   text-align: left;
+  font-size: 1.3rem;
+  text-transform: capitalize;
 }
 
 .footer__title[disabled] {
@@ -4998,6 +5005,14 @@ select::-ms-expand {
 .footer__link-item {
   display: block;
   padding: 5px 0;
+}
+
+.footer__link-item:hover {
+  color: #1fc3dc;
+}
+
+.form__submit {
+  background: #67b3d5;
 }
 
 .footer__newsletter-form {
@@ -5141,7 +5156,7 @@ select::-ms-expand {
   }
 
   .footer__block-item--newsletter {
-    flex-basis: 350px;
+    flex-basis: 550px;
   }
 
   .footer__block-item--links {
