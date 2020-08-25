@@ -72,6 +72,22 @@
                         <button type="submit" class="form__submit form__submit--tight button button--primary">{{ 'footer.newsletter.submit' | t }}</button>
                       {%- endif -%}
                     {%- endform -%}
+
+                    {%- if section.settings.show_social_media -%}
+                      {%- capture social_media -%}{% render 'social-media', show_social_media_name: false %}{%- endcapture -%}
+
+                      {%- if social_media != blank -%}
+                        <div class="footer__aside-item footer__aside-item--social">
+                          <!-- <p class="footer__aside-title">{{ 'footer.general.follow_us' | t }}</p> -->
+                          {{ social_media }}
+                        </div>
+                      {%- endif -%}
+                    {%- endif -%}
+
+                    <div class="footer__aside-item footer__aside-item--copyright hidden-lap-and-up footer-rights">
+                      <!-- <p>Copyright © {{ shop.name }} {{ powered_by_link }}</p> -->
+                      <p>Copyright © {{ shop.name }} All Rights Reserved</p>
+                    </div>
                   </div>
                 </div>
             {%- endcase -%}
@@ -164,18 +180,6 @@
           <p class="hidden-pocket">© {{ shop.name }}<br>{{ powered_by_link }}</p>
         </div>
 
-        {%- if section.settings.show_social_media -%}
-          {%- capture social_media -%}{% render 'social-media', show_social_media_name: false %}{%- endcapture -%}
-
-          {%- if social_media != blank -%}
-            <div class="footer__aside-item footer__aside-item--social">
-              <p class="footer__aside-title">{{ 'footer.general.follow_us' | t }}</p>
-
-              {{ social_media }}
-            </div>
-          {%- endif -%}
-        {%- endif -%}
-
         {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
           <div class="footer__aside-item footer__aside-item--payment">
             <p class="footer__aside-title">{{ 'footer.general.we_accept' | t }}</p>
@@ -187,10 +191,6 @@
             </div>
           </div>
         {%- endif -%}
-
-        <div class="footer__aside-item footer__aside-item--copyright hidden-lap-and-up">
-          <p>© {{ shop.name }}<br>{{ powered_by_link }}</p>
-        </div>
       </aside>
     </div>
   </div>
