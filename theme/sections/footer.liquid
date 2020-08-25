@@ -86,7 +86,7 @@
 
                     <div class="footer__aside-item footer__aside-item--copyright hidden-lap-and-up footer-rights">
                       <!-- <p>Copyright © {{ shop.name }} {{ powered_by_link }}</p> -->
-                      <p>Copyright © {{ shop.name }} All Rights Reserved</p>
+                      <p class="footer-rights">Copyright © {{ shop.name }} All Rights Reserved</p>
                     </div>
                   </div>
                 </div>
@@ -176,8 +176,6 @@
               </div>
             {%- endif -%}
           {%- endform -%}
-
-          <p class="hidden-pocket">© {{ shop.name }}<br>{{ powered_by_link }}</p>
         </div>
 
         {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
