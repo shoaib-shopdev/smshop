@@ -65,13 +65,27 @@
                         <input type="hidden" name="contact[tags]" value="newsletter">
 
                         <div class="form__input-wrapper form__input-wrapper--labelled">
-                          <input type="email" id="footer[contact][email]" name="contact[email]" class="form__field form__field--text" required="">
-                          <label for="footer[contact][email]" class="form__floating-label">{{ 'footer.newsletter.input' | t }}</label>
+                          <input type="email" id="footer[contact][email]" name="contact[email]" class="form__field form__field--text" required="" placeholder="Enter email address">
+                          {%- comment -%}<label for="footer[contact][email]" class="form__floating-label">{{ 'footer.newsletter.input' | t }}</label>{%- endcomment -%}
                         </div>
 
                         <button type="submit" class="form__submit form__submit--tight button button--primary">{{ 'footer.newsletter.submit' | t }}</button>
                       {%- endif -%}
                     {%- endform -%}
+
+                    {%- if section.settings.show_social_media -%}
+                      {%- capture social_media -%}{% render 'social-media', show_social_media_name: false %}{%- endcapture -%}
+
+                      {%- if social_media != blank -%}
+                        <div class="footer__aside-item footer__aside-item--social">
+                          {%- comment -%} <p class="footer__aside-title">{{ 'footer.general.follow_us' | t }}</p> {%- endcomment -%}
+                          {{ social_media }}
+                        </div>
+                      {%- endif -%}
+                    {%- endif -%}
+                    
+                    <p class="hidden-pocket footer-rights">Copyright © {{ shop.name }}. All Rights Reserved.</p>
+
                   </div>
                 </div>
             {%- endcase -%}
@@ -161,20 +175,8 @@
             {%- endif -%}
           {%- endform -%}
 
-          <p class="hidden-pocket">© {{ shop.name }}<br>{{ powered_by_link }}</p>
+          {%- comment -%} <p class="hidden-pocket footer-rights">© {{ shop.name }}<br>{{ powered_by_link }}</p>  {%- endcomment -%}
         </div>
-
-        {%- if section.settings.show_social_media -%}
-          {%- capture social_media -%}{% render 'social-media', show_social_media_name: false %}{%- endcapture -%}
-
-          {%- if social_media != blank -%}
-            <div class="footer__aside-item footer__aside-item--social">
-              <p class="footer__aside-title">{{ 'footer.general.follow_us' | t }}</p>
-
-              {{ social_media }}
-            </div>
-          {%- endif -%}
-        {%- endif -%}
 
         {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
           <div class="footer__aside-item footer__aside-item--payment">
@@ -189,8 +191,9 @@
         {%- endif -%}
 
         <div class="footer__aside-item footer__aside-item--copyright hidden-lap-and-up">
-          <p>© {{ shop.name }}<br>{{ powered_by_link }}</p>
+          <p class="footer-rights">Copyright © {{ shop.name }}. All Rights Reserved.</p>
         </div>
+
       </aside>
     </div>
   </div>
