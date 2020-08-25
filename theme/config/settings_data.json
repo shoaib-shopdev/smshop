@@ -112,20 +112,12 @@
               "title": "Newsletter",
               "subheading": "<p>Get awesome exclusives and more deals when you subscribe!<\/p>"
             }
-          },
-          "1597905151334": {
-            "type": "text",
-            "settings": {
-              "title": "About our store",
-              "content": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.<\/p>"
-            }
           }
         },
         "block_order": [
           "footer-1",
           "1597125343265",
-          "footer-2",
-          "1597905151334"
+          "footer-2"
         ],
         "settings": {
           "show_social_media": true,
