@@ -13294,15 +13294,17 @@ select::-ms-expand {
 
 .page-static-wrapper .page__title {
   text-transform: uppercase;
-  font-weight: bold;
+  font-family: 'SuperSansHeavy';
 }
 
-.page-static-wrapper ul {
+.page-static-wrapper ul,
+.page-static-wrapper ol {
   padding-left: 25px;
 }
 
 .page-static-wrapper p,
-.page-static-wrapper ul li {
+.page-static-wrapper ul li,
+.page-static-wrapper ol li {
   font-size: 0.9rem;
   line-height: 1.2;
   text-align: justify;
@@ -13316,4 +13318,5 @@ select::-ms-expand {
   color: #2c68dc;
   margin-top: 15px;
   display: inline-block;
+  font-family: 'SuperSansHeavy';
 }
