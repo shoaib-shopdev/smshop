@@ -85,7 +85,10 @@
                     {%- endif -%}
 
                     <div class="privacy-block">
-                      <input type="checkbox">
+                      <div class="checkbox-wrapper">
+                        <input type="checkbox" class="checkbox">
+                        {% render 'icon', icon: 'check' %}
+                      </div>
                       <span>Subscribe to updates. Access our Privacy Policy </span>
                       <a href="/pages/shopsm-data-privacy-policy" class="privacy-link">here.</a>
                    </div>
