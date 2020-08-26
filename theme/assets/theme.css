@@ -4476,6 +4476,26 @@ img.lazyload[data-sizes=auto] {
 
 #footer-newsletter .form__field[type=email]:focus {
   border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.footer .privacy-block {
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.footer .privacy-block input{
+  margin-right: 10px;
+}
+
+.footer .privacy-block .privacy-link{
+  margin-left: 4px;
+  display: inline-block;
+  color: #66b3d5;
+  text-decoration: underline;
 }
 
 .footer input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -5046,7 +5066,7 @@ select::-ms-expand {
 }
 
 .footer__newsletter-form {
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
 }
 
