@@ -5161,10 +5161,6 @@ select::-ms-expand {
     padding: 0 20px 25px 0;
   }
 
-  .footer__block-item .rte {
-    /* margin-top: -0.425em; */
-  }
-
   .footer__aside-item--localization,
   .footer__aside-item--copyright {
     margin-top: 10px;
@@ -5193,7 +5189,7 @@ select::-ms-expand {
   }
 
   .footer__block-item--newsletter {
-    max-width: 550px;
+    max-width: 500px;
   }
 
   .footer__block-item .plus-button {
@@ -13282,4 +13278,23 @@ select::-ms-expand {
   .value-picker--auto {
     min-width: 0;
   }
+}
+
+/**
+ * --------------------------------------------------------------------
+ * CUSTOM CSS
+ * --------------------------------------------------------------------
+ */
+
+.page-static-wrapper .page__title {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.page-static-wrapper p {
+  font-size: 0.9rem;
+}
+
+.page-static-wrapper strong {
+  color: #2c68dc;
 }
