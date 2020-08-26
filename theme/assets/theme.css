@@ -11,13 +11,19 @@
   font-family: "Super Sans";
   src: url('SuperSans.woff2') format('woff2'),
    url('SuperSans.woff') format('woff'),
-   url('SuperSans-Heavy.woff') format('woff'),
    url('SuperSans-Regular.woff') format('woff'),
    url('SuperSans-SemiBold.woff') format('woff'),
-   url('SuperSans-Heavy.woff2') format('woff2'),
    url('SuperSans-Regular.woff2') format('woff2'),
    url('SuperSans-SemiBold.woff2') format('woff2');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SuperSansHeavy";
+  src: url('SuperSans-Heavy.woff') format('woff'),
+   url('SuperSans-Heavy.woff2') format('woff2');
+  font-weight: bolder;
   font-style: normal;
 }
 /**
