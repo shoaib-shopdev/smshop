@@ -13291,10 +13291,23 @@ select::-ms-expand {
   font-weight: bold;
 }
 
-.page-static-wrapper p {
+.page-static-wrapper ul {
+  padding-left: 25px;
+}
+
+.page-static-wrapper p,
+.page-static-wrapper ul li {
   font-size: 0.9rem;
+  line-height: 1.2;
+  text-align: justify;
+}
+
+.page-static-wrapper p {
+  margin: 15px 0;
 }
 
 .page-static-wrapper strong {
   color: #2c68dc;
+  margin-top: 15px;
+  display: inline-block;
 }
