@@ -153,11 +153,10 @@
 
         // Add the "show" class to DIV/Element
         toastEl.className = "show";
-
         message ? toastEl.innerHTML = message : toastEl.innerHTML = defaultMessage;
 
         // After 3 seconds, remove the show class from DIV
-        setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
+        setTimeout(() => { toastEl.className = toastEl.className.replace("show", ""); }, 3000);
       } 
     </script>
   </body>

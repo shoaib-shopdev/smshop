@@ -194,7 +194,7 @@
                                   <span>{{ line_item.quantity }}</span>
                                 {% endunless -%}
 
-                                <a href="{{ routes.cart_change_url }}?quantity=0&id={{ line_item.key }}" data-action="decrease-quantity" data-quantity="0" data-line-id="{{ line_item.key }}" class="line-item__quantity-remove link">{{ 'cart.items.remove' | t }}</a>
+                                <a onclick="showToast('Item removed')" href="{{ routes.cart_change_url }}?quantity=0&id={{ line_item.key }}" data-action="decrease-quantity" data-quantity="0" data-line-id="{{ line_item.key }}" class="line-item__quantity-remove link">{{ 'cart.items.remove' | t }}</a>
                               </div>
                             </div>
                           </div>
@@ -219,7 +219,7 @@
                             <span>{{ line_item.quantity }}</span>
                           {%- endunless -%}
 
-                          <a href="{{ routes.cart_change_url }}?quantity=0&id={{ line_item.key }}" data-action="decrease-quantity" data-quantity="0" data-line-id="{{ line_item.key }}" class="line-item__quantity-remove link">{{ 'cart.items.remove' | t }}</a>
+                          <a onclick="showToast('Item removed')" href="{{ routes.cart_change_url }}?quantity=0&id={{ line_item.key }}" data-action="decrease-quantity" data-quantity="0" data-line-id="{{ line_item.key }}" class="line-item__quantity-remove link">{{ 'cart.items.remove' | t }}</a>
                         </td>
 
                         <td class="line-item__line-price table__cell--right hidden-phone">
