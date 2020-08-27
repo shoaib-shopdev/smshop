@@ -179,7 +179,10 @@
             <div class="form__input-wrapper form__input-wrapper--labelled">
               <div class="select-wrapper select-wrapper--primary is-filled">
                 {%- render 'icon', icon: 'arrow-bottom' -%}
-                <select name="address[country]" id="address-new[country]">{{ all_country_option_tags }}</select>
+                <select name="address[country]" id="address-new[country]">
+                  <option value="none" selected disabled hidden>---</option> 
+                  {{ all_country_option_tags }}
+                </select>
               </div>
 
               <label for="address-new[country]" class="form__floating-label">{{ 'customer.addresses.country' | t }}</label>
