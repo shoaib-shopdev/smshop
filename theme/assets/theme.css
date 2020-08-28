@@ -12449,6 +12449,102 @@ select::-ms-expand {
   margin-bottom: 30px;
 }
 
+.contact-page-wrapper {
+  padding: 20px 0;
+}
+
+.contact-page-wrapper .grid-section {
+  display: flex;
+  flex-basis: auto;
+}
+
+.contact-page-wrapper .page__header {
+  padding: 0;
+}
+
+.contact-page-wrapper .page__title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.contact-page-wrapper .left-col {
+  width: 60%;
+  padding: 0 20px;
+}
+
+.contact-page-wrapper .right-col {
+  width: 40%;
+  padding: 0 20px;
+}
+
+.contact-page-wrapper .form__input-wrapper {
+  margin-bottom: 15px;
+}
+
+.contact-page-wrapper .contact-approval {
+  font-size: 0.8rem;
+  display: flex;
+}
+
+.contact-page-wrapper .checkbox-wrapper {
+  margin: 5px 0;
+}
+
+.contact-page-wrapper .contact-approval a {
+  text-decoration: underline;
+}
+
+.contact-page-wrapper .tips {
+  font-size: 1.3rem;
+  margin-bottom: 0;
+}
+
+.contact-page-wrapper .faq-link {
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+.contact-page-wrapper .page__description {
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+}
+
+.contact-page-wrapper .form__input-wrapper label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.contact-page-wrapper .form__field:not() {
+  height: 36px;
+}
+
+.contact-page-wrapper .page__title,
+.contact-page-wrapper .tips,
+.contact-page-wrapper .faq-link {
+  font-family: 'SuperSansHeavy';
+}
+
+.contact-page-wrapper input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #dcd5cf;
+}
+
+.contact-page-wrapper input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #dcd5cf;
+}
+
+.contact-page-wrapper input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #dcd5cf;
+}
+
+.contact-page-wrapper input::-ms-input-placeholder, textarea::-ms-input-placeholder {
+  color: #dcd5cf;
+}
+
+.contact-page-wrapper input::placeholder,
+textarea::placeholder {
+  color: #dcd5cf;
+}
+
 @media screen and (min-width: 641px) {
   .contact {
     margin-bottom: 90px;
@@ -13379,4 +13475,8 @@ select::-ms-expand {
 
 .page-static-wrapper .sub-title {
   font-size: 0.9rem;
+}
+
+.theme-blue {
+  color: #2c68dc;
 }

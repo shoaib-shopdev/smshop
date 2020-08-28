@@ -445,10 +445,12 @@
   },
   "contact": {
     "form": {
-      "name": "Your name",
-      "email": "Your email",
-      "message": "Your message",
-      "submit": "Send message",
+      "name": "Name",
+      "email": "Email Address",
+      "mobile_number": "Mobile Number",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Submit",
       "successfully_sent": "Your message has been successfully sent."
     }
   },

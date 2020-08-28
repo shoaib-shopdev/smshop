@@ -1,131 +1,157 @@
-<div class="container container--narrow">
-  <header class="page__header page__header--stack page__header--centered">
-    <h1 class="page__title heading h1">{{ page.title }}</h1>
+<div class="container">
+  <div class="contact-page-wrapper">
+    <div class="grid-section">
+      <div class="left-col">
+        <header class="page__header page__header--stack">
+          <h1 class="page__title heading h1">{{ page.title }}</h1>
 
-    {%- if page.content != blank -%}
-      <div class="page__description rte">
-        {{ page.content }}
-      </div>
-    {%- endif -%}
-  </header>
-</div>
+          {%- if page.content != blank -%}
+            <div class="page__description rte">
+              {{ page.content }}
+            </div>
+          {%- endif -%}
+        </header>
+        <div>
+          <div>
+            {%- form 'contact', class: 'form' -%}
+              {%- if section.settings.show_store_info -%}
+                <div class="form__header">
+                  <h2 class="heading h3">{{ section.settings.form_heading | escape }}</h2>
+                </div>
+              {%- endif -%}
 
-<div class="container container--medium">
-  <div class="layout">
-    <div class="layout__section">
-      {%- form 'contact', class: 'form' -%}
-        {%- if section.settings.show_store_info -%}
-          <div class="form__header">
-            <h2 class="heading h3">{{ section.settings.form_heading | escape }}</h2>
-          </div>
-        {%- endif -%}
+              {%- if form.posted_successfully? -%}
+                <p class="alert alert--success">{{ 'contact.form.successfully_sent' | t }}</p>
+              {%- endif -%}
 
-        {%- if form.posted_successfully? -%}
-          <p class="alert alert--success">{{ 'contact.form.successfully_sent' | t }}</p>
-        {%- endif -%}
+              {%- if form.errors -%}
+                <div class="alert alert--error">
+                  <ul class="alert__error-list">
+                    {%- for field in form.errors -%}
+                      {%- if field == 'form' -%}
+                        <li class="alert__error-item">{{ form.errors.messages[field] }}</li>
+                      {%- else -%}
+                        <li class="alert__error-item">{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
 
-        {%- if form.errors -%}
-          <div class="alert alert--error">
-            <ul class="alert__error-list">
-              {%- for field in form.errors -%}
-                {%- if field == 'form' -%}
-                  <li class="alert__error-item">{{ form.errors.messages[field] }}</li>
-                {%- else -%}
-                  <li class="alert__error-item">{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</li>
+              <div class="">
+                <div class="form__input-wrapper form__input-wrapper--labelled">
+                  <input id="contact-form-name" type="text" class="form__field form__field--text {% if customer.name != blank %}is-filled{% endif %}" name="contact[name]" aria-label="{{ 'contact.form.name' | t }}" required {% if customer %}value="{{ customer.name }}"{% endif %}>
+                  <label for="contact-form-name" class="form__floating-label">{{ 'contact.form.name' | t }}</label>
+                </div>
+
+                <div class="form__input-wrapper form__input-wrapper--labelled">
+                  <input id="contact-form-email" type="email" class="form__field form__field--text {% if customer.email != blank %}is-filled{% endif %}" name="contact[email]" aria-label="{{ 'contact.form.email' | t }}" required {% if customer %}value="{{ customer.email }}"{% endif %}>
+                  <label for="contact-form-email" class="form__floating-label">{{ 'contact.form.email' | t }}</label>
+                </div>
+
+                <div class="form__input-wrapper form__input-wrapper--labelled">
+                  <input id="contact-form-phone" type="phone" class="form__field form__field--text {% if customer.phone != blank %}is-filled{% endif %}" name="contact[phone]" aria-label="{{ 'contact.form.phone' | t }}" required {% if customer %}value="{{ customer.phone }}"{% endif %}>
+                  <label for="contact-form-phone" class="form__floating-label">{{ 'contact.form.mobile_number' | t }}</label>
+                </div>
+
+                <div class="form__input-wrapper form__input-wrapper--labelled">
+                  <input id="contact-form-subject" type="subject" class="form__field form__field--text {% if customer.subject != blank %}is-filled{% endif %}" name="contact[subject]" aria-label="{{ 'contact.form.subject' | t }}" required {% if customer %}value="{{ customer.subject }}"{% endif %}>
+                  <label for="contact-form-subject" class="form__floating-label">{{ 'contact.form.subject' | t }}</label>
+                </div>
+              </div>
+
+              {%- for block in section.blocks -%}
+                {%- assign field_title = block.settings.title -%}
+
+                {%- if field_title == blank -%}
+                  {%- capture field_title -%}Custom field {% increment custom_field %}{%- endcapture -%}
+                {%- endif -%}
+
+                {%- if block.type == 'text' -%}
+                  <div class="form__input-wrapper form__input-wrapper--labelled">
+                    {%- if block.settings.use_long_text -%}
+                      <textarea id="contact-form-{{ field_title | handle }}" name="contact[{{ field_title | escape }}]" rows="3" class="form__field form__field--textarea" aria-label="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}></textarea>
+                      <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
+                    {%- else -%}
+                      <input id="contact-form-{{ field_title | handle }}" type="text" class="form__field form__field--text" name="contact[{{ field_title | escape }}]" aria-label="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}>
+                      <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
+                    {%- endif -%}
+                  </div>
+                {%- elsif block.type == 'dropdown' -%}
+                  {%- assign values = block.settings.values | split: ',' -%}
+
+                  {%- if values == empty -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  <div class="form__input-wrapper form__input-wrapper--labelled">
+                    <div id="contact-form-{{ field_title | handle }}" class="select-wrapper select-wrapper--primary">
+                      {%- render 'icon', icon: 'arrow-bottom' -%}
+
+                      <select name="contact[{{ field_title | escape }}]" title="{{ block.settings.title | escape }}" required>
+                        <option value="" disabled selected></option>
+
+                        {%- for value in values -%}
+                          {%- assign trim_value = value | strip -%}
+
+                          <option value="{{ trim_value | escape }}">{{ trim_value | escape }}</option>
+                        {%- endfor -%}
+                      </select>
+                    </div>
+
+                    <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
+                  </div>
                 {%- endif -%}
               {%- endfor -%}
-            </ul>
-          </div>
-        {%- endif -%}
 
-        <div class="form__input-row">
-          <div class="form__input-wrapper form__input-wrapper--labelled">
-            <input id="contact-form-name" type="text" class="form__field form__field--text {% if customer.name != blank %}is-filled{% endif %}" name="contact[name]" aria-label="{{ 'contact.form.name' | t }}" required {% if customer %}value="{{ customer.name }}"{% endif %}>
-            <label for="contact-form-name" class="form__floating-label">{{ 'contact.form.name' | t }}</label>
-          </div>
-
-          <div class="form__input-wrapper form__input-wrapper--labelled">
-            <input id="contact-form-email" type="email" class="form__field form__field--text {% if customer.email != blank %}is-filled{% endif %}" name="contact[email]" aria-label="{{ 'contact.form.email' | t }}" required {% if customer %}value="{{ customer.email }}"{% endif %}>
-            <label for="contact-form-email" class="form__floating-label">{{ 'contact.form.email' | t }}</label>
-          </div>
-        </div>
-
-        {%- for block in section.blocks -%}
-          {%- assign field_title = block.settings.title -%}
-
-          {%- if field_title == blank -%}
-            {%- capture field_title -%}Custom field {% increment custom_field %}{%- endcapture -%}
-          {%- endif -%}
-
-          {%- if block.type == 'text' -%}
-            <div class="form__input-wrapper form__input-wrapper--labelled">
-              {%- if block.settings.use_long_text -%}
-                <textarea id="contact-form-{{ field_title | handle }}" name="contact[{{ field_title | escape }}]" rows="7" class="form__field form__field--textarea" aria-label="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}></textarea>
-                <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
-              {%- else -%}
-                <input id="contact-form-{{ field_title | handle }}" type="text" class="form__field form__field--text" name="contact[{{ field_title | escape }}]" aria-label="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}>
-                <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
-              {%- endif -%}
-            </div>
-          {%- elsif block.type == 'dropdown' -%}
-            {%- assign values = block.settings.values | split: ',' -%}
-
-            {%- if values == empty -%}
-              {%- continue -%}
-            {%- endif -%}
-
-            <div class="form__input-wrapper form__input-wrapper--labelled">
-              <div id="contact-form-{{ field_title | handle }}" class="select-wrapper select-wrapper--primary">
-                {%- render 'icon', icon: 'arrow-bottom' -%}
-
-                <select name="contact[{{ field_title | escape }}]" title="{{ block.settings.title | escape }}" required>
-                  <option value="" disabled selected></option>
-
-                  {%- for value in values -%}
-                    {%- assign trim_value = value | strip -%}
-
-                    <option value="{{ trim_value | escape }}">{{ trim_value | escape }}</option>
-                  {%- endfor -%}
-                </select>
+              <div class="form__input-wrapper form__input-wrapper--labelled">
+                <textarea id="contact-form-message" name="contact[body]" rows="3" class="form__field form__field--textarea" aria-label="{{ 'contact.form.message' | t }}" required></textarea>
+                <label for="contact-form-message" class="form__floating-label">{{ 'contact.form.message' | t }}</label>
+              </div>
+            
+              <div class="form__input-wrapper form__input-wrapper--labelled">
+                <div class="contact-approval">
+                  <div class="checkbox-wrapper">
+                    <input type="checkbox" class="checkbox">
+                    {% render 'icon', icon: 'check' %}
+                  </div>
+                  <span>I have read and agree to be bound by the <b class="theme-blue"><a href="/pages/terms-of-use" target="_blank">Terms and Conditions</a></b> & <b class="theme-blue"><a href="/pages/shopsm-data-privacy-policy" target="_blank">Data Privacy Policy</a></b> of the SHOPSM Platform. I give my consent to SM ONLINE CORP. and its Service Group to collect, use, disclose, share or otherwise process my personal data for the purposes stated in the Data Privacy Policy and in line with my transactions with the SHOPSM Platform and/or its Merchant Partners.</span>
+                </div>
               </div>
 
-              <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+              <button type="submit" class="form__submit {% unless section.settings.show_store_info %}form__submit--centered{% endunless %} button button--primary button--min-width">{{ 'contact.form.submit' | t }}</button>
+            {%- endform -%}
+          </div>
 
-        <div class="form__input-wrapper form__input-wrapper--labelled">
-          <textarea id="contact-form-message" name="contact[body]" rows="8" class="form__field form__field--textarea" aria-label="{{ 'contact.form.message' | t }}" required></textarea>
-          <label for="contact-form-message" class="form__floating-label">{{ 'contact.form.message' | t }}</label>
-        </div>
+          {%- if section.settings.show_store_info -%}
+            <div class="layout__section layout__section--large-secondary">
+              <div class="contact__store-info">
+                {%- if section.settings.store_heading != blank -%}
+                  <h2 class="contact__store-heading heading h3">{{ section.settings.store_heading | escape }}</h2>
+                {%- endif -%}
 
-        <button type="submit" class="form__submit {% unless section.settings.show_store_info %}form__submit--centered{% endunless %} button button--primary button--min-width">{{ 'contact.form.submit' | t }}</button>
-      {%- endform -%}
-    </div>
+                {%- if section.settings.store_image -%}
+                  <div class="contact__store-image">
+                    <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: section.settings.store_image.aspect_ratio }}%">
+                      <img src="{{ section.settings.store_image | img_url: '700x' }}" alt="{{ section.settings.store_image.alt | escape }}">
+                    </div>
+                  </div>
+                {%- endif -%}
 
-    {%- if section.settings.show_store_info -%}
-      <div class="layout__section layout__section--large-secondary">
-        <div class="contact__store-info">
-          {%- if section.settings.store_heading != blank -%}
-            <h2 class="contact__store-heading heading h3">{{ section.settings.store_heading | escape }}</h2>
-          {%- endif -%}
-
-          {%- if section.settings.store_image -%}
-            <div class="contact__store-image">
-              <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: section.settings.store_image.aspect_ratio }}%">
-                <img src="{{ section.settings.store_image | img_url: '700x' }}" alt="{{ section.settings.store_image.alt | escape }}">
+                {%- if section.settings.store_info != blank -%}
+                  <div class="contact__store-text rte">
+                    {{ section.settings.store_info }}
+                  </div>
+                {%- endif -%}
               </div>
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.store_info != blank -%}
-            <div class="contact__store-text rte">
-              {{ section.settings.store_info }}
             </div>
           {%- endif -%}
         </div>
       </div>
-    {%- endif -%}
+      <div class="right-col">
+        <p>We've got a collection of information and tips on how to make the most out of your Shopping Experience.</p>
+      </div>
+    </div>
   </div>
 </div>
 
