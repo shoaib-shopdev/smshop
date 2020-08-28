@@ -7802,7 +7802,8 @@ select::-ms-expand {
 
 @media screen and (min-width: 641px) {
   .page__header {
-    margin: 35px 0;
+    margin: 0;
+    padding: 35px 0 15px 0;
   }
 
   .page__header--image {
@@ -13367,5 +13368,15 @@ select::-ms-expand {
   color: #2c68dc;
   margin-top: 15px;
   display: inline-block;
+  font-size: 1.2rem;
+}
+
+.page-static-wrapper strong, 
+.page-static-wrapper .black-bolder,
+.page-static-wrapper a {
   font-family: 'SuperSansHeavy';
+}
+
+.page-static-wrapper .sub-title {
+  font-size: 0.9rem;
 }
