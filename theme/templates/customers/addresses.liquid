@@ -88,7 +88,7 @@
                   
                   <div class="address-list__action-list">
                     <button class="link link--accented" data-action="open-modal" aria-controls="modal-address-{{ customer.default_address.id }}">{{ 'customer.addresses.edit' | t }}</button>
-                    <button class="link link--accented" onclick="Shopify.CustomerAddress.destroy({{ customer.default_address.id }}); return false">{{ 'customer.addresses.delete' | t }}</button>
+                    <button class="link link--accented" onclick="showToast('Address deleted successfully!'); Shopify.CustomerAddress.destroy({{ customer.default_address.id }}); return false">{{ 'customer.addresses.delete' | t }}</button>
                   </div>
                 </div>
 
