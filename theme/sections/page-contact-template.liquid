@@ -40,23 +40,23 @@
 
               <div class="">
                 <div class="form__input-wrapper form__input-wrapper--labelled">
-                  <input id="contact-form-name" type="text" class="form__field form__field--text {% if customer.name != blank %}is-filled{% endif %}" name="contact[name]" aria-label="{{ 'contact.form.name' | t }}" required {% if customer %}value="{{ customer.name }}"{% endif %}>
-                  <label for="contact-form-name" class="form__floating-label">{{ 'contact.form.name' | t }}</label>
+                  <label for="contact-form-name">{{ 'contact.form.name' | t }}</label>
+                  <input id="contact-form-name" type="text" placeholder="Juan Dela Cruz" class="form__field form__field--text {% if customer.name != blank %}is-filled{% endif %}" name="contact[name]" aria-label="{{ 'contact.form.name' | t }}" required {% if customer %}value="{{ customer.name }}"{% endif %}>
                 </div>
 
                 <div class="form__input-wrapper form__input-wrapper--labelled">
-                  <input id="contact-form-email" type="email" class="form__field form__field--text {% if customer.email != blank %}is-filled{% endif %}" name="contact[email]" aria-label="{{ 'contact.form.email' | t }}" required {% if customer %}value="{{ customer.email }}"{% endif %}>
-                  <label for="contact-form-email" class="form__floating-label">{{ 'contact.form.email' | t }}</label>
+                  <label for="contact-form-email">{{ 'contact.form.email' | t }}</label>
+                  <input id="contact-form-email" type="email" placeholder="sam@gmail.com" class="form__field form__field--text {% if customer.email != blank %}is-filled{% endif %}" name="contact[email]" aria-label="{{ 'contact.form.email' | t }}" required {% if customer %}value="{{ customer.email }}"{% endif %}>
                 </div>
 
                 <div class="form__input-wrapper form__input-wrapper--labelled">
-                  <input id="contact-form-phone" type="phone" class="form__field form__field--text {% if customer.phone != blank %}is-filled{% endif %}" name="contact[phone]" aria-label="{{ 'contact.form.phone' | t }}" required {% if customer %}value="{{ customer.phone }}"{% endif %}>
-                  <label for="contact-form-phone" class="form__floating-label">{{ 'contact.form.mobile_number' | t }}</label>
+                  <label for="contact-form-phone">{{ 'contact.form.mobile_number' | t }}</label>
+                  <input id="contact-form-phone" type="phone" placeholder="+63___-___-____" class="form__field form__field--text {% if customer.phone != blank %}is-filled{% endif %}" name="contact[phone]" aria-label="{{ 'contact.form.phone' | t }}" required {% if customer %}value="{{ customer.phone }}"{% endif %}>
                 </div>
 
                 <div class="form__input-wrapper form__input-wrapper--labelled">
-                  <input id="contact-form-subject" type="subject" class="form__field form__field--text {% if customer.subject != blank %}is-filled{% endif %}" name="contact[subject]" aria-label="{{ 'contact.form.subject' | t }}" required {% if customer %}value="{{ customer.subject }}"{% endif %}>
-                  <label for="contact-form-subject" class="form__floating-label">{{ 'contact.form.subject' | t }}</label>
+                  <label for="contact-form-subject">{{ 'contact.form.subject' | t }}</label>
+                  <input id="contact-form-subject" type="subject" placeholder="Sample Subject" class="form__field form__field--text {% if customer.subject != blank %}is-filled{% endif %}" name="contact[subject]" aria-label="{{ 'contact.form.subject' | t }}" required {% if customer %}value="{{ customer.subject }}"{% endif %}>
                 </div>
               </div>
 
@@ -105,8 +105,8 @@
               {%- endfor -%}
 
               <div class="form__input-wrapper form__input-wrapper--labelled">
-                <textarea id="contact-form-message" name="contact[body]" rows="3" class="form__field form__field--textarea" aria-label="{{ 'contact.form.message' | t }}" required></textarea>
-                <label for="contact-form-message" class="form__floating-label">{{ 'contact.form.message' | t }}</label>
+                <label for="contact-form-message">{{ 'contact.form.message' | t }}</label>
+                <textarea id="contact-form-message" name="contact[body]" rows="3" placeholder="Sample Message" class="form__field form__field--textarea" aria-label="{{ 'contact.form.message' | t }}" required></textarea>
               </div>
             
               <div class="form__input-wrapper form__input-wrapper--labelled">
@@ -115,7 +115,7 @@
                     <input type="checkbox" class="checkbox">
                     {% render 'icon', icon: 'check' %}
                   </div>
-                  <span>I have read and agree to be bound by the <b class="theme-blue"><a href="/pages/terms-of-use" target="_blank">Terms and Conditions</a></b> & <b class="theme-blue"><a href="/pages/shopsm-data-privacy-policy" target="_blank">Data Privacy Policy</a></b> of the SHOPSM Platform. I give my consent to SM ONLINE CORP. and its Service Group to collect, use, disclose, share or otherwise process my personal data for the purposes stated in the Data Privacy Policy and in line with my transactions with the SHOPSM Platform and/or its Merchant Partners.</span>
+                  <span>I have read and agree to be bound by the <a class="theme-blue" href="/pages/terms-of-use" target="_blank"><b>Terms and Conditions</b></a> & <a class="theme-blue" href="/pages/shopsm-data-privacy-policy" target="_blank"><b>Data Privacy Policy</b></a> of the SHOPSM Platform. I give my consent to SM ONLINE CORP. and its Service Group to collect, use, disclose, share or otherwise process my personal data for the purposes stated in the Data Privacy Policy and in line with my transactions with the SHOPSM Platform and/or its Merchant Partners.</span>
                 </div>
               </div>
 
@@ -149,7 +149,8 @@
         </div>
       </div>
       <div class="right-col">
-        <p>We've got a collection of information and tips on how to make the most out of your Shopping Experience.</p>
+        <p class="tips text--strong theme-blue">We've got a collection of information and tips on how to make the most out of your Shopping Experience.</p>
+        <a class="faq-link" href="/pages/faqs" target="_blank"><b>View FAQs</b></a>
       </div>
     </div>
   </div>
