@@ -1,0 +1,67 @@
+<div class="container">
+  <main class="page-grid">
+      <nav class="nav">
+        <div id="tabs_container">
+          <ul class="tabs">
+            <li>
+              <a href="#" rel="#tab_1_contents" class="tab active">Account Creation, Login, and Loyalty Cards</a>
+            </li>
+            <li>
+              <a href="#" rel="#tab_2_contents" class="tab">Ordering and Cancellation</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="content">
+		
+        <h3 id="category-title" class="page__title heading h3">{{ page.title }}</h3>
+        
+         <div class="tab_contents_container">
+
+           <div id="tab_1_contents" class="tab_contents tab_contents_active">
+             <ul class="article-list">
+                <li class="article-list-item">
+					<a href="/pages/how-secure-is-my-information-on-shopsm" class="article-list-anchor theme-blue"> How secure is my information on ShopSM? </a>
+                </li>
+                <li class="article-list-item">
+                  	<a href="/pages/what-should-i-do-if-i-cant-login-to-my-account" class="article-list-anchor theme-blue"> What should I do if I can't login to my account? </a>
+               	</li>
+                <li class="article-list-item">
+                      <a href="/pages/what-loyalty-cards-can-i-use-to-earn-points-on-shopsm" class="article-list-anchor theme-blue"> What loyalty cards can I use to earn points on ShopSM? </a>
+                 </li>
+                <li class="article-list-item">
+                      <a href="/pages/whats-the-address-book-for" class="article-list-anchor theme-blue"> What's the Address Book for? </a>
+                 </li>
+                <li class="article-list-item">
+                      <a href="/pages/how-do-i-create-an-account-login-and-manage-account" class="article-list-anchor theme-blue"> How do I create an account, login, and manage account? </a>
+                 </li>
+             </ul>
+           </div>
+
+           <div id="tab_2_contents" class="tab_contents">
+             <a href="/pages/what-should-i-do-if-i-cant-login-to-my-account" class="item"> What should I do if I can't login to my account? </a>
+           </div>
+         </div>
+		{% comment %}        
+        {%- if page.content != blank -%}
+          <div class="page__description rte">
+            {{ page.content }}
+          </div>
+        {%- endif -%}
+        {% endcomment %}
+      </div>
+    </main>
+</div>
+{% schema %}
+  {
+    "name": "FAQs Category",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+// RELATED JAVASCRIPT IN custom.js
+{% endjavascript %}

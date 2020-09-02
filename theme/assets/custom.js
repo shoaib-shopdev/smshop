@@ -33,3 +33,32 @@
  *   bubbles: true
  * }));
  */
+
+
+// FAQs custom script
+
+$('.tab_contents:not(:first)').hide();
+$("#category-title").html($('#tabs_container .tab:first').html());
+$('.tab').click(function() {
+    var target = $(this.rel);
+    $("#category-title").html(this.innerText);
+   
+    $('.tab_contents').not(target).hide();
+          target.toggle();
+    $('#tabs_container > .tabs > li > a.active')
+        .removeClass('active');
+
+    $(this).addClass('active');
+
+    $('#tabs_container > .tab_contents_container > div.tab_contents_active')
+        .removeClass('tab_contents_active');
+
+  	$(this.rel).addClass('tab_contents_active');
+});
+
+/* Redirect Url for My account */
+function redirectMethod() {
+  console.log('applying redirect')
+  let redirectUrl = 'https://www-develop.smretailonline.com/login/?redirectUrl=https%3A%2F%2Fapi-develop.smretailonline.com/auth/shopify/sso';
+  window.location.href = redirectUrl;
+}

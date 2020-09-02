@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="theme-color" content="{{ settings.accent_color }}">
-
+    <link rel="manifest" href="/apps/litefy/manifest/">
+ 	{{ 'jquery_3.2.1.min.js' | asset_url | script_tag }}
+    
     {%- capture seo_page_title -%}
       {%- if request.page_type == 'search' and search.terms != blank -%}
         {{ search.terms | split: ' AND ' | last }} - {{ shop.name }}
@@ -34,13 +36,14 @@
     <link rel="dns-prefetch" href="https://ajax.googleapis.com">
     <link rel="dns-prefetch" href="https://maps.googleapis.com">
     <link rel="dns-prefetch" href="https://maps.gstatic.com">
-	
+   
     {% render 'social-meta-tags' %}
     {% render 'css-variables' %}
 
     {{ content_for_header }}
 
     <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+	{{ 'faq.css' | asset_url | stylesheet_tag }}
 
     {% render 'microdata-schema' %}
 
@@ -115,7 +118,9 @@
       </script>
     {%- endif -%}
   
-  {% include 'shogun-head' %}
+  
+
+  {% render 'shogun-head' %}
 </head>
 
   <body class="warehouse--v1 {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
@@ -160,7 +165,7 @@
           // After 5 seconds, remove the show class from DIV
           setTimeout(() => { toastEl.className = toastEl.className.replace("show", ""); }, 5000);
         }, 2000);
-      } 
+      }
     </script>
   </body>
 </html>

@@ -1,0 +1,63 @@
+<div class="container">
+  <main class="page-grid">
+    <nav class="nav">
+      <div id="tabs_container">
+        <ul class="tabs">
+          <li>
+            <a href="/pages/how-secure-is-my-information-on-shopsm" class="tab"> How secure is my information on ShopSM? </a>
+          </li>
+          <li>
+            <a href="/pages/what-should-i-do-if-i-cant-login-to-my-account" class="tab"> What should I do if I can't login to my account? </a>
+          </li>
+          <li>
+            <a href="/pages/what-loyalty-cards-can-i-use-to-earn-points-on-shopsm" class="tab"> What loyalty cards can I use to earn points on ShopSM? </a>
+          </li>
+          <li>
+            <a href="/pages/whats-the-address-book-for" class="tab"> What's the Address Book for? </a>
+          </li>
+          <li>
+            <a href="/pages/how-do-i-create-an-account-login-and-manage-account" class="tab"> How do I create an account, login, and manage account? </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content">
+      <h1 class="page__title heading h1">{{ page.title }}</h1>
+
+      {%- if page.content != blank -%}
+        <div class="page__description rte">
+          {{ page.content }}
+        </div>
+      {%- endif -%}
+    </div>
+  </main>
+</div>
+
+{% schema %}
+  {
+    "name": "Page FAQ",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+	let tabNodes = document.querySelectorAll('.tab');
+	let pageUrl = window.location.pathname;
+	let matchedUrl;
+
+    for(let i=0; i<tabNodes.length; i++){
+        let item = tabNodes[i];
+        let itemPath = item.pathname;
+        if(itemPath ===  pageUrl) {
+            matchedUrl = item.href;
+            if(!item.classList.contains('active')) {
+                item.classList.add('active')
+            }
+            break;
+        }
+    }
+
+{% endjavascript %}

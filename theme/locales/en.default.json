@@ -50,7 +50,8 @@
       "account": "My account",
       "login": "Login \/ Signup",
       "welcome": "Hello {{first_name}}",
-      "cart": "Cart"
+      "cart": "Cart",
+      "hi_shopper": "HI, SHOPPER"
     },
     "navigation": {
       "menu": "Menu",

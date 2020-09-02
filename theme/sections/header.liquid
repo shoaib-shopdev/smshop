@@ -266,9 +266,8 @@
           {%- if shop.customer_accounts_enabled -%}
             <div class="header__action-item header__action-item--account">
               {%- if customer -%}
-                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.welcome' | t: first_name: customer.first_name | truncate: 20 }}</span>
-              {%- else -%}
-                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.login' | t }}</span>
+              	<span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.welcome' | t: first_name: customer.first_name | truncate: 20 }}</span>
+              	<a href="{% if customer %}/account{% else %}/account/login{% endif %}" class="header__action-item-link hidden-pocket hidden-lap" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover">{{ 'header.general.account' | t }} {% render 'icon', icon: 'arrow-bottom' %}</a>
               {%- endif -%}
 
               <div class="header__action-item-content">
@@ -276,8 +275,12 @@
                   <span class="icon-state__primary">{%- render 'icon', icon: 'account' -%}</span>
                   <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
                 </a>
-
-                <a href="{% if customer %}/account{% else %}/account/login{% endif %}" class="header__action-item-link hidden-pocket hidden-lap" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover">{{ 'header.general.account' | t }} {% render 'icon', icon: 'arrow-bottom' %}</a>
+                
+                {% unless customer %}
+                	<span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.hi_shopper' | t }}</span>
+                	<a onclick="redirectMethod()" href="#" class="header__action-item-link hidden-pocket hidden-lap">{{ 'header.general.login' | t }}</a>
+                {% endunless %}
+                
 
                 <div id="account-popover" class="popover {% if customer %}popover--logged{% else %}popover--large popover--unlogged{% endif %}" aria-hidden="true">
                   {%- render 'icon', icon: 'nav-triangle-borderless' -%}
