@@ -41,19 +41,16 @@
 	let pageUrl = window.location.pathname;
 	let matchedUrl;
 
-    for(let i=0; i<tabNodes.length; i++){
-        let item = tabNodes[i];
-        let itemPath = item.pathname;
-        if(itemPath ===  pageUrl) {
-            matchedUrl = item.href;
-            if(!item.classList.contains('active')) {
-                item.classList.add('active')
-            }
-            break;
-        }
-    }
-
-  function goToFaqsCategoryUrl() {
-    window.location.pathname = '/pages/faqs-category';
+  for(let i=0; i<tabNodes.length; i++){
+      let item = tabNodes[i];
+      let itemPath = item.pathname;
+      if(itemPath ===  pageUrl) {
+          matchedUrl = item.href;
+          if(!item.classList.contains('active')) {
+              item.classList.add('active')
+          }
+          break;
+      }
   }
+
 {% endjavascript %}

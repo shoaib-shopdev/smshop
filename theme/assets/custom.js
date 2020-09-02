@@ -62,3 +62,8 @@ function redirectMethod() {
   let redirectUrl = 'https://www-develop.smretailonline.com/login/?redirectUrl=https%3A%2F%2Fapi-develop.smretailonline.com/auth/shopify/sso';
   window.location.href = redirectUrl;
 }
+
+function goToFaqsCategoryUrl() {
+  window.location.pathname = '/pages/faqs-category';
+}
+
