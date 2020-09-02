@@ -13480,3 +13480,9 @@ textarea::placeholder {
 .theme-blue {
   color: #2c68dc;
 }
+
+hr {
+  background: #d8d8d8;
+  border: none;
+  height: 1px;
+}

@@ -1,27 +1,17 @@
 <div class="container">
   <main class="page-grid">
-    <nav class="nav">
+    <!-- <nav class="nav">
       <div id="tabs_container">
         <ul class="tabs">
           <li>
-            <a href="/pages/how-secure-is-my-information-on-shopsm" class="tab"> How secure is my information on ShopSM? </a>
-          </li>
-          <li>
-            <a href="/pages/what-should-i-do-if-i-cant-login-to-my-account" class="tab"> What should I do if I can't login to my account? </a>
-          </li>
-          <li>
-            <a href="/pages/what-loyalty-cards-can-i-use-to-earn-points-on-shopsm" class="tab"> What loyalty cards can I use to earn points on ShopSM? </a>
-          </li>
-          <li>
-            <a href="/pages/whats-the-address-book-for" class="tab"> What's the Address Book for? </a>
-          </li>
-          <li>
-            <a href="/pages/how-do-i-create-an-account-login-and-manage-account" class="tab"> How do I create an account, login, and manage account? </a>
+            <a href="/pages/" class="tab"> How secure is my information on ShopSM? </a>
           </li>
         </ul>
       </div>
-    </nav>
+    </nav> -->
     <div class="content">
+      <a href="#" class="theme-blue" onclick="goToFaqsCategoryUrl()">{% render 'icon', icon: 'arrow-left' %} FAQs</a>
+      <hr>
       <h1 class="page__title category-title heading h1">{{ page.title }}</h1>
 
       {%- if page.content != blank -%}
@@ -35,12 +25,15 @@
 
 {% schema %}
   {
-    "name": "Page FAQ",
+    "name": "FAQ Article",
     "settings": []
   }
 {% endschema %}
 
 {% stylesheet %}
+.page-grid .content {
+  max-width: 100% !important;
+}
 {% endstylesheet %}
 
 {% javascript %}
@@ -60,4 +53,7 @@
         }
     }
 
+  function goToFaqsCategoryUrl() {
+    window.location.pathname = '/pages/faqs-category';
+  }
 {% endjavascript %}
