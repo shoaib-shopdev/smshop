@@ -34,36 +34,61 @@
  * }));
  */
 
+if(window.location.pathname.indexOf('faqs-category') !== -1) {
+    executeFaqsScript();
+}
 
-// FAQs custom script
+/* FAQs related custom script */
+function executeFaqsScript() {
+    $('.tab_contents:not(:first)').hide();
+    $("#category-title").html($('#tabs_container .tab:first').html());
+    
+    let tabNodes = document.querySelectorAll('.tab');
+    let pageUrl = window.location.pathname;
+    let searchQuery = new URLSearchParams(window.location.search);
+    let categoryId = searchQuery.get('category'); // route query param category id
+    
+    // active first tab by default if no query param exists
+    if(!categoryId) {
+        $('#tabs_container .tab:first').addClass('active');
+    }
 
-$('.tab_contents:not(:first)').hide();
-$("#category-title").html($('#tabs_container .tab:first').html());
-$('.tab').click(function() {
+    for(let i=0; i<tabNodes.length; i++){
+        let item = tabNodes[i];
+        let itemCategory = item.getAttribute('data-category');
+        if(itemCategory ===  categoryId) {
+            if(!item.classList.contains('active')) {
+                item.classList.add('active')
+            }
+            setTimeout(()=> { $(item).click() }, 10);
+            break;
+        }
+    }
+}
+
+$('#tabs_container .tab').click(function() {
     var target = $(this.rel);
     $("#category-title").html(this.innerText);
-   
     $('.tab_contents').not(target).hide();
-          target.toggle();
-    $('#tabs_container > .tabs > li > a.active')
-        .removeClass('active');
-
+    target.toggle();
+    $('#tabs_container > .tabs > li > a.active').removeClass('active');
     $(this).addClass('active');
-
-    $('#tabs_container > .tab_contents_container > div.tab_contents_active')
-        .removeClass('tab_contents_active');
-
+    $('#tabs_container > .tab_contents_container > div.tab_contents_active').removeClass('tab_contents_active');
   	$(this.rel).addClass('tab_contents_active');
 });
 
-/* Redirect Url for My account */
+/* Redirect Url for Login/Signup. Method being called from header.liquid */
 function redirectMethod() {
-  console.log('applying redirect')
-  let redirectUrl = 'https://www-develop.smretailonline.com/login/?redirectUrl=https%3A%2F%2Fapi-develop.smretailonline.com/auth/shopify/sso';
-  window.location.href = redirectUrl;
+    console.log('applying redirect')
+    let redirectUrl = 'https://www-develop.smretailonline.com/login/?redirectUrl=https%3A%2F%2Fapi-develop.smretailonline.com/auth/shopify/sso';
+    window.location.href = redirectUrl;
 }
 
+
+/* Method being called from page-faq-static-template.liquid */
 function goToFaqsCategoryUrl() {
+  let searchQuery = new URLSearchParams(window.location.search);
+  let categoryId = searchQuery.get('category');
   window.location.pathname = '/pages/faqs-category';
 }
 
