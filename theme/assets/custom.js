@@ -84,11 +84,35 @@ function redirectMethod() {
     window.location.href = redirectUrl;
 }
 
-
 /* Method being called from page-faq-static-template.liquid */
 function goToFaqsCategoryUrl() {
-  let searchQuery = new URLSearchParams(window.location.search);
-  let categoryId = searchQuery.get('category');
-  window.location.pathname = '/pages/faqs-category';
+    let searchQuery = new URLSearchParams(window.location.search);
+    let categoryId = searchQuery.get('category');
+    window.location.pathname = '/pages/faqs-category';
 }
 
+/* Reset new address form in addresses.liquid */
+function resetAdderessForm() {
+    document.getElementById('address_form_new').reset();
+}
+
+/* Phone format in addresses.liquid */
+$('.phone-input').keydown(function(e){
+    let oldvalue = $(this).val();
+    let key = e.charCode || e.keyCode || 0;
+    if(key != 8) {
+        if($(this).val().length === 3) {
+            $(this).val($(this).val() + ' ');
+        }
+        if($(this).val().length === 7 || $(this).val().length === 11) {
+            $(this).val($(this).val() + '-');
+        }
+    }
+    setTimeout( () => {
+        if(this.value.indexOf('+63') !== 0) {
+            console.log('logging');
+            $(this).val(oldvalue);
+            // $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'))
+        } 
+    }, 1);
+});

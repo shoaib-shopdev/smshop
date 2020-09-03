@@ -58,7 +58,7 @@
             <h1 class="card__title heading h1">{{ 'customer.general.addresses' | t }} {% if customer.addresses_count > 0 %}({{ customer.addresses_count }}){% endif %}</h1>
 
             {%- if customer.addresses_count > 0 -%}
-              <button class="button button--small button--primary" data-action="open-modal" aria-controls="modal-address-new">{{ 'customer.addresses.add_address' | t }}</button>
+              <button class="button button--small button--primary" data-action="open-modal" aria-controls="modal-address-new" onclick="resetAdderessForm()">{{ 'customer.addresses.add_address' | t }}</button>
             {%- endif -%}
           </div>
 
@@ -123,7 +123,7 @@
     </div>
   </div>
 
-  {% comment %}FORM FOR NEW ADDRESS{% endcomment %}
+  {% comment %} FORM FOR NEW ADDRESS {% endcomment %}
 
   {%- assign new_form_errored = false -%}
 
@@ -160,6 +160,7 @@
             </div>
           {%- endif -%}
 
+          {%- comment -%} When locale code = ja {%- endcomment -%}
           {%- if request.locale.iso_code == 'ja' -%}
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
@@ -176,12 +177,12 @@
               <input id="address-new[zip]" type="text" class="form__field form__field--text {% if form.zip != blank %}is-filled{% endif %}" name="address[zip]" value="{{ form.zip }}">
               <label for="address-new[zip]" class="form__floating-label">{{ 'customer.addresses.zip' | t }}</label>
             </div>
-
+            {%- comment -%} Add new address for locale code = ja {%- endcomment -%}
             <div class="form__input-wrapper form__input-wrapper--labelled">
               <div class="select-wrapper select-wrapper--primary is-filled">
                 {%- render 'icon', icon: 'arrow-bottom' -%}
                 <select name="address[country]" id="address-new[country]">
-                  <option value="none" selected disabled hidden>---</option> 
+                  <option value="none" disabled hidden>---</option> 
                   {{ all_country_option_tags }}
                 </select>
               </div>
@@ -198,7 +199,7 @@
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[city]" type="text" class="form__field form__field--text {% if form.city != blank %}is-filled{% endif %}" name="address[city]" value="{{ form.city }}">
+              <input id="address-new[city]" required type="text" class="form__field form__field--text {% if form.city != blank %}is-filled{% endif %}" name="address[city]" value="{{ form.city }}">
               <label for="address-new[city]" class="form__floating-label">{{ 'customer.addresses.city' | t }}</label>
             </div>
 
@@ -221,6 +222,7 @@
               <input id="address-new[phone]" required type="text" class="form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{{ form.phone }}">
               <label for="address-new[phone]" class="form__floating-label">{{ 'customer.addresses.phone' | t }}</label>
             </div>
+          {%- comment -%} When locale code is other than ja {%- endcomment -%}
           {%- else -%}
             <div class="form__input-wrapper form__input-wrapper--labelled">
               <input id="address-new[first_name]" required type="text" class="form__field form__field--text {% if form.first_name != blank %}is-filled{% endif %}" name="address[first_name]" value="{{ form.first_name }}" autofocus>
@@ -238,7 +240,7 @@
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[phone]" required type="text" class="form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{{ form.phone }}">
+              <input id="address-new[phone]" maxlength="16" required type="tel" class="phone-input form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{% if form.phone != blank %} {{ form.phone }} {% else %}+63{% endif %}">
               <label for="address-new[phone]" class="form__floating-label">{{ 'customer.addresses.phone' | t }}</label>
             </div>
 
@@ -254,7 +256,7 @@
 
             <div class="form__input-row">
               <div class="form__input-wrapper form__input-wrapper--labelled">
-                <input id="address-new[city]" type="text" class="form__field form__field--text {% if form.city != blank %}is-filled{% endif %}" name="address[city]" value="{{ form.city }}">
+                <input id="address-new[city]" required type="text" class="form__field form__field--text {% if form.city != blank %}is-filled{% endif %}" name="address[city]" value="{{ form.city }}">
                 <label for="address-new[city]" class="form__floating-label">{{ 'customer.addresses.city' | t }}</label>
               </div>
 
@@ -264,11 +266,12 @@
               </div>
             </div>
 
+            {%- comment -%} Add new address for locale code other than ja {%- endcomment -%}
             <div class="form__input-wrapper form__input-wrapper--labelled">
               <div class="select-wrapper select-wrapper--primary is-filled">
                 {%- render 'icon', icon: 'arrow-bottom' -%}
                 <select name="address[country]" id="address-new[country]">
-                  <option value="none" selected disabled hidden>---</option> 
+                  <option value="none" selected disabled>---</option> 
                   {{ all_country_option_tags }}
                 </select>
               </div>
@@ -331,7 +334,12 @@
             <div class="form__input-wrapper form__input-wrapper--labelled">
               <div class="select-wrapper select-wrapper--primary is-filled">
                 {%- render 'icon', icon: 'arrow-bottom' -%}
-                <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
+                <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{ form.country }}">
+                  {% unless form.country %}
+                    <option value="none" selected disabled>---</option>
+                  {% endunless %}
+                  {{ all_country_option_tags }}
+                </select>
               </div>
 
               <label for="address-{{ address.id }}[country]" class="form__floating-label">{{ 'customer.addresses.country' | t }}</label>
@@ -416,7 +424,12 @@
             <div class="form__input-wrapper form__input-wrapper--labelled">
               <div class="select-wrapper select-wrapper--primary is-filled">
                 {%- render 'icon', icon: 'arrow-bottom' -%}
-                <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
+                <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{form.country}}">
+                  {% unless form.country %}
+                    <option value="none" selected disabled>---</option>
+                  {% endunless %}
+                  {{ all_country_option_tags }}
+                </select>
               </div>
               <label for="address-{{ address.id }}[country]" class="form__floating-label">{{ 'customer.addresses.country' | t }}</label>
             </div>
@@ -484,7 +497,12 @@
                 <div class="form__input-wrapper form__input-wrapper--labelled">
                   <div class="select-wrapper select-wrapper--primary is-filled">
                     {%- render 'icon', icon: 'arrow-bottom' -%}
-                    <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
+                    <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{ form.country }}">
+                      {% unless form.country %}
+                        <option value="none" selected disabled>---</option>
+                      {% endunless %}
+                      {{ all_country_option_tags }}
+                    </select>
                   </div>
                   <label for="address-{{ address.id }}[country]" class="form__floating-label">{{ 'customer.addresses.country' | t }}</label>
                 </div>
@@ -518,7 +536,7 @@
                 </div>
 
                 <div class="form__input-wrapper form__input-wrapper--labelled">
-                  <input id="address-{{ address.id }}[phone]" type="text" class="form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{{ form.phone }}">
+                  <input id="address-{{ address.id }}[phone]" required type="text" class="form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{{ form.phone }}">
                   <label for="address-{{ address.id }}[phone]" class="form__floating-label">{{ 'customer.addresses.phone' | t }}</label>
                 </div>
               {%- else -%}
@@ -554,7 +572,7 @@
 
                 <div class="form__input-row">
                   <div class="form__input-wrapper form__input-wrapper--labelled">
-                    <input id="address-{{ address.id }}[city]" type="text" class="form__field form__field--text {% if form.city != blank %}is-filled{% endif %}" name="address[city]" value="{{ form.city }}">
+                    <input id="address-{{ address.id }}[city]" required type="text" class="form__field form__field--text {% if form.city != blank %}is-filled{% endif %}" name="address[city]" value="{{ form.city }}">
                     <label for="address-{{ address.id }}[city]" class="form__floating-label">{{ 'customer.addresses.city' | t }}</label>
                   </div>
 
@@ -564,10 +582,16 @@
                   </div>
                 </div>
 
+                {% comment %} when country alredy saved and edited {% endcomment %}
                 <div class="form__input-wrapper form__input-wrapper--labelled">
                   <div class="select-wrapper select-wrapper--primary is-filled">
                     {%- render 'icon', icon: 'arrow-bottom' -%}
-                    <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{ form.country }}">{{ all_country_option_tags }}</select>
+                    <select name="address[country]" id="address-{{ address.id }}[country]" data-default="{{form.country}}">
+                      {% unless form.country %}
+                        <option value="none" selected disabled>---</option>
+                      {% endunless %}
+                      {{ all_country_option_tags }}
+                    </select>
                   </div>
 
                   <label for="address-{{ address.id }}[country]" class="form__floating-label">{{ 'customer.addresses.country' | t }}</label>
@@ -603,3 +627,5 @@
 
 {% section 'static-promotion-list' %}
 {% section 'static-recently-viewed-products' %}
+
+
