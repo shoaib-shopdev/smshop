@@ -4016,9 +4016,13 @@ img.lazyload[data-sizes=auto] {
 }
 
 @media screen and (max-width: 640px) {
-  .featured-collection,
+  /* .featured-collection,
   .featured-collection__header {
     background-image: none !important;
+  } */
+  .featured-collection {
+    background-position: top -100px left -15px;
+    background-size: auto;
   }
 }
 
