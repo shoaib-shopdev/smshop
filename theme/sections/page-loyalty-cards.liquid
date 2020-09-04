@@ -57,11 +57,29 @@
 				<div class="card">
 					<div class="card__section card__section--flex card__section--tight">
 						<h1 class="card__title heading h1">{{ 'customer.general.add_loyalty_card' | t }} </h1>
-						{{ 'activate-cards.svg' | asset_img_url: '300x' }}
-						<button class="button button--small button--primary" data-action="open-modal" aria-controls="modal-loyaltycards-new" >{{ 'customer.addresses.add_address' | t }}</button>
+						<button class="button button--small button--primary" data-action="open-modal" aria-controls="modal-loyaltycards-new" >{{ 'customer.general.add_loyalty_card' | t }}</button>
 					</div>
 					<div class="card__section">
-						
+						<div style="text-align: right;">
+							<img src="{{ 'activate-cards.png' | asset_img_url }}">
+							<img src="{{ 'prestige-card.png' | asset_img_url }}">
+							<img src="{{ 'smac.png' | asset_img_url }}">
+						</div>
+
+						{% comment %} APPLY CHECK HERE IF NO LOYALTY CARDS AVAILABLE {% endcomment %}
+						<div class="empty-state empty-state--extra-tight">
+							<div class="empty-state__icon">
+								{%- render 'icon', icon: 'address' -%}
+								<span class="empty-state__count">0</span>
+							</div>
+
+							<p class="empty-state__icon-description">{{ 'loyalty_cards.no_loyalty_cards' | t }}</p>
+
+							<div class="empty-state__button-container">
+								<button class="empty-state__button button button--primary" data-action="open-modal" aria-controls="modal-loyaltycards-new">{{ 'customer.general.add_loyalty_card' | t }}</button>
+							</div>
+						</div>
+
 						{% comment %} FORM FOR LOYALTY CARD {% endcomment %}
 
 						{%- assign new_form_errored = false -%}
@@ -77,7 +95,7 @@
 						<div id="modal-loyaltycards-new" class="modal" aria-hidden="{% if new_form_errored %}false{% else %}true{% endif %}">
 							<div class="modal__dialog" role="dialog">
 								<header class="modal__header">
-									<h3 class="modal__title heading h2">{{ 'customer.addresses.add_address' | t }}</h3>
+									<h3 class="modal__title heading h2">{{ 'customer.general.add_loyalty_card' | t }}</h3>
 									<button class="modal__close link" data-action="close-modal">{%- render 'icon', icon: 'close' -%}</button>
 								</header>
 
@@ -102,6 +120,11 @@
 										<div class="form__input-wrapper form__input-wrapper--labelled">
 											<input id="loyalty_cards[name_on_card]" type="text" class="form__field form__field--text" name="loyalty_cards[name_on_card]" value="">
 											<label for="loyalty_cards[name_on_card]" class="form__floating-label">{{ 'loyalty_cards.name_on_card' | t }}</label>
+										</div>
+
+										<div class="form__input-wrapper form__input-wrapper--labelled">
+											<input id="loyalty_cards[card_number]" type="text" class="form__field form__field--text" name="loyalty_cards[card_number]" value="">
+											<label for="loyalty_cards[card_number]" class="form__floating-label">{{ 'loyalty_cards.card_number' | t }}</label>
 										</div>
 
 										<button class="form__submit button button--primary button--full">{{ 'customer.general.add_loyalty_card' | t }}</button>

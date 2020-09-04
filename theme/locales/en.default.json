@@ -466,6 +466,7 @@
       "name_on_card": "Name on card",
       "card_number": "Card number",
       "submit": "Save",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "no_loyalty_cards": "No Loyalty Cards"
   }
 }
