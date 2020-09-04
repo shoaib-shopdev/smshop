@@ -211,6 +211,8 @@
       "my_account": "My account",
       "orders": "My orders",
       "addresses": "My addresses",
+      "loyalty_cards": "Loyalty Cards",
+      "add_loyalty_card": "Add New Loyalty Card",
       "logout": "Logout",
       "no_orders": "No orders yet",
       "no_orders_button": "Make your first order"
