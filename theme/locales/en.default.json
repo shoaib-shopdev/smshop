@@ -461,5 +461,11 @@
     "month_day_year": "%B %d, %Y",
     "short_month_day_year": "%b %d, %Y",
     "month_day_year_time": "%B %d, %Y at %H:%M%P"
+  },
+  "loyalty_cards": {
+      "name_on_card": "Name on card",
+      "card_number": "Card number",
+      "submit": "Save",
+      "cancel": "Cancel"
   }
 }
