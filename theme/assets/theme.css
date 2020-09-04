@@ -9171,6 +9171,7 @@ select::-ms-expand {
   flex-shrink: 0;
   background: var(--secondary-background);
   white-space: normal;
+  overflow: hidden;
 }
 
 .product-item::after {
@@ -9204,6 +9205,11 @@ select::-ms-expand {
   left: -1px;
   z-index: 2;
   font-size: 0;
+  transition: ease 0.4s;
+}
+
+.product-item:hover .product-item__label-list {
+  left: -100%;
 }
 
 .product-item__label-list > .product-label {

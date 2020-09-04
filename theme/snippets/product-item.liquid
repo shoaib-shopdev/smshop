@@ -2,6 +2,13 @@
 {%- assign color_label = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve' | split: ',' -%}
 
 <div class="product-item {% if horizontal %}product-item--horizontal{% elsif list %}product-item--list{% else %}product-item--vertical{% endif %} {% if section.id == 'blog-sidebar' %}product-item--compact{% endif %} {{ grid_classes }}">
+  <div class="product-item__label-list">
+    {%- for tag in product.tags -%}
+      {%- if tag contains 'New Arivals' or tag contains 'New Arrivals' -%}
+        <span class="product-label product-label--on-sale">{{ tag }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
   {%- capture product_labels -%}
     {%- for tag in product.tags -%}
       {%- if tag contains '__label:' -%}
