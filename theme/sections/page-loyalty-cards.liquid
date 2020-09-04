@@ -25,7 +25,7 @@
 						<div class="card__linklist">
 							<a href="{{ routes.account_url }}" class="card__linklist-item link">{{ 'customer.general.orders' | t }}</a>
 							<a href="{{ routes.account_addresses_url }}" class="card__linklist-item link text--strong">{{ 'customer.general.addresses' | t }}</a>
-							<a href="/pages/loyalty_cards" class="card__linklist-item link text--strong">{{ 'customer.general.loyalty_cards' | t }}</a>
+							<a href="/pages/loyalty-cards" class="card__linklist-item link">{{ 'customer.general.loyalty_cards' | t }}</a>
 							<a href="{{ routes.account_logout_url }}" class="card__linklist-item link" data-no-instant>{{ 'customer.general.logout' | t }}</a>
 						</div>
 					</div>
@@ -100,35 +100,35 @@
 								</header>
 
 								<div class="modal__content modal__content--ios-push">
-										<p class="modal__description">{{ 'customer.addresses.form_subtitle' | t }}</p>
+									<p class="modal__description">{{ 'customer.addresses.form_subtitle' | t }}</p>
 
-										{%- form 'customer_address', customer.new_address, class: 'form' -%}
-											{%- if form.errors -%}
-												<div class="alert alert--error">
-													<ul class="alert__error-list">
-														{%- for field in form.errors -%}
-															{%- if field == 'form' -%}
-																<li class="alert__error-item">{{ form.errors.messages[field] }}</li>
-															{%- else -%}
-																<li class="alert__error-item"><strong>{{ form.errors.translated_fields[field] }}</strong> {{ form.errors.messages[field] }}</li>
-															{%- endif -%}
-														{%- endfor -%}
-													</ul>
-												</div>
-											{%- endif -%}
+									{%- if form.errors -%}
+										<div class="alert alert--error">
+											<ul class="alert__error-list">
+												{%- for field in form.errors -%}
+													{%- if field == 'form' -%}
+														<li class="alert__error-item">{{ form.errors.messages[field] }}</li>
+													{%- else -%}
+														<li class="alert__error-item"><strong>{{ form.errors.translated_fields[field] }}</strong> {{ form.errors.messages[field] }}</li>
+													{%- endif -%}
+												{%- endfor -%}
+											</ul>
+										</div>
+									{%- endif -%}
 
+									<form method="post" action="" accept-charset="UTF-8">
+										<input name="utf8" type="hidden" value="✓" />
 										<div class="form__input-wrapper form__input-wrapper--labelled">
 											<input id="loyalty_cards[name_on_card]" type="text" class="form__field form__field--text" name="loyalty_cards[name_on_card]" value="">
 											<label for="loyalty_cards[name_on_card]" class="form__floating-label">{{ 'loyalty_cards.name_on_card' | t }}</label>
 										</div>
-
 										<div class="form__input-wrapper form__input-wrapper--labelled">
 											<input id="loyalty_cards[card_number]" type="text" class="form__field form__field--text" name="loyalty_cards[card_number]" value="">
 											<label for="loyalty_cards[card_number]" class="form__floating-label">{{ 'loyalty_cards.card_number' | t }}</label>
 										</div>
 
 										<button class="form__submit button button--primary button--full">{{ 'customer.general.add_loyalty_card' | t }}</button>
-									{%- endform -%}
+									</form>
 								</div>
 							</div>
 						</div>
