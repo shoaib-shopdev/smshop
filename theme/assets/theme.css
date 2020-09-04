@@ -12531,24 +12531,70 @@ select::-ms-expand {
 }
 
 .contact-page-wrapper input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  color: #dcd5cf;
+  color: #bbbbbb;
 }
 
 .contact-page-wrapper input::-moz-placeholder, textarea::-moz-placeholder {
-  color: #dcd5cf;
+  color: #bbbbbb;
 }
 
 .contact-page-wrapper input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color: #dcd5cf;
+  color: #bbbbbb;
 }
 
 .contact-page-wrapper input::-ms-input-placeholder, textarea::-ms-input-placeholder {
-  color: #dcd5cf;
+  color: #bbbbbb;
 }
 
 .contact-page-wrapper input::placeholder,
 textarea::placeholder {
-  color: #dcd5cf;
+  color: #bbbbbb;
+}
+
+.contact-banner-wrapper {
+  background: #e5c3ea;
+  display:flex;
+  align-items: center;
+}
+
+.contact-banner-wrapper .banner-content {
+  padding: 20px;
+}
+
+.contact-banner-wrapper img{
+  min-width: 350px;
+}
+
+.contact-banner-wrapper .banner-title {
+  font-size: 3.5rem;
+  color: #0c0adc;
+  margin-bottom: 0;
+}
+
+.contact-banner-wrapper p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+.contact-banner-wrapper .banner-title,
+.contact-banner-wrapper p {
+  font-family: 'SuperSansHeavy';
+}
+
+@media screen and (max-width: 641px) {
+  .contact-banner-wrapper {
+    display: block;
+  }
+  .contact-banner-wrapper .banner-title {
+    line-height: 1.2;
+  }
+  .contact-page-wrapper .grid-section {
+  	display: block;
+  }
+
+  .contact-page-wrapper .left-col,
+  .contact-page-wrapper .right-col {
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 641px) {
