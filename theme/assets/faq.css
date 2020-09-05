@@ -61,3 +61,13 @@ ul {
 .article-list .article-list-anchor:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 641px) {
+    .page-grid {
+        display: block;
+    }
+    .page-grid .content {
+        min-width: auto;
+        padding: 0;
+    }
+}

@@ -53,7 +53,7 @@ function executeFaqsScript() {
         $('#tabs_container .tab:first').addClass('active');
     }
 
-    for(let i=0; i<tabNodes.length; i++){
+    for(let i=0; i<tabNodes.length; i++) {
         let item = tabNodes[i];
         let itemCategory = item.getAttribute('data-category');
         if(itemCategory ===  categoryId) {
@@ -86,8 +86,6 @@ function redirectMethod() {
 
 /* Method being called from page-faq-static-template.liquid */
 function goToFaqsCategoryUrl() {
-    let searchQuery = new URLSearchParams(window.location.search);
-    let categoryId = searchQuery.get('category');
     window.location.pathname = '/pages/faqs-category';
 }
 
@@ -110,9 +108,20 @@ $('.phone-input').keydown(function(e){
     }
     setTimeout( () => {
         if(this.value.indexOf('+63') !== 0) {
-            console.log('logging');
             $(this).val(oldvalue);
-            // $(this).val($(this).val().replace(/(\d{3})\-?(\d{3})\-?(\d{4})/,'$1-$2-$3'))
         } 
     }, 1);
 });
+
+function showLocatorInfo(e) {
+    debugger
+    let target = e.currentTarget;
+    let $el = $(e.currentTarget);
+
+    let addressObj = {
+        title: $el.find("#scasl-title").html(),
+        address: $el.find("#scasl-address").html(),
+        phone: $el.find("#scasl-phone").find('a').html(),
+        schedule: $el.find("scasl-schedule").html(),
+    }
+}
