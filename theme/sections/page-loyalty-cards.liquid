@@ -69,8 +69,9 @@
 						{% comment %} APPLY CHECK HERE IF NO LOYALTY CARDS AVAILABLE {% endcomment %}
 						<div class="empty-state empty-state--extra-tight">
 							<div class="empty-state__icon">
-								{%- render 'icon', icon: 'address' -%}
-								<span class="empty-state__count">0</span>
+								<!-- {%- render 'icon', icon: 'address' -%} -->
+								<img src="{{ 'loyalty.png' | asset_img_url }}">
+								<!-- <span class="empty-state__count">0</span> -->
 							</div>
 
 							<p class="empty-state__icon-description">{{ 'loyalty_cards.no_loyalty_cards' | t }}</p>
