@@ -113,6 +113,7 @@ $('.phone-input').keydown(function(e){
     }, 1);
 });
 
+/* Continue developing this method if we have to display schedules for each store in Our Stores page.sca-storelocator.liquid */
 function showLocatorInfo(e) {
     debugger
     let target = e.currentTarget;

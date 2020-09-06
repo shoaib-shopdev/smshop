@@ -90,7 +90,7 @@
                   
                   <div class="address-list__action-list">
                     <button class="link link--accented" data-action="open-modal" aria-controls="modal-address-{{ customer.default_address.id }}">{{ 'customer.addresses.edit' | t }}</button>
-                    <button class="link link--accented" onclick="showToast('Address deleted successfully!'); Shopify.CustomerAddress.destroy({{ customer.default_address.id }}); return false">{{ 'customer.addresses.delete' | t }}</button>
+                    <button class="link link--accented" Shopify.CustomerAddress.destroy({{ customer.default_address.id }}); return false">{{ 'customer.addresses.delete' | t }}</button>
                   </div>
                 </div>
 
@@ -141,7 +141,7 @@
     <div class="modal__dialog" role="dialog">
       <header class="modal__header">
         <h3 class="modal__title heading h2">{{ 'customer.addresses.add_address' | t }}</h3>
-        <button class="modal__close link" data-action="close-modal">{%- render 'icon', icon: 'close' -%}</button>
+        <button class="modal__close link" data-action="close-modal" onclick="resetAdderessForm();">{%- render 'icon', icon: 'close' -%}</button>
       </header>
 
       <div class="modal__content modal__content--ios-push">
@@ -242,7 +242,7 @@
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[phone]" maxlength="16" required type="tel" class="phone-input form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{% if form.phone != blank %} {{ form.phone }} {% else %}+63{% endif %}">
+              <input id="address-new[phone]" maxlength="16" required type="tel" class="is-filled phone-input form__field form__field--text {% if form.phone != blank %}is-filled{% endif %}" name="address[phone]" value="{% if form.phone != blank %} {{ form.phone }} {% else %}+63{% endif %}">
               <label for="address-new[phone]" class="form__floating-label">{{ 'customer.addresses.phone' | t }}</label>
             </div>
 

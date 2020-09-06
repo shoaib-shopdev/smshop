@@ -4337,7 +4337,7 @@ img.lazyload[data-sizes=auto] {
   border: 1px solid var(--form-border-color);
   width: 100%;
   line-height: normal;
-  height: 48px;
+  height: 50px;
   color: var(--heading-color);
   -webkit-appearance: none;
   resize: none;
@@ -4453,7 +4453,7 @@ img.lazyload[data-sizes=auto] {
 .form__field:focus + .form__floating-label,
 .form__field.is-filled + .form__floating-label,
 .select-wrapper.is-filled + .form__floating-label {
-  transform: translateY(-6px) scale(0.8);
+  transform: translateY(-6px) scale(0.7);
 }
 
 .form__input-wrapper--labelled .form__field {
