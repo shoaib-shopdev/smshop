@@ -69,7 +69,6 @@
 
 						{% comment %} APPLY CHECK HERE IF NO LOYALTY CARDS AVAILABLE {% endcomment %}
 
-						{% comment %}
 						<div class="empty-state empty-state--extra-tight">
 							<div class="empty-state__icon">
 								<!-- {%- render 'icon', icon: 'address' -%} -->
@@ -83,8 +82,8 @@
 								<button class="empty-state__button button button--primary" data-action="open-modal" aria-controls="modal-loyaltycards-new">{{ 'customer.general.add_loyalty_card' | t }}</button>
 							</div>
 						</div>
-						{% endcomment %}
-
+						
+						{% comment %}
 						<div class="flex-container">
 							<div class="flex-item">
 								<h3 class="heading h3">Card Name</h3>
@@ -95,7 +94,7 @@
 								<p>33125432156452</p>
 							</div>
 						</div>
-						
+						{% endcomment %}
 						
 						{% comment %} FORM FOR LOYALTY CARD {% endcomment %}
 
