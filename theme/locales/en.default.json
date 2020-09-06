@@ -214,6 +214,8 @@
       "loyalty_cards": "My Loyalty Cards",
       "returns_and_exchange": "Returns & Exchange",
       "add_loyalty_card": "Add New Loyalty Card",
+      "edit": "Edit",
+      "edit_loyalty": "Edit Loyalty",
       "logout": "Logout",
       "no_orders": "No orders yet",
       "no_orders_button": "Make your first order"

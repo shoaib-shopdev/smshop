@@ -8,10 +8,20 @@
 <section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
   <div class="container container--flush">
     {%- assign collection = collections[section.settings.collection] -%}
-    
-    <div class="featured-collection lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--lap]"{% endif %}>
+    <script>
+      if( $(window).width() < 767 ){
+        {%- assign main_image_url = section.settings.image_mobile -%}
+        console.log("in mobile screen part","{{main_image_url}}")        
+      }else {
+        {% assign main_image_url = section.settings.image %}
+        console.log("in web screen part","{{main_image_url}}")   
+      }
+
+    </script>
+    <div class="featured-collection lazyload" {% if main_image_url %}data-bgset="{{ main_image_url | img_url: '1000x' }}"{% endif %}>
+    {% comment %}<div class="featured-collection lazyload" {% if main_image_url %}data-bgset="{{ main_image_url | img_url: '1000x' }} [--lap]"{% endif %}>{% endcomment %}
       {% comment %}<header class="featured-collection__header lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--tablet]"{% endif %}> {% endcomment %}
-      <header class="featured-collection__header lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }}"{% endif %}>
+      <header class="featured-collection__header lazyload" {% if main_image_url %}data-bgset="{{ main_image_url | img_url: '1000x' }}"{% endif %}>
         {%- if section.settings.title != blank -%}
           <h2 class="featured-collection__title heading h2">{{ section.settings.title | escape }}</h2>
         {%- endif -%}

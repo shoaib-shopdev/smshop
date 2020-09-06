@@ -13555,3 +13555,17 @@ hr {
     background-repeat: no-repeat;
   } */
 }
+
+.loyalty-section .flex-container{
+  display: flex;
+}
+
+.loyalty-section .flex-container .flex-item {
+  width: 40%;
+}
+
+@media (max-width: 641px) {
+  .loyalty-section .flex-container{
+    display: block;
+  }
+}

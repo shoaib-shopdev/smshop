@@ -1,3 +1,10 @@
+<script>
+  $(document).ready(function() {
+    $("#shopify-section-cart-template > section > div > div > div > div > div.cart-recap > div > div.card > div > form > input[type=hidden]:nth-child(2)").after(`<input type="hidden" name="checkout" value="" />`);
+  })
+</script>
+
+
 {%- capture section_settings -%}
 {
   "showShippingEstimator": {% if cart.item_count == 0 %}false{% else %}{{ section.settings.show_shipping_estimator | json }}{% endif %}
@@ -236,6 +243,7 @@
               </div>
             </div>
 
+            
             {%- comment -%}
             --------------------------------------------------------------------------------------
             GIFT WRAP
