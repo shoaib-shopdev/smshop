@@ -406,7 +406,7 @@
                         <div id="order-note" class="collapsible" aria-hidden="true">
                           <div class="cart-recap__note-inner">
                             <textarea name="cart[note]" class="form__field form__field--textarea" rows="3" autofocus>{{ cart.note }}</textarea>
-                            <button type="button" class="form__submit form__submit--tight button button--secondary" data-action="save-note">{{ 'cart.general.save_note' | t }}</button>
+                            <button type="button" class="form__submit button button--secondary" data-action="save-note">{{ 'cart.general.save_note' | t }}</button>
                           </div>
                         </div>
                       </div>
@@ -425,6 +425,8 @@
                         {%- endif -%}
                       </p>
                     </div>
+
+                    <div id="storePickupApp"></div>
 
                     <form method="post" action="{{ routes.cart_url }}" novalidate="novalidate" data-item-count="{{ cart.item_count }}">
                       <input type="hidden" name="attributes[collection_products_per_page]" value="">

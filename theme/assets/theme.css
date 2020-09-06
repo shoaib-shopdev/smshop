@@ -12534,24 +12534,28 @@ select::-ms-expand {
   font-family: 'SuperSansHeavy';
 }
 
-.contact-page-wrapper input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+.contact-page-wrapper input::-webkit-input-placeholder, 
+.contact-page-wrapper textarea::-webkit-input-placeholder {
   color: #bbbbbb;
 }
 
-.contact-page-wrapper input::-moz-placeholder, textarea::-moz-placeholder {
+.contact-page-wrapper input::-moz-placeholder, 
+.contact-page-wrapper textarea::-moz-placeholder {
   color: #bbbbbb;
 }
 
-.contact-page-wrapper input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+.contact-page-wrapper input:-ms-input-placeholder, 
+.contact-page-wrapper textarea:-ms-input-placeholder {
   color: #bbbbbb;
 }
 
-.contact-page-wrapper input::-ms-input-placeholder, textarea::-ms-input-placeholder {
+.contact-page-wrapper input::-ms-input-placeholder, 
+.contact-page-wrapper textarea::-ms-input-placeholder {
   color: #bbbbbb;
 }
 
 .contact-page-wrapper input::placeholder,
-textarea::placeholder {
+.contact-page-wrapper textarea::placeholder {
   color: #bbbbbb;
 }
 
@@ -13541,4 +13545,13 @@ hr {
   background: #d8d8d8;
   border: none;
   height: 1px;
+}
+
+@media (max-width: 641px) {
+
+  /* .featured-collection__header {
+    background-position: 100% 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  } */
 }
