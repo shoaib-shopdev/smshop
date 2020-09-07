@@ -90,7 +90,7 @@
                   
                   <div class="address-list__action-list">
                     <button class="link link--accented" data-action="open-modal" aria-controls="modal-address-{{ customer.default_address.id }}">{{ 'customer.addresses.edit' | t }}</button>
-                    <button class="link link--accented" Shopify.CustomerAddress.destroy({{ customer.default_address.id }}); return false">{{ 'customer.addresses.delete' | t }}</button>
+                    <button class="link link--accented" onclick="showConfirmDialog('Are you sure to delete address?', true, addressRemoval, '{{customer.default_address.id}}')">{{ 'customer.addresses.delete' | t }}</button>
                   </div>
                 </div>
 
@@ -106,10 +106,10 @@
                       <p class="heading h6">{{ 'customer.addresses.address_number' | t: number: address_count }}</p>
                       {{- address | format_address -}}
                     </div>
-
+                   
                     <div class="address-list__action-list">
                       <button class="link link--accented" data-action="open-modal" aria-controls="modal-address-{{ address.id }}">{{ 'customer.addresses.edit' | t }}</button>
-                      <button class="link link--accented" onclick="Shopify.CustomerAddress.destroy({{ address.id }}); return false">{{ 'customer.addresses.delete' | t }}</button>
+                      <button class="link link--accented" onclick="showConfirmDialog('Are you sure to delete address?', true, addressRemoval, '{{address.id}}')">{{ 'customer.addresses.delete' | t }}</button>
                     </div>
                   </div>
 
