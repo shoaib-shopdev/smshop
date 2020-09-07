@@ -13549,11 +13549,10 @@ hr {
 
 @media (max-width: 641px) {
 
-  /* .featured-collection__header {
-    background-position: 100% 50%;
-    background-size: contain;
+  .featured-collection__header {
+    background-size: cover;
     background-repeat: no-repeat;
-  } */
+  }
 }
 
 .loyalty-section .flex-container{

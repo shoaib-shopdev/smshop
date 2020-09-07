@@ -4,7 +4,7 @@
 <div class="product-item {% if horizontal %}product-item--horizontal{% elsif list %}product-item--list{% else %}product-item--vertical{% endif %} {% if section.id == 'blog-sidebar' %}product-item--compact{% endif %} {{ grid_classes }}">
   <div class="product-item__label-list">
     {%- for tag in product.tags -%}
-      {%- if tag contains 'New Arivals' or tag contains 'New Arrivals' -%}
+      {%- if tag contains 'New Arivals' or tag contains 'New Arrivals' or tag contains 'New Stock' -%}
         <span class="product-label product-label--on-sale">{{ tag }}</span>
       {%- endif -%}
     {%- endfor -%}
