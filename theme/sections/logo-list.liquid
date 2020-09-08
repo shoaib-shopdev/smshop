@@ -49,14 +49,19 @@
             </div>
 
             <style>
-              #block-{{ block.id }} .quick-links__image-ie-fix {
+              /* #block-{{ block.id }} .quick-links__image-ie-fix {
                 max-width: {{ max_width_mobile }}px;
+              } */
+
+              #block-{{ block.id }} .quick-links__image-ie-fix {
+                max-width: 100px;
               }
 
               @media screen and (min-width: 641px) {
                 #block-{{ block.id }} .quick-links__image-ie-fix {
                   max-width: {{ max_width_desktop }}px;
                 }
+
               }
             </style>
           {%- else -%}

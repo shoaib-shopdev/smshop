@@ -206,12 +206,12 @@
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[address1]" required type="text" class="form__field form__field--text {% if form.address1 != blank %}is-filled{% endif %}" name="address[address1]" value="{{ form.address1 }}">
+              <input id="address-new[address1]" maxlength="200" required type="text" class="form__field form__field--text {% if form.address1 != blank %}is-filled{% endif %}" name="address[address1]" value="{{ form.address1 }}">
               <label for="address-new[address1]" class="form__floating-label">{{ 'customer.addresses.address1' | t }}</label>
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[address2]" type="text" class="form__field form__field--text {% if form.address2 != blank %}is-filled{% endif %}" name="address[address2]" value="{{ form.address2 }}">
+              <input id="address-new[address2]" maxlength="200" type="text" class="form__field form__field--text {% if form.address2 != blank %}is-filled{% endif %}" name="address[address2]" value="{{ form.address2 }}">
               <label for="address-new[address2]" class="form__floating-label">{{ 'customer.addresses.address2' | t }}</label>
             </div>
 
@@ -247,12 +247,12 @@
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[address1]" required type="text" class="form__field form__field--text {% if form.address1 != blank %}is-filled{% endif %}" name="address[address1]" value="{{ form.address1 }}">
+              <input id="address-new[address1]" maxlength="200" required type="text" class="form__field form__field--text {% if form.address1 != blank %}is-filled{% endif %}" name="address[address1]" value="{{ form.address1 }}">
               <label for="address-new[address1]" class="form__floating-label">{{ 'customer.addresses.address1' | t }}</label>
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-new[address2]" type="text" class="form__field form__field--text {% if form.address2 != blank %}is-filled{% endif %}" name="address[address2]" value="{{ form.address2 }}">
+              <input id="address-new[address2]" maxlength="200" type="text" class="form__field form__field--text {% if form.address2 != blank %}is-filled{% endif %}" name="address[address2]" value="{{ form.address2 }}">
               <label for="address-new[address2]" class="form__floating-label">{{ 'customer.addresses.address2' | t }}</label>
             </div>
 
@@ -362,12 +362,12 @@
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-{{ address.id }}[address1]" type="text" class="form__field form__field--text {% if form.address1 != blank %}is-filled{% endif %}" name="address[address1]" value="{{ form.address1 }}">
+              <input id="address-{{ address.id }}[address1]" maxlength="200" type="text" class="form__field form__field--text {% if form.address1 != blank %}is-filled{% endif %}" name="address[address1]" value="{{ form.address1 }}">
               <label for="address-{{ address.id }}[address1]" class="form__floating-label">{{ 'customer.addresses.address1' | t }}</label>
             </div>
 
             <div class="form__input-wrapper form__input-wrapper--labelled">
-              <input id="address-{{ address.id }}[address2]" type="text" class="form__field form__field--text {% if form.address2 != blank %}is-filled{% endif %}" name="address[address2]" value="{{ form.address2 }}">
+              <input id="address-{{ address.id }}[address2]" maxlength="200" type="text" class="form__field form__field--text {% if form.address2 != blank %}is-filled{% endif %}" name="address[address2]" value="{{ form.address2 }}">
               <label for="address-{{ address.id }}[address2]" class="form__floating-label">{{ 'customer.addresses.address2' | t }}</label>
             </div>
 

@@ -5035,7 +5035,7 @@ select::-ms-expand {
   background-color: #0e326f;
 }
 
-.footer * {
+.footer *:not(input) {
   color: #ffffff;
 }
 
@@ -5086,6 +5086,9 @@ select::-ms-expand {
 
 .footer__newsletter-form {
   margin-top: 8px;
+}
+
+.newsletter-flex {
   display: flex;
 }
 
@@ -13587,12 +13590,28 @@ hr {
   height: 1px;
 }
 
+
+/**
+ * --------------------------------------------------------------------
+ * MIXED MEDIA QUIRIES
+ * --------------------------------------------------------------------
+ */
 @media (max-width: 641px) {
 
   .featured-collection__header {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
+  #shopify-section-collection-list .collection-item {
+    width: 27vw;
+    margin: 0 8px;
+  }
+
+  .quick-links__link {
+    width: 100%;
+  }
+
 }
 
 .loyalty-section .flex-container{

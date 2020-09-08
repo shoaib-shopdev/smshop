@@ -196,7 +196,11 @@
       }
 
       function addressRemoval(addressId) {
-        Shopify.CustomerAddress.destroy(addressId);
+        Shopify.postLink("/account/addresses/" + addressId, {
+            parameters: {
+                _method: "delete"
+            }
+        });
         showToast('Address deleted successfully');
         return false;
       }

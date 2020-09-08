@@ -1,0 +1,50 @@
+<div class="container">
+    <main class="page-grid">
+      <div class="content">
+        <a href="#" class="theme-blue" onclick="goToFaqsCategoryUrl()">{% render 'icon', icon: 'arrow-left' %} FAQs</a>
+        <hr>
+        <h1 class="page__title category-title heading h1">{{ page.title }}</h1>
+  
+        <!-- <h3 id="category-title" class="page__title heading h3">{{ page.title }}</h3> -->
+        
+        <div class="tab_contents_container">
+          <div id="tab_1_contents" class="tab_contents tab_contents_active">
+            <ul class="article-list">
+                <li class="article-list-item">
+                  <a href="/pages/what-is-click-collect?category=5" class="item theme-blue"> What is Click & Collect? </a>
+                </li>
+                <li class="article-list-item">
+                    <a href="/pages/where-are-the-click-collect-locations?category=5" class="article-list-anchor theme-blue"> Where are the Click & Collect locations? </a>
+                </li>
+                <li class="article-list-item">
+                    <a href="/pages/how-do-i-collect-my-order-from-a-click-collect-location?category=5" class="article-list-anchor theme-blue"> How do I collect my order from a Click & Collect location? </a>
+                </li>
+              </ul>
+          </div>
+        </div>
+
+        {%- if page.content != blank -%}
+          <div class="page__description rte">
+            {{ page.content }}
+          </div>
+        {%- endif -%}
+      </div>
+    </main>
+  </div>
+  
+  {% schema %}
+    {
+      "name": "Click & Collect",
+      "settings": []
+    }
+  {% endschema %}
+  
+  {% stylesheet %}
+  .page-grid .content {
+    max-width: 100% !important;
+  }
+  {% endstylesheet %}
+  
+  {% javascript %}
+  {% endjavascript %}
+  

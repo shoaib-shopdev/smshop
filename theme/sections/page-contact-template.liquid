@@ -60,7 +60,7 @@
 
                 <div class="form__input-wrapper form__input-wrapper--labelled">
                   <label for="contact-form-phone">{{ 'contact.form.mobile_number' | t }}</label>
-                  <input id="contact-form-phone" type="phone" required placeholder="+63___-___-____" class="form__field form__field--text {% if customer.phone != blank %}is-filled{% endif %}" name="contact[phone]" aria-label="{{ 'contact.form.phone' | t }}" required {% if customer %}value="{{ customer.phone }}"{% endif %}>
+                  <input id="contact-form-phone" type="phone" maxlength="16" required class="is-filled phone-input form__field form__field--text" name="contact[phone]" aria-label="{{ 'contact.form.phone' | t }}" value="{% if customer.phone != blank %} {{ customer.phone }} {% else %}+63{% endif %}">
                 </div>
 
                 <div class="form__input-wrapper form__input-wrapper--labelled">
@@ -141,7 +141,7 @@
 
                 {%- if section.settings.store_image -%}
                   <div class="contact__store-image">
-                    <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: section.settings.store_image.aspect_ratio }}%">
+                    <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: section.settings.store_image.aspect_ratio }}">
                       <img src="{{ section.settings.store_image | img_url: '700x' }}" alt="{{ section.settings.store_image.alt | escape }}">
                     </div>
                   </div>

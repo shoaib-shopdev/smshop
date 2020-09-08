@@ -63,13 +63,22 @@
                         {%- endif -%}
 
                         <input type="hidden" name="contact[tags]" value="newsletter">
-
-                        <div class="form__input-wrapper form__input-wrapper--labelled">
-                          <input type="email" id="footer[contact][email]" name="contact[email]" class="form__field form__field--text" required="" placeholder="Enter email address">
-                          {%- comment -%}<label for="footer[contact][email]" class="form__floating-label">{{ 'footer.newsletter.input' | t }}</label>{%- endcomment -%}
+                        <div class="newsletter-flex">
+                          <div class="form__input-wrapper form__input-wrapper--labelled">
+                            <input type="email" id="footer[contact][email]" name="contact[email]" class="form__field form__field--text" required="" placeholder="Enter email address">
+                            {%- comment -%}<label for="footer[contact][email]" class="form__floating-label">{{ 'footer.newsletter.input' | t }}</label>{%- endcomment -%}
+                          </div>
+                          <button type="submit" class="form__submit form__submit--tight button button--primary">{{ 'footer.newsletter.submit' | t }}</button>
                         </div>
 
-                        <button type="submit" class="form__submit form__submit--tight button button--primary">{{ 'footer.newsletter.submit' | t }}</button>
+                        <div class="privacy-block">
+                          <div class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox" required>
+                            {% render 'icon', icon: 'check' %}
+                          </div>
+                          <span>Subscribe to updates. Access our Privacy Policy </span>
+                          <a href="/pages/shopsm-data-privacy-policy" class="privacy-link">here.</a>
+                       </div>
                       {%- endif -%}
                     {%- endform -%}
 
@@ -83,15 +92,6 @@
                         </div>
                       {%- endif -%}
                     {%- endif -%}
-
-                    <div class="privacy-block">
-                      <div class="checkbox-wrapper">
-                        <input type="checkbox" class="checkbox">
-                        {% render 'icon', icon: 'check' %}
-                      </div>
-                      <span>Subscribe to updates. Access our Privacy Policy </span>
-                      <a href="/pages/shopsm-data-privacy-policy" class="privacy-link">here.</a>
-                   </div>
 
                     <p class="hidden-pocket footer-rights">Copyright © {{ shop.name }}. All Rights Reserved.</p>
 

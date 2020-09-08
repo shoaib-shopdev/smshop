@@ -339,7 +339,8 @@
       "taxes_included_but_shipping_at_checkout": "Tax included. Shipping calculated at checkout",
       "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping<\/a> calculated at checkout",
       "total": "Total",
-      "checkout": "Checkout"
+      "checkout": "Checkout",
+      "login_to_checkout": "Login to Checkout"
     },
     "items": {
       "decrease_quantity": "Decrease quantity by 1",
