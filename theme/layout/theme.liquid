@@ -152,8 +152,8 @@
       <div>
         <div id="confirmMessage"></div>
         <div>
-          <input id="confirmYes" type="button" value="Yes" />
-          <input id="confirmNo" type="button" value="No" />
+          <input id="confirmYes" class="confirm-btns yes" type="button" value="Yes" />
+          <input id="confirmNo" class="confirm-btns no" type="button" value="No" />
         </div>
       </div>
     </div>
@@ -161,66 +161,5 @@
     {% comment %} Toast Message {% endcomment %}
     <div id="snackbar"></div>
 
-
-    <script>
-
-      // Custom Confirm Dialog
-      const ui = {
-        confirm: async (message) => createConfirm(message)
-      }
-
-      const createConfirm = (message) => {
-        return new Promise((complete, failed)=>{
-          $('#confirmMessage').text(message)
-
-          $('#confirmYes').off('click');
-          $('#confirmNo').off('click');
-          
-          $('#confirmYes').on('click', ()=> { $('.confirm').hide(); complete(true); });
-          $('#confirmNo').on('click', ()=> { $('.confirm').hide(); complete(false); });
-          
-          $('.confirm').show();
-        });
-      }
-                          
-      const showConfirmDialog = async (questionStr, allowCallback, callback, callbackParam) => {
-        const confirm = await ui.confirm(questionStr);
-        if(confirm) {
-          if(allowCallback && callbackParam) {
-            callback(callbackParam);
-          }
-          else if(allowCallback && !callbackParam) {
-            callback();
-          }
-        }
-      }
-
-      function addressRemoval(addressId) {
-        Shopify.postLink("/account/addresses/" + addressId, {
-            parameters: {
-                _method: "delete"
-            }
-        });
-        showToast('Address deleted successfully');
-        return false;
-      }
-
-      // Toast/Snackbar
-      function showToast(message) {
-
-        setTimeout( () => {
-          let defaultMessage = 'Updated';
-          // Get the snackbar DIV/Element
-          let toastEl = document.getElementById("snackbar");
-  
-          // Add the "show" class to DIV/Element
-          toastEl.className = "show";
-          message ? toastEl.innerHTML = message : toastEl.innerHTML = defaultMessage;
-  
-          // After 5 seconds, remove 'show' class from DIV
-          setTimeout(() => { toastEl.className = toastEl.className.replace("show", ""); }, 5000);
-        }, 2000);
-      }
-    </script>
   </body>
 </html>

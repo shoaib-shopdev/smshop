@@ -38,6 +38,10 @@ if(window.location.pathname.indexOf('faqs-category') !== -1) {
     executeFaqsScript();
 }
 
+// if(window.location.pathname.indexOf('/account/addresses') !== -1) {
+//     debugger
+// }
+
 /* FAQs related custom script */
 function executeFaqsScript() {
     $('.tab_contents:not(:first)').hide();
@@ -130,6 +134,66 @@ $('.phone-input').keydown(function(e){
     }, 1);
 });
 
+// Custom Confirm Dialog
+const ui = {
+    confirm: async (message) => createConfirm(message)
+}
+
+const createConfirm = (message) => {
+    return new Promise((complete, failed)=>{
+        $('#confirmMessage').text(message)
+        $('#confirmYes').off('click');
+        $('#confirmNo').off('click');
+        $('#confirmYes').on('click', ()=> { $('.confirm').hide(); complete(true); });
+        $('#confirmNo').on('click', ()=> { $('.confirm').hide(); complete(false); });
+        $('.confirm').show();
+    });
+}
+                    
+const showConfirmDialog = async (questionStr, allowCallback, callback, callbackParam) => {
+    const confirm = await ui.confirm(questionStr);
+    if(confirm) {
+        if(allowCallback && callbackParam) {
+            callback(callbackParam);
+        }
+        else if(allowCallback && !callbackParam) {
+            callback();
+        }
+    }
+}
+
+function addressRemoval(addressId) {
+
+    showToast('Address deleted successfully');
+    
+    // Shopify.bind(showToast);
+    setTimeout(() => { 
+        Shopify.postLink("/account/addresses/" + addressId + "?deleted=y", {
+            parameters: {
+                _method: "delete"
+            }
+        });
+    }, 4000);
+
+    return false;
+}
+
+// Toast/Snackbar
+function showToast(message) {
+
+    setTimeout( () => {
+        let defaultMessage = 'Updated';
+        // Get the snackbar DIV/Element
+        let toastEl = document.getElementById("snackbar");
+
+        // Add the "show" class to DIV/Element
+        toastEl.className = "show";
+        message ? toastEl.innerHTML = message : toastEl.innerHTML = defaultMessage;
+
+        // After 5 seconds, remove 'show' class from DIV
+        setTimeout(() => { toastEl.className = toastEl.className.replace("show", ""); }, 5000);
+    }, 3000);
+}
 /* Continue developing this method if we have to display schedules for each store in Our Stores page.sca-storelocator.liquid. If this functionality not needed remove it. */
 function showLocatorInfo(e) {
     let target = e.currentTarget;
