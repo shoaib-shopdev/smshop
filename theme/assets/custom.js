@@ -45,10 +45,16 @@ function executeFaqsScript() {
     
     let tabNodes = document.querySelectorAll('.tab');
     let pageUrl = window.location.pathname;
-    let searchQuery = new URLSearchParams(window.location.search);
-    let categoryId = searchQuery.get('category'); // route query param category id
-    
-    // active first tab by default if no query param exists
+    let searchParams = new URLSearchParams(window.location.search);
+    let categoryId = searchParams.get('category'); // route query param category id
+
+    /* Hack: if FAQs is visited through url /pages/click-and-collect then add query param (i.e.category) of 'Click and Collect' explicitly */
+    if(document.referrer.indexOf('collect') !== -1) {
+        searchParams.set('category', 5);
+        categoryId = searchParams.get('category');
+    }
+
+    /* Hack: active first tab by default if no query param exists */
     if(!categoryId) {
         $('#tabs_container .tab:first').addClass('active');
     }
@@ -66,7 +72,15 @@ function executeFaqsScript() {
     }
 }
 
+/* Show respective category articles based on tab/category-title click */
 $('#tabs_container .tab').click(function() {
+
+    /* Disable clicking the same tab more than once */
+    $('#tabs_container > .tabs > li > .tab:not(.active)').removeAttr("disabled");
+    if($(this).attr("disabled") === "disabled") {
+        return;
+    }
+
     var target = $(this.rel);
     $("#category-title").html(this.innerText);
     $('.tab_contents').not(target).hide();
@@ -74,7 +88,10 @@ $('#tabs_container .tab').click(function() {
     $('#tabs_container > .tabs > li > a.active').removeClass('active');
     $(this).addClass('active');
     $('#tabs_container > .tab_contents_container > div.tab_contents_active').removeClass('tab_contents_active');
-  	$(this.rel).addClass('tab_contents_active');
+    $(this.rel).addClass('tab_contents_active');
+      
+    $(this).attr("disabled", "disabled");
+
 });
 
 /* Redirect Url for Login/Signup. Method being called from header.liquid */
