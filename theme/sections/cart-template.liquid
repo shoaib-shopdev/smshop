@@ -439,7 +439,7 @@
                     <form method="post" action="{{ routes.cart_url }}" novalidate="novalidate" data-item-count="{{ cart.item_count }}">
                       <input type="hidden" name="attributes[collection_products_per_page]" value="">
                       <input type="hidden" name="attributes[collection_layout]" value="">
-                      <button type="submit" name="checkout" class="cart-recap__checkout button button--primary button--full button--large">{{ 'cart.general.checkout' | t }}</button>
+                      <button type="submit" name="checkout" class="cart-recap__checkout button button--primary button--full button--large">{% if customer %} {{ 'cart.general.checkout' | t }}  {% else %} {{ 'cart.general.login_to_checkout' | t }}  {% endif %} </button>
 
                       {%- comment -%}
                       By uncommenting the additional_checkout_buttons, the express checkout buttons will be hidden from the first step of the checkout, and
