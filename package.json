@@ -1,0 +1,24 @@
+{
+  "name": "smshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "local": "theme watch --vars=.env --env=local",
+    "open": "theme open --vars=.env --env=local",
+    "get": "theme get --vars=.env --env=local",
+    "deploy:live": "theme deploy --vars=.env --env=live --allow-live",
+    "deploy:local": "theme deploy --vars=.env --env=local",
+    "get:local": "theme get --password=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 --store=sm-shop-ph.myshopify.com --themeid=111756181657"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shoaib-shopdev/smshop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shoaib-shopdev/smshop/issues"
+  },
+  "homepage": "https://github.com/shoaib-shopdev/smshop#readme"
+}

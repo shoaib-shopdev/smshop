@@ -1,0 +1,16 @@
+development:
+    password: ${password}
+    theme_id: ${live_theme_id}
+    store: ${store}
+    ignore_files:
+  live:
+    password: ${password}
+    theme_id: ${live_theme_id}
+    store: ${store}
+    ignore_files:
+  local:
+    password: ${password}
+    theme_id: ${local_theme_id}
+    store: ${store}
+    ignore_files:
+  
