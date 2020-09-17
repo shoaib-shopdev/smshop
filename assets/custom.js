@@ -36,10 +36,28 @@
 
 $(document).ready(() => {
   activeNavList();
+  $(".logout-link").on("click", function (e) {
+    clearCartOnLogout(e);
+  });
 });
 
 if (window.location.pathname.indexOf("faqs-category") !== -1) {
   executeFaqsScript();
+}
+
+/**
+ * Clear cart on logout
+ */
+function clearCartOnLogout(e) {
+  e.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: "/cart/clear.js",
+    success: function () {
+      window.location.href = "/account/logout";
+    },
+    dataType: "json",
+  });
 }
 
 /**
