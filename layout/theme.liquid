@@ -1,53 +1,64 @@
 <!doctype html>
 
 <html class="no-js" lang="{{ request.locale.iso_code }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="theme-color" content="{{ settings.accent_color }}">
-    <link rel="manifest" href="/apps/litefy/manifest/">
- 	{{ 'jquery_3.2.1.min.js' | asset_url | script_tag }}
-    
-    {%- capture seo_page_title -%}
-      {%- if request.page_type == 'search' and search.terms != blank -%}
-        {{ search.terms | split: ' AND ' | last }} - {{ shop.name }}
-      {%- else -%}
-        {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
-      {%- endif -%}
-    {%- endcapture -%}
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
+        <meta name="theme-color" content="{{ settings.accent_color }}">
+        <link href="/apps/litefy/manifest/" rel="manifest">
+        {{ 'jquery_3.2.1.min.js' | asset_url | script_tag }}
 
-    <title>{{- seo_page_title -}}</title>
+        {%- capture seo_page_title -%}
+            {%- if request.page_type == 'search' and search.terms != blank -%}
+                {{ search.terms | split: ' AND ' | last }}
+                -
+                {{ shop.name }}
+            {%- else -%}
+                {{ page_title }}
+                {% if current_tags %}
+                    {% assign meta_tags = current_tags | join: ', ' %}
+                    &ndash;
+                    {{ 'general.meta.tags' | t: tags: meta_tags }}
+                {% endif %}
+                {% if current_page != 1 %}
+                    &ndash;
+                    {{ 'general.meta.page' | t: page: current_page }}
+                {% endif %}
+            {%- endif -%}
+        {%- endcapture -%}
 
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
-    {%- endif -%}
+        <title>{{- seo_page_title -}}</title>
 
-    <link rel="canonical" href="{{ canonical_url }}">
+        {%- if page_description -%}
+            <meta name="description" content="{{ page_description | escape }}">
+        {%- endif -%}
 
-    {%- if settings.favicon -%}
-      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
-    {%- endif -%}
+        <link rel="canonical" href="{{ canonical_url }}">
 
-    {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
-    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
-    <link rel="preconnect" href="https://cdn.shopify.com">
-    <link rel="preconnect" href="https://fonts.shopifycdn.com">
-    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
-    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
-    <link rel="dns-prefetch" href="https://maps.googleapis.com">
-    <link rel="dns-prefetch" href="https://maps.gstatic.com">
-   
-    {% render 'social-meta-tags' %}
-    {% render 'css-variables' %}
+        {%- if settings.favicon -%}
+            <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+        {%- endif -%}
 
-    {{ content_for_header }}
+        {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
+        <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
+        <link href="https://cdn.shopify.com" rel="preconnect">
+        <link href="https://fonts.shopifycdn.com" rel="preconnect">
+        <link href="https://productreviews.shopifycdn.com" rel="dns-prefetch">
+        <link href="https://ajax.googleapis.com" rel="dns-prefetch">
+        <link href="https://maps.googleapis.com" rel="dns-prefetch">
+        <link href="https://maps.gstatic.com" rel="dns-prefetch">
 
-    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
-	{{ 'faq.css' | asset_url | stylesheet_tag }}
+        {% render 'social-meta-tags' %}
+        {% render 'css-variables' %}
 
-    {% render 'microdata-schema' %}
+        {{ content_for_header }}
 
-    <script>
+        <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+        {{ 'faq.css' | asset_url | stylesheet_tag }}
+
+        {% render 'microdata-schema' %}
+
+        <script>
       // This allows to expose several variables to the global scope, to be used in scripts
       window.theme = {
         pageType: {{ request.page_type | json }},
@@ -94,17 +105,17 @@
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
     </script>
 
-    {%- if request.page_type == 'customers/addresses' -%}
-      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
-      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
-    {%- endif -%}
+        {%- if request.page_type == 'customers/addresses' -%}
+            <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+            <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+        {%- endif -%}
 
-    <script src="//cdn.polyfill.io/v3/polyfill.min.js?unknown=polyfill&features=fetch,Element.prototype.closest,Element.prototype.matches,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,String.prototype.includes,String.prototype.padStart,Object.assign,CustomEvent,Intl,URL,DOMTokenList,IntersectionObserver,IntersectionObserverEntry" defer></script>
-    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+        <script defer src="//cdn.polyfill.io/v3/polyfill.min.js?unknown=polyfill&features=fetch,Element.prototype.closest,Element.prototype.matches,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,String.prototype.includes,String.prototype.padStart,Object.assign,CustomEvent,Intl,URL,DOMTokenList,IntersectionObserver,IntersectionObserverEntry"></script>
+        <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
+        <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
-    {%- if request.page_type != 'cart' -%}
-      <script>
+        {%- if request.page_type != 'cart' -%}
+            <script>
         (function () {
           window.onpageshow = function() {
             // We force re-freshing the cart content onpageshow, as most browsers will serve a cache copy when hitting the
@@ -116,50 +127,49 @@
           };
         })();
       </script>
-    {%- endif -%}
-  
-  
+        {%- endif -%}
 
-  {% render 'shogun-head' %}
-</head>
 
-  <body class="warehouse--v1 {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
-    <span class="loading-bar"></span>
+        {% render 'shogun-head' %}
+    </head>
 
-    {% section 'announcement-bar' %}
+    <body class="warehouse--v1 {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
+        <span class="loading-bar"></span>
 
-    {%- unless request.page_type == 'cart' -%}
-      {%- comment -%}As required by Shopify rules, popup must be removed on cart page to remove distraction{%- endcomment -%}
-      {% section 'popups' %}
-    {%- endunless -%}
+        {% section 'announcement-bar' %}
 
-    {% section 'header' %}
+        {%- unless request.page_type == 'cart' -%}
+            {%- comment -%}As required by Shopify rules, popup must be removed on cart page to remove distraction{%- endcomment -%}
+            {% section 'popups' %}
+        {%- endunless -%}
 
-    <main id="main" role="main">
-      {{ content_for_layout }}
-    </main>
+        {% section 'header' %}
 
-    {%- if request.page_type == 'blog' or request.page_type == 'article' or request.page_type == 'page' -%}
-      {% section 'static-newsletter' %}
-    {%- endif -%}
+        <main id="main" role="main">
+            {{ content_for_layout }}
+        </main>
 
-    {% section 'text-with-icons' %}
-    {% section 'footer' %}
+        {%- if request.page_type == 'blog' or request.page_type == 'article' or request.page_type == 'page' -%}
+            {% section 'static-newsletter' %}
+        {%- endif -%}
 
-    {% comment %} Custom Confirm Dialog {% endcomment %}
-    <div class="confirm">
-      <div></div>
-      <div>
-        <div id="confirmMessage"></div>
-        <div>
-          <input id="confirmYes" class="confirm-btns yes" type="button" value="Yes" />
-          <input id="confirmNo" class="confirm-btns no" type="button" value="No" />
+        {% section 'text-with-icons' %}
+        {% section 'footer' %}
+
+        {% comment %} Custom Confirm Dialog {% endcomment %}
+        <div class="confirm">
+            <div></div>
+            <div>
+                <div id="confirmMessage"></div>
+                <div>
+                    <input class="confirm-btns yes" id="confirmYes" type="button" value="Yes"/>
+                    <input class="confirm-btns no" id="confirmNo" type="button" value="No"/>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    {% comment %} Toast Message {% endcomment %}
-    <div id="snackbar"></div>
+        {% comment %} Toast Message {% endcomment %}
+        <div id="snackbar"></div>
 
-  </body>
+    </body>
 </html>
