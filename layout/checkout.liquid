@@ -37,7 +37,6 @@
         </header>
 
         {{ order_summary_toggle }}
-
         <div class="content" data-content>
             <div class="wrap">
                 <div class="main">
@@ -67,239 +66,248 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <style>
-        .product-added-info {
-            padding: 20px;
-            background: #fff;
-            margin-bottom: 12px;
-        }
-        .product-added-info .row {
-            margin-bottom: 0;
-            text-align: center;
-        }
-        .product-added-info .row h2 {
-            padding-bottom: 0;
-            margin-bottom: 12px;
-        }
-        .product-added-info .row h4 {
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
+      .product-added-info {
+        padding: 20px;
+        background: #fff;
+        margin-bottom: 12px;
+      }
+      .product-added-info .row {
+        margin-bottom: 0;
+        text-align: center;
+      }
+      .product-added-info .row h2 {
+        padding-bottom: 0;
+        margin-bottom: 12px;
+      }
+      .product-added-info .row h4 {
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
 
-        .main .field__input::placeholder {
-            opacity: 0;
+      .main .field__input::placeholder {
+        opacity: 0;
+      }
+      .sidebar .field__input::placeholder {
+        opacity: 0;
+      }
+      .floating-labels .field__label {
+        position: absolute;
+        opacity: 1;
+        left: 0;
+        font-size: 11px;
+        font-weight: 500;
+        /* bottom: 38px; */
+        display: block;
+        top: 0px;
+        &::after {
+          content: ' *';
+          color: red;
         }
-        .sidebar .field__input::placeholder {
-            opacity: 0;
-        }
-        .floating-labels .field__label {
-            position: absolute;
-            opacity: 1;
-            left: 0;
-            font-size: 11px;
-            font-weight: 500;
-            /* bottom: 38px; */
-            display: block;
-            top: 0px;
-            &::after {
-            content: ' *';
-            color: red;
-            }
-        }
+      }
 
-        .product-recommendations__list {
-            padding: 20px;
-            background: #fff;
-            border-radius: 12px;
-        }
-        .dynamic-checkout {
-            display: none;
-        }
-        .alternative-payment-separator {
-            display: none;
-        }
-        .checkout_shipping_address_city {
-            display: none;
-        }
-        #append-dropdown {
-            width: 100%;
-        }
+      .product-recommendations__list {
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+      }
+      .dynamic-checkout {
+        display: none;
+      }
+      .alternative-payment-separator {
+        display: none;
+      }
+      .checkout_shipping_address_city {
+        display: none;
+      }
+      #append-dropdown {
+        width: 100%;
+      }
 
-        div[data-select-gateway='87457415'] {
-            display: block;
-        }
+      div[data-select-gateway='87457415'] {
+        display: block;
+      }
 
-        .importantDisplay {
-            display: block;
-        }
+      .importantDisplay {
+        display: block;
+      }
 
-        .importantNone {
-            display: none !important;
-        }
+      .importantNone {
+        display: none !important;
+      }
 
-        .action_button {
-            color: #e08377;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
+      .action_button {
+        color: #e08377;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
     </style>
 
-        <!-- start fill city of shopify field automatically -->
-        <script>
-        $(document).ready(function () {
-            const provinceElement=$("#province");
-            console.log("Province element: ",provinceElement);
-            $("#barangay").after(`
-                <div id="provinceCheepi"></div>
-            `);
-            if(provinceElement && Object.keys(provinceElement).length > 0){
-            $("form")[0].onsubmit = function(e){
-                
-                const province = provinceElement.val();
-                const city = $("#city").val();
-                const barangay = $("#barangay").val();
-                
-                $("#provinceCheepi").html(`
-                        <input type="hidden" name="checkout[shipping_address][province]" id="checkout_shipping_address_province" value="${province}">
-                `);
-                $("#checkout_shipping_address_province").prop("type", "hidden").val(province);
-                
-                if(!province) {
-                     provinceElement.css("border","2px solid red");
-                } else {
-                    provinceElement.css("border","1px solid #e2e2e2");
-                }
-                if(!city) {
-                    $("#city").css("border","2px solid red");
-                } else {
-                    $("#city").css("border","1px solid #e2e2e2");
-                }
-                if(!barangay) {
-                    $("#barangay").css("border","2px solid red");
-                } else {
-                    $("#barangay").css("border","1px solid #e2e2e2");
-                }
-                
-                console.log("province: ",province);
-                console.log("city: ",city);
-                console.log("barangay: ",barangay);
-                
-                if(!province || !city || !barangay){
-                e.preventDefault();
-                
-                setTimeout(function(){ 
-                    const continueButton = $("#continue_button");
-                    console.log("Continue Button classes ",$("#continue_button"));
-                    continueButton.removeClass("btn--loading");
-                    continueButton.attr("disabled", false);
-                    console.log("After continue Button classes ",$("#continue_button"));
-                }, 1000);
-                return;
-                } 
-            };
-            }
-            else{
-            console.log("Province element DO NOT exists");
-            }
+        <!-- start fill city of shopify field automatically --><script>
+      $(document).ready(function () {
 
-            $('select#province').val($('select#province option:first').val());
-            $('select#province').change(function () {
-            var selectedCountry = $(this).children('option:selected').text();
-            $('select#city').val($('select#city option:first').val());
-            $('#prov').val(selectedCountry);
-            $('#province').val(selectedCountry);
-            });
-            $('select#city').change(function () {
-            var selectedCity = $(this).children('option:selected').text();
-            $('#cit').val(selectedCity);
-            $('#city').val(selectedCity);
-            $('#checkout_shipping_address_city').val(selectedCity);
-            $('select#barangay').val($('select#barangay option:first').val());
-            });
+        // Add checkout_shipping_address_city input if not exist
+        const isCityElementAvailable = $("#checkout_shipping_address_city");
+        if(!isCityElementAvailable || isCityElementAvailable.length === 0){
+          const searchParams = new URLSearchParams(window.location.search);
+          const breadCrumbs = $('.breadcrumb .breadcrumb__item');
+          let foundBreadcrumb;
+          for(let i=0; i<breadCrumbs.length; i++) {
+            let breadCrumb = $(breadCrumbs[i]);
+            if(breadCrumb.hasClass('breadcrumb__item--current')){
+              foundBreadcrumb = breadCrumb.children('.breadcrumb__text').html();
+              break;
+            }
+          }
+          if(foundBreadcrumb && foundBreadcrumb.length>0 && foundBreadcrumb.toLowerCase() === 'information') {
+            $('<input id="checkout_shipping_address_city" type="hidden" placeholder="City" autocomplete="shipping address-level2" autocorrect="off" data-trekkie-id="shipping_city_field" data-backup="city" class="field__input" aria-required="true" size="30" type="text" value="" name="checkout[shipping_address][city]">').appendTo('body .step form')
+          }
+        }
+
+        const provinceElement=$("#province");
+        console.log("Province element: ",provinceElement);
+        $("#barangay").after(`<div id="provinceCheepi"></div>`);
+        
+        if(provinceElement && Object.keys(provinceElement).length > 0){
+          $("form")[0].onsubmit = function(e){
+			      const province = provinceElement.val();
+            const city = $("#city").val();
+            const barangay = $("#barangay").val();
+            
+            $("#provinceCheepi").html(`
+                <input type="hidden" name="checkout[shipping_address][province]" id="checkout_shipping_address_province" value="${province}">
+            `);
+             $("#checkout_shipping_address_province").prop("type", "hidden").val(province);
+            
+            if(!province) {
+              provinceElement.css("border","2px solid red");
+            } else {
+              provinceElement.css("border","1px solid #e2e2e2");
+            }
+            if(!city) {
+              $("#city").css("border","2px solid red");
+            } else {
+              $("#city").css("border","1px solid #e2e2e2");
+            }
+            if(!barangay) {
+              $("#barangay").css("border","2px solid red");
+            } else {
+              $("#barangay").css("border","1px solid #e2e2e2");
+            }
+            console.log(`province: ${province}, city: ${city}, barangay: ${barangay}`);
+            
+            if(!province || !city || !barangay){
+              e.preventDefault();
+              setTimeout(function(){ 
+                const continueButton = $("#continue_button");
+                console.log("Continue Button classes ",$("#continue_button"));
+                continueButton.removeClass("btn--loading");
+                continueButton.attr("disabled", false);
+                console.log("After continue Button classes ",$("#continue_button"));
+              }, 1000);
+              return;
+            } 
+          };
+        }
+        else{
+          console.log("Province element DO NOT exists");
+        }
+
+        $('select#province').val($('select#province option:first').val());
+        $('select#province').change(function () {
+          var selectedCountry = $(this).children('option:selected').text();
+          $('select#city').val($('select#city option:first').val());
+          $('#prov').val(selectedCountry);
+          $('#province').val(selectedCountry);
         });
+        $('select#city').change(function () {
+          var selectedCity = $(this).children('option:selected').text();
+          $('#cit').val(selectedCity);
+          $('#city').val(selectedCity);
+          $('#checkout_shipping_address_city').val(selectedCity);
+          $('select#barangay').val( );
+        });
+      });
     </script>
         <!-- end fill city of shopify field automatically -->
-                                                                                                                                                                                                                                
-<!-- Start appending fields in shopify liquid checkout -->
+                                                                                                                                                                                                                                        
+                                                                                                                                                                            <!-- Start appending fields in shopify liquid checkout -->
         <script>
-          // $(
-          //     'body > div > div > div > main > div.step > form > div.step__sections > div.section.section--shipping-address > div.section__content > div > div.address-fields > div:nth-child(13)'
-          // )
-        $(
-            'body .step form > .step__sections > .section.section--shipping-address .address-fields > div:nth-child(13)'
-        )
-          .html(
+      $(
+        'body .step form > .step__sections > .section.section--shipping-address .address-fields > div:nth-child(13)'
+      )
+        .html(
           `
-              <div id="append-dropdown" class="cart-attribute__field">
+            <div id="append-dropdown" class="cart-attribute__field">
+              <div class="field field--required field--show-floating-label">
+                <div class="field__input-wrapper">
+                  <input required class="required" id="prov" type="hidden" name="checkout[attributes][Province]" value="">
+                  <label class="field__label field__label--visible" for="province">Province <span style="color:red"> *</span></label>
+                  <select class="field__input field__input--select" name="checkout[attributes][Province]" id="province" value="option:first" required></select>
+                  <div class="field__caret">
+                    <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
+                  </div>
+                </div>
+              </div>
               <div class="field field--required field--show-floating-label">
                   <div class="field__input-wrapper">
-                      <input required class="required" id="prov" type="hidden" name="checkout[attributes][Province]" value="">
-                      <label class="field__label field__label--visible" for="province">Province <span style="color:red"> *</span></label>
-                      <select class="field__input field__input--select" name="checkout[attributes][Province]" id="province" value="option:first" required></select>
-                      <div class="field__caret">
-                          <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
-                      </div>
+                    <input required class="required" id="cit" type="hidden" name="checkout[attributes][City]" value="">
+                    <label class="field__label field__label--visible" for="city">City <span style="color:red"> *</span></label>
+                    <select required class="field__input field__input--select" name="checkout[attributes][City]" id="city" value=""><option disabled="" selected="" value="">Select Municipality</option></select>
+                    <div class="field__caret">
+                      <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
+                    </div>
                   </div>
               </div>
-                  <div class="field field--required field--show-floating-label">
-                      <div class="field__input-wrapper">
-                          <input required class="required" id="cit" type="hidden" name="checkout[attributes][City]" value="">
-                          <label class="field__label field__label--visible" for="city">City <span style="color:red"> *</span></label>
-                          <select required class="field__input field__input--select" name="checkout[attributes][City]" id="city" value=""><option disabled="" selected="" value="">Select Municipality</option></select>
-                          <div class="field__caret">
-                          <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
-                          </div>
-                      </div>
+              <div class="field field--required field--show-floating-label">
+                <div class="field__input-wrapper">
+                  <label class="field__label field__label--visible" for="barangay">Barangay <span style="color:red"> *</span></label>
+                  <select required class="field__input field__input--select" name="checkout[attributes][Barangay]" id="barangay" value="">
+                            <option disabled="" selected="" value="">Select Barangay</option>
+                  <option value="Others">Others</option></select>
+                  <div class="field__caret">
+                    <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
                   </div>
-                  <div class="field field--required field--show-floating-label">
-                      <div class="field__input-wrapper">
-                          <label class="field__label field__label--visible" for="barangay">Barangay <span style="color:red"> *</span></label>
-                          <select required class="field__input field__input--select" name="checkout[attributes][Barangay]" id="barangay" value="">
-                                  <option disabled="" selected="" value="">Select Barangay</option>
-                          <option value="Others">Others</option></select>
-                          <div class="field__caret">
-                          <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
-                          </div>
-                      </div>
-                  </div>
-              </div>`
-          )
-          .removeClass('field field--required')
-          .css('width', '100%');
+                </div>
+              </div>
+            </div>
+          `
+        )
+        .removeClass('field field--required')
+        .css('width', '100%');
 
-        !(function () {
-            if ('object' == typeof Checkout && 'function' == typeof Checkout.$) {
-            var a =
-                'https://cdn.shopify.com/s/files/1/1307/5383/files/barangay619.js?v=1592821169',
-                b = document.createElement('script');
-            (b.type = 'text/javascript'),
-                (b.src = a),
-                document.getElementsByTagName('head')[0].appendChild(b);
-            }
-        })();
+      !(function () {
+        if ('object' == typeof Checkout && 'function' == typeof Checkout.$) {
+          var a = 'https://cdn.shopify.com/s/files/1/1307/5383/files/barangay619.js?v=1592821169',
+            b = document.createElement('script');
+          (b.type = 'text/javascript'),
+            (b.src = a),
+            document.getElementsByTagName('head')[0].appendChild(b);
+        }
+      })();
 
-        !(function () {
-            if ('object' == typeof Checkout && 'function' == typeof Checkout.$) {
-            var a =
-                'https://cdn.shopify.com/s/files/1/1307/5383/files/autocomplete.js?15724',
-                b = document.createElement('script');
-            (b.type = 'text/javascript'),
-                (b.src = a),
-                document.getElementsByTagName('head')[0].appendChild(b);
-            }
-        })();
+      !(function () {
+        if ('object' == typeof Checkout && 'function' == typeof Checkout.$) {
+          var a =
+              'https://cdn.shopify.com/s/files/1/1307/5383/files/autocomplete.js?15724',
+            b = document.createElement('script');
+          (b.type = 'text/javascript'),
+            (b.src = a),
+            document.getElementsByTagName('head')[0].appendChild(b);
+        }
+      })();
 
-        $('#checkout_shipping_address_city')
-            .parent()
-            .parent()
-            .css('display', 'none');
+      // $('#checkout_shipping_address_city')
+      //   .parent()
+      //   .parent()
+      //   .css('display', 'none');
     </script>
     <!-- End appending fields in shopify liquid checkout -->
 
-    <!-- End custom attributes input -->
+    <!--     End custom attributes input -->
 
     {{ tracking_code }}
   </body>
-</html> 
-    </body>
 </html>
+    </body>
+    </body>
+</html> 
