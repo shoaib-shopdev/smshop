@@ -138,24 +138,9 @@ This file can be re-written at any time.
   
   {{ content_for_layout }}
   
-  <script>
-      // Toast/Snackbar
-      function showToast(message) {
-
-        setTimeout( () => {
-          let defaultMessage = 'Updated';
-          // Get the snackbar DIV/Element
-          let toastEl = document.getElementById("snackbar");
-  
-          // Add the "show" class to DIV/Element
-          toastEl.className = "show";
-          message ? toastEl.innerHTML = message : toastEl.innerHTML = defaultMessage;
-  
-          // After 5 seconds, remove the show class from DIV
-          setTimeout(() => { toastEl.className = toastEl.className.replace("show", ""); }, 5000);
-        }, 2000);
-      }
-    </script>
+  <script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>
+<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>
+<script src="https://config.gorgias.io/production/ZPB9rx1ZYw6WVa3O/chat/qgaXzxaDyZ7vDWOp.js" defer></script>
   <style type="text/css">
     body, html {
       width: 100% !important;

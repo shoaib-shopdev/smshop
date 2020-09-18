@@ -37,7 +37,7 @@
     "product_price_position": "after_title",
     "product_image_size": "square",
     "show_color_swatch": true,
-    "show_inventory_quantity": true,
+    "show_inventory_quantity": false,
     "low_inventory_threshold": 3,
     "show_reviews_badge": false,
     "cart_type": "drawer",
@@ -45,16 +45,16 @@
     "cart_show_free_shipping_threshold": true,
     "cart_free_shipping_threshold": "50",
     "social_facebook": "https:\/\/www.facebook.com\/ShopSMOfficial",
-    "social_twitter": "",
+    "social_twitter": "https:\/\/twitter.com\/thesmstore",
     "social_pinterest": "",
-    "social_instagram": "",
+    "social_instagram": "https:\/\/www.instagram.com\/thesmstore\/",
     "social_vimeo": "",
     "social_tumblr": "",
-    "social_youtube": "",
+    "social_youtube": "https:\/\/www.youtube.com\/channel\/UCf3ae5buKgLYkZKzlWEdieQ",
     "social_linkedin": "",
     "social_snapchat": "",
     "social_fancy": "",
-    "favicon": "",
+    "favicon": "shopify:\/\/shop_images\/favicon-32x32.png",
     "checkout_header_image": "",
     "checkout_logo_image": "shopify:\/\/shop_images\/logo-blue.png",
     "checkout_logo_position": "center",
@@ -135,142 +135,104 @@
           "slide-1": {
             "type": "image",
             "settings": {
-              "image": "shopify:\/\/shop_images\/fashion_2.jpg",
-              "mobile_image": "shopify:\/\/shop_images\/fashion_2-mobile.jpg",
+              "image": "shopify:\/\/shop_images\/shopsafe-desk-1800x600_bae45158-6a4c-4cdd-b29f-0929304c5e89.png",
+              "mobile_image": "shopify:\/\/shop_images\/shop-safe-mobile-750x750_e77a9fbe-54ef-4fa8-bfa6-b441cf4b13eb.png",
               "show_overlay": false,
-              "overlay_opacity": 30,
+              "overlay_opacity": 100,
               "text_color": "#ffffff",
               "title": "",
               "content": "",
-              "content_position": "bottomLeft",
-              "button_background": "#ffffff",
-              "button_text_color": "#000000",
-              "button_text": "Button",
-              "link": ""
-            }
-          },
-          "1597053854140": {
-            "type": "image",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/home.jpg",
-              "mobile_image": "shopify:\/\/shop_images\/home-mobile.jpg",
-              "show_overlay": false,
-              "overlay_opacity": 30,
-              "text_color": "#ffffff",
-              "title": "",
-              "content": "",
-              "content_position": "middle_center",
-              "button_background": "#ffffff",
-              "button_text_color": "#000000",
+              "content_position": "bottom_center",
+              "button_background": "rgba(0,0,0,0)",
+              "button_text_color": "#ffffff",
               "button_text": "",
-              "link": ""
-            }
-          },
-          "slide-0": {
-            "type": "image",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/bags-sale-desk.jpg",
-              "mobile_image": "shopify:\/\/shop_images\/bags-mobile.jpg",
-              "show_overlay": false,
-              "overlay_opacity": 30,
-              "text_color": "#ffffff",
-              "title": "",
-              "content": "",
-              "content_position": "bottomLeft",
-              "button_background": "#ffffff",
-              "button_text_color": "#000000",
-              "button_text": "",
-              "link": ""
-            }
-          },
-          "1597053939202": {
-            "type": "image",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/shoes.jpg",
-              "mobile_image": "shopify:\/\/shop_images\/shoes-mobile.jpg",
-              "show_overlay": false,
-              "overlay_opacity": 30,
-              "text_color": "#ffffff",
-              "title": "",
-              "content": "",
-              "content_position": "middle_center",
-              "button_background": "#ffffff",
-              "button_text_color": "#000000",
-              "button_text": "",
-              "link": ""
+              "link": "https:\/\/www.shopsm.com\/home\/products\/Shop%20Safe"
             }
           }
         },
         "block_order": [
-          "slide-1",
-          "1597053854140",
-          "slide-0",
-          "1597053939202"
+          "slide-1"
         ],
         "settings": {
           "edge_to_edge": true,
           "section_size": "preserve_ratio",
           "carousel_effect": "slide",
           "autoplay": true,
-          "cycle_speed": 5
+          "cycle_speed": 6
         }
       },
       "collection-list": {
         "type": "collection-list",
         "blocks": {
+          "1599095939253": {
+            "type": "collection",
+            "settings": {
+              "collection": "fashion",
+              "image": "shopify:\/\/shop_images\/fashion_92ee2f3c-a3b3-47f8-b739-3326ac55ff1a.jpg"
+            }
+          },
           "collection-0": {
             "type": "collection",
             "settings": {
-              "collection": "",
-              "image": ""
+              "collection": "beauty",
+              "image": "shopify:\/\/shop_images\/beauty.jpg"
             }
           },
           "collection-1": {
             "type": "collection",
             "settings": {
-              "collection": "",
-              "image": ""
+              "collection": "home",
+              "image": "shopify:\/\/shop_images\/home_73e32b88-f063-4771-95e5-7c0a56ec1f1d.jpg"
             }
           },
-          "collection-2": {
+          "1599095951806": {
+            "type": "collection",
+            "settings": {
+              "collection": "babies-kids",
+              "image": "shopify:\/\/shop_images\/kids-_-bb.jpg"
+            }
+          },
+          "1599103950241": {
             "type": "collection",
             "settings": {
               "collection": "",
-              "image": ""
+              "image": "shopify:\/\/shop_images\/bags.jpg"
             }
           },
-          "collection-3": {
+          "1599103981168": {
             "type": "collection",
             "settings": {
-              "collection": "",
-              "image": ""
+              "collection": "accessories-1",
+              "image": "shopify:\/\/shop_images\/accs.jpg"
             }
           },
-          "collection-4": {
+          "1599104141985": {
             "type": "collection",
             "settings": {
-              "collection": "",
-              "image": ""
+              "collection": "shoes-1",
+              "image": "shopify:\/\/shop_images\/shoes_50fdd485-c874-45fc-a5e8-933e5a061750.jpg"
             }
           },
-          "collection-5": {
+          "1599104229254": {
             "type": "collection",
             "settings": {
-              "collection": "",
-              "image": ""
+              "collection": "toys",
+              "image": "shopify:\/\/shop_images\/toys_90b13c67-1688-44ce-9ca5-ccd5edbeff60.jpg"
             }
           }
         },
         "block_order": [
+          "1599095939253",
           "collection-0",
           "collection-1",
-          "collection-2",
-          "collection-3",
-          "collection-4",
-          "collection-5"
+          "1599095951806",
+          "1599103950241",
+          "1599103981168",
+          "1599104141985",
+          "1599104229254"
         ],
         "settings": {
-          "title": "Our collections",
+          "title": "Categories",
           "link_title": "View all",
           "link": "shopify:\/\/collections",
           "round_images": true,
@@ -313,12 +275,12 @@
           "show_taxes_included": false,
           "selector_mode": "block",
           "color_mode": "color",
-          "show_quantity_selector": true,
+          "show_quantity_selector": false,
           "show_payment_button": true,
           "image_size": "small",
           "enable_image_zoom": true,
           "enable_video_looping": false,
-          "zoom_effect": "outside",
+          "zoom_effect": "inside",
           "carousel_effect": "fade",
           "show_inventory_quantity": false,
           "low_inventory_threshold": 0,
@@ -347,7 +309,7 @@
       "announcement-bar": {
         "type": "announcement-bar",
         "settings": {
-          "show_announcement": true,
+          "show_announcement": false,
           "background": "#ffffff",
           "text_color": "#0c0adc",
           "text": "Free Shipping for orders P2000 and above",
@@ -364,8 +326,8 @@
         "disabled": true,
         "settings": {
           "collection": "",
-          "title": "Featured collection",
-          "products_count": 12,
+          "title": "",
+          "products_count": 8,
           "layout": "vertical",
           "stack_desktop": false,
           "show_quick_buy": false,
@@ -380,6 +342,7 @@
           "collection": "",
           "products_count": 12,
           "image": "",
+          "image_mobile": "",
           "background": "#3a2a2f",
           "text_color": "#ffffff",
           "title": "Our best sellers",
@@ -503,7 +466,7 @@
               "show_only_for_visitors": true,
               "show_only_once": true,
               "title": "Newsletter",
-              "content": "<p>Subscribe to our Newsletter and stay updated!<\/p>",
+              "content": "<p>Subscribe to our newsletter&nbsp;to stay updated!<\/p>",
               "show_newsletter": true,
               "apparition_delay": 5
             }
@@ -570,14 +533,15 @@
         "settings": {
           "collection": "",
           "products_count": 8,
-          "image": "",
-          "background": "#0c0adc",
+          "image": "shopify:\/\/shop_images\/charactercritters-400x400.png",
+          "image_mobile": "shopify:\/\/shop_images\/critters_mobile.jpg",
+          "background": "#ffdd7b",
           "text_color": "#ffffff",
-          "title": "Featured collection",
-          "content": "Tell more about your product, collection...",
+          "title": "Character Critters",
+          "content": "From screen to toy box",
           "button_background": "#ffffff",
-          "button_text_color": "#0774d7",
-          "button_text": "Learn more",
+          "button_text_color": "#0604e3",
+          "button_text": "Show All",
           "button_link": ""
         }
       },
@@ -585,31 +549,33 @@
         "type": "collection-with-image",
         "settings": {
           "collection": "",
-          "products_count": 12,
-          "image": "",
-          "background": "#0c0adc",
+          "products_count": 8,
+          "image": "shopify:\/\/shop_images\/stowaway-400x400_e43c1ab0-894c-4660-bc86-bd5f8a3f7d29.png",
+          "image_mobile": "",
+          "background": "#ffc2d2",
           "text_color": "#ffffff",
-          "title": "Featured collection",
-          "content": "Tell more about your product, collection...",
+          "title": "Stow Away",
+          "content": "Live clutter-free!",
           "button_background": "#ffffff",
-          "button_text_color": "#0774d7",
-          "button_text": "Learn more",
+          "button_text_color": "#0604e3",
+          "button_text": "Show All",
           "button_link": ""
         }
       },
       "1597057313736": {
         "type": "collection-with-image",
         "settings": {
-          "collection": "",
-          "products_count": 12,
-          "image": "",
-          "background": "#0c0adc",
+          "collection": "safety-picks",
+          "products_count": 8,
+          "image": "shopify:\/\/shop_images\/skincare-savvy.png",
+          "image_mobile": "",
+          "background": "#bcf0fe",
           "text_color": "#ffffff",
-          "title": "Featured collection",
-          "content": "Tell more about your product, collection...",
+          "title": "Skincare Savvy",
+          "content": "Lit from within",
           "button_background": "#ffffff",
-          "button_text_color": "#0774d7",
-          "button_text": "Learn more",
+          "button_text_color": "#0604e3",
+          "button_text": "Show All",
           "button_link": ""
         }
       },
@@ -618,15 +584,16 @@
         "disabled": true,
         "settings": {
           "collection": "",
-          "products_count": 12,
-          "image": "",
-          "background": "#0774d7",
+          "products_count": 8,
+          "image": "shopify:\/\/shop_images\/safety.png",
+          "image_mobile": "",
+          "background": "#89cecd",
           "text_color": "#ffffff",
-          "title": "Featured collection",
-          "content": "Tell more about your product, collection...",
+          "title": "Safety Picks",
+          "content": "Stay protected",
           "button_background": "#ffffff",
-          "button_text_color": "#0774d7",
-          "button_text": "Learn more",
+          "button_text_color": "#0a0adc",
+          "button_text": "Show All",
           "button_link": ""
         }
       },
@@ -685,7 +652,7 @@
           "1597057330857-3"
         ],
         "settings": {
-          "title": "Brands We Carry",
+          "title": "Brands You Love",
           "link_title": "",
           "link": ""
         }
@@ -696,98 +663,26 @@
           "1597097353856-0": {
             "type": "item",
             "settings": {
-              "image": "shopify:\/\/shop_images\/bright-eye-makeup-brushes.jpg",
-              "show_overlay": true,
-              "overlay_opacity": 50,
-              "background": "#f0f0f0",
+              "image": "shopify:\/\/shop_images\/safety-desk-1800x600.png",
+              "show_overlay": false,
+              "overlay_opacity": 100,
+              "background": "#90cece",
               "text_color": "#ffffff",
-              "title": "Beauty and Makeup",
-              "content": "Tell more about your product, collection...",
-              "content_position": "middle_center",
-              "button_background": "#4f5558",
-              "button_text_color": "#f3f4f4",
-              "button_text": "Learn more",
-              "link": ""
-            }
-          },
-          "1597097353856-1": {
-            "type": "item",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/young-boy-pushes-sister-on-swing.jpg",
-              "show_overlay": true,
-              "overlay_opacity": 50,
-              "background": "#f3f4f4",
-              "text_color": "#ffffff",
-              "title": "Kids and Babies",
-              "content": "Sophisticated, simple and stylish collection for everyday office wear.",
-              "content_position": "top_left",
-              "button_background": "#4f5558",
-              "button_text_color": "#f3f4f4",
-              "button_text": "Learn more",
-              "link": ""
-            }
-          },
-          "1597097353856-2": {
-            "type": "item",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/business-woman-with-wool-hat.jpg",
-              "show_overlay": true,
-              "overlay_opacity": 50,
-              "background": "#f3f4f4",
-              "text_color": "#ffffff",
-              "title": "Women's Fashion",
-              "content": "Tell more about your product, collection...",
-              "content_position": "top_left",
-              "button_background": "#4f5558",
-              "button_text_color": "#f3f4f4",
-              "button_text": "Learn more",
-              "link": ""
-            }
-          },
-          "1597097353856-3": {
-            "type": "item",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/macbook-air-on-desk.jpg",
-              "show_overlay": true,
-              "overlay_opacity": 46,
-              "background": "#f3f4f4",
-              "text_color": "#ffffff",
-              "title": "Work From Home",
-              "content": "Tell more about your product, collection...",
-              "content_position": "bottom_center",
-              "button_background": "#4f5558",
-              "button_text_color": "#f3f4f4",
-              "button_text": "Learn more",
-              "link": ""
-            }
-          },
-          "1597097353856-4": {
-            "type": "item",
-            "settings": {
-              "image": "shopify:\/\/shop_images\/mens-watch-and-ring.jpg",
-              "show_overlay": true,
-              "overlay_opacity": 50,
-              "background": "#f3f4f4",
-              "text_color": "#ffffff",
-              "title": "Accessories and Jewelry",
-              "content": "Tell more about your product, collection...",
-              "content_position": "top_left",
-              "button_background": "#4f5558",
-              "button_text_color": "#f3f4f4",
-              "button_text": "Learn more",
-              "link": ""
+              "title": "",
+              "content": "Stay protected",
+              "content_position": "bottom_left",
+              "button_background": "rgba(0,0,0,0)",
+              "button_text_color": "rgba(0,0,0,0)",
+              "button_text": "",
+              "link": "shopify:\/\/products\/3-pack-water-resistant-face-mask-set"
             }
           }
         },
         "block_order": [
-          "1597097353856-0",
-          "1597097353856-1",
-          "1597097353856-2",
-          "1597097353856-3",
-          "1597097353856-4"
+          "1597097353856-0"
         ],
         "settings": {
-          "section_size": "small"
+          "section_size": "large"
         }
       },
       "static-promotion-list": {
@@ -1083,21 +978,53 @@
           "upsell_collection": "",
           "upsell_products_count": 4
         }
+      },
+      "1599115410647": {
+        "type": "collection-with-image",
+        "settings": {
+          "collection": "",
+          "products_count": 8,
+          "image": "shopify:\/\/shop_images\/slipon-400x400_f06a755c-f835-4df8-9883-85d52c5df66a.png",
+          "image_mobile": "",
+          "background": "#b9e186",
+          "text_color": "#ffffff",
+          "title": "On and Off",
+          "content": "No-fuss footwear",
+          "button_background": "#ffffff",
+          "button_text_color": "#0a0adc",
+          "button_text": "Show All",
+          "button_link": ""
+        }
+      },
+      "1599181720773": {
+        "type": "featured-collection",
+        "settings": {
+          "collection": "",
+          "title": "",
+          "products_count": 10,
+          "layout": "vertical",
+          "stack_desktop": false,
+          "show_quick_buy": true,
+          "link_title": "View all",
+          "link_url": "shopify:\/\/collections\/all"
+        }
       }
     },
     "content_for_index": [
       "slideshow",
       "collection-list",
-      "1597057242308",
       "1597097353856",
+      "1599181720773",
+      "1597057320401",
+      "1597057242308",
       "1597057298113",
       "1597057313736",
-      "1597057320401",
+      "1599115410647",
+      "1597057330857",
       "1542984811767",
       "1555314133560",
       "1550833441117",
-      "1542984882560",
-      "1597057330857"
+      "1542984882560"
     ]
   },
   "presets": {
