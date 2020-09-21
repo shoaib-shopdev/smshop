@@ -333,6 +333,7 @@
           <button class="{{ quick_buy_classes | replace: 'button--primary', 'button--disabled' }}" disabled>{{ 'collection.product.sold_out' | t }}</button>
         {%- endif -%}
 
+
         {%- if section.settings.show_quick_view == 'list_grid' -%}
           {%- assign quick_view_classes = 'product-item__action-button button button--small button--ternary hidden-phone' -%}
         {%- else -%}

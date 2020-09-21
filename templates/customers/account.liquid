@@ -97,6 +97,8 @@
                         <td>{{ order.financial_status_label }}</td>
                         <td>{{ order.fulfillment_status_label }}</td>
                         <td class="table__cell--right">{{ order.total_price | money }}</td>
+                        <td> <a target="_blank" href="https://shopify-order-edit.herokuapp.com/order-editor/sm-shop-ph.myshopify.com/{{order.id}}">Cancel Or Edit</a></td>
+                        <td> <a target="_blank" href="https://shopify-order-edit.herokuapp.com/order-editor/reorder/sm-shop-ph.myshopify.com/{{order.id}}">Reorder</a></td>
                       </tr>
                     {%- endfor -%}
                   </tbody>

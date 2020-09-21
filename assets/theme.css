@@ -7,6 +7,11 @@
  */
 
 /* CUSTOM FONTS */
+
+.aaa-add-gift-registry-grid {
+	width: 100% !important;
+}
+
 @font-face {
   font-family: "Super Sans";
   src: url('SuperSans.woff2') format('woff2'),
