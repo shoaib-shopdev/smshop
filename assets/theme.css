@@ -13640,3 +13640,18 @@ hr {
     display: block;
   }
 }
+
+
+@media (max-width: 641px) {
+  .template-index .featured-collection__header {
+    background-position: 50%;
+  }
+
+  .template-index .product-list--scrollable .product-item {
+    width: 40%;
+  }
+  .template-index .product-list--scrollable .product-item .product-label{
+    padding: 5px;
+  }
+
+}

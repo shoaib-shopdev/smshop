@@ -51,8 +51,10 @@
               <p class="page__description">{{ 'cart.general.free_shipping_remaining_html' | t: remaining_amount: remaining_amount }}</p>
             {%- endif -%}
           {%- endif -%}
-
+          
+          {%- comment -%}
           <button type="submit" name="checkout" class="page__button-action button button--primary button--full button--large hidden-phone hidden-tablet">{{ 'cart.general.checkout' | t }}</button>
+          {%- endcomment -%}
         </header>
       </div>
     </form>
