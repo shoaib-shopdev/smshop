@@ -1,8 +1,15 @@
 development:
-  password: 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
-  theme_id: "112384802969"
-  store: sm-shop-ph.myshopify.com
+  password: ${password}
+  theme_id: ${live_theme_id}
+  store: ${store}
+  ignore_files:
 live:
-  store: ""
+  password: ${password}
+  theme_id: ${live_theme_id}
+  store: ${store}
+  ignore_files:
 local:
-  store: ""
+  password: ${password}
+  theme_id: ${local_theme_id}
+  store: ${store}
+  ignore_files:
