@@ -13665,3 +13665,8 @@ hr {
     width: 50%;
   }
 }
+
+
+.empty-state__button-container .underline_link {
+  text-decoration: underline;
+}
