@@ -13650,3 +13650,33 @@ hr {
     display: block;
   }
 }
+
+#shopify-section-1600690283205 .flickity-slider .collection-item {
+  pointer-events: none;
+}
+
+@media (max-width: 641px) {
+  .template-index .featured-collection__header {
+    background-position: 50%;
+  }
+
+  .template-index .product-list--scrollable .product-item {
+    width: 40%;
+  }
+  .template-index .product-list--scrollable .product-item .product-label{
+    padding: 5px;
+  }
+
+  .footer__title {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  .quick-links .quick-links__link {
+    width: 50%;
+  }
+}
+
+
+.empty-state__button-container .underline_link {
+  text-decoration: underline;
+}
