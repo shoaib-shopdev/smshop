@@ -18,7 +18,9 @@
         {{
       checkout_scripts
     }}
-    </head>
+    
+  {% render 'shogun-head' %}
+</head>
     <body>
 
         {% assign currentPageName =  Shopify.Checkout.page  %}
@@ -140,11 +142,15 @@
         font-weight: 700;
         text-transform: uppercase;
       }
+      label[for=checkout_shipping_address_id] {
+        visibility: hidden;
+      }
     </style>
 
-        <!-- start fill city of shopify field automatically --><script>
+<!-- start fill city of shopify field automatically -->
+      <script>
       $(document).ready(function () {
-
+        $('#checkout_shipping_address_address1').prop('maxLength', 200);
         // Add checkout_shipping_address_city input if not exist
         const isCityElementAvailable = $("#checkout_shipping_address_city");
         if(!isCityElementAvailable || isCityElementAvailable.length === 0){
@@ -224,7 +230,7 @@
           $('#cit').val(selectedCity);
           $('#city').val(selectedCity);
           $('#checkout_shipping_address_city').val(selectedCity);
-          $('select#barangay').val( );
+          $('select#barangay').val();
         });
       });
     </script>
@@ -296,10 +302,10 @@
         }
       })();
 
-      // $('#checkout_shipping_address_city')
-      //   .parent()
-      //   .parent()
-      //   .css('display', 'none');
+      $('#checkout_shipping_address_city')
+        .parent()
+        .parent()
+        .css('display', 'none');
     </script>
     <!-- End appending fields in shopify liquid checkout -->
 

@@ -1,7 +1,9 @@
 (function (factory) {
-  typeof define === 'function' && define.amd ? define('index', factory) :
-  factory();
-}((function () { 'use strict';
+  typeof define === "function" && define.amd
+    ? define("index", factory)
+    : factory();
+})(function () {
+  "use strict";
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -12,7 +14,12 @@
       };
     } else {
       _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        return obj &&
+          typeof Symbol === "function" &&
+          obj.constructor === Symbol &&
+          obj !== Symbol.prototype
+          ? "symbol"
+          : typeof obj;
       };
     }
 
@@ -47,7 +54,8 @@
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
     if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+      return _arrayLikeToArray(o, minLen);
   }
 
   function _arrayLikeToArray(arr, len) {
@@ -68,28 +76,31 @@
         return {
           s: F,
           n: function () {
-            if (i >= o.length) return {
-              done: true
-            };
+            if (i >= o.length)
+              return {
+                done: true,
+              };
             return {
               done: false,
-              value: o[i++]
+              value: o[i++],
             };
           },
           e: function (e) {
             throw e;
           },
-          f: F
+          f: F,
         };
       }
 
-      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+      throw new TypeError(
+        "Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."
+      );
     }
 
     var it,
-        normalCompletion = true,
-        didErr = false,
-        err;
+      normalCompletion = true,
+      didErr = false,
+      err;
     return {
       s: function () {
         it = o[Symbol.iterator]();
@@ -109,141 +120,176 @@
         } finally {
           if (didErr) throw err;
         }
-      }
+      },
     };
   }
 
   var animationQueue = {};
 
-  var Animation = /*#__PURE__*/function () {
+  var Animation = /*#__PURE__*/ (function () {
     function Animation() {
       _classCallCheck(this, Animation);
     }
 
-    _createClass(Animation, null, [{
-      key: "slideUp",
+    _createClass(Animation, null, [
+      {
+        key: "slideUp",
 
-      /**
-       * Slide up aims to close an element. To do that, we take the height of the element, and set it to 0 to
-       * force an animation
-       */
-      value: function slideUp(element, callback) {
-        var propertyToAnimate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'height';
-        element.style[propertyToAnimate] = "".concat(element.scrollHeight, "px"); // Force previous height to allow CSS transition
+        /**
+         * Slide up aims to close an element. To do that, we take the height of the element, and set it to 0 to
+         * force an animation
+         */
+        value: function slideUp(element, callback) {
+          var propertyToAnimate =
+            arguments.length > 2 && arguments[2] !== undefined
+              ? arguments[2]
+              : "height";
+          element.style[propertyToAnimate] = "".concat(
+            element.scrollHeight,
+            "px"
+          ); // Force previous height to allow CSS transition
 
-        element.offsetHeight; // Force redraw
+          element.offsetHeight; // Force redraw
 
-        element.style[propertyToAnimate] = 0;
+          element.style[propertyToAnimate] = 0;
 
-        if (animationQueue[element.id]) {
-          element.removeEventListener('transitionend', animationQueue[element.id]);
-          delete animationQueue[element.id];
-        }
-
-        var transitionEnded = function transitionEnded(event) {
-          if (event.propertyName === 'height') {
-            element.removeEventListener('transitionend', transitionEnded);
-            (callback || function () {})();
-          }
-        };
-
-        element.addEventListener('transitionend', transitionEnded);
-      }
-      /**
-       * Slide down aims to open an element. To do that, you must make sure that the element you are trying to open
-       * is set with height: 0; overflow: hidden in the CSS, and does not contain any padding nor margin.
-       */
-
-    }, {
-      key: "slideDown",
-      value: function slideDown(element, callback) {
-        var propertyToAnimate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'height';
-        // To do the animation we temporarily hide it, check the height, and transition to it
-        element.style[propertyToAnimate] = "".concat(element.scrollHeight, "px");
-
-        var transitionEnded = function transitionEnded(event) {
-          if (event.propertyName === propertyToAnimate) {
-            var defaultValue = 'auto';
-
-            if (propertyToAnimate === 'max-height') {
-              defaultValue = 'none';
-            }
-
-            element.style[propertyToAnimate] = defaultValue; // Allows the content to grow normally
-
-            element.removeEventListener('transitionend', transitionEnded);
+          if (animationQueue[element.id]) {
+            element.removeEventListener(
+              "transitionend",
+              animationQueue[element.id]
+            );
             delete animationQueue[element.id];
-            (callback || function () {})();
           }
-        };
 
-        element.addEventListener('transitionend', transitionEnded);
-        animationQueue[element.id] = transitionEnded;
-      }
-    }]);
+          var transitionEnded = function transitionEnded(event) {
+            if (event.propertyName === "height") {
+              element.removeEventListener("transitionend", transitionEnded);
+              (callback || function () {})();
+            }
+          };
+
+          element.addEventListener("transitionend", transitionEnded);
+        },
+        /**
+         * Slide down aims to open an element. To do that, you must make sure that the element you are trying to open
+         * is set with height: 0; overflow: hidden in the CSS, and does not contain any padding nor margin.
+         */
+      },
+      {
+        key: "slideDown",
+        value: function slideDown(element, callback) {
+          var propertyToAnimate =
+            arguments.length > 2 && arguments[2] !== undefined
+              ? arguments[2]
+              : "height";
+          // To do the animation we temporarily hide it, check the height, and transition to it
+          element.style[propertyToAnimate] = "".concat(
+            element.scrollHeight,
+            "px"
+          );
+
+          var transitionEnded = function transitionEnded(event) {
+            if (event.propertyName === propertyToAnimate) {
+              var defaultValue = "auto";
+
+              if (propertyToAnimate === "max-height") {
+                defaultValue = "none";
+              }
+
+              element.style[propertyToAnimate] = defaultValue; // Allows the content to grow normally
+
+              element.removeEventListener("transitionend", transitionEnded);
+              delete animationQueue[element.id];
+              (callback || function () {})();
+            }
+          };
+
+          element.addEventListener("transitionend", transitionEnded);
+          animationQueue[element.id] = transitionEnded;
+        },
+      },
+    ]);
 
     return Animation;
-  }();
+  })();
 
   /**
    * Various DOM helper
    */
-  var Dom = /*#__PURE__*/function () {
+  var Dom = /*#__PURE__*/ (function () {
     function Dom() {
       _classCallCheck(this, Dom);
     }
 
-    _createClass(Dom, null, [{
-      key: "getSiblings",
+    _createClass(Dom, null, [
+      {
+        key: "getSiblings",
 
-      /**
-       * Get all the previous and next siblings, optionally filtered by a selector
-       */
-      value: function getSiblings(element, filter) {
-        var includeSelf = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-        var siblings = [];
-        var currentElement = element; // Do the previous first
+        /**
+         * Get all the previous and next siblings, optionally filtered by a selector
+         */
+        value: function getSiblings(element, filter) {
+          var includeSelf =
+            arguments.length > 2 && arguments[2] !== undefined
+              ? arguments[2]
+              : false;
+          var siblings = [];
+          var currentElement = element; // Do the previous first
 
-        while (currentElement = currentElement.previousElementSibling) {
-          if (!filter || currentElement.matches(filter)) {
-            siblings.push(currentElement);
+          while ((currentElement = currentElement.previousElementSibling)) {
+            if (!filter || currentElement.matches(filter)) {
+              siblings.push(currentElement);
+            }
           }
-        }
 
-        if (includeSelf) {
-          siblings.push(element);
-        } // Then the next side
+          if (includeSelf) {
+            siblings.push(element);
+          } // Then the next side
 
+          currentElement = element;
 
-        currentElement = element;
-
-        while (currentElement = currentElement.nextElementSibling) {
-          if (!filter || currentElement.matches(filter)) {
-            siblings.push(currentElement);
+          while ((currentElement = currentElement.nextElementSibling)) {
+            if (!filter || currentElement.matches(filter)) {
+              siblings.push(currentElement);
+            }
           }
-        }
 
-        return siblings;
-      }
-    }]);
+          return siblings;
+        },
+      },
+    ]);
 
     return Dom;
-  }();
+  })();
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+  var commonjsGlobal =
+    typeof globalThis !== "undefined"
+      ? globalThis
+      : typeof window !== "undefined"
+      ? window
+      : typeof global !== "undefined"
+      ? global
+      : typeof self !== "undefined"
+      ? self
+      : {};
 
-  function unwrapExports (x) {
-  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+  function unwrapExports(x) {
+    return x &&
+      x.__esModule &&
+      Object.prototype.hasOwnProperty.call(x, "default")
+      ? x["default"]
+      : x;
   }
 
   function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+    return (
+      (module = { exports: {} }), fn(module, module.exports), module.exports
+    );
   }
 
   var browser = createCommonjsModule(function (module, exports) {
-
     Object.defineProperty(exports, "__esModule", {
-      value: true
+      value: true,
     });
     exports["default"] = void 0;
     /**
@@ -271,7 +317,6 @@
       }
       /** @type function() */
 
-
       this.handle = Delegate.prototype.handle.bind(this); // Cache of event listeners removed during an event cycle
 
       this._removedListeners = [];
@@ -283,7 +328,6 @@
      * @param  {Node|string} [root] The root node or a selector string matching the root node
      * @returns {Delegate} This method is chainable
      */
-
 
     Delegate.prototype.root = function (root) {
       var listenerMap = this.listenerMap;
@@ -305,7 +349,6 @@
       // a dom node, then remove internal
       // root reference and exit here
 
-
       if (!root || !root.addEventListener) {
         if (this.rootElement) {
           delete this.rootElement;
@@ -319,7 +362,6 @@
        *
        * @type Node
        */
-
 
       this.rootElement = root; // Set up master event listeners
 
@@ -342,9 +384,12 @@
      * @returns boolean
      */
 
-
     Delegate.prototype.captureForType = function (eventType) {
-      return ['blur', 'error', 'focus', 'load', 'resize', 'scroll'].indexOf(eventType) !== -1;
+      return (
+        ["blur", "error", "focus", "load", "resize", "scroll"].indexOf(
+          eventType
+        ) !== -1
+      );
     };
     /**
      * Attach a handler to one
@@ -372,33 +417,35 @@
      * @returns {Delegate} This method is chainable
      */
 
-
-    Delegate.prototype.on = function (eventType, selector, handler, useCapture) {
+    Delegate.prototype.on = function (
+      eventType,
+      selector,
+      handler,
+      useCapture
+    ) {
       var root;
       var listenerMap;
       var matcher;
       var matcherParam;
 
       if (!eventType) {
-        throw new TypeError('Invalid event type: ' + eventType);
+        throw new TypeError("Invalid event type: " + eventType);
       } // handler can be passed as
       // the second or third argument
 
-
-      if (typeof selector === 'function') {
+      if (typeof selector === "function") {
         useCapture = handler;
         handler = selector;
         selector = null;
       } // Fallback to sensible defaults
       // if useCapture not set
 
-
       if (useCapture === undefined) {
         useCapture = this.captureForType(eventType);
       }
 
-      if (typeof handler !== 'function') {
-        throw new TypeError('Handler must be a type of Function');
+      if (typeof handler !== "function") {
+        throw new TypeError("Handler must be a type of Function");
       }
 
       root = this.rootElement;
@@ -428,12 +475,11 @@
         matcher = Element.prototype.matches;
       } // Add to the list of listeners
 
-
       listenerMap[eventType].push({
         selector: selector,
         handler: handler,
         matcher: matcher,
-        matcherParam: matcherParam
+        matcherParam: matcherParam,
       });
       return this;
     };
@@ -448,8 +494,12 @@
      * @returns {Delegate} This method is chainable
      */
 
-
-    Delegate.prototype.off = function (eventType, selector, handler, useCapture) {
+    Delegate.prototype.off = function (
+      eventType,
+      selector,
+      handler,
+      useCapture
+    ) {
       var i;
       var listener;
       var listenerMap;
@@ -457,13 +507,12 @@
       var singleEventType; // Handler can be passed as
       // the second or third argument
 
-      if (typeof selector === 'function') {
+      if (typeof selector === "function") {
         useCapture = handler;
         handler = selector;
         selector = null;
       } // If useCapture not set, remove
       // all event listeners
-
 
       if (useCapture === undefined) {
         this.off(eventType, selector, handler, true);
@@ -490,23 +539,28 @@
       } // Remove only parameter matches
       // if specified
 
-
       for (i = listenerList.length - 1; i >= 0; i--) {
         listener = listenerList[i];
 
-        if ((!selector || selector === listener.selector) && (!handler || handler === listener.handler)) {
+        if (
+          (!selector || selector === listener.selector) &&
+          (!handler || handler === listener.handler)
+        ) {
           this._removedListeners.push(listener);
 
           listenerList.splice(i, 1);
         }
       } // All listeners removed
 
-
       if (!listenerList.length) {
         delete listenerMap[eventType]; // Remove the main handler
 
         if (this.rootElement) {
-          this.rootElement.removeEventListener(eventType, this.handle, useCapture);
+          this.rootElement.removeEventListener(
+            eventType,
+            this.handle,
+            useCapture
+          );
         }
       }
 
@@ -518,7 +572,6 @@
      * @param {Event} event
      */
 
-
     Delegate.prototype.handle = function (event) {
       var i;
       var l;
@@ -529,7 +582,7 @@
       var returned;
       var listenerList = [];
       var target;
-      var eventIgnore = 'ftLabsDelegateIgnore';
+      var eventIgnore = "ftLabsDelegateIgnore";
 
       if (event[eventIgnore] === true) {
         return;
@@ -542,13 +595,13 @@
         target = target.parentNode;
       } // Handle SVG <use> elements in IE
 
-
       if (target.correspondingUseElement) {
         target = target.correspondingUseElement;
       }
 
       root = this.rootElement;
-      phase = event.eventPhase || (event.target !== event.currentTarget ? 3 : 2); // eslint-disable-next-line default-case
+      phase =
+        event.eventPhase || (event.target !== event.currentTarget ? 3 : 2); // eslint-disable-next-line default-case
 
       switch (phase) {
         case 1:
@@ -593,7 +646,13 @@
             break;
           }
 
-          if (target.tagName && ["button", "input", "select", "textarea"].indexOf(target.tagName.toLowerCase()) > -1 && target.hasAttribute("disabled")) {
+          if (
+            target.tagName &&
+            ["button", "input", "select", "textarea"].indexOf(
+              target.tagName.toLowerCase()
+            ) > -1 &&
+            target.hasAttribute("disabled")
+          ) {
             // Remove things that have previously fired
             toFire = [];
           } // Check for match and fire
@@ -602,15 +661,16 @@
           // TODO:MCG:20120117: Need a way
           // to check if event#stopImmediatePropagation
           // was called. If so, break both loops.
-          else if (listener.matcher.call(target, listener.matcherParam, target)) {
-              toFire.push([event, target, listener]);
-            }
+          else if (
+            listener.matcher.call(target, listener.matcherParam, target)
+          ) {
+            toFire.push([event, target, listener]);
+          }
         } // TODO:MCG:20120117: Need a way to
         // check if event#stopPropagation
         // was called. If so, break looping
         // through the DOM. Stop if the
         // delegation root has been reached
-
 
         if (target === root) {
           break;
@@ -656,7 +716,6 @@
      * @returns {boolean}
      */
 
-
     Delegate.prototype.fire = function (event, target, listener) {
       return listener.handler.call(target, event, target);
     };
@@ -673,7 +732,6 @@
      * @returns boolean
      */
 
-
     function matchesTag(tagName, element) {
       return tagName.toLowerCase() === element.tagName.toLowerCase();
     }
@@ -686,10 +744,10 @@
      * @returns boolean
      */
 
-
     function matchesRoot(selector, element) {
       if (this.rootElement === window) {
-        return (// Match the outer document (dispatched from document)
+        return (
+          // Match the outer document (dispatched from document)
           element === document || // The <html> element (dispatched from document.body or document.documentElement)
           element === document.documentElement || // Or the window itself (dispatched from window)
           element === window
@@ -710,7 +768,6 @@
      * @returns boolean
      */
 
-
     function matchesId(id, element) {
       return id === element.id;
     }
@@ -721,7 +778,6 @@
      *
      * @return void
      */
-
 
     Delegate.prototype.destroy = function () {
       this.off();
@@ -734,7 +790,7 @@
   });
   var Delegate = unwrapExports(browser);
 
-  var CollapsibleManager = /*#__PURE__*/function () {
+  var CollapsibleManager = /*#__PURE__*/ (function () {
     function CollapsibleManager() {
       _classCallCheck(this, CollapsibleManager);
 
@@ -743,108 +799,131 @@
       this._attachListeners();
     }
 
-    _createClass(CollapsibleManager, [{
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.domDelegate.on('click', '[data-action="toggle-collapsible"]:not([disabled])', this._toggleCollapsible.bind(this));
-        document.addEventListener('collapsible:toggle', this._toggleCollapsible.bind(this));
-      }
-      /**
-       * Toggle a given collapsible
-       */
+    _createClass(CollapsibleManager, [
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.domDelegate.on(
+            "click",
+            '[data-action="toggle-collapsible"]:not([disabled])',
+            this._toggleCollapsible.bind(this)
+          );
+          document.addEventListener(
+            "collapsible:toggle",
+            this._toggleCollapsible.bind(this)
+          );
+        },
+        /**
+         * Toggle a given collapsible
+         */
+      },
+      {
+        key: "_toggleCollapsible",
+        value: function _toggleCollapsible(event, target) {
+          var _this = this;
 
-    }, {
-      key: "_toggleCollapsible",
-      value: function _toggleCollapsible(event, target) {
-        var _this = this;
+          // If the target is null, it may be because someone has sent the global event "collapsible:toggle". If that the case
+          // we can retrieve the toggle button by using the event.detail.id
+          if (!target && event.detail) {
+            target = document.querySelector(
+              '[aria-controls="'.concat(event.detail.id, '"]')
+            );
+          }
 
-        // If the target is null, it may be because someone has sent the global event "collapsible:toggle". If that the case
-        // we can retrieve the toggle button by using the event.detail.id
-        if (!target && event.detail) {
-          target = document.querySelector("[aria-controls=\"".concat(event.detail.id, "\"]"));
-        }
-
-        var isOpen = target.getAttribute('aria-expanded') === 'true',
+          var isOpen = target.getAttribute("aria-expanded") === "true",
             parentCollapsible = target.parentNode;
 
-        if (isOpen) {
-          this._close(parentCollapsible);
-        } else {
-          this._open(parentCollapsible);
-        } // We make sure to close any siblings collapsible as well
+          if (isOpen) {
+            this._close(parentCollapsible);
+          } else {
+            this._open(parentCollapsible);
+          } // We make sure to close any siblings collapsible as well
 
-
-        if (target.getAttribute('data-close-siblings') !== 'false') {
-          Dom.getSiblings(parentCollapsible).forEach(function (collapsibleToClose) {
-            return _this._close(collapsibleToClose);
-          });
-        }
-      }
-      /**
-       * Open a given collapsible
-       */
-
-    }, {
-      key: "_open",
-      value: function _open(collapsible) {
-        var toggleButton = collapsible.querySelector('[aria-controls]');
-
-        if (!toggleButton || toggleButton.getAttribute('aria-expanded') === 'true') {
-          return; // It's already open
-        }
-
-        var collapsibleContent = collapsible.querySelector("#".concat(toggleButton.getAttribute('aria-controls')));
-        toggleButton.setAttribute('aria-expanded', 'true');
-
-        if (collapsibleContent.hasAttribute('aria-hidden')) {
-          collapsibleContent.setAttribute('aria-hidden', 'false');
-        }
-
-        Animation.slideDown(collapsibleContent, function () {
-          if (toggleButton.hasAttribute('data-collapsible-force-overflow')) {
-            collapsibleContent.style.overflow = 'visible';
-          } // If there is an autofocus field, we focus it
-
-
-          var autofocusElement = collapsibleContent.querySelector('[autofocus]');
-
-          if (autofocusElement) {
-            autofocusElement.focus();
+          if (target.getAttribute("data-close-siblings") !== "false") {
+            Dom.getSiblings(parentCollapsible).forEach(function (
+              collapsibleToClose
+            ) {
+              return _this._close(collapsibleToClose);
+            });
           }
-        });
-      }
-      /**
-       * Close a given collapsible
-       */
+        },
+        /**
+         * Open a given collapsible
+         */
+      },
+      {
+        key: "_open",
+        value: function _open(collapsible) {
+          var toggleButton = collapsible.querySelector("[aria-controls]");
 
-    }, {
-      key: "_close",
-      value: function _close(collapsible) {
-        var toggleButton = collapsible.querySelector('[aria-controls]');
+          if (
+            !toggleButton ||
+            toggleButton.getAttribute("aria-expanded") === "true"
+          ) {
+            return; // It's already open
+          }
 
-        if (!toggleButton || toggleButton.getAttribute('aria-expanded') === 'false') {
-          return; // It's already closed
-        }
+          var collapsibleContent = collapsible.querySelector(
+            "#".concat(toggleButton.getAttribute("aria-controls"))
+          );
+          toggleButton.setAttribute("aria-expanded", "true");
 
-        var collapsibleContent = collapsible.querySelector("#".concat(toggleButton.getAttribute('aria-controls')));
+          if (collapsibleContent.hasAttribute("aria-hidden")) {
+            collapsibleContent.setAttribute("aria-hidden", "false");
+          }
 
-        if (toggleButton.hasAttribute('data-collapsible-force-overflow')) {
-          collapsibleContent.style.overflow = 'hidden';
-        }
+          Animation.slideDown(collapsibleContent, function () {
+            if (toggleButton.hasAttribute("data-collapsible-force-overflow")) {
+              collapsibleContent.style.overflow = "visible";
+            } // If there is an autofocus field, we focus it
 
-        if (collapsibleContent.hasAttribute('aria-hidden')) {
-          collapsibleContent.setAttribute('aria-hidden', 'true');
-        }
+            var autofocusElement = collapsibleContent.querySelector(
+              "[autofocus]"
+            );
 
-        toggleButton.setAttribute('aria-expanded', 'false');
-        Animation.slideUp(collapsibleContent);
-      }
-    }]);
+            if (autofocusElement) {
+              autofocusElement.focus();
+            }
+          });
+        },
+        /**
+         * Close a given collapsible
+         */
+      },
+      {
+        key: "_close",
+        value: function _close(collapsible) {
+          var toggleButton = collapsible.querySelector("[aria-controls]");
+
+          if (
+            !toggleButton ||
+            toggleButton.getAttribute("aria-expanded") === "false"
+          ) {
+            return; // It's already closed
+          }
+
+          var collapsibleContent = collapsible.querySelector(
+            "#".concat(toggleButton.getAttribute("aria-controls"))
+          );
+
+          if (toggleButton.hasAttribute("data-collapsible-force-overflow")) {
+            collapsibleContent.style.overflow = "hidden";
+          }
+
+          if (collapsibleContent.hasAttribute("aria-hidden")) {
+            collapsibleContent.setAttribute("aria-hidden", "true");
+          }
+
+          toggleButton.setAttribute("aria-expanded", "false");
+          Animation.slideUp(collapsibleContent);
+        },
+      },
+    ]);
 
     return CollapsibleManager;
-  }();
+  })();
 
-  var CountrySelector = /*#__PURE__*/function () {
+  var CountrySelector = /*#__PURE__*/ (function () {
     function CountrySelector(countrySelect, provinceSelect) {
       _classCallCheck(this, CountrySelector);
 
@@ -858,152 +937,190 @@
       }
     }
 
-    _createClass(CountrySelector, [{
-      key: "destroy",
-      value: function destroy() {
-        if (this.countrySelect) {
-          this.countrySelect.removeEventListener('change', this._onCountryChangedListener);
-        }
-      }
-    }, {
-      key: "_initSelectors",
-      value: function _initSelectors() {
-        // Check first the default value of country
-        var defaultCountry = this.countrySelect.getAttribute('data-default');
-
-        if (defaultCountry) {
-          for (var i = 0; i !== this.countrySelect.options.length; ++i) {
-            if (this.countrySelect.options[i].text === defaultCountry) {
-              this.countrySelect.selectedIndex = i;
-              break;
-            }
+    _createClass(CountrySelector, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          if (this.countrySelect) {
+            this.countrySelect.removeEventListener(
+              "change",
+              this._onCountryChangedListener
+            );
           }
-        } else {
-          this.countrySelect.selectedIndex = 0;
-        }
+        },
+      },
+      {
+        key: "_initSelectors",
+        value: function _initSelectors() {
+          // Check first the default value of country
+          var defaultCountry = this.countrySelect.getAttribute("data-default");
 
-        var event = new Event('change', {
-          bubbles: true
-        });
-        this.countrySelect.dispatchEvent(event); // Then the province
+          if (defaultCountry) {
+            for (var i = 0; i !== this.countrySelect.options.length; ++i) {
+              if (this.countrySelect.options[i].text === defaultCountry) {
+                this.countrySelect.selectedIndex = i;
+                break;
+              }
+            }
+          } else {
+            this.countrySelect.selectedIndex = 0;
+          }
 
-        var defaultProvince = this.provinceSelect.getAttribute('data-default');
+          var event = new Event("change", {
+            bubbles: true,
+          });
+          this.countrySelect.dispatchEvent(event); // Then the province
 
-        if (defaultProvince) {
-          this.provinceSelect.value = defaultProvince;
-        }
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._onCountryChangedListener = this._onCountryChanged.bind(this);
-        this.countrySelect.addEventListener('change', this._onCountryChangedListener);
-      }
-    }, {
-      key: "_onCountryChanged",
-      value: function _onCountryChanged() {
-        var _this = this;
+          var defaultProvince = this.provinceSelect.getAttribute(
+            "data-default"
+          );
 
-        var selectedOption = this.countrySelect.options[this.countrySelect.selectedIndex];
+          if (defaultProvince) {
+            this.provinceSelect.value = defaultProvince;
+          }
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._onCountryChangedListener = this._onCountryChanged.bind(this);
+          this.countrySelect.addEventListener(
+            "change",
+            this._onCountryChangedListener
+          );
+        },
+      },
+      {
+        key: "_onCountryChanged",
+        value: function _onCountryChanged() {
+          var _this = this;
 
-        if (!selectedOption) {
-          return;
-        }
+          var selectedOption = this.countrySelect.options[
+            this.countrySelect.selectedIndex
+          ];
 
-        var provinces = JSON.parse(selectedOption.getAttribute('data-provinces') || '[]'); // First remove all options
+          if (!selectedOption) {
+            return;
+          }
 
-        this.provinceSelect.innerHTML = '';
+          var provinces = JSON.parse(
+            selectedOption.getAttribute("data-provinces") || "[]"
+          ); // First remove all options
 
-        if (provinces.length === 0) {
-          this.provinceSelect.closest('.form__input-wrapper').style.display = 'none';
-          return;
-        } // We need to build the provinces array
+          this.provinceSelect.innerHTML = "";
 
+          if (provinces.length === 0) {
+            this.provinceSelect.closest(".form__input-wrapper").style.display =
+              "none";
+            return;
+          } // We need to build the provinces array
 
-        provinces.forEach(function (data) {
-          _this.provinceSelect.options.add(new Option(data[1], data[0]));
-        });
-        this.provinceSelect.closest('.form__input-wrapper').style.display = 'block';
-      }
-    }]);
+          provinces.forEach(function (data) {
+            _this.provinceSelect.options.add(new Option(data[1], data[0]));
+          });
+          this.provinceSelect.closest(".form__input-wrapper").style.display =
+            "block";
+        },
+      },
+    ]);
 
     return CountrySelector;
-  }();
+  })();
 
-  var Responsive = /*#__PURE__*/function () {
+  var Responsive = /*#__PURE__*/ (function () {
     function Responsive() {
       _classCallCheck(this, Responsive);
     }
 
-    _createClass(Responsive, null, [{
-      key: "matchesBreakpoint",
-      value: function matchesBreakpoint(breakpoint) {
-        switch (breakpoint) {
-          case 'phone':
-            return window.matchMedia('screen and (max-width: 640px)').matches;
+    _createClass(Responsive, null, [
+      {
+        key: "matchesBreakpoint",
+        value: function matchesBreakpoint(breakpoint) {
+          switch (breakpoint) {
+            case "phone":
+              return window.matchMedia("screen and (max-width: 640px)").matches;
 
-          case 'tablet':
-            return window.matchMedia('screen and (min-width: 641px) and (max-width: 1023px)').matches;
+            case "tablet":
+              return window.matchMedia(
+                "screen and (min-width: 641px) and (max-width: 1023px)"
+              ).matches;
 
-          case 'tablet-and-up':
-            return window.matchMedia('screen and (min-width: 641px)').matches;
+            case "tablet-and-up":
+              return window.matchMedia("screen and (min-width: 641px)").matches;
 
-          case 'pocket':
-            return window.matchMedia('screen and (max-width: 1023px)').matches;
+            case "pocket":
+              return window.matchMedia("screen and (max-width: 1023px)")
+                .matches;
 
-          case 'lap':
-            return window.matchMedia('screen and (min-width: 1024px) and (max-width: 1279px)').matches;
+            case "lap":
+              return window.matchMedia(
+                "screen and (min-width: 1024px) and (max-width: 1279px)"
+              ).matches;
 
-          case 'lap-and-up':
-            return window.matchMedia('screen and (min-width: 1024px)').matches;
+            case "lap-and-up":
+              return window.matchMedia("screen and (min-width: 1024px)")
+                .matches;
 
-          case 'desk':
-            return window.matchMedia('screen and (min-width: 1280px)').matches;
+            case "desk":
+              return window.matchMedia("screen and (min-width: 1280px)")
+                .matches;
 
-          case 'widescreen':
-            return window.matchMedia('screen and (min-width: 1440px)').matches;
+            case "widescreen":
+              return window.matchMedia("screen and (min-width: 1440px)")
+                .matches;
 
-          case 'supports-hover':
-            return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-        }
-      }
-    }, {
-      key: "getCurrentBreakpoint",
-      value: function getCurrentBreakpoint() {
-        if (window.matchMedia('screen and (max-width: 640px)').matches) {
-          return 'phone';
-        }
+            case "supports-hover":
+              return window.matchMedia("(hover: hover) and (pointer: fine)")
+                .matches;
+          }
+        },
+      },
+      {
+        key: "getCurrentBreakpoint",
+        value: function getCurrentBreakpoint() {
+          if (window.matchMedia("screen and (max-width: 640px)").matches) {
+            return "phone";
+          }
 
-        if (window.matchMedia('screen and (min-width: 641px) and (max-width: 1023px)').matches) {
-          return 'tablet';
-        }
+          if (
+            window.matchMedia(
+              "screen and (min-width: 641px) and (max-width: 1023px)"
+            ).matches
+          ) {
+            return "tablet";
+          }
 
-        if (window.matchMedia('screen and (min-width: 1024px) and (max-width: 1279px)').matches) {
-          return 'lap';
-        }
+          if (
+            window.matchMedia(
+              "screen and (min-width: 1024px) and (max-width: 1279px)"
+            ).matches
+          ) {
+            return "lap";
+          }
 
-        if (window.matchMedia('screen and (min-width: 1280px)').matches) {
-          return 'desk';
-        }
-      }
-    }]);
+          if (window.matchMedia("screen and (min-width: 1280px)").matches) {
+            return "desk";
+          }
+        },
+      },
+    ]);
 
     return Responsive;
-  }();
+  })();
 
-  var DesktopNavigation = /*#__PURE__*/function () {
+  var DesktopNavigation = /*#__PURE__*/ (function () {
     function DesktopNavigation(element, navigationLayout, openTrigger) {
       _classCallCheck(this, DesktopNavigation);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
       this.delegateRoot = new Delegate(document.documentElement);
-      this.useInlineNavigation = navigationLayout === 'inline';
+      this.useInlineNavigation = navigationLayout === "inline";
       this.isNavigationVisible = this.useInlineNavigation;
       this.openTrigger = openTrigger; // If we use a device that does not support hover, we force the open trigger to be on click (for instance iPad)
 
-      if (!Responsive.matchesBreakpoint('supports-hover')) {
-        this.openTrigger = 'click';
+      if (!Responsive.matchesBreakpoint("supports-hover")) {
+        this.openTrigger = "click";
       }
 
       this.openItems = [];
@@ -1018,380 +1135,470 @@
       }
     }
 
-    _createClass(DesktopNavigation, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-        this.delegateRoot.off();
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        var _this = this;
+    _createClass(DesktopNavigation, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+          this.delegateRoot.off();
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          var _this = this;
 
-        if (!this.useInlineNavigation) {
-          this._openNavigation();
-        } // We receive a reference to the mega-menu, but for simpler handling, we simulate as if the button was hovered. First, we must close
-        // mega-menu if there is already one that is open
+          if (!this.useInlineNavigation) {
+            this._openNavigation();
+          } // We receive a reference to the mega-menu, but for simpler handling, we simulate as if the button was hovered. First, we must close
+          // mega-menu if there is already one that is open
 
-
-        Dom.getSiblings(event.target.parentNode, '.is-dropdown-open').forEach(function (openItem) {
-          _this._deactivateDropdown(event, openItem.querySelector('[data-type="menuitem"][aria-haspopup]'));
-        }); // The previousElementSibling is always the link itself
-
-        this._activateDropdown(event, event.target.previousElementSibling);
-      }
-    }, {
-      key: "onBlockDeselect",
-      value: function onBlockDeselect(event) {
-        if (!this.useInlineNavigation) {
-          this._closeNavigation();
-        } // The deactivation is done on the wrapping div (so parentNode)
-
-
-        this._deactivateDropdown(event, event.target.parentNode);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('focusout', this._onFocusOut.bind(this));
-        this.delegateRoot.on('click', this._onClick.bind(this));
-        this.delegateElement.on('click', '[data-action="toggle-menu"]', this._toggleNavigation.bind(this));
-
-        if (this.openTrigger === 'hover') {
-          this.delegateElement.on('focusin', '[data-type="menuitem"][aria-haspopup]', this._activateDropdown.bind(this));
-          this.delegateElement.on('mouseover', '[data-type="menuitem"][aria-haspopup]', this._activateDropdown.bind(this));
-          this.delegateElement.on('mouseover', '[data-type="menu"][aria-hidden="false"]', this._blockDropdownDeactivation.bind(this));
-          this.delegateElement.on('focusout', '.is-dropdown-open', this._deactivateDropdown.bind(this));
-          this.delegateElement.on('mouseout', '.is-dropdown-open', this._deactivateDropdown.bind(this));
-        } else {
-          this.delegateElement.on('click', '[data-type="menuitem"][aria-haspopup]', this._toggleDropdown.bind(this));
-        }
-      }
-      /**
-       * When the whole menu looses focus, it's automatically closed (in the case of condensed menu)
-       */
-
-    }, {
-      key: "_onFocusOut",
-      value: function _onFocusOut(event) {
-        // event.relatedTarget is the new target that receives focus
-        if (event.relatedTarget !== null && !this.element.contains(event.relatedTarget)) {
-          this._closeNavigation();
-        }
-      }
-      /**
-       * We need to catch click outside the element to automatically close menu
-       */
-
-    }, {
-      key: "_onClick",
-      value: function _onClick(event) {
-        if (!this.element.contains(event.target)) {
-          this._closeNavigation();
-        }
-      }
-      /**
-       * Open the navigation (really make sense for condensed menu-
-       */
-
-    }, {
-      key: "_openNavigation",
-      value: function _openNavigation() {
-        // Inline navigation is always visible so there is nothing to open
-        if (this.useInlineNavigation) {
-          return;
-        }
-
-        this.element.querySelector('[data-action="toggle-menu"]').setAttribute('aria-expanded', 'true');
-        this.element.querySelector('[data-type="menu"]').setAttribute('aria-hidden', 'false');
-        this.isNavigationVisible = true;
-      }
-      /**
-       * Close the navigation (really make sense for condensed menu)
-       */
-
-    }, {
-      key: "_closeNavigation",
-      value: function _closeNavigation() {
-        var _this2 = this;
-
-        if (!this.useInlineNavigation) {
-          this.element.querySelector('[data-action="toggle-menu"]').setAttribute('aria-expanded', 'false');
-          this.element.querySelector('[data-type="menu"]').setAttribute('aria-hidden', 'true');
-        }
-
-        this.isNavigationVisible = false;
-
-        if (this.openTrigger === 'click') {
-          var cloneOpenItems = this.openItems.slice(0);
-          cloneOpenItems.forEach(function (item) {
-            _this2._deactivateDropdown(event, item);
-          });
-        }
-      }
-      /**
-       * Toggle navigation
-       */
-
-    }, {
-      key: "_toggleNavigation",
-      value: function _toggleNavigation(event) {
-        if (this.isNavigationVisible) {
-          this._closeNavigation();
-        } else {
-          this._openNavigation();
-        }
-      }
-      /**
-       * Toggle a dropdown
-       */
-
-    }, {
-      key: "_toggleDropdown",
-      value: function _toggleDropdown(event, target) {
-        // If the link is currently not expanded, we block the click
-        if (target.getAttribute('aria-expanded') === 'false') {
-          event.preventDefault();
-        }
-
-        if (target.getAttribute('aria-expanded') === 'true') {
-          // If the link target is "#", by convention we close the dropdown, otherwise we just follow the link
-          if (target.getAttribute('href') === '#') {
-            event.preventDefault();
-
-            this._deactivateDropdown(event, target.closest('.is-dropdown-open'));
-          }
-        } else {
-          this._activateDropdown(event, target);
-        }
-      }
-      /**
-       * Open a dropdown menu
-       */
-
-    }, {
-      key: "_activateDropdown",
-      value: function _activateDropdown(event, target) {
-        var _this3 = this;
-
-        // If we are on click, we first need to close any other dropdown (if needed)
-        if (this.openTrigger === 'click') {
-          var cloneOpenItems = this.openItems.slice(0);
-          cloneOpenItems.forEach(function (item) {
-            if (!item.contains(target)) {
-              _this3._deactivateDropdown(event, item);
+          Dom.getSiblings(event.target.parentNode, ".is-dropdown-open").forEach(
+            function (openItem) {
+              _this._deactivateDropdown(
+                event,
+                openItem.querySelector('[data-type="menuitem"][aria-haspopup]')
+              );
             }
-          });
-        }
+          ); // The previousElementSibling is always the link itself
 
-        var menuToOpen = Dom.getSiblings(target, '[aria-hidden]')[0];
+          this._activateDropdown(event, event.target.previousElementSibling);
+        },
+      },
+      {
+        key: "onBlockDeselect",
+        value: function onBlockDeselect(event) {
+          if (!this.useInlineNavigation) {
+            this._closeNavigation();
+          } // The deactivation is done on the wrapping div (so parentNode)
 
-        var callback = function callback() {
-          target.setAttribute('aria-expanded', 'true');
-          target.parentNode.classList.add('is-dropdown-open');
-          menuToOpen.setAttribute('aria-hidden', 'false'); // If this menu was scheduled for deactivation, we remove the scheduling as it is now meant to open
+          this._deactivateDropdown(event, event.target.parentNode);
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on("focusout", this._onFocusOut.bind(this));
+          this.delegateRoot.on("click", this._onClick.bind(this));
+          this.delegateElement.on(
+            "click",
+            '[data-action="toggle-menu"]',
+            this._toggleNavigation.bind(this)
+          );
 
-          if (_this3.openTrigger === 'hover' && _this3.dropdownDeactivationTimeouts[menuToOpen.id]) {
-            clearTimeout(_this3.dropdownDeactivationTimeouts[menuToOpen.id]);
-            delete _this3.dropdownDeactivationTimeouts[menuToOpen.id];
-          } // If we are in inline navigation, we may be on the edge of the screen. If that's the case we check if any of the sub-sub-menu goes outside the screen. If
-          // this is the case, sub-sub-menu will be displayed on the left
+          if (this.openTrigger === "hover") {
+            this.delegateElement.on(
+              "focusin",
+              '[data-type="menuitem"][aria-haspopup]',
+              this._activateDropdown.bind(this)
+            );
+            this.delegateElement.on(
+              "mouseover",
+              '[data-type="menuitem"][aria-haspopup]',
+              this._activateDropdown.bind(this)
+            );
+            this.delegateElement.on(
+              "mouseover",
+              '[data-type="menu"][aria-hidden="false"]',
+              this._blockDropdownDeactivation.bind(this)
+            );
+            this.delegateElement.on(
+              "focusout",
+              ".is-dropdown-open",
+              this._deactivateDropdown.bind(this)
+            );
+            this.delegateElement.on(
+              "mouseout",
+              ".is-dropdown-open",
+              this._deactivateDropdown.bind(this)
+            );
+          } else {
+            this.delegateElement.on(
+              "click",
+              '[data-type="menuitem"][aria-haspopup]',
+              this._toggleDropdown.bind(this)
+            );
+          }
+        },
+        /**
+         * When the whole menu looses focus, it's automatically closed (in the case of condensed menu)
+         */
+      },
+      {
+        key: "_onFocusOut",
+        value: function _onFocusOut(event) {
+          // event.relatedTarget is the new target that receives focus
+          if (
+            event.relatedTarget !== null &&
+            !this.element.contains(event.relatedTarget)
+          ) {
+            this._closeNavigation();
+          }
+        },
+        /**
+         * We need to catch click outside the element to automatically close menu
+         */
+      },
+      {
+        key: "_onClick",
+        value: function _onClick(event) {
+          if (!this.element.contains(event.target)) {
+            this._closeNavigation();
+          }
+        },
+        /**
+         * Open the navigation (really make sense for condensed menu-
+         */
+      },
+      {
+        key: "_openNavigation",
+        value: function _openNavigation() {
+          // Inline navigation is always visible so there is nothing to open
+          if (this.useInlineNavigation) {
+            return;
+          }
 
+          this.element
+            .querySelector('[data-action="toggle-menu"]')
+            .setAttribute("aria-expanded", "true");
+          this.element
+            .querySelector('[data-type="menu"]')
+            .setAttribute("aria-hidden", "false");
+          this.isNavigationVisible = true;
+        },
+        /**
+         * Close the navigation (really make sense for condensed menu)
+         */
+      },
+      {
+        key: "_closeNavigation",
+        value: function _closeNavigation() {
+          var _this2 = this;
 
-          if (_this3.useInlineNavigation) {
-            var windowWidth = window.innerWidth,
-                shouldOpenLeft = false;
-            menuToOpen.querySelectorAll('.nav-dropdown').forEach(function (subSubMenu) {
-              if (subSubMenu.getBoundingClientRect().right > windowWidth) {
-                shouldOpenLeft = true;
+          if (!this.useInlineNavigation) {
+            this.element
+              .querySelector('[data-action="toggle-menu"]')
+              .setAttribute("aria-expanded", "false");
+            this.element
+              .querySelector('[data-type="menu"]')
+              .setAttribute("aria-hidden", "true");
+          }
+
+          this.isNavigationVisible = false;
+
+          if (this.openTrigger === "click") {
+            var cloneOpenItems = this.openItems.slice(0);
+            cloneOpenItems.forEach(function (item) {
+              _this2._deactivateDropdown(event, item);
+            });
+          }
+        },
+        /**
+         * Toggle navigation
+         */
+      },
+      {
+        key: "_toggleNavigation",
+        value: function _toggleNavigation(event) {
+          if (this.isNavigationVisible) {
+            this._closeNavigation();
+          } else {
+            this._openNavigation();
+          }
+        },
+        /**
+         * Toggle a dropdown
+         */
+      },
+      {
+        key: "_toggleDropdown",
+        value: function _toggleDropdown(event, target) {
+          // If the link is currently not expanded, we block the click
+          if (target.getAttribute("aria-expanded") === "false") {
+            event.preventDefault();
+          }
+
+          if (target.getAttribute("aria-expanded") === "true") {
+            // If the link target is "#", by convention we close the dropdown, otherwise we just follow the link
+            if (target.getAttribute("href") === "#") {
+              event.preventDefault();
+
+              this._deactivateDropdown(
+                event,
+                target.closest(".is-dropdown-open")
+              );
+            }
+          } else {
+            this._activateDropdown(event, target);
+          }
+        },
+        /**
+         * Open a dropdown menu
+         */
+      },
+      {
+        key: "_activateDropdown",
+        value: function _activateDropdown(event, target) {
+          var _this3 = this;
+
+          // If we are on click, we first need to close any other dropdown (if needed)
+          if (this.openTrigger === "click") {
+            var cloneOpenItems = this.openItems.slice(0);
+            cloneOpenItems.forEach(function (item) {
+              if (!item.contains(target)) {
+                _this3._deactivateDropdown(event, item);
               }
             });
+          }
 
-            if (shouldOpenLeft) {
-              menuToOpen.classList.add('nav-dropdown--inverse');
+          var menuToOpen = Dom.getSiblings(target, "[aria-hidden]")[0];
+
+          var callback = function callback() {
+            target.setAttribute("aria-expanded", "true");
+            target.parentNode.classList.add("is-dropdown-open");
+            menuToOpen.setAttribute("aria-hidden", "false"); // If this menu was scheduled for deactivation, we remove the scheduling as it is now meant to open
+
+            if (
+              _this3.openTrigger === "hover" &&
+              _this3.dropdownDeactivationTimeouts[menuToOpen.id]
+            ) {
+              clearTimeout(_this3.dropdownDeactivationTimeouts[menuToOpen.id]);
+              delete _this3.dropdownDeactivationTimeouts[menuToOpen.id];
+            } // If we are in inline navigation, we may be on the edge of the screen. If that's the case we check if any of the sub-sub-menu goes outside the screen. If
+            // this is the case, sub-sub-menu will be displayed on the left
+
+            if (_this3.useInlineNavigation) {
+              var windowWidth = window.innerWidth,
+                shouldOpenLeft = false;
+              menuToOpen
+                .querySelectorAll(".nav-dropdown")
+                .forEach(function (subSubMenu) {
+                  if (subSubMenu.getBoundingClientRect().right > windowWidth) {
+                    shouldOpenLeft = true;
+                  }
+                });
+
+              if (shouldOpenLeft) {
+                menuToOpen.classList.add("nav-dropdown--inverse");
+              }
             }
-          }
 
-          target.closest('[data-type="menu"]').classList.add('nav-dropdown--glued');
+            target
+              .closest('[data-type="menu"]')
+              .classList.add("nav-dropdown--glued");
 
-          if (menuToOpen.classList.contains('mega-menu')) {
-            _this3._setupMegaMenu(menuToOpen);
-          }
-
-          if (_this3.openTrigger === 'click') {
-            _this3.openItems.push(target.parentNode);
-          }
-        }; // If we are using on click, we can directly close, otherwise we apply a slight delay before closing the menu,
-        // so that the deactivation could be cancelled if the mouse is back to the dropdown (which can happen when doing
-        // horizontal movement)
-
-
-        if (this.openTrigger === 'click') {
-          callback();
-        } else {
-          // Any other menu that has been scheduled for activation must be deactivated as it's now this one that is supposed to open
-          for (var toDeactivate in this.dropdownActivationTimeouts) {
-            if (this.dropdownActivationTimeouts.hasOwnProperty(toDeactivate)) {
-              clearTimeout(this.dropdownActivationTimeouts[toDeactivate]);
-              delete this.dropdownActivationTimeouts[toDeactivate];
+            if (menuToOpen.classList.contains("mega-menu")) {
+              _this3._setupMegaMenu(menuToOpen);
             }
-          }
 
-          callback();
-          /*this.dropdownActivationTimeouts[menuToOpen.id] = setTimeout(() => {
+            if (_this3.openTrigger === "click") {
+              _this3.openItems.push(target.parentNode);
+            }
+          }; // If we are using on click, we can directly close, otherwise we apply a slight delay before closing the menu,
+          // so that the deactivation could be cancelled if the mouse is back to the dropdown (which can happen when doing
+          // horizontal movement)
+
+          if (this.openTrigger === "click") {
+            callback();
+          } else {
+            // Any other menu that has been scheduled for activation must be deactivated as it's now this one that is supposed to open
+            for (var toDeactivate in this.dropdownActivationTimeouts) {
+              if (
+                this.dropdownActivationTimeouts.hasOwnProperty(toDeactivate)
+              ) {
+                clearTimeout(this.dropdownActivationTimeouts[toDeactivate]);
+                delete this.dropdownActivationTimeouts[toDeactivate];
+              }
+            }
+
+            callback();
+            /*this.dropdownActivationTimeouts[menuToOpen.id] = setTimeout(() => {
             callback();
             delete this.dropdownActivationTimeouts[menuToOpen.id];
           }, this.DROPDOWN_TIMEOUT);*/
-        }
-      }
-      /**
-       * Close a dropdown menu
-       */
+          }
+        },
+        /**
+         * Close a dropdown menu
+         */
+      },
+      {
+        key: "_deactivateDropdown",
+        value: function _deactivateDropdown(event, target) {
+          var _this4 = this;
 
-    }, {
-      key: "_deactivateDropdown",
-      value: function _deactivateDropdown(event, target) {
-        var _this4 = this;
+          // event.relatedTarget is the new target. This allows to make sure to only close the dropdown if we leave the containing div
+          if (
+            this.openTrigger === "hover" &&
+            target.contains(event.relatedTarget)
+          ) {
+            return;
+          }
 
-        // event.relatedTarget is the new target. This allows to make sure to only close the dropdown if we leave the containing div
-        if (this.openTrigger === 'hover' && target.contains(event.relatedTarget)) {
-          return;
-        }
+          var menuToClose = target.querySelector("[aria-hidden]");
 
-        var menuToClose = target.querySelector('[aria-hidden]');
+          var callback = function callback() {
+            target.classList.remove("is-dropdown-open");
+            target
+              .querySelector('[data-type="menuitem"]')
+              .setAttribute("aria-expanded", "false");
+            var menuToClose = target.querySelector("[aria-hidden]");
+            menuToClose.setAttribute("aria-hidden", "true");
+            target
+              .closest('[data-type="menu"]')
+              .classList.remove("nav-dropdown--glued"); // If on click, we also close all sub-menus that may be open
 
-        var callback = function callback() {
-          target.classList.remove('is-dropdown-open');
-          target.querySelector('[data-type="menuitem"]').setAttribute('aria-expanded', 'false');
-          var menuToClose = target.querySelector('[aria-hidden]');
-          menuToClose.setAttribute('aria-hidden', 'true');
-          target.closest('[data-type="menu"]').classList.remove('nav-dropdown--glued'); // If on click, we also close all sub-menus that may be open
+            if (_this4.openTrigger === "click") {
+              target
+                .querySelectorAll(".is-dropdown-open")
+                .forEach(function (item) {
+                  _this4._deactivateDropdown(event, item);
 
-          if (_this4.openTrigger === 'click') {
-            target.querySelectorAll('.is-dropdown-open').forEach(function (item) {
-              _this4._deactivateDropdown(event, item);
+                  var index = _this4.openItems.indexOf(item);
 
-              var index = _this4.openItems.indexOf(item);
+                  if (index > -1) {
+                    _this4.openItems.splice(index, 1);
+                  }
+                }); // It has been deactivated so we also remove this one
+
+              var index = _this4.openItems.indexOf(target);
 
               if (index > -1) {
                 _this4.openItems.splice(index, 1);
               }
-            }); // It has been deactivated so we also remove this one
-
-            var index = _this4.openItems.indexOf(target);
-
-            if (index > -1) {
-              _this4.openItems.splice(index, 1);
             }
-          }
-        }; // If we are using on click, we can directly close, otherwise we apply a slight delay before closing the menu,
-        // so that the deactivation could be cancelled if the mouse is back to the dropdown (which can happen when doing
-        // horizontal movement)
+          }; // If we are using on click, we can directly close, otherwise we apply a slight delay before closing the menu,
+          // so that the deactivation could be cancelled if the mouse is back to the dropdown (which can happen when doing
+          // horizontal movement)
 
-
-        if (this.openTrigger === 'click') {
-          callback();
-        } else {
-          this.dropdownDeactivationTimeouts[menuToClose.id] = setTimeout(function () {
+          if (this.openTrigger === "click") {
             callback();
-            delete _this4.dropdownDeactivationTimeouts[menuToClose.id];
-          }, this.DROPDOWN_TIMEOUT);
-        }
-      }
-      /**
-       * This method allows to block the dropdown deactivation if the mouse is back on the element. This may happen for
-       * instance when the customer does a kind of diagonal movement to the menu. While the mouse may leave the opening
-       * item, we want the item to stay open
-       */
+          } else {
+            this.dropdownDeactivationTimeouts[menuToClose.id] = setTimeout(
+              function () {
+                callback();
+                delete _this4.dropdownDeactivationTimeouts[menuToClose.id];
+              },
+              this.DROPDOWN_TIMEOUT
+            );
+          }
+        },
+        /**
+         * This method allows to block the dropdown deactivation if the mouse is back on the element. This may happen for
+         * instance when the customer does a kind of diagonal movement to the menu. While the mouse may leave the opening
+         * item, we want the item to stay open
+         */
+      },
+      {
+        key: "_blockDropdownDeactivation",
+        value: function _blockDropdownDeactivation(event, target) {
+          if (this.dropdownDeactivationTimeouts[target.id] !== undefined) {
+            clearTimeout(this.dropdownDeactivationTimeouts[target.id]);
+            delete this.dropdownDeactivationTimeouts[target.id]; // If we blocked the deactivation, then we must also remove any pending menu that could have been scheduled to open
 
-    }, {
-      key: "_blockDropdownDeactivation",
-      value: function _blockDropdownDeactivation(event, target) {
-        if (this.dropdownDeactivationTimeouts[target.id] !== undefined) {
-          clearTimeout(this.dropdownDeactivationTimeouts[target.id]);
-          delete this.dropdownDeactivationTimeouts[target.id]; // If we blocked the deactivation, then we must also remove any pending menu that could have been scheduled to open
-
-          for (var toDeactivate in this.dropdownActivationTimeouts) {
-            if (this.dropdownActivationTimeouts.hasOwnProperty(toDeactivate)) {
-              clearTimeout(this.dropdownActivationTimeouts[toDeactivate]);
-              delete this.dropdownActivationTimeouts[toDeactivate];
+            for (var toDeactivate in this.dropdownActivationTimeouts) {
+              if (
+                this.dropdownActivationTimeouts.hasOwnProperty(toDeactivate)
+              ) {
+                clearTimeout(this.dropdownActivationTimeouts[toDeactivate]);
+                delete this.dropdownActivationTimeouts[toDeactivate];
+              }
             }
           }
-        }
-      }
-      /**
-       * Set the maximum width allowed for the given mega-menu. For the inline style, it is always full width so nothing to do
-       */
+        },
+        /**
+         * Set the maximum width allowed for the given mega-menu. For the inline style, it is always full width so nothing to do
+         */
+      },
+      {
+        key: "_setupMegaMenu",
+        value: function _setupMegaMenu(megaMenu) {
+          if (!this.useInlineNavigation) {
+            var navDropdownWidth = megaMenu.closest(".nav-dropdown")
+              .clientWidth;
+            megaMenu.style.maxWidth =
+              Math.min(
+                1400 - navDropdownWidth,
+                parseInt(window.innerWidth - navDropdownWidth - 80)
+              ) + "px";
+          }
+        },
+        /**
+         * Fix inline navigation
+         */
+      },
+      {
+        key: "_setupInlineNavigation",
+        value: function _setupInlineNavigation() {
+          var _this5 = this;
 
-    }, {
-      key: "_setupMegaMenu",
-      value: function _setupMegaMenu(megaMenu) {
-        if (!this.useInlineNavigation) {
-          var navDropdownWidth = megaMenu.closest('.nav-dropdown').clientWidth;
-          megaMenu.style.maxWidth = Math.min(1400 - navDropdownWidth, parseInt(window.innerWidth - navDropdownWidth - 80)) + 'px';
-        }
-      }
-      /**
-       * Fix inline navigation
-       */
+          this.element
+            .querySelectorAll(".mega-menu")
+            .forEach(function (megaMenu) {
+              megaMenu
+                .closest(".nav-bar__item")
+                .classList.add("nav-bar__item--static");
+            }); // If using the inline navigation, we also set up a mutation observer whenever a sub-sub-dropdown is open, in order
+          // to calculate their distance from the top of the screen, so we can apply a max-height properly
 
-    }, {
-      key: "_setupInlineNavigation",
-      value: function _setupInlineNavigation() {
-        var _this5 = this;
-
-        this.element.querySelectorAll('.mega-menu').forEach(function (megaMenu) {
-          megaMenu.closest('.nav-bar__item').classList.add('nav-bar__item--static');
-        }); // If using the inline navigation, we also set up a mutation observer whenever a sub-sub-dropdown is open, in order
-        // to calculate their distance from the top of the screen, so we can apply a max-height properly
-
-        if ('MutationObserver' in window) {
-          this.dropdownMenuObserver = new MutationObserver(function (mutationList) {
-            mutationList.forEach(function (mutation) {
-              if (mutation.target.getAttribute('aria-hidden') === 'false') {
-                // We set a CSS variable, so we can do various calculation in CSS
-                mutation.target.style.setProperty('--distance-to-top', "".concat(mutation.target.getBoundingClientRect().top, "px"));
-              }
+          if ("MutationObserver" in window) {
+            this.dropdownMenuObserver = new MutationObserver(function (
+              mutationList
+            ) {
+              mutationList.forEach(function (mutation) {
+                if (mutation.target.getAttribute("aria-hidden") === "false") {
+                  // We set a CSS variable, so we can do various calculation in CSS
+                  mutation.target.style.setProperty(
+                    "--distance-to-top",
+                    "".concat(mutation.target.getBoundingClientRect().top, "px")
+                  );
+                }
+              });
             });
-          });
-          this.element.querySelectorAll('.nav-dropdown .nav-dropdown').forEach(function (item) {
-            _this5.dropdownMenuObserver.observe(item, {
-              attributes: true,
-              attributeFilter: ['aria-hidden']
-            });
-          });
-        }
-      }
-    }]);
+            this.element
+              .querySelectorAll(".nav-dropdown .nav-dropdown")
+              .forEach(function (item) {
+                _this5.dropdownMenuObserver.observe(item, {
+                  attributes: true,
+                  attributeFilter: ["aria-hidden"],
+                });
+              });
+          }
+        },
+      },
+    ]);
 
     return DesktopNavigation;
-  }();
+  })();
 
   var fastdom = createCommonjsModule(function (module) {
-    !function (win) {
+    !(function (win) {
       /**
        * Mini logger
        *
        * @return {Function}
        */
 
-      var debug =  function () {};
+      var debug = function () {};
       /**
        * Normalized rAF
        *
        * @type {Function}
        */
 
-      var raf = win.requestAnimationFrame || win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame || win.msRequestAnimationFrame || function (cb) {
-        return setTimeout(cb, 16);
-      };
+      var raf =
+        win.requestAnimationFrame ||
+        win.webkitRequestAnimationFrame ||
+        win.mozRequestAnimationFrame ||
+        win.msRequestAnimationFrame ||
+        function (cb) {
+          return setTimeout(cb, 16);
+        };
       /**
        * Initialize a `FastDom`.
        *
        * @constructor
        */
-
 
       function FastDom() {
         var self = this;
@@ -1480,7 +1687,7 @@
          * @return {FastDom}
          */
         extend: function extend(props) {
-          if (_typeof(props) != 'object') throw new Error('expected object');
+          if (_typeof(props) != "object") throw new Error("expected object");
           var child = Object.create(this);
           mixin(child, props);
           child.fastdom = this; // run optional creation hook
@@ -1491,7 +1698,7 @@
         // override this with a function
         // to prevent Errors in console
         // when tasks throw
-        "catch": null
+        catch: null,
       };
       /**
        * Schedules a new read/write
@@ -1516,16 +1723,15 @@
        * @private
        */
 
-
       function flush(fastdom) {
         var writes = fastdom.writes;
         var reads = fastdom.reads;
         var error;
 
         try {
-          debug('flushing reads', reads.length);
+          debug("flushing reads", reads.length);
           runTasks(reads);
-          debug('flushing writes', writes.length);
+          debug("flushing writes", writes.length);
           runTasks(writes);
         } catch (e) {
           error = e;
@@ -1536,8 +1742,9 @@
         if (reads.length || writes.length) scheduleFlush(fastdom);
 
         if (error) {
-          debug('task errored', error.message);
-          if (fastdom["catch"]) fastdom["catch"](error);else throw error;
+          debug("task errored", error.message);
+          if (fastdom["catch"]) fastdom["catch"](error);
+          else throw error;
         }
       }
       /**
@@ -1549,11 +1756,10 @@
        * @private
        */
 
-
       function runTasks(tasks) {
         var task;
 
-        while (task = tasks.shift()) {
+        while ((task = tasks.shift())) {
           task();
         }
       }
@@ -1564,7 +1770,6 @@
        * @param  {*} item
        * @return {Boolean}
        */
-
 
       function remove(array, item) {
         var index = array.indexOf(item);
@@ -1578,7 +1783,6 @@
        * @param  {Object} source
        */
 
-
       function mixin(target, source) {
         for (var key in source) {
           if (source.hasOwnProperty(key)) target[key] = source[key];
@@ -1586,19 +1790,18 @@
       } // There should never be more than
       // one instance of `FastDom` in an app
 
-
-      var exports = win.fastdom = win.fastdom || new FastDom(); // jshint ignore:line
+      var exports = (win.fastdom = win.fastdom || new FastDom()); // jshint ignore:line
       // Expose to CJS & AMD
 
       module.exports = exports;
-    }(typeof window !== 'undefined' ? window : commonjsGlobal);
+    })(typeof window !== "undefined" ? window : commonjsGlobal);
   });
 
-  var CollectionFilterDrawer = /*#__PURE__*/function () {
+  var CollectionFilterDrawer = /*#__PURE__*/ (function () {
     function CollectionFilterDrawer(options) {
       _classCallCheck(this, CollectionFilterDrawer);
 
-      this.element = document.getElementById('mobile-collection-filters');
+      this.element = document.getElementById("mobile-collection-filters");
       this.delegateRoot = new Delegate(document.documentElement);
       this.options = options;
       this.isOpen = false;
@@ -1608,284 +1811,378 @@
       }
     }
 
-    _createClass(CollectionFilterDrawer, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateRoot.off();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateRoot.on('click', '[aria-controls="mobile-collection-filters"][data-action="open-drawer"]', this.open.bind(this));
-        this.delegateRoot.on('click', "#mobile-collection-filters [data-action=\"close-drawer\"]", this.close.bind(this));
-        document.addEventListener('collection-filter:close', this.close.bind(this));
-        document.addEventListener('click', this._detectOutsideClick.bind(this));
-        window.addEventListener('resize', this._computeDrawerHeight.bind(this));
-      }
-    }, {
-      key: "open",
-      value: function open(event) {
-        if (event) {
-          event.stopPropagation();
-        }
-
-        this._computeDrawerHeight();
-
-        this.isOpen = true;
-        document.querySelector('[aria-controls="mobile-collection-filters"]').setAttribute('aria-expanded', 'true');
-        document.getElementById('mobile-collection-filters').setAttribute('aria-hidden', 'false');
-        document.body.classList.add('no-mobile-scroll');
-      }
-    }, {
-      key: "close",
-      value: function close(event) {
-        if (event) {
-          event.stopPropagation();
-        }
-
-        this.isOpen = false;
-        document.querySelector('[aria-controls="mobile-collection-filters"]').setAttribute('aria-expanded', 'false');
-        document.getElementById('mobile-collection-filters').setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('no-mobile-scroll');
-      }
-    }, {
-      key: "_computeDrawerHeight",
-      value: function _computeDrawerHeight() {
-        document.getElementById('mobile-collection-filters').querySelector('.collection-drawer').style.maxHeight = "".concat(window.innerHeight, "px");
-      }
-      /**
-       * This method is called by the collection section whenever the filters have changed, so we can update them
-       */
-
-    }, {
-      key: "_filtersHaveChanged",
-      value: function _filtersHaveChanged(newFilters) {
-        var _this = this;
-
-        if (!this.element) {
-          return;
-        }
-
-        fastdom.mutate(function () {
-          // First, we update the filters count
-          var filterCountElement = _this.element.querySelector('.collection-drawer__filter-count');
-
-          filterCountElement.innerText = "(".concat(newFilters.length, ")");
-          filterCountElement.style.display = newFilters.length === 0 ? 'none' : 'inline'; // Then we hide/display the clear tag button
-
-          _this.element.querySelector('[data-action="clear-tags"]').style.display = newFilters.length === 0 ? 'none' : 'block'; // Finally, we have to toggle on/off the active filter
-
-          if (_this.options['filterType'] === 'group') {
-            _this.element.querySelectorAll('.collection__filter-item-active').forEach(function (item) {
-              // We check if this item has an active tag
-              var parentList = item.closest('.collection__filter-group'); // We find if there is associated active data-tag
-
-              var activeDataTag = parentList.querySelector('.is-selected[data-tag]');
-
-              if (activeDataTag) {
-                item.style.display = 'block';
-                item.innerText = activeDataTag.getAttribute('data-tag-user');
-              } else {
-                item.style.display = 'none';
-              }
-            });
+    _createClass(CollectionFilterDrawer, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateRoot.off();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateRoot.on(
+            "click",
+            '[aria-controls="mobile-collection-filters"][data-action="open-drawer"]',
+            this.open.bind(this)
+          );
+          this.delegateRoot.on(
+            "click",
+            '#mobile-collection-filters [data-action="close-drawer"]',
+            this.close.bind(this)
+          );
+          document.addEventListener(
+            "collection-filter:close",
+            this.close.bind(this)
+          );
+          document.addEventListener(
+            "click",
+            this._detectOutsideClick.bind(this)
+          );
+          window.addEventListener(
+            "resize",
+            this._computeDrawerHeight.bind(this)
+          );
+        },
+      },
+      {
+        key: "open",
+        value: function open(event) {
+          if (event) {
+            event.stopPropagation();
           }
-        });
-      }
-    }, {
-      key: "_detectOutsideClick",
-      value: function _detectOutsideClick(event) {
-        if (this.isOpen && !event.target.closest('.collection-drawer__inner')) {
-          this.close();
-        }
-      }
-    }]);
+
+          this._computeDrawerHeight();
+
+          this.isOpen = true;
+          document
+            .querySelector('[aria-controls="mobile-collection-filters"]')
+            .setAttribute("aria-expanded", "true");
+          document
+            .getElementById("mobile-collection-filters")
+            .setAttribute("aria-hidden", "false");
+          document.body.classList.add("no-mobile-scroll");
+        },
+      },
+      {
+        key: "close",
+        value: function close(event) {
+          if (event) {
+            event.stopPropagation();
+          }
+
+          this.isOpen = false;
+          document
+            .querySelector('[aria-controls="mobile-collection-filters"]')
+            .setAttribute("aria-expanded", "false");
+          document
+            .getElementById("mobile-collection-filters")
+            .setAttribute("aria-hidden", "true");
+          document.body.classList.remove("no-mobile-scroll");
+        },
+      },
+      {
+        key: "_computeDrawerHeight",
+        value: function _computeDrawerHeight() {
+          document
+            .getElementById("mobile-collection-filters")
+            .querySelector(".collection-drawer").style.maxHeight = "".concat(
+            window.innerHeight,
+            "px"
+          );
+        },
+        /**
+         * This method is called by the collection section whenever the filters have changed, so we can update them
+         */
+      },
+      {
+        key: "_filtersHaveChanged",
+        value: function _filtersHaveChanged(newFilters) {
+          var _this = this;
+
+          if (!this.element) {
+            return;
+          }
+
+          fastdom.mutate(function () {
+            // First, we update the filters count
+            var filterCountElement = _this.element.querySelector(
+              ".collection-drawer__filter-count"
+            );
+
+            filterCountElement.innerText = "(".concat(newFilters.length, ")");
+            filterCountElement.style.display =
+              newFilters.length === 0 ? "none" : "inline"; // Then we hide/display the clear tag button
+
+            _this.element.querySelector(
+              '[data-action="clear-tags"]'
+            ).style.display = newFilters.length === 0 ? "none" : "block"; // Finally, we have to toggle on/off the active filter
+
+            if (_this.options["filterType"] === "group") {
+              _this.element
+                .querySelectorAll(".collection__filter-item-active")
+                .forEach(function (item) {
+                  // We check if this item has an active tag
+                  var parentList = item.closest(".collection__filter-group"); // We find if there is associated active data-tag
+
+                  var activeDataTag = parentList.querySelector(
+                    ".is-selected[data-tag]"
+                  );
+
+                  if (activeDataTag) {
+                    item.style.display = "block";
+                    item.innerText = activeDataTag.getAttribute(
+                      "data-tag-user"
+                    );
+                  } else {
+                    item.style.display = "none";
+                  }
+                });
+            }
+          });
+        },
+      },
+      {
+        key: "_detectOutsideClick",
+        value: function _detectOutsideClick(event) {
+          if (
+            this.isOpen &&
+            !event.target.closest(".collection-drawer__inner")
+          ) {
+            this.close();
+          }
+        },
+      },
+    ]);
 
     return CollectionFilterDrawer;
-  }();
+  })();
 
-  var ExitPopup = /*#__PURE__*/function () {
+  var ExitPopup = /*#__PURE__*/ (function () {
     function ExitPopup(element) {
       _classCallCheck(this, ExitPopup);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(element.getAttribute('data-popup-settings'));
+      this.options = JSON.parse(element.getAttribute("data-popup-settings"));
       this.hasOpenOnceInCurrentPage = false; // If the popup has been already displayed, we do not display it
 
       try {
-        if (window.location.hash === '#exit-popup' && window.theme.pageType !== '') {
+        if (
+          window.location.hash === "#exit-popup" &&
+          window.theme.pageType !== ""
+        ) {
           this._openPopup();
         }
-      } catch (error) {// Some browsers (especially in private mode) throw an exception when trying to access local storage, so we protect ourselves here
+      } catch (error) {
+        // Some browsers (especially in private mode) throw an exception when trying to access local storage, so we protect ourselves here
       }
 
       this._attachListeners();
     }
 
-    _createClass(ExitPopup, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        var _this = this;
+    _createClass(ExitPopup, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          var _this = this;
 
-        /* Some browsers like Android emit a mouseleave event when opening keyboard. This is too unreliable for touch devices */
-        if (!Responsive.matchesBreakpoint('supports-hover')) {
-          return;
-        }
-
-        this.delegateElement.on('click', '[data-action="close-popup"]', this._closePopup.bind(this));
-        document.body.addEventListener('mouseleave', function () {
-          if (!_this.hasOpenOnceInCurrentPage) {
-            if (!_this.options['showOnlyOnce'] || _this.options['showOnlyOnce'] && localStorage.getItem('themeExitPopup') === null) {
-              _this._openPopup();
-            }
+          /* Some browsers like Android emit a mouseleave event when opening keyboard. This is too unreliable for touch devices */
+          if (!Responsive.matchesBreakpoint("supports-hover")) {
+            return;
           }
-        });
-        this._clickOutsideListener = this._checkClickOutside.bind(this);
-      }
-    }, {
-      key: "_openPopup",
-      value: function _openPopup() {
-        if (!window.theme.isNewsletterPopupOpen) {
-          this.element.setAttribute('aria-hidden', 'false');
-          localStorage.setItem('themeExitPopup', 'true');
-          this.hasOpenOnceInCurrentPage = true;
-          window.theme.isExitPopupOpen = true;
-          this.delegateElement.on('click', this._clickOutsideListener);
-        }
-      }
-    }, {
-      key: "_closePopup",
-      value: function _closePopup() {
-        this.element.setAttribute('aria-hidden', 'true');
-        window.theme.isExitPopupOpen = false;
-        this.delegateElement.off('click', this._clickOutsideListener);
-      }
-    }, {
-      key: "_checkClickOutside",
-      value: function _checkClickOutside(event) {
-        if (!this.element.contains(event.target) || this.element === event.target) {
-          this._closePopup();
-        }
-      }
-    }]);
+
+          this.delegateElement.on(
+            "click",
+            '[data-action="close-popup"]',
+            this._closePopup.bind(this)
+          );
+          document.body.addEventListener("mouseleave", function () {
+            if (!_this.hasOpenOnceInCurrentPage) {
+              if (
+                !_this.options["showOnlyOnce"] ||
+                (_this.options["showOnlyOnce"] &&
+                  localStorage.getItem("themeExitPopup") === null)
+              ) {
+                _this._openPopup();
+              }
+            }
+          });
+          this._clickOutsideListener = this._checkClickOutside.bind(this);
+        },
+      },
+      {
+        key: "_openPopup",
+        value: function _openPopup() {
+          if (!window.theme.isNewsletterPopupOpen) {
+            this.element.setAttribute("aria-hidden", "false");
+            localStorage.setItem("themeExitPopup", "true");
+            this.hasOpenOnceInCurrentPage = true;
+            window.theme.isExitPopupOpen = true;
+            this.delegateElement.on("click", this._clickOutsideListener);
+          }
+        },
+      },
+      {
+        key: "_closePopup",
+        value: function _closePopup() {
+          this.element.setAttribute("aria-hidden", "true");
+          window.theme.isExitPopupOpen = false;
+          this.delegateElement.off("click", this._clickOutsideListener);
+        },
+      },
+      {
+        key: "_checkClickOutside",
+        value: function _checkClickOutside(event) {
+          if (
+            !this.element.contains(event.target) ||
+            this.element === event.target
+          ) {
+            this._closePopup();
+          }
+        },
+      },
+    ]);
 
     return ExitPopup;
-  }();
+  })();
 
   /**
    * Simple plugin that handles the loading bar actions
    *
    * This plugin uses delegate events so it's independent of the sections.
    */
-  var LoadingBar = /*#__PURE__*/function () {
+  var LoadingBar = /*#__PURE__*/ (function () {
     function LoadingBar() {
       _classCallCheck(this, LoadingBar);
 
-      this.element = document.querySelector('.loading-bar');
+      this.element = document.querySelector(".loading-bar");
 
       if (this.element) {
-        document.addEventListener('theme:loading:start', this._onLoadingStart.bind(this));
-        document.addEventListener('theme:loading:end', this._onLoadingEnd.bind(this));
-        this.element.addEventListener('transitionend', this._onTransitionEnd.bind(this));
+        document.addEventListener(
+          "theme:loading:start",
+          this._onLoadingStart.bind(this)
+        );
+        document.addEventListener(
+          "theme:loading:end",
+          this._onLoadingEnd.bind(this)
+        );
+        this.element.addEventListener(
+          "transitionend",
+          this._onTransitionEnd.bind(this)
+        );
       }
     }
 
-    _createClass(LoadingBar, [{
-      key: "_onLoadingStart",
-      value: function _onLoadingStart() {
-        this.element.classList.add('is-visible');
-        this.element.style.width = '40%';
-      }
-    }, {
-      key: "_onLoadingEnd",
-      value: function _onLoadingEnd() {
-        this.element.style.width = '100%';
-        this.element.classList.add('is-finished');
-      }
-    }, {
-      key: "_onTransitionEnd",
-      value: function _onTransitionEnd(event) {
-        if (event.propertyName === 'width' && this.element.classList.contains('is-finished')) {
-          this.element.classList.remove('is-visible');
-          this.element.classList.remove('is-finished');
-          this.element.style.width = '0';
-        }
-      }
-    }]);
+    _createClass(LoadingBar, [
+      {
+        key: "_onLoadingStart",
+        value: function _onLoadingStart() {
+          this.element.classList.add("is-visible");
+          this.element.style.width = "40%";
+        },
+      },
+      {
+        key: "_onLoadingEnd",
+        value: function _onLoadingEnd() {
+          this.element.style.width = "100%";
+          this.element.classList.add("is-finished");
+        },
+      },
+      {
+        key: "_onTransitionEnd",
+        value: function _onTransitionEnd(event) {
+          if (
+            event.propertyName === "width" &&
+            this.element.classList.contains("is-finished")
+          ) {
+            this.element.classList.remove("is-visible");
+            this.element.classList.remove("is-finished");
+            this.element.style.width = "0";
+          }
+        },
+      },
+    ]);
 
     return LoadingBar;
-  }();
+  })();
 
-  var Accessibility = /*#__PURE__*/function () {
+  var Accessibility = /*#__PURE__*/ (function () {
     function Accessibility() {
       _classCallCheck(this, Accessibility);
     }
 
-    _createClass(Accessibility, null, [{
-      key: "trapFocus",
+    _createClass(Accessibility, null, [
+      {
+        key: "trapFocus",
 
-      /**
-       * Traps the focus in a particular container
-       */
-      value: function trapFocus(container, namespace) {
-        this.listeners = this.listeners || {}; // We check if there is an element with the attribute "autofocus"
+        /**
+         * Traps the focus in a particular container
+         */
+        value: function trapFocus(container, namespace) {
+          this.listeners = this.listeners || {}; // We check if there is an element with the attribute "autofocus"
 
-        var elementToFocus = container.querySelector('[autofocus]') || container;
-        container.setAttribute('tabindex', '-1');
-        elementToFocus.focus();
+          var elementToFocus =
+            container.querySelector("[autofocus]") || container;
+          container.setAttribute("tabindex", "-1");
+          elementToFocus.focus();
 
-        this.listeners[namespace] = function (event) {
-          if (container !== event.target && !container.contains(event.target)) {
-            elementToFocus.focus();
+          this.listeners[namespace] = function (event) {
+            if (
+              container !== event.target &&
+              !container.contains(event.target)
+            ) {
+              elementToFocus.focus();
+            }
+          };
+
+          document.addEventListener("focusin", this.listeners[namespace]);
+        },
+        /**
+         * Removes the trap of focus in a particular container
+         */
+      },
+      {
+        key: "removeTrapFocus",
+        value: function removeTrapFocus(container, namespace) {
+          if (container) {
+            container.removeAttribute("tabindex");
           }
-        };
 
-        document.addEventListener('focusin', this.listeners[namespace]);
-      }
-      /**
-       * Removes the trap of focus in a particular container
-       */
-
-    }, {
-      key: "removeTrapFocus",
-      value: function removeTrapFocus(container, namespace) {
-        if (container) {
-          container.removeAttribute('tabindex');
-        }
-
-        document.removeEventListener('focusin', this.listeners[namespace]);
-      }
-      /**
-       * Reset any previous trap focus
-       */
-
-    }, {
-      key: "clearTrapFocus",
-      value: function clearTrapFocus() {
-        for (var key in this.listeners) {
-          if (this.listeners.hasOwnProperty(key)) {
-            document.removeEventListener('focusin', this.listeners[key]);
+          document.removeEventListener("focusin", this.listeners[namespace]);
+        },
+        /**
+         * Reset any previous trap focus
+         */
+      },
+      {
+        key: "clearTrapFocus",
+        value: function clearTrapFocus() {
+          for (var key in this.listeners) {
+            if (this.listeners.hasOwnProperty(key)) {
+              document.removeEventListener("focusin", this.listeners[key]);
+            }
           }
-        }
 
-        this.listeners = {};
-      }
-    }]);
+          this.listeners = {};
+        },
+      },
+    ]);
 
     return Accessibility;
-  }();
+  })();
 
   /**
    * This class handles both the mini cart and the dedicated cart page. It's not the cleanest code on earth but works well :)
    */
 
-  var Cart = /*#__PURE__*/function () {
+  var Cart = /*#__PURE__*/ (function () {
     function Cart(element, options) {
       _classCallCheck(this, Cart);
 
@@ -1893,11 +2190,13 @@
       this.delegateElement = new Delegate(this.element);
       this.delegateRoot = new Delegate(document.documentElement);
       this.options = options;
-      this.miniCartElement = this.element.querySelector('.mini-cart');
+      this.miniCartElement = this.element.querySelector(".mini-cart");
       this.isMiniCartOpen = false;
 
-      if (window.theme.pageType !== 'cart' && this.miniCartElement) {
-        this.miniCartToggleElement = this.element.querySelector("[aria-controls=\"".concat(this.miniCartElement.id, "\"]"));
+      if (window.theme.pageType !== "cart" && this.miniCartElement) {
+        this.miniCartToggleElement = this.element.querySelector(
+          '[aria-controls="'.concat(this.miniCartElement.id, '"]')
+        );
 
         this._checkMiniCartScrollability();
       }
@@ -1907,409 +2206,552 @@
       this._attachListeners();
     }
 
-    _createClass(Cart, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-        this.delegateRoot.off();
-        window.removeEventListener('resize', this._calculateMiniCartHeightListener);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._calculateMiniCartHeightListener = this._calculateMiniCartHeight.bind(this);
+    _createClass(Cart, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+          this.delegateRoot.off();
+          window.removeEventListener(
+            "resize",
+            this._calculateMiniCartHeightListener
+          );
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._calculateMiniCartHeightListener = this._calculateMiniCartHeight.bind(
+            this
+          );
 
-        if (window.theme.pageType !== 'cart' && window.theme.cartType !== 'page') {
-          this.delegateElement.on('click', '[data-action="toggle-mini-cart"]', this._toggleMiniCart.bind(this));
-          this.delegateRoot.on('click', this._onWindowClick.bind(this));
-          window.addEventListener('resize', this._calculateMiniCartHeightListener);
-        }
+          if (
+            window.theme.pageType !== "cart" &&
+            window.theme.cartType !== "page"
+          ) {
+            this.delegateElement.on(
+              "click",
+              '[data-action="toggle-mini-cart"]',
+              this._toggleMiniCart.bind(this)
+            );
+            this.delegateRoot.on("click", this._onWindowClick.bind(this));
+            window.addEventListener(
+              "resize",
+              this._calculateMiniCartHeightListener
+            );
+          }
 
-        this.delegateRoot.on('click', '[data-action="decrease-quantity"]', this._updateQuantity.bind(this));
-        this.delegateRoot.on('click', '[data-action="increase-quantity"]', this._updateQuantity.bind(this));
-        this.delegateRoot.on('change', '.quantity-selector__value', this._updateQuantity.bind(this));
-        this.delegateRoot.on('keyup', '.quantity-selector__value', this._updateQuantitySize.bind(this));
-        this.delegateRoot.on('product:added', this._onProductAdded.bind(this));
-        this.delegateRoot.on('cart:refresh', this._onCartRefresh.bind(this));
-      }
-    }, {
-      key: "_toggleMiniCart",
-      value: function _toggleMiniCart(event) {
-        if (event) {
-          event.preventDefault();
-        }
+          this.delegateRoot.on(
+            "click",
+            '[data-action="decrease-quantity"]',
+            this._updateQuantity.bind(this)
+          );
+          this.delegateRoot.on(
+            "click",
+            '[data-action="increase-quantity"]',
+            this._updateQuantity.bind(this)
+          );
+          this.delegateRoot.on(
+            "change",
+            ".quantity-selector__value",
+            this._updateQuantity.bind(this)
+          );
+          this.delegateRoot.on(
+            "keyup",
+            ".quantity-selector__value",
+            this._updateQuantitySize.bind(this)
+          );
+          this.delegateRoot.on(
+            "product:added",
+            this._onProductAdded.bind(this)
+          );
+          this.delegateRoot.on("cart:refresh", this._onCartRefresh.bind(this));
+        },
+      },
+      {
+        key: "_toggleMiniCart",
+        value: function _toggleMiniCart(event) {
+          if (event) {
+            event.preventDefault();
+          }
 
-        if (this.isMiniCartOpen) {
-          this._closeMiniCart();
-        } else {
-          this._openMiniCart();
-        }
-      }
-    }, {
-      key: "_openMiniCart",
-      value: function _openMiniCart() {
-        this.miniCartToggleElement.setAttribute('aria-expanded', 'true'); // If we are on mobile phone we also set the aria-expanded attribute to true on the icon state holder
-
-        if (Responsive.getCurrentBreakpoint() === 'phone') {
-          this.miniCartToggleElement.querySelector('.header__cart-icon').setAttribute('aria-expanded', 'true');
-        } // Finally also set aria-hidden to false on controlled element
-
-
-        this.miniCartElement.setAttribute('aria-hidden', 'false');
-        this.isMiniCartOpen = true;
-
-        this._calculateMiniCartHeight(); // Trap the focus
-
-
-        Accessibility.trapFocus(this.miniCartElement, 'mini-cart');
-        document.body.classList.add('no-mobile-scroll');
-      }
-    }, {
-      key: "_closeMiniCart",
-      value: function _closeMiniCart() {
-        this.miniCartToggleElement.setAttribute('aria-expanded', 'false'); // If we are on mobile phone we also set the aria-expanded attribute to true on the icon state holder
-
-        if (Responsive.getCurrentBreakpoint() === 'phone') {
-          this.miniCartToggleElement.querySelector('.header__cart-icon').setAttribute('aria-expanded', 'false');
-          this.miniCartElement.style.maxHeight = '';
-        } // Finally also set aria-hidden to false on controlled element
-
-
-        this.miniCartElement.setAttribute('aria-hidden', 'true');
-        this.isMiniCartOpen = false;
-        document.body.classList.remove('no-mobile-scroll');
-      }
-    }, {
-      key: "_calculateMiniCartHeight",
-      value: function _calculateMiniCartHeight() {
-        if (Responsive.getCurrentBreakpoint() === 'phone') {
           if (this.isMiniCartOpen) {
-            var maxHeight = window.innerHeight - document.querySelector('.header').getBoundingClientRect().bottom;
-            this.miniCartElement.style.maxHeight = "".concat(maxHeight, "px"); // We also need to calculate the content part height to avoid any issue on Chrome
+            this._closeMiniCart();
+          } else {
+            this._openMiniCart();
+          }
+        },
+      },
+      {
+        key: "_openMiniCart",
+        value: function _openMiniCart() {
+          this.miniCartToggleElement.setAttribute("aria-expanded", "true"); // If we are on mobile phone we also set the aria-expanded attribute to true on the icon state holder
 
-            var miniCartContentElement = this.miniCartElement.querySelector('.mini-cart__content'),
-                miniCartRecapElement = this.miniCartElement.querySelector('.mini-cart__recap');
+          if (Responsive.getCurrentBreakpoint() === "phone") {
+            this.miniCartToggleElement
+              .querySelector(".header__cart-icon")
+              .setAttribute("aria-expanded", "true");
+          } // Finally also set aria-hidden to false on controlled element
 
-            if (miniCartRecapElement) {
-              miniCartContentElement.style.maxHeight = "".concat(maxHeight - miniCartRecapElement.clientHeight, "px");
+          this.miniCartElement.setAttribute("aria-hidden", "false");
+          this.isMiniCartOpen = true;
+
+          this._calculateMiniCartHeight(); // Trap the focus
+
+          Accessibility.trapFocus(this.miniCartElement, "mini-cart");
+          document.body.classList.add("no-mobile-scroll");
+        },
+      },
+      {
+        key: "_closeMiniCart",
+        value: function _closeMiniCart() {
+          this.miniCartToggleElement.setAttribute("aria-expanded", "false"); // If we are on mobile phone we also set the aria-expanded attribute to true on the icon state holder
+
+          if (Responsive.getCurrentBreakpoint() === "phone") {
+            this.miniCartToggleElement
+              .querySelector(".header__cart-icon")
+              .setAttribute("aria-expanded", "false");
+            this.miniCartElement.style.maxHeight = "";
+          } // Finally also set aria-hidden to false on controlled element
+
+          this.miniCartElement.setAttribute("aria-hidden", "true");
+          this.isMiniCartOpen = false;
+          document.body.classList.remove("no-mobile-scroll");
+        },
+      },
+      {
+        key: "_calculateMiniCartHeight",
+        value: function _calculateMiniCartHeight() {
+          if (Responsive.getCurrentBreakpoint() === "phone") {
+            if (this.isMiniCartOpen) {
+              var maxHeight =
+                window.innerHeight -
+                document.querySelector(".header").getBoundingClientRect()
+                  .bottom;
+              this.miniCartElement.style.maxHeight = "".concat(maxHeight, "px"); // We also need to calculate the content part height to avoid any issue on Chrome
+
+              var miniCartContentElement = this.miniCartElement.querySelector(
+                  ".mini-cart__content"
+                ),
+                miniCartRecapElement = this.miniCartElement.querySelector(
+                  ".mini-cart__recap"
+                );
+
+              if (miniCartRecapElement) {
+                miniCartContentElement.style.maxHeight = "".concat(
+                  maxHeight - miniCartRecapElement.clientHeight,
+                  "px"
+                );
+              }
+            } else {
+              this.miniCartElement.style.maxHeight = "";
+              this.miniCartElement.querySelector(
+                ".mini-cart__content"
+              ).style.maxHeight = "";
             }
           } else {
-            this.miniCartElement.style.maxHeight = '';
-            this.miniCartElement.querySelector('.mini-cart__content').style.maxHeight = '';
+            this.miniCartElement.style.maxHeight = "";
+            this.miniCartElement.querySelector(
+              ".mini-cart__content"
+            ).style.maxHeight = "";
           }
-        } else {
-          this.miniCartElement.style.maxHeight = '';
-          this.miniCartElement.querySelector('.mini-cart__content').style.maxHeight = '';
-        }
-      }
-      /**
-       * Change the quantity of the cart
-       */
-
-    }, {
-      key: "_updateQuantity",
-      value: function _updateQuantity(event, target) {
-        var _this = this;
-
-        var parsedQuantity = 1;
-
-        if (target.tagName === 'INPUT') {
-          parsedQuantity = parseInt(target.value);
-        } else {
-          parsedQuantity = parseInt(target.getAttribute('data-quantity'));
-        } // If we are in "page" mode, we reload the page instead of doing that in Ajax to have a better compatibility with apps
-
-
-        if (window.theme.cartType === 'page') {
-          if (target.hasAttribute('data-href')) {
-            window.location.href = target.getAttribute('data-href');
+        },
+        /**
+         * Change the quantity of the cart
+         */
+      },
+      {
+        key: "_updateQuantity",
+        value: function _updateQuantity(event, target) {
+          var _this = this;
+          var parsedQuantity = 1;
+          if (target.tagName === "INPUT") {
+            parsedQuantity = parseInt(target.value);
           } else {
-            window.location.href = "".concat(window.routes.cartChangeUrl, "?id=").concat(target.getAttribute('data-line-id'), "&quantity=").concat(parsedQuantity);
+            parsedQuantity = parseInt(target.getAttribute("data-quantity"));
+          } // If we are in "page" mode, we reload the page instead of doing that in Ajax to have a better compatibility with apps
+
+          if (window.theme.cartType === "page") {
+            if (target.hasAttribute("data-href")) {
+              window.location.href = target.getAttribute("data-href");
+            } else {
+              window.location.href = ""
+                .concat(window.routes.cartChangeUrl, "?id=")
+                .concat(target.getAttribute("data-line-id"), "&quantity=")
+                .concat(parsedQuantity);
+            }
+
+            return;
+          }
+          if ($(target).attr("data-remove-action") == "true") {
+            showConfirmDialog(
+              "Are you sure you want to remove this item?",
+              true,
+              function () {
+                processUpdateApi();
+              }
+            );
+          } else {
+            processUpdateApi();
           }
 
-          return;
-        }
-
-        document.dispatchEvent(new CustomEvent('theme:loading:start'));
-        fetch("".concat(window.routes.cartChangeUrl, ".js"), {
-          body: JSON.stringify({
-            id: target.getAttribute('data-line-id'),
-            quantity: parsedQuantity
-          }),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
-          }
-        }).then(function (cart) {
-          cart.json().then(function (content) {
-            _this.itemCount = content['item_count'];
-
-            _this._rerender(false).then(function () {
-              document.dispatchEvent(new CustomEvent('theme:loading:end'));
+          function processUpdateApi() {
+            document.dispatchEvent(new CustomEvent("theme:loading:start"));
+            fetch("".concat(window.routes.cartChangeUrl, ".js"), {
+              body: JSON.stringify({
+                id: target.getAttribute("data-line-id"),
+                quantity: parsedQuantity,
+              }),
+              credentials: "same-origin",
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+              },
+            }).then(function (cart) {
+              cart.json().then(function (content) {
+                _this.itemCount = content["item_count"];
+                _this._rerender(false).then(function () {
+                  showToast("Cart Updated...", 1);
+                  document.dispatchEvent(new CustomEvent("theme:loading:end"));
+                });
+              });
             });
-          });
-        });
-        event.preventDefault();
-      }
-    }, {
-      key: "_updateQuantitySize",
-      value: function _updateQuantitySize(event, target) {
-        target.setAttribute('size', Math.max(target.value.length, 2));
-      }
-      /**
-       * This method is called internally to rerender the cart, based on the content returned by Shopify Ajax API.
-       * We could save some performance by updating directly in JavaScript instead of doing a GET call to get the HTML
-       * from Shopify, but by experience, this allows for easier app integration as it allows the Liquid to re-run
-       * all the time and hence having easier logic.
-       */
+          }
+          event.preventDefault();
+        },
+      },
+      {
+        key: "_updateQuantitySize",
+        value: function _updateQuantitySize(event, target) {
+          target.setAttribute("size", Math.max(target.value.length, 2));
+        },
+        /**
+         * This method is called internally to rerender the cart, based on the content returned by Shopify Ajax API.
+         * We could save some performance by updating directly in JavaScript instead of doing a GET call to get the HTML
+         * from Shopify, but by experience, this allows for easier app integration as it allows the Liquid to re-run
+         * all the time and hence having easier logic.
+         */
+      },
+      {
+        key: "_rerender",
+        value: function _rerender() {
+          var _this2 = this;
 
-    }, {
-      key: "_rerender",
-      value: function _rerender() {
-        var _this2 = this;
+          var scrollToTop =
+            arguments.length > 0 && arguments[0] !== undefined
+              ? arguments[0]
+              : true;
+          // Note: appending a timestamp is necessary as the polyfill on IE11 and lower does not support the "cache" property
+          var url = "";
 
-        var scrollToTop = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-        // Note: appending a timestamp is necessary as the polyfill on IE11 and lower does not support the "cache" property
-        var url = '';
+          if (window.theme.pageType !== "cart") {
+            url = ""
+              .concat(window.routes.cartUrl, "?view=mini-cart&timestamp=")
+              .concat(Date.now());
+          } else {
+            url = ""
+              .concat(window.routes.cartUrl, "?timestamp=")
+              .concat(Date.now());
+          }
 
-        if (window.theme.pageType !== 'cart') {
-          url = "".concat(window.routes.cartUrl, "?view=mini-cart&timestamp=").concat(Date.now());
-        } else {
-          url = "".concat(window.routes.cartUrl, "?timestamp=").concat(Date.now());
-        }
+          return fetch(url, {
+            credentials: "same-origin",
+            method: "GET",
+          }).then(function (content) {
+            content.text().then(function (html) {
+              // We extract the data-item-count from the returned element
+              var myDiv = document.createElement("div");
+              myDiv.innerHTML = html;
 
-        return fetch(url, {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (content) {
-          content.text().then(function (html) {
-            // We extract the data-item-count from the returned element
-            var myDiv = document.createElement('div');
-            myDiv.innerHTML = html;
+              if (
+                myDiv.firstElementChild &&
+                myDiv.firstElementChild.hasAttribute("data-item-count")
+              ) {
+                _this2.itemCount = parseInt(
+                  myDiv.firstElementChild.getAttribute("data-item-count")
+                );
+              }
 
-            if (myDiv.firstElementChild && myDiv.firstElementChild.hasAttribute('data-item-count')) {
-              _this2.itemCount = parseInt(myDiv.firstElementChild.getAttribute('data-item-count'));
-            }
+              _this2.element.querySelector(".header__cart-count").textContent =
+                _this2.itemCount;
 
-            _this2.element.querySelector('.header__cart-count').textContent = _this2.itemCount;
+              if (window.theme.cartType === "drawer") {
+                if (window.theme.pageType !== "cart") {
+                  // Note: we could use outerHTML here but outerHTML does not update the reference to new object
+                  var tempElement = document.createElement("div");
+                  tempElement.innerHTML = html; // When we re-render, we need to preserve the scroll position when content changes
 
-            if (window.theme.cartType === 'drawer') {
-              if (window.theme.pageType !== 'cart') {
-                // Note: we could use outerHTML here but outerHTML does not update the reference to new object
-                var tempElement = document.createElement('div');
-                tempElement.innerHTML = html; // When we re-render, we need to preserve the scroll position when content changes
-
-                var miniCartItemListElement = _this2.miniCartElement.querySelector('.mini-cart__line-item-list'),
+                  var miniCartItemListElement = _this2.miniCartElement.querySelector(
+                      ".mini-cart__line-item-list"
+                    ),
                     scrollPosition = null;
 
-                if (miniCartItemListElement) {
-                  scrollPosition = miniCartItemListElement.scrollTop;
+                  if (miniCartItemListElement) {
+                    scrollPosition = miniCartItemListElement.scrollTop;
+                  }
+
+                  _this2.miniCartElement.innerHTML = tempElement.querySelector(
+                    ".mini-cart"
+                  ).innerHTML;
+
+                  var newMiniCartItemListElement = _this2.miniCartElement.querySelector(
+                    ".mini-cart__line-item-list"
+                  );
+
+                  if (newMiniCartItemListElement && scrollPosition !== null) {
+                    newMiniCartItemListElement.scrollTop = scrollPosition;
+                  }
+
+                  _this2._checkMiniCartScrollability();
+
+                  _this2._calculateMiniCartHeight();
+
+                  _this2.element.dispatchEvent(
+                    new CustomEvent("cart:rerendered")
+                  );
+                } else {
+                  // The replacement of the DOM here could be made better and more resilient (maybe exploring using a virtual DOM approach in future?)
+                  var _tempElement = document.createElement("div");
+
+                  _tempElement.innerHTML = html;
+                  var originalCart = document.querySelector(
+                    '[data-section-type="cart"]'
+                  );
+                  originalCart.innerHTML = _tempElement.querySelector(
+                    '[data-section-type="cart"]'
+                  ).innerHTML;
+
+                  if (scrollToTop) {
+                    window.scrollTo({
+                      top: 0,
+                      behavior: "smooth",
+                    });
+                  } // Reload the Shopify Review badges
+
+                  if (window.SPR) {
+                    window.SPR.initDomEls();
+                    window.SPR.loadBadges();
+                  }
+
+                  _this2.element.dispatchEvent(
+                    new CustomEvent("cart:rerendered", {
+                      bubbles: true,
+                    })
+                  );
                 }
-
-                _this2.miniCartElement.innerHTML = tempElement.querySelector('.mini-cart').innerHTML;
-
-                var newMiniCartItemListElement = _this2.miniCartElement.querySelector('.mini-cart__line-item-list');
-
-                if (newMiniCartItemListElement && scrollPosition !== null) {
-                  newMiniCartItemListElement.scrollTop = scrollPosition;
-                }
-
-                _this2._checkMiniCartScrollability();
-
-                _this2._calculateMiniCartHeight();
-
-                _this2.element.dispatchEvent(new CustomEvent('cart:rerendered'));
-              } else {
-                // The replacement of the DOM here could be made better and more resilient (maybe exploring using a virtual DOM approach in future?)
-                var _tempElement = document.createElement('div');
-
-                _tempElement.innerHTML = html;
-                var originalCart = document.querySelector('[data-section-type="cart"]');
-                originalCart.innerHTML = _tempElement.querySelector('[data-section-type="cart"]').innerHTML;
-
-                if (scrollToTop) {
-                  window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                  });
-                } // Reload the Shopify Review badges
-
-
-                if (window.SPR) {
-                  window.SPR.initDomEls();
-                  window.SPR.loadBadges();
-                }
-
-                _this2.element.dispatchEvent(new CustomEvent('cart:rerendered', {
-                  bubbles: true
-                }));
               }
+            });
+          });
+        },
+        /**
+         * Check if the mini-cart is scrollable
+         */
+      },
+      {
+        key: "_checkMiniCartScrollability",
+        value: function _checkMiniCartScrollability() {
+          var miniCartItemList = this.miniCartElement.querySelector(
+            ".mini-cart__line-item-list"
+          );
+
+          if (
+            miniCartItemList &&
+            miniCartItemList.scrollHeight > miniCartItemList.clientHeight
+          ) {
+            miniCartItemList.classList.add("is-scrollable");
+          }
+        },
+        /**
+         * This callback is automatically called when a variant has been added, which allows us to open it and re-render
+         */
+      },
+      {
+        key: "_onProductAdded",
+        value: function _onProductAdded(event) {
+          var _this3 = this;
+
+          this.itemCount += event.detail.quantity;
+          /* Add the quantity added */
+
+          this._onCartRefresh().then(function () {
+            if (window.theme.pageType !== "cart") {
+              // If we don't have the sticky header enabled, we scroll to top to make sure it is visible
+              if (!_this3.options["useStickyHeader"]) {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }
+
+              _this3._openMiniCart();
             }
           });
-        });
-      }
-      /**
-       * Check if the mini-cart is scrollable
-       */
+        },
+        /**
+         * Allows to refresh the mini-cart
+         */
+      },
+      {
+        key: "_onCartRefresh",
+        value: function _onCartRefresh(event) {
+          var scrollToTop = true;
 
-    }, {
-      key: "_checkMiniCartScrollability",
-      value: function _checkMiniCartScrollability() {
-        var miniCartItemList = this.miniCartElement.querySelector('.mini-cart__line-item-list');
-
-        if (miniCartItemList && miniCartItemList.scrollHeight > miniCartItemList.clientHeight) {
-          miniCartItemList.classList.add('is-scrollable');
-        }
-      }
-      /**
-       * This callback is automatically called when a variant has been added, which allows us to open it and re-render
-       */
-
-    }, {
-      key: "_onProductAdded",
-      value: function _onProductAdded(event) {
-        var _this3 = this;
-
-        this.itemCount += event.detail.quantity;
-        /* Add the quantity added */
-
-        this._onCartRefresh().then(function () {
-          if (window.theme.pageType !== 'cart') {
-            // If we don't have the sticky header enabled, we scroll to top to make sure it is visible
-            if (!_this3.options['useStickyHeader']) {
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-              });
-            }
-
-            _this3._openMiniCart();
+          if (event && event.detail) {
+            scrollToTop = event.detail.scrollToTop;
           }
-        });
-      }
-      /**
-       * Allows to refresh the mini-cart
-       */
 
-    }, {
-      key: "_onCartRefresh",
-      value: function _onCartRefresh(event) {
-        var scrollToTop = true;
-
-        if (event && event.detail) {
-          scrollToTop = event.detail.scrollToTop;
-        }
-
-        return this._rerender(scrollToTop).then(function () {
-          document.dispatchEvent(new CustomEvent('theme:loading:end'));
-        });
-      }
-      /**
-       * We need to catch click outside the element to automatically close mini-cart
-       */
-
-    }, {
-      key: "_onWindowClick",
-      value: function _onWindowClick(event) {
-        if (this.miniCartElement && this.isMiniCartOpen && !this.element.contains(event.target)) {
-          this._closeMiniCart();
-        }
-      }
-    }]);
+          return this._rerender(scrollToTop).then(function () {
+            document.dispatchEvent(new CustomEvent("theme:loading:end"));
+          });
+        },
+        /**
+         * We need to catch click outside the element to automatically close mini-cart
+         */
+      },
+      {
+        key: "_onWindowClick",
+        value: function _onWindowClick(event) {
+          if (
+            this.miniCartElement &&
+            this.isMiniCartOpen &&
+            !this.element.contains(event.target)
+          ) {
+            this._closeMiniCart();
+          }
+        },
+      },
+    ]);
 
     return Cart;
-  }();
+  })();
 
-  var MobileNavigation = /*#__PURE__*/function () {
+  var MobileNavigation = /*#__PURE__*/ (function () {
     function MobileNavigation(element) {
       _classCallCheck(this, MobileNavigation);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
       this.delegateRoot = new Delegate(document.documentElement);
-      this.mobileMenuElement = this.element.querySelector('.mobile-menu');
-      this.mobileMenuToggleElement = this.element.querySelector("[aria-controls=\"".concat(this.mobileMenuElement.id, "\"]"));
+      this.mobileMenuElement = this.element.querySelector(".mobile-menu");
+      this.mobileMenuToggleElement = this.element.querySelector(
+        '[aria-controls="'.concat(this.mobileMenuElement.id, '"]')
+      );
       this.isOpen = false;
 
       this._attachListeners();
     }
 
-    _createClass(MobileNavigation, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-        this.delegateRoot.off();
-        window.removeEventListener('resize', this._calculatMaxHeightListener);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._calculatMaxHeightListener = this._calculateMaxHeight.bind(this);
-        this.delegateElement.on('click', '[data-action="toggle-menu"]', this._toggleMenu.bind(this));
-        this.delegateElement.on('click', '[data-action="open-panel"]', this._openPanel.bind(this));
-        this.delegateElement.on('click', '[data-action="close-panel"]', this._closePanel.bind(this));
-        this.delegateRoot.on('click', this._onWindowClick.bind(this));
-        window.addEventListener('resize', this._calculatMaxHeightListener);
-      }
-    }, {
-      key: "_toggleMenu",
-      value: function _toggleMenu() {
-        this.isOpen = !this.isOpen;
-        this.mobileMenuToggleElement.setAttribute('aria-expanded', this.isOpen ? 'true' : 'false');
-        this.mobileMenuElement.setAttribute('aria-hidden', this.isOpen ? 'false' : 'true');
+    _createClass(MobileNavigation, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+          this.delegateRoot.off();
+          window.removeEventListener("resize", this._calculatMaxHeightListener);
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._calculatMaxHeightListener = this._calculateMaxHeight.bind(this);
+          this.delegateElement.on(
+            "click",
+            '[data-action="toggle-menu"]',
+            this._toggleMenu.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="open-panel"]',
+            this._openPanel.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="close-panel"]',
+            this._closePanel.bind(this)
+          );
+          this.delegateRoot.on("click", this._onWindowClick.bind(this));
+          window.addEventListener("resize", this._calculatMaxHeightListener);
+        },
+      },
+      {
+        key: "_toggleMenu",
+        value: function _toggleMenu() {
+          this.isOpen = !this.isOpen;
+          this.mobileMenuToggleElement.setAttribute(
+            "aria-expanded",
+            this.isOpen ? "true" : "false"
+          );
+          this.mobileMenuElement.setAttribute(
+            "aria-hidden",
+            this.isOpen ? "false" : "true"
+          );
 
-        if (!this.isOpen) {
-          this.mobileMenuElement.style.maxHeight = ''; // If closed, we need to close all sub-menus
+          if (!this.isOpen) {
+            this.mobileMenuElement.style.maxHeight = ""; // If closed, we need to close all sub-menus
 
-          this.element.querySelectorAll('.mobile-menu__panel.is-open').forEach(function (item) {
-            item.classList.remove('is-open');
-          });
-          document.body.classList.remove('no-mobile-scroll');
-        } else {
-          // We need to restrict the height
-          this._calculateMaxHeight();
+            this.element
+              .querySelectorAll(".mobile-menu__panel.is-open")
+              .forEach(function (item) {
+                item.classList.remove("is-open");
+              });
+            document.body.classList.remove("no-mobile-scroll");
+          } else {
+            // We need to restrict the height
+            this._calculateMaxHeight();
 
-          document.body.classList.add('no-mobile-scroll');
-        }
-      }
-    }, {
-      key: "_openPanel",
-      value: function _openPanel(event, target) {
-        target.setAttribute('aria-expanded', 'true');
-        this.element.querySelector("#".concat(target.getAttribute('aria-controls'))).classList.add('is-open');
-      }
-    }, {
-      key: "_closePanel",
-      value: function _closePanel(event, target) {
-        // We first get the panel to be closed
-        var panelToClose = target.closest('.mobile-menu__panel.is-open');
-        panelToClose.classList.remove('is-open'); // Then update the ARIA attributes for button that control it
+            document.body.classList.add("no-mobile-scroll");
+          }
+        },
+      },
+      {
+        key: "_openPanel",
+        value: function _openPanel(event, target) {
+          target.setAttribute("aria-expanded", "true");
+          this.element
+            .querySelector("#".concat(target.getAttribute("aria-controls")))
+            .classList.add("is-open");
+        },
+      },
+      {
+        key: "_closePanel",
+        value: function _closePanel(event, target) {
+          // We first get the panel to be closed
+          var panelToClose = target.closest(".mobile-menu__panel.is-open");
+          panelToClose.classList.remove("is-open"); // Then update the ARIA attributes for button that control it
 
-        this.element.querySelector("[aria-controls=\"".concat(panelToClose.id, "\"]")).setAttribute('aria-expanded', 'false');
-      }
-    }, {
-      key: "_calculateMaxHeight",
-      value: function _calculateMaxHeight() {
-        if (this.isOpen) {
-          this.mobileMenuElement.style.maxHeight = "".concat(window.innerHeight - document.querySelector('.header').getBoundingClientRect().bottom, "px");
-        }
-      }
-    }, {
-      key: "_onWindowClick",
-      value: function _onWindowClick(event) {
-        if (this.isOpen && !this.element.contains(event.target)) {
-          this._toggleMenu();
-        }
-      }
-    }]);
+          this.element
+            .querySelector('[aria-controls="'.concat(panelToClose.id, '"]'))
+            .setAttribute("aria-expanded", "false");
+        },
+      },
+      {
+        key: "_calculateMaxHeight",
+        value: function _calculateMaxHeight() {
+          if (this.isOpen) {
+            this.mobileMenuElement.style.maxHeight = "".concat(
+              window.innerHeight -
+                document.querySelector(".header").getBoundingClientRect()
+                  .bottom,
+              "px"
+            );
+          }
+        },
+      },
+      {
+        key: "_onWindowClick",
+        value: function _onWindowClick(event) {
+          if (this.isOpen && !this.element.contains(event.target)) {
+            this._toggleMenu();
+          }
+        },
+      },
+    ]);
 
     return MobileNavigation;
-  }();
+  })();
 
-  var ModalManager = /*#__PURE__*/function () {
+  var ModalManager = /*#__PURE__*/ (function () {
     function ModalManager() {
       _classCallCheck(this, ModalManager);
 
@@ -2319,140 +2761,188 @@
       this._attachListeners();
     }
 
-    _createClass(ModalManager, [{
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.domDelegate.on('click', '[data-action="open-modal"]', this._openModal.bind(this));
-        this.domDelegate.on('click', '[data-action="close-modal"]', this._closeModal.bind(this)); // We allow any other code to force closing a modal by listening to the "modal:close" event
+    _createClass(ModalManager, [
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.domDelegate.on(
+            "click",
+            '[data-action="open-modal"]',
+            this._openModal.bind(this)
+          );
+          this.domDelegate.on(
+            "click",
+            '[data-action="close-modal"]',
+            this._closeModal.bind(this)
+          ); // We allow any other code to force closing a modal by listening to the "modal:close" event
 
-        document.addEventListener('modal:close', this._closeModal.bind(this));
-        this._clickOutsideListener = this._checkClickOutside.bind(this); // If there is already an active modal when the page is loaded, we directly attach the listener on outside click
+          document.addEventListener("modal:close", this._closeModal.bind(this));
+          this._clickOutsideListener = this._checkClickOutside.bind(this); // If there is already an active modal when the page is loaded, we directly attach the listener on outside click
 
-        if (this.activeModal) {
-          document.documentElement.classList.add('is-locked');
-          this.domDelegate.on('click', this._clickOutsideListener);
-        }
-      }
-    }, {
-      key: "_openModal",
-      value: function _openModal(event, target) {
-        var _this = this;
+          if (this.activeModal) {
+            document.documentElement.classList.add("is-locked");
+            this.domDelegate.on("click", this._clickOutsideListener);
+          }
+        },
+      },
+      {
+        key: "_openModal",
+        value: function _openModal(event, target) {
+          var _this = this;
 
-        var modal = document.querySelector("#".concat(target.getAttribute('aria-controls')));
+          var modal = document.querySelector(
+            "#".concat(target.getAttribute("aria-controls"))
+          );
 
-        if (modal) {
-          var onOpen = function onOpen(event) {
-            if (event.propertyName === 'visibility') {
-              modal.removeEventListener('transitionend', onOpen);
-              Accessibility.trapFocus(modal, 'modal');
-              _this.activeModal = modal;
-            }
-          };
+          if (modal) {
+            var onOpen = function onOpen(event) {
+              if (event.propertyName === "visibility") {
+                modal.removeEventListener("transitionend", onOpen);
+                Accessibility.trapFocus(modal, "modal");
+                _this.activeModal = modal;
+              }
+            };
 
-          modal.addEventListener('transitionend', onOpen);
-          modal.setAttribute('aria-hidden', 'false');
-          document.documentElement.classList.add('is-locked');
-          this.domDelegate.on('click', this._clickOutsideListener);
-          return false; // Prevent the event to be propagated to the clickOutsideListener immediately
-        }
-      }
-    }, {
-      key: "_closeModal",
-      value: function _closeModal() {
-        var _this2 = this;
+            modal.addEventListener("transitionend", onOpen);
+            modal.setAttribute("aria-hidden", "false");
+            document.documentElement.classList.add("is-locked");
+            this.domDelegate.on("click", this._clickOutsideListener);
+            return false; // Prevent the event to be propagated to the clickOutsideListener immediately
+          }
+        },
+      },
+      {
+        key: "_closeModal",
+        value: function _closeModal() {
+          var _this2 = this;
 
-        if (this.activeModal) {
-          var onClose = function onClose(event) {
-            if (event.propertyName === 'visibility') {
-              _this2.activeModal.removeEventListener('transitionend', onClose);
+          if (this.activeModal) {
+            var onClose = function onClose(event) {
+              if (event.propertyName === "visibility") {
+                _this2.activeModal.removeEventListener(
+                  "transitionend",
+                  onClose
+                );
 
-              Accessibility.removeTrapFocus(_this2.activeModal, 'modal'); // We emit an event saying it has closed, which can give the option to do cleanup
+                Accessibility.removeTrapFocus(_this2.activeModal, "modal"); // We emit an event saying it has closed, which can give the option to do cleanup
 
-              _this2.activeModal.dispatchEvent(new CustomEvent('modal:closed'));
+                _this2.activeModal.dispatchEvent(
+                  new CustomEvent("modal:closed")
+                );
 
-              _this2.activeModal = null;
-            }
-          };
+                _this2.activeModal = null;
+              }
+            };
 
-          this.activeModal.addEventListener('transitionend', onClose);
-          this.activeModal.setAttribute('aria-hidden', 'true');
-          document.documentElement.classList.remove('is-locked');
-          this.domDelegate.off('click', this._clickOutsideListener);
-        }
-      }
-    }, {
-      key: "_checkClickOutside",
-      value: function _checkClickOutside(event) {
-        if (this.activeModal && (!this.activeModal.contains(event.target) || this.activeModal === event.target)) {
-          this._closeModal();
-        }
-      }
-    }]);
+            this.activeModal.addEventListener("transitionend", onClose);
+            this.activeModal.setAttribute("aria-hidden", "true");
+            document.documentElement.classList.remove("is-locked");
+            this.domDelegate.off("click", this._clickOutsideListener);
+          }
+        },
+      },
+      {
+        key: "_checkClickOutside",
+        value: function _checkClickOutside(event) {
+          if (
+            this.activeModal &&
+            (!this.activeModal.contains(event.target) ||
+              this.activeModal === event.target)
+          ) {
+            this._closeModal();
+          }
+        },
+      },
+    ]);
 
     return ModalManager;
-  }();
+  })();
 
-  var NewsletterPopup = /*#__PURE__*/function () {
+  var NewsletterPopup = /*#__PURE__*/ (function () {
     function NewsletterPopup(element) {
       _classCallCheck(this, NewsletterPopup);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(element.getAttribute('data-popup-settings')); // If the popup has been already displayed, we do not display it
+      this.options = JSON.parse(element.getAttribute("data-popup-settings")); // If the popup has been already displayed, we do not display it
 
       try {
-        if (window.location.hash === '#newsletter-popup' && window.theme.pageType !== '') {
+        if (
+          window.location.hash === "#newsletter-popup" &&
+          window.theme.pageType !== ""
+        ) {
           this._openPopup();
-        } else if (!this.options['showOnlyOnce'] || this.options['showOnlyOnce'] && localStorage.getItem('themePopup') === null) {
-          setTimeout(this._openPopup.bind(this), this.options['apparitionDelay'] * 1000);
+        } else if (
+          !this.options["showOnlyOnce"] ||
+          (this.options["showOnlyOnce"] &&
+            localStorage.getItem("themePopup") === null)
+        ) {
+          setTimeout(
+            this._openPopup.bind(this),
+            this.options["apparitionDelay"] * 1000
+          );
         }
-      } catch (error) {// Some browsers (especially in private mode) throw an exception when trying to access local storage, so we protect ourselves here
+      } catch (error) {
+        // Some browsers (especially in private mode) throw an exception when trying to access local storage, so we protect ourselves here
       }
 
       this._attachListeners();
     }
 
-    _createClass(NewsletterPopup, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('click', '[data-action="close-popup"]', this._closePopup.bind(this));
-        this._clickOutsideListener = this._checkClickOutside.bind(this);
-      }
-    }, {
-      key: "_openPopup",
-      value: function _openPopup() {
-        if (!window.theme.isExitPopupOpen) {
-          this.element.setAttribute('aria-hidden', 'false');
-          localStorage.setItem('themePopup', 'true');
-          window.theme.isNewsletterPopupOpen = true;
-          this.delegateElement.on('click', this._clickOutsideListener);
-        }
-      }
-    }, {
-      key: "_closePopup",
-      value: function _closePopup() {
-        this.element.setAttribute('aria-hidden', 'true');
-        window.theme.isNewsletterPopupOpen = false;
-        this.delegateElement.off('click');
-      }
-    }, {
-      key: "_checkClickOutside",
-      value: function _checkClickOutside(event) {
-        if (!this.element.contains(event.target) || this.element === event.target) {
-          this._closePopup();
-        }
-      }
-    }]);
+    _createClass(NewsletterPopup, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "click",
+            '[data-action="close-popup"]',
+            this._closePopup.bind(this)
+          );
+          this._clickOutsideListener = this._checkClickOutside.bind(this);
+        },
+      },
+      {
+        key: "_openPopup",
+        value: function _openPopup() {
+          if (!window.theme.isExitPopupOpen) {
+            this.element.setAttribute("aria-hidden", "false");
+            localStorage.setItem("themePopup", "true");
+            window.theme.isNewsletterPopupOpen = true;
+            this.delegateElement.on("click", this._clickOutsideListener);
+          }
+        },
+      },
+      {
+        key: "_closePopup",
+        value: function _closePopup() {
+          this.element.setAttribute("aria-hidden", "true");
+          window.theme.isNewsletterPopupOpen = false;
+          this.delegateElement.off("click");
+        },
+      },
+      {
+        key: "_checkClickOutside",
+        value: function _checkClickOutside(event) {
+          if (
+            !this.element.contains(event.target) ||
+            this.element === event.target
+          ) {
+            this._closePopup();
+          }
+        },
+      },
+    ]);
 
     return NewsletterPopup;
-  }();
+  })();
 
-  var OverflowScroller = /*#__PURE__*/function () {
+  var OverflowScroller = /*#__PURE__*/ (function () {
     function OverflowScroller(element, options) {
       _classCallCheck(this, OverflowScroller);
 
@@ -2464,51 +2954,68 @@
       this.options = options;
       this.lastKnownY = window.scrollY;
       this.currentTop = 0;
-      this.initialTopOffset = options['offsetTop'] || parseInt(window.getComputedStyle(this.element).top);
+      this.initialTopOffset =
+        options["offsetTop"] ||
+        parseInt(window.getComputedStyle(this.element).top);
 
       this._attachListeners();
     }
 
-    _createClass(OverflowScroller, [{
-      key: "destroy",
-      value: function destroy() {
-        window.removeEventListener('scroll', this._checkPositionListener);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._checkPositionListener = this._checkPosition.bind(this);
-        window.addEventListener('scroll', this._checkPositionListener);
-      }
-    }, {
-      key: "_checkPosition",
-      value: function _checkPosition() {
-        var _this = this;
+    _createClass(OverflowScroller, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          window.removeEventListener("scroll", this._checkPositionListener);
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._checkPositionListener = this._checkPosition.bind(this);
+          window.addEventListener("scroll", this._checkPositionListener);
+        },
+      },
+      {
+        key: "_checkPosition",
+        value: function _checkPosition() {
+          var _this = this;
 
-        fastdom.measure(function () {
-          var bounds = _this.element.getBoundingClientRect(),
-              maxTop = bounds.top + window.scrollY - _this.element.offsetTop + _this.initialTopOffset,
-              minTop = _this.element.clientHeight - window.innerHeight + (_this.options['offsetBottom'] || 0);
+          fastdom.measure(function () {
+            var bounds = _this.element.getBoundingClientRect(),
+              maxTop =
+                bounds.top +
+                window.scrollY -
+                _this.element.offsetTop +
+                _this.initialTopOffset,
+              minTop =
+                _this.element.clientHeight -
+                window.innerHeight +
+                (_this.options["offsetBottom"] || 0);
 
-          if (window.scrollY < _this.lastKnownY) {
-            _this.currentTop -= window.scrollY - _this.lastKnownY;
-          } else {
-            _this.currentTop += _this.lastKnownY - window.scrollY;
-          }
+            if (window.scrollY < _this.lastKnownY) {
+              _this.currentTop -= window.scrollY - _this.lastKnownY;
+            } else {
+              _this.currentTop += _this.lastKnownY - window.scrollY;
+            }
 
-          _this.currentTop = Math.min(Math.max(_this.currentTop, -minTop), maxTop, _this.initialTopOffset);
-          _this.lastKnownY = window.scrollY;
-        });
-        fastdom.mutate(function () {
-          _this.element.style.top = "".concat(_this.currentTop, "px");
-        });
-      }
-    }]);
+            _this.currentTop = Math.min(
+              Math.max(_this.currentTop, -minTop),
+              maxTop,
+              _this.initialTopOffset
+            );
+            _this.lastKnownY = window.scrollY;
+          });
+          fastdom.mutate(function () {
+            _this.element.style.top = "".concat(_this.currentTop, "px");
+          });
+        },
+      },
+    ]);
 
     return OverflowScroller;
-  }();
+  })();
 
-  var PopoverManager = /*#__PURE__*/function () {
+  var PopoverManager = /*#__PURE__*/ (function () {
     function PopoverManager() {
       _classCallCheck(this, PopoverManager);
 
@@ -2519,106 +3026,163 @@
       this._attachListeners();
     }
 
-    _createClass(PopoverManager, [{
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('click', '[data-action="toggle-popover"]', this._togglePopover.bind(this));
-        this.delegateElement.on('click', '[data-action="show-popover-panel"]', this._showPanel.bind(this));
-        this.delegateRoot.on('click', this._onWindowClick.bind(this));
-        document.addEventListener('popover:close', this._closeActivePopover.bind(this));
-        window.addEventListener('resize', this._windowResized.bind(this));
-      }
-    }, {
-      key: "_togglePopover",
-      value: function _togglePopover(event, target) {
-        var hasActivePopover = this.activePopover !== null,
-            previousActivePopoverId = this.activePopover ? this.activePopover.id : null; // If the toggler has a "data-follow-link" attribute, we match against the breakpoint and redirect to the page
+    _createClass(PopoverManager, [
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "click",
+            '[data-action="toggle-popover"]',
+            this._togglePopover.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="show-popover-panel"]',
+            this._showPanel.bind(this)
+          );
+          this.delegateRoot.on("click", this._onWindowClick.bind(this));
+          document.addEventListener(
+            "popover:close",
+            this._closeActivePopover.bind(this)
+          );
+          window.addEventListener("resize", this._windowResized.bind(this));
+        },
+      },
+      {
+        key: "_togglePopover",
+        value: function _togglePopover(event, target) {
+          var hasActivePopover = this.activePopover !== null,
+            previousActivePopoverId = this.activePopover
+              ? this.activePopover.id
+              : null; // If the toggler has a "data-follow-link" attribute, we match against the breakpoint and redirect to the page
 
-        if (target.hasAttribute('data-follow-link') && Responsive.matchesBreakpoint(target.getAttribute('data-follow-link'))) {
-          return;
-        }
-
-        if (hasActivePopover) {
-          this._closeActivePopover();
-        }
-
-        if (!hasActivePopover || hasActivePopover && target.getAttribute('aria-controls') !== previousActivePopoverId) {
-          this._openPopover(target);
-        }
-
-        event.preventDefault();
-      }
-    }, {
-      key: "_closeActivePopover",
-      value: function _closeActivePopover() {
-        this.activePopover.setAttribute('aria-hidden', 'true');
-        document.querySelector("[aria-controls=\"".concat(this.activePopover.id, "\"]")).setAttribute('aria-expanded', 'false');
-        this.activePopover = null;
-      }
-    }, {
-      key: "_openPopover",
-      value: function _openPopover(target) {
-        var element = document.getElementById(target.getAttribute('aria-controls'));
-        target.setAttribute('aria-expanded', 'true');
-        element.setAttribute('aria-hidden', 'false'); // If we are on mobile phone we also set the aria-expanded attribute to true on the icon state holder
-
-        if (Responsive.getCurrentBreakpoint() === 'phone') {
-          element.style.height = "".concat(window.innerHeight - document.querySelector('.header').getBoundingClientRect().bottom, "px");
-        } else {
-          element.style.height = ''; // If the popover contains a "panel-list", we set the height to the active panel
-
-          var panelList = element.querySelector('.popover__panel-list');
-
-          if (panelList) {
-            panelList.style.height = "".concat(panelList.clientHeight, "px");
+          if (
+            target.hasAttribute("data-follow-link") &&
+            Responsive.matchesBreakpoint(
+              target.getAttribute("data-follow-link")
+            )
+          ) {
+            return;
           }
-        }
 
-        this.activePopover = element;
-      }
-    }, {
-      key: "_showPanel",
-      value: function _showPanel(event, target) {
-        // If no active popover, we do nothing
-        if (!this.activePopover) {
-          return;
-        } // Otherwise we get all the panels within the popover
+          if (hasActivePopover) {
+            this._closeActivePopover();
+          }
 
+          if (
+            !hasActivePopover ||
+            (hasActivePopover &&
+              target.getAttribute("aria-controls") !== previousActivePopoverId)
+          ) {
+            this._openPopover(target);
+          }
 
-        var panels = this.activePopover.querySelectorAll('.popover__panel');
-        panels.forEach(function (panel) {
-          if (panel.id === target.getAttribute('aria-controls')) {
-            panel.classList.add('is-selected');
-            panel.closest('.popover__panel-list').style.height = "".concat(panel.clientHeight, "px");
+          event.preventDefault();
+        },
+      },
+      {
+        key: "_closeActivePopover",
+        value: function _closeActivePopover() {
+          this.activePopover.setAttribute("aria-hidden", "true");
+          document
+            .querySelector(
+              '[aria-controls="'.concat(this.activePopover.id, '"]')
+            )
+            .setAttribute("aria-expanded", "false");
+          this.activePopover = null;
+        },
+      },
+      {
+        key: "_openPopover",
+        value: function _openPopover(target) {
+          var element = document.getElementById(
+            target.getAttribute("aria-controls")
+          );
+          target.setAttribute("aria-expanded", "true");
+          element.setAttribute("aria-hidden", "false"); // If we are on mobile phone we also set the aria-expanded attribute to true on the icon state holder
+
+          if (Responsive.getCurrentBreakpoint() === "phone") {
+            element.style.height = "".concat(
+              window.innerHeight -
+                document.querySelector(".header").getBoundingClientRect()
+                  .bottom,
+              "px"
+            );
           } else {
-            panel.classList.remove('is-selected');
-          }
-        });
-      }
-    }, {
-      key: "_onWindowClick",
-      value: function _onWindowClick(event) {
-        if (event.target.getAttribute('data-action') === 'toggle-popover' || event.target.closest('[data-action="toggle-popover"]')) {
-          return;
-        }
+            element.style.height = ""; // If the popover contains a "panel-list", we set the height to the active panel
 
-        if (this.activePopover && !this.activePopover.contains(event.target)) {
-          this._closeActivePopover();
-        }
-      }
-    }, {
-      key: "_windowResized",
-      value: function _windowResized() {
-        if (Responsive.getCurrentBreakpoint() === 'phone' && this.activePopover) {
-          this.activePopover.style.height = "".concat(window.innerHeight - document.querySelector('.header').getBoundingClientRect().bottom, "px");
-        }
-      }
-    }]);
+            var panelList = element.querySelector(".popover__panel-list");
+
+            if (panelList) {
+              panelList.style.height = "".concat(panelList.clientHeight, "px");
+            }
+          }
+
+          this.activePopover = element;
+        },
+      },
+      {
+        key: "_showPanel",
+        value: function _showPanel(event, target) {
+          // If no active popover, we do nothing
+          if (!this.activePopover) {
+            return;
+          } // Otherwise we get all the panels within the popover
+
+          var panels = this.activePopover.querySelectorAll(".popover__panel");
+          panels.forEach(function (panel) {
+            if (panel.id === target.getAttribute("aria-controls")) {
+              panel.classList.add("is-selected");
+              panel.closest(".popover__panel-list").style.height = "".concat(
+                panel.clientHeight,
+                "px"
+              );
+            } else {
+              panel.classList.remove("is-selected");
+            }
+          });
+        },
+      },
+      {
+        key: "_onWindowClick",
+        value: function _onWindowClick(event) {
+          if (
+            event.target.getAttribute("data-action") === "toggle-popover" ||
+            event.target.closest('[data-action="toggle-popover"]')
+          ) {
+            return;
+          }
+
+          if (
+            this.activePopover &&
+            !this.activePopover.contains(event.target)
+          ) {
+            this._closeActivePopover();
+          }
+        },
+      },
+      {
+        key: "_windowResized",
+        value: function _windowResized() {
+          if (
+            Responsive.getCurrentBreakpoint() === "phone" &&
+            this.activePopover
+          ) {
+            this.activePopover.style.height = "".concat(
+              window.innerHeight -
+                document.querySelector(".header").getBoundingClientRect()
+                  .bottom,
+              "px"
+            );
+          }
+        },
+      },
+    ]);
 
     return PopoverManager;
-  }();
+  })();
 
-  var ProductItemColorSwatch = /*#__PURE__*/function () {
+  var ProductItemColorSwatch = /*#__PURE__*/ (function () {
     function ProductItemColorSwatch(element) {
       _classCallCheck(this, ProductItemColorSwatch);
 
@@ -2630,235 +3194,304 @@
       this.recalculateSwatches();
     }
 
-    _createClass(ProductItemColorSwatch, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-        window.removeEventListener('resize', this._recalculateSwatchesListener);
-      }
-    }, {
-      key: "recalculateSwatches",
-      value: function recalculateSwatches() {
-        var _this = this;
+    _createClass(ProductItemColorSwatch, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+          window.removeEventListener(
+            "resize",
+            this._recalculateSwatchesListener
+          );
+        },
+      },
+      {
+        key: "recalculateSwatches",
+        value: function recalculateSwatches() {
+          var _this = this;
 
-        // If you have too many swatches, it will grow into more than one lines, which is not desirable. Instead,
-        // we'd like to only show one line only, and show a "+X" if there are too many swatches
-        fastdom.measure(function () {
-          // For each swatch list we get the number of swatches, and make sure that we don't display more than 100% of
-          // the width
-          _this.element.querySelectorAll('.product-item__swatch-list').forEach(function (swatchList) {
-            // Get the width of the swatch list (this is 100%)
-            var currentWidth = swatchList.clientWidth,
-                maxAllowedWidth = parseInt(Math.min(currentWidth, 200)); // A single swatch takes 30px, so let's figure out how many we can fit completely
+          // If you have too many swatches, it will grow into more than one lines, which is not desirable. Instead,
+          // we'd like to only show one line only, and show a "+X" if there are too many swatches
+          fastdom.measure(function () {
+            // For each swatch list we get the number of swatches, and make sure that we don't display more than 100% of
+            // the width
+            _this.element
+              .querySelectorAll(".product-item__swatch-list")
+              .forEach(function (swatchList) {
+                // Get the width of the swatch list (this is 100%)
+                var currentWidth = swatchList.clientWidth,
+                  maxAllowedWidth = parseInt(Math.min(currentWidth, 200)); // A single swatch takes 30px, so let's figure out how many we can fit completely
 
-            var maxFit = Math.floor(maxAllowedWidth / 30); // Now, we add a special class to the one after "maxFit"
+                var maxFit = Math.floor(maxAllowedWidth / 30); // Now, we add a special class to the one after "maxFit"
 
-            fastdom.mutate(function () {
-              var colorSwatches = swatchList.querySelectorAll('.color-swatch'); // For each, we reset the attributes if needed
+                fastdom.mutate(function () {
+                  var colorSwatches = swatchList.querySelectorAll(
+                    ".color-swatch"
+                  ); // For each, we reset the attributes if needed
 
-              colorSwatches.forEach(function (colorSwatch, index) {
-                colorSwatch.classList.remove('color-swatch--view-more');
+                  colorSwatches.forEach(function (colorSwatch, index) {
+                    colorSwatch.classList.remove("color-swatch--view-more");
 
-                if (maxFit === index + 1 && maxFit !== colorSwatches.length) {
-                  colorSwatch.classList.add('color-swatch--view-more');
-                }
+                    if (
+                      maxFit === index + 1 &&
+                      maxFit !== colorSwatches.length
+                    ) {
+                      colorSwatch.classList.add("color-swatch--view-more");
+                    }
+                  });
+                });
               });
-            });
           });
-        });
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._recalculateSwatchesListener = this.recalculateSwatches.bind(this);
-        this.delegateElement.on('change', '.product-item__swatch-list .color-swatch__radio', this._colorChanged.bind(this));
-        window.addEventListener('resize', this._recalculateSwatchesListener);
-      }
-    }, {
-      key: "_colorChanged",
-      value: function _colorChanged(event, target) {
-        // We need to change the URL of the various links
-        var productItem = target.closest('.product-item'),
-            variantUrl = target.getAttribute('data-variant-url');
-        productItem.querySelector('.product-item__image-wrapper').setAttribute('href', variantUrl);
-        productItem.querySelector('.product-item__title').setAttribute('href', variantUrl); // If we have a custom image for the variant, we change it
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._recalculateSwatchesListener = this.recalculateSwatches.bind(
+            this
+          );
+          this.delegateElement.on(
+            "change",
+            ".product-item__swatch-list .color-swatch__radio",
+            this._colorChanged.bind(this)
+          );
+          window.addEventListener("resize", this._recalculateSwatchesListener);
+        },
+      },
+      {
+        key: "_colorChanged",
+        value: function _colorChanged(event, target) {
+          // We need to change the URL of the various links
+          var productItem = target.closest(".product-item"),
+            variantUrl = target.getAttribute("data-variant-url");
+          productItem
+            .querySelector(".product-item__image-wrapper")
+            .setAttribute("href", variantUrl);
+          productItem
+            .querySelector(".product-item__title")
+            .setAttribute("href", variantUrl); // If we have a custom image for the variant, we change it
 
-        var originalImageElement = productItem.querySelector('.product-item__primary-image');
+          var originalImageElement = productItem.querySelector(
+            ".product-item__primary-image"
+          );
 
-        if (target.hasAttribute('data-image-url') && target.getAttribute('data-media-id') !== originalImageElement.getAttribute('data-media-id')) {
-          var newImageElement = document.createElement('img');
-          newImageElement.className = 'product-item__primary-image lazyload image--fade-in';
-          newImageElement.setAttribute('data-media-id', target.getAttribute('data-media-id'));
-          newImageElement.setAttribute('data-src', target.getAttribute('data-image-url'));
-          newImageElement.setAttribute('data-widths', target.getAttribute('data-image-widths'));
-          newImageElement.setAttribute('data-sizes', 'auto'); // Replace the original node
+          if (
+            target.hasAttribute("data-image-url") &&
+            target.getAttribute("data-media-id") !==
+              originalImageElement.getAttribute("data-media-id")
+          ) {
+            var newImageElement = document.createElement("img");
+            newImageElement.className =
+              "product-item__primary-image lazyload image--fade-in";
+            newImageElement.setAttribute(
+              "data-media-id",
+              target.getAttribute("data-media-id")
+            );
+            newImageElement.setAttribute(
+              "data-src",
+              target.getAttribute("data-image-url")
+            );
+            newImageElement.setAttribute(
+              "data-widths",
+              target.getAttribute("data-image-widths")
+            );
+            newImageElement.setAttribute("data-sizes", "auto"); // Replace the original node
 
-          originalImageElement.parentNode.style.paddingBottom = "".concat(100.0 / newImageElement.getAttribute('data-image-aspect-ratio'), "%");
-          originalImageElement.parentNode.replaceChild(newImageElement, originalImageElement);
-        }
-      }
-    }]);
+            originalImageElement.parentNode.style.paddingBottom = "".concat(
+              100.0 / newImageElement.getAttribute("data-image-aspect-ratio"),
+              "%"
+            );
+            originalImageElement.parentNode.replaceChild(
+              newImageElement,
+              originalImageElement
+            );
+          }
+        },
+      },
+    ]);
 
     return ProductItemColorSwatch;
-  }();
+  })();
 
-  var Currency = /*#__PURE__*/function () {
+  var Currency = /*#__PURE__*/ (function () {
     function Currency() {
       _classCallCheck(this, Currency);
     }
 
-    _createClass(Currency, null, [{
-      key: "formatMoney",
+    _createClass(Currency, null, [
+      {
+        key: "formatMoney",
 
-      /**
-       * Format money values based on your shop currency settings
-       *
-       * @param  {Number|string} cents - value in cents or dollar amount e.g. 300 cents or 3.00 dollars
-       * @param  {String} format - shop money_format setting
-       * @return {String} value - formatted value
-       */
-      value: function formatMoney(cents, format) {
-        if (typeof cents === 'string') {
-          cents = cents.replace('.', '');
-        }
-
-        var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/,
-            formatString = format || '${{amount}}';
-
-        function defaultTo(value, defaultValue) {
-          return value == null || value !== value ? defaultValue : value;
-        }
-
-        function formatWithDelimiters(number, precision, thousands, decimal) {
-          precision = defaultTo(precision, 2);
-          thousands = defaultTo(thousands, ',');
-          decimal = defaultTo(decimal, '.');
-
-          if (isNaN(number) || number == null) {
-            return 0;
+        /**
+         * Format money values based on your shop currency settings
+         *
+         * @param  {Number|string} cents - value in cents or dollar amount e.g. 300 cents or 3.00 dollars
+         * @param  {String} format - shop money_format setting
+         * @return {String} value - formatted value
+         */
+        value: function formatMoney(cents, format) {
+          if (typeof cents === "string") {
+            cents = cents.replace(".", "");
           }
 
-          number = (number / 100.0).toFixed(precision);
-          var parts = number.split('.'),
-              dollarsAmount = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
-              centsAmount = parts[1] ? decimal + parts[1] : '';
-          return dollarsAmount + centsAmount;
-        }
+          var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/,
+            formatString = format || "${{amount}}";
 
-        var value = '';
+          function defaultTo(value, defaultValue) {
+            return value == null || value !== value ? defaultValue : value;
+          }
 
-        switch (formatString.match(placeholderRegex)[1]) {
-          case 'amount':
-            value = formatWithDelimiters(cents, 2);
-            break;
+          function formatWithDelimiters(number, precision, thousands, decimal) {
+            precision = defaultTo(precision, 2);
+            thousands = defaultTo(thousands, ",");
+            decimal = defaultTo(decimal, ".");
 
-          case 'amount_no_decimals':
-            value = formatWithDelimiters(cents, 0);
-            break;
+            if (isNaN(number) || number == null) {
+              return 0;
+            }
 
-          case 'amount_with_space_separator':
-            value = formatWithDelimiters(cents, 2, ' ', '.');
-            break;
+            number = (number / 100.0).toFixed(precision);
+            var parts = number.split("."),
+              dollarsAmount = parts[0].replace(
+                /(\d)(?=(\d\d\d)+(?!\d))/g,
+                "$1" + thousands
+              ),
+              centsAmount = parts[1] ? decimal + parts[1] : "";
+            return dollarsAmount + centsAmount;
+          }
 
-          case 'amount_no_decimals_with_comma_separator':
-            value = formatWithDelimiters(cents, 0, ',', '.');
-            break;
+          var value = "";
 
-          case 'amount_no_decimals_with_space_separator':
-            value = formatWithDelimiters(cents, 0, ' ');
-            break;
+          switch (formatString.match(placeholderRegex)[1]) {
+            case "amount":
+              value = formatWithDelimiters(cents, 2);
+              break;
 
-          case 'amount_with_comma_separator':
-            value = formatWithDelimiters(cents, 2, '.', ',');
-            break;
-        }
+            case "amount_no_decimals":
+              value = formatWithDelimiters(cents, 0);
+              break;
 
-        if (formatString.indexOf('with_comma_separator') !== -1) {
-          return formatString.replace(placeholderRegex, value).replace(',00', '');
-        } else {
-          return formatString.replace(placeholderRegex, value).replace('.00', '');
-        }
-      }
-    }]);
+            case "amount_with_space_separator":
+              value = formatWithDelimiters(cents, 2, " ", ".");
+              break;
+
+            case "amount_no_decimals_with_comma_separator":
+              value = formatWithDelimiters(cents, 0, ",", ".");
+              break;
+
+            case "amount_no_decimals_with_space_separator":
+              value = formatWithDelimiters(cents, 0, " ");
+              break;
+
+            case "amount_with_comma_separator":
+              value = formatWithDelimiters(cents, 2, ".", ",");
+              break;
+          }
+
+          if (formatString.indexOf("with_comma_separator") !== -1) {
+            return formatString
+              .replace(placeholderRegex, value)
+              .replace(",00", "");
+          } else {
+            return formatString
+              .replace(placeholderRegex, value)
+              .replace(".00", "");
+          }
+        },
+      },
+    ]);
 
     return Currency;
-  }();
+  })();
 
   /**
    * This implementation allows to serialize a form
    */
-  var Form = /*#__PURE__*/function () {
+  var Form = /*#__PURE__*/ (function () {
     function Form() {
       _classCallCheck(this, Form);
     }
 
-    _createClass(Form, null, [{
-      key: "serialize",
-      value: function serialize(form) {
-        function stringKey(key, value) {
-          var beginBracket = key.lastIndexOf('[');
+    _createClass(Form, null, [
+      {
+        key: "serialize",
+        value: function serialize(form) {
+          function stringKey(key, value) {
+            var beginBracket = key.lastIndexOf("[");
 
-          if (beginBracket === -1) {
-            var _hash = {};
-            _hash[key] = value;
-            return _hash;
+            if (beginBracket === -1) {
+              var _hash = {};
+              _hash[key] = value;
+              return _hash;
+            }
+
+            var newKey = key.substr(0, beginBracket);
+            var newValue = {};
+            newValue[key.substring(beginBracket + 1, key.length - 1)] = value;
+            return stringKey(newKey, newValue);
           }
 
-          var newKey = key.substr(0, beginBracket);
-          var newValue = {};
-          newValue[key.substring(beginBracket + 1, key.length - 1)] = value;
-          return stringKey(newKey, newValue);
-        }
+          var hash = {};
 
-        var hash = {};
+          for (var i = 0, len = form.elements.length; i < len; i++) {
+            var formElement = form.elements[i];
 
-        for (var i = 0, len = form.elements.length; i < len; i++) {
-          var formElement = form.elements[i];
+            if (formElement.name === "" || formElement.disabled) {
+              continue;
+            }
 
-          if (formElement.name === '' || formElement.disabled) {
-            continue;
-          }
-
-          if (formElement.name && !formElement.disabled && (formElement.checked || /select|textarea/i.test(formElement.nodeName) || /hidden|text|search|tel|url|email|password|datetime|date|month|week|time|datetime-local|number|range|color/i.test(formElement.type))) {
-            var stringKeys = stringKey(formElement.name, formElement.value);
-            hash = Form.extend(hash, stringKeys);
-          }
-        }
-
-        return hash;
-      }
-    }, {
-      key: "extend",
-      value: function extend() {
-        var extended = {};
-        var i = 0; // Merge the object into the extended object
-
-        var merge = function merge(obj) {
-          for (var prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-              // If property is an object, merge properties
-              if (Object.prototype.toString.call(obj[prop]) === '[object Object]') {
-                extended[prop] = Form.extend(extended[prop], obj[prop]);
-              } else {
-                extended[prop] = obj[prop];
-              }
+            if (
+              formElement.name &&
+              !formElement.disabled &&
+              (formElement.checked ||
+                /select|textarea/i.test(formElement.nodeName) ||
+                /hidden|text|search|tel|url|email|password|datetime|date|month|week|time|datetime-local|number|range|color/i.test(
+                  formElement.type
+                ))
+            ) {
+              var stringKeys = stringKey(formElement.name, formElement.value);
+              hash = Form.extend(hash, stringKeys);
             }
           }
-        }; // Loop through each object and conduct a merge
 
+          return hash;
+        },
+      },
+      {
+        key: "extend",
+        value: function extend() {
+          var extended = {};
+          var i = 0; // Merge the object into the extended object
 
-        for (; i < arguments.length; i++) {
-          merge(arguments[i]);
-        }
+          var merge = function merge(obj) {
+            for (var prop in obj) {
+              if (obj.hasOwnProperty(prop)) {
+                // If property is an object, merge properties
+                if (
+                  Object.prototype.toString.call(obj[prop]) ===
+                  "[object Object]"
+                ) {
+                  extended[prop] = Form.extend(extended[prop], obj[prop]);
+                } else {
+                  extended[prop] = obj[prop];
+                }
+              }
+            }
+          }; // Loop through each object and conduct a merge
 
-        return extended;
-      }
-    }]);
+          for (; i < arguments.length; i++) {
+            merge(arguments[i]);
+          }
+
+          return extended;
+        },
+      },
+    ]);
 
     return Form;
-  }();
+  })();
 
-  var ProductVariants = /*#__PURE__*/function () {
+  var ProductVariants = /*#__PURE__*/ (function () {
     function ProductVariants(element, options) {
       var _this = this;
 
@@ -2867,527 +3500,726 @@
       this.element = element;
       this.delegateElement = new Delegate(this.element);
       this.options = options;
-      var productJsonElement = this.element.querySelector('[data-product-json]'); // If we are using placeholder, there is no JSON so we wrap here!
+      var productJsonElement = this.element.querySelector(
+        "[data-product-json]"
+      ); // If we are using placeholder, there is no JSON so we wrap here!
 
       if (productJsonElement) {
         var jsonData = JSON.parse(productJsonElement.innerHTML);
-        this.productData = jsonData['product'];
-        this.productOptionsWithValues = jsonData['options_with_values'];
-        this.variantsInventories = jsonData['inventories'] || {};
-        this.variantSelectors = this.element.querySelectorAll('.product-form__option[data-selector-type]');
-        this.masterSelector = this.element.querySelector("#product-select-".concat(this.productData['id'])); // We init value with the first selected variant
+        this.productData = jsonData["product"];
+        this.productOptionsWithValues = jsonData["options_with_values"];
+        this.variantsInventories = jsonData["inventories"] || {};
+        this.variantSelectors = this.element.querySelectorAll(
+          ".product-form__option[data-selector-type]"
+        );
+        this.masterSelector = this.element.querySelector(
+          "#product-select-".concat(this.productData["id"])
+        ); // We init value with the first selected variant
 
-        this.productData['variants'].forEach(function (variant) {
-          if (variant['id'] === jsonData['selected_variant_id']) {
+        this.productData["variants"].forEach(function (variant) {
+          if (variant["id"] === jsonData["selected_variant_id"]) {
             _this.currentVariant = variant;
-            _this.option1 = variant['option1'];
-            _this.option2 = variant['option2'];
-            _this.option3 = variant['option3'];
+            _this.option1 = variant["option1"];
+            _this.option2 = variant["option2"];
+            _this.option3 = variant["option3"];
           }
         });
       }
 
       this._updateSelectors(this.currentVariant); // We update the selectors on initial load to disable the sold out variants
 
-
       this._setupStockCountdown();
 
       this._attachListeners();
     }
 
-    _createClass(ProductVariants, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off('click');
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('change', '.product-form__single-selector', this._onOptionChanged.bind(this));
-        this.delegateElement.on('click', '[data-action="add-to-cart"]', this._addToCart.bind(this));
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * CODE THAT HANDLE VARIANT CHANGES IN THE FRONT
-       *
-       * Please note that this code is highly dependant on the markup and classes, so make sure to NOT
-       * edit this code
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-      /**
-       * This callback is called whenever the variant changes and allows to update data about the active variant
-       */
-
-    }, {
-      key: "_onVariantChanged",
-      value: function _onVariantChanged(previousVariant, newVariant) {
-        // 1st: the prices
-        this._updateProductPrices(newVariant, previousVariant); // 2th: update inventory
-
-
-        this._updateInventory(newVariant, previousVariant); // 3th: update SKU
-
-
-        this._updateSku(newVariant, previousVariant); // 4th: update the discount label (if necessary)
-
-
-        this._updateDiscountLabel(newVariant, previousVariant); // 5th: update the unit price (if necessary)
-
-
-        this._updateUnitPrice(newVariant, previousVariant); // 6th: update selectors
-
-
-        this._updateSelectors(newVariant, previousVariant); // 7th: the add to cart button
-
-
-        this._updateAddToCartButton(newVariant, previousVariant); // Finally, we send an event so that other system could hook and do their own logic
-
-
-        this.element.dispatchEvent(new CustomEvent('variant:changed', {
-          bubbles: true,
-          detail: {
-            variant: newVariant,
-            previousVariant: previousVariant
-          }
-        }));
-      }
-      /**
-       * Update the prices (optionally showing compare at price)
-       */
-
-    }, {
-      key: "_updateProductPrices",
-      value: function _updateProductPrices(newVariant, previousVariant) {
-        var productPrices = this.element.querySelector('.price-list');
-
-        if (!newVariant) {
-          productPrices.style.display = 'none';
-        } else {
-          if (previousVariant && previousVariant['price'] === newVariant['price'] && previousVariant['compare_at_price'] === newVariant['compare_at_price']) {
-            return; // The price do not have changed so let's return to avoid changing the DOM for nothing
-          }
-
-          productPrices.innerHTML = '';
-
-          if (newVariant['compare_at_price'] > newVariant['price']) {
-            productPrices.innerHTML += "<span class=\"price price--highlight\" data-money-convertible>".concat(Currency.formatMoney(newVariant['price'], window.theme.moneyFormat), "</span>");
-            productPrices.innerHTML += "<span class=\"price price--compare\" data-money-convertible>".concat(Currency.formatMoney(newVariant['compare_at_price'], window.theme.moneyFormat), "</span>");
-          } else {
-            productPrices.innerHTML += "<span class=\"price\" data-money-convertible>".concat(Currency.formatMoney(newVariant['price'], window.theme.moneyFormat), "</span>");
-          }
-
-          productPrices.style.display = '';
-        }
-      }
-      /**
-       * Update the inventory (if needed)
-       */
-
-    }, {
-      key: "_updateInventory",
-      value: function _updateInventory(newVariant) {
-        if (!this.options['showInventoryQuantity'] || !newVariant) {
-          return;
-        }
-
-        var productFormInventoryElement = this.element.querySelector('.product-form__inventory'),
-            variantInventoryManagement = this.variantsInventories[newVariant['id']]['inventory_management'],
-            variantInventoryPolicy = this.variantsInventories[newVariant['id']]['inventory_policy'],
-            variantInventoryQuantity = this.variantsInventories[newVariant['id']]['inventory_quantity'],
-            variantInventoryMessage = this.variantsInventories[newVariant['id']]['inventory_message'];
-        productFormInventoryElement.classList.remove('inventory--high');
-        productFormInventoryElement.classList.remove('inventory--low');
-
-        if (newVariant['available']) {
-          if (null !== variantInventoryManagement && variantInventoryPolicy === 'deny' && this.options['lowInventoryThreshold'] > 0) {
-            if (variantInventoryQuantity <= this.options['lowInventoryThreshold']) {
-              productFormInventoryElement.classList.add('inventory--low');
-            } else {
-              productFormInventoryElement.classList.add('inventory--high');
-            }
-          } else {
-            productFormInventoryElement.classList.add('inventory--high');
-          }
-        } // We also need to update the stock countdown if setup
-
-
-        var stockCountdown = this.element.querySelector('.inventory-bar');
-
-        if (stockCountdown) {
-          var stockCountdownProgress = Math.min(Math.max(variantInventoryQuantity / parseInt(stockCountdown.getAttribute('data-stock-countdown-max')) * 100.0, 0), 100);
-          stockCountdown.classList.toggle('inventory-bar--hidden', stockCountdownProgress === 0);
-          stockCountdown.firstElementChild.style.width = "".concat(stockCountdownProgress, "%");
-        }
-
-        productFormInventoryElement.innerHTML = variantInventoryMessage;
-      }
-      /**
-       * Update SKU
-       */
-
-    }, {
-      key: "_updateSku",
-      value: function _updateSku(newVariant, previousVariant) {
-        var productSku = this.element.querySelector('.product-meta__sku');
-
-        if (!productSku) {
-          return;
-        }
-
-        var productSkuNumber = productSku.querySelector('.product-meta__sku-number');
-
-        if (!newVariant || newVariant['sku'] === '') {
-          productSku.style.display = 'none';
-        } else {
-          if (previousVariant && previousVariant['sku'] === newVariant['sku']) {
-            return; // The SKU do not have changed so let's return to avoid changing the DOM for nothing
-          }
-
-          productSkuNumber.innerHTML = newVariant['sku'];
-          productSku.style.display = '';
-        }
-      }
-      /**
-       * Update the discount label
-       */
-
-    }, {
-      key: "_updateDiscountLabel",
-      value: function _updateDiscountLabel(newVariant, previousVariant) {
-        if (!window.theme.showDiscount) {
-          return; // Nothing to do if discount label is configured to be hidden
-        }
-
-        var discountLabel = this.element.querySelector('.product-meta .product-label--on-sale'); // Some merchants have removed it from the code so we have to act defensive
-
-        if (!discountLabel) {
-          return;
-        }
-
-        if (!newVariant || !(newVariant['price'] < newVariant['compare_at_price'])) {
-          discountLabel.style.display = 'none';
-        } else {
-          // We compute the savings based on the setting
-          var savings = null;
-
-          if (window.theme.discountMode === 'percentage') {
-            savings = "".concat(Math.round((newVariant['compare_at_price'] - newVariant['price']) * 100 / newVariant['compare_at_price']), "%");
-          } else {
-            savings = "<span data-money-convertible>".concat(Currency.formatMoney(newVariant['compare_at_price'] - newVariant['price'], window.theme.moneyFormat), "</span>");
-          }
-
-          discountLabel.innerHTML = "".concat(window.languages.collectionOnSaleLabel.replace('{{savings}}', savings));
-          discountLabel.style.display = 'inline-block';
-        }
-      }
-    }, {
-      key: "_updateUnitPrice",
-      value: function _updateUnitPrice(newVariant, previousVariant) {
-        var unitPriceMeasurement = this.element.querySelector('.unit-price-measurement');
-
-        if (!newVariant || !newVariant['unit_price_measurement']) {
-          unitPriceMeasurement.parentNode.style.display = 'none';
-        } else {
-          unitPriceMeasurement.parentNode.style.display = 'block';
-          unitPriceMeasurement.querySelector('.unit-price-measurement__price').innerHTML = Currency.formatMoney(newVariant['unit_price'], window.theme.moneyFormat);
-          unitPriceMeasurement.querySelector('.unit-price-measurement__reference-unit').innerHTML = newVariant['unit_price_measurement']['reference_unit']; // Reference value may be absent
-
-          var unitPriceReferenceValue = unitPriceMeasurement.querySelector('.unit-price-measurement__reference-value');
-
-          if (unitPriceReferenceValue) {
-            unitPriceReferenceValue.innerHTML = newVariant['unit_price_measurement']['reference_value'];
-          }
-        }
-      }
-      /**
-       * Warehouse automatically adds a "disabled" state to sold out/unavailable variant. When we change the variant we have to recompute
-       * all the selectors
-       */
-
-    }, {
-      key: "_updateSelectors",
-      value: function _updateSelectors(newVariant) {
-        var _this2 = this;
-
-        // No need to recompute the combinations if variant does not exist
-        if (!newVariant) {
-          return;
-        }
-
-        var option1 = newVariant['option1'],
-            option2 = newVariant['option2'],
-            option3 = newVariant['option3'],
-            variantsCount = this.productData['variants'].length;
-        this.variantSelectors.forEach(function (selector, i) {
-          var selectorType = selector.getAttribute('data-selector-type');
-
-          if (selectorType !== 'select') {
-            var optionIndex = i + 1,
-                optionValues = _this2.productOptionsWithValues[i]['values'];
-            optionValues.forEach(function (valueToCheck, j) {
-              var variantAvailable = false;
-
-              if (optionIndex === 1) {
-                for (var k = 0; k !== variantsCount; ++k) {
-                  var currentVariant = _this2.productData['variants'][k];
-
-                  if (currentVariant['option1'] === valueToCheck && currentVariant['option2'] === option2 && currentVariant['option3'] === option3) {
-                    variantAvailable = currentVariant['available'];
-                    break;
-                  }
-                }
-              } else if (optionIndex === 2) {
-                for (var _k = 0; _k !== variantsCount; ++_k) {
-                  var _currentVariant = _this2.productData['variants'][_k];
-
-                  if (_currentVariant['option1'] === option1 && _currentVariant['option2'] === valueToCheck && _currentVariant['option3'] === option3) {
-                    variantAvailable = _currentVariant['available'];
-                    break;
-                  }
-                }
-              } else if (optionIndex === 3) {
-                for (var _k2 = 0; _k2 !== variantsCount; ++_k2) {
-                  var _currentVariant2 = _this2.productData['variants'][_k2];
-
-                  if (_currentVariant2['option1'] === option1 && _currentVariant2['option2'] === option2 && _currentVariant2['option3'] === valueToCheck) {
-                    variantAvailable = _currentVariant2['available'];
-                    break;
-                  }
-                }
-              }
-
-              switch (selectorType) {
-                case 'color':
-                  selector.querySelector(".color-swatch:nth-child(".concat(j + 1, ")")).classList.toggle('color-swatch--disabled', !variantAvailable);
-                  break;
-
-                case 'variant':
-                  selector.querySelector(".variant-swatch:nth-child(".concat(j + 1, ")")).classList.toggle('variant-swatch--disabled', !variantAvailable);
-                  break;
-
-                case 'block':
-                  selector.querySelector(".block-swatch:nth-child(".concat(j + 1, ")")).classList.toggle('block-swatch--disabled', !variantAvailable);
-                  break;
-              }
-            });
-          }
-        });
-      }
-      /**
-       * Update the add to cart
-       */
-
-    }, {
-      key: "_updateAddToCartButton",
-      value: function _updateAddToCartButton(newVariant) {
-        var addToCartButtonElement = this.element.querySelector('.product-form__add-button'),
-            infoListElement = this.element.querySelector('.product-form__info-list');
-
-        if (!addToCartButtonElement) {
-          return;
-        }
-
-        if (!newVariant) {
-          addToCartButtonElement.setAttribute('disabled', 'disabled');
-          addToCartButtonElement.classList.add('button--disabled');
-          addToCartButtonElement.classList.remove('button--primary');
-          addToCartButtonElement.removeAttribute('data-action');
-          addToCartButtonElement.innerHTML = window.languages.productFormUnavailable;
-          infoListElement.style.display = 'none';
-        } else {
-          infoListElement.style.display = 'block';
-
-          if (newVariant['available']) {
-            addToCartButtonElement.removeAttribute('disabled');
-            addToCartButtonElement.classList.remove('button--disabled');
-            addToCartButtonElement.classList.add('button--primary');
-            addToCartButtonElement.setAttribute('data-action', 'add-to-cart');
-            addToCartButtonElement.innerHTML = window.languages.productFormAddToCart;
-          } else {
-            addToCartButtonElement.setAttribute('disabled', 'disabled');
-            addToCartButtonElement.classList.add('button--disabled');
-            addToCartButtonElement.classList.remove('button--primary');
-            addToCartButtonElement.removeAttribute('data-action');
-            addToCartButtonElement.innerHTML = window.languages.productFormSoldOut;
-          }
-        } // We handle the smart payment button
-
-
-        if (this.options['showPaymentButton']) {
-          var paymentButtonElement = this.element.querySelector('.shopify-payment-button');
-
-          if (!newVariant || !newVariant['available']) {
-            paymentButtonElement.style.display = 'none';
-          } else {
-            paymentButtonElement.style.display = 'block';
-          }
-        }
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE VARIANT CHANGES
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-      /**
-       * Whenever an option is changed, this code fetch the corresponding active variant
-       */
-
-    }, {
-      key: "_onOptionChanged",
-      value: function _onOptionChanged(event, target) {
-        this['option' + target.getAttribute('data-option-position')] = target.value; // We update the selected value
-
-        var selectedValueElement = target.closest('.product-form__option').querySelector('.product-form__selected-value');
-
-        if (selectedValueElement) {
-          selectedValueElement.innerHTML = target.value;
-        } // Finally, we get the new variant
-
-
-        var previousVariant = this.currentVariant;
-        this.currentVariant = this._getCurrentVariantFromOptions();
-
-        this._onVariantChanged(previousVariant, this.currentVariant);
-
-        if (this.currentVariant) {
-          if (this.options['enableHistoryState'] && history.replaceState) {
-            var newUrl = "".concat(window.location.protocol, "//").concat(window.location.host).concat(window.location.pathname, "?variant=").concat(this.currentVariant.id);
-            window.history.replaceState({
-              path: newUrl
-            }, '', newUrl);
-          } // We need to modify the hidden select that contain the id attribute as well
-
-
-          this.masterSelector.querySelector('[selected]').removeAttribute('selected');
-          this.masterSelector.querySelector("[value=\"".concat(this.currentVariant['id'], "\"]")).setAttribute('selected', 'selected');
-        }
-      }
-      /**
-       * Get the active variant based on the options
-       */
-
-    }, {
-      key: "_getCurrentVariantFromOptions",
-      value: function _getCurrentVariantFromOptions() {
-        var _this3 = this;
-
-        var found = false;
-        this.productData['variants'].forEach(function (variant) {
-          if (variant['option1'] === _this3.option1 && variant['option2'] === _this3.option2 && variant['option3'] === _this3.option3) {
-            found = variant;
-          }
-        });
-        return found || null;
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-    }, {
-      key: "_addToCart",
-      value: function _addToCart(event, target) {
-        var _this4 = this;
-
-        if (window.theme.cartType === 'page') {
-          return; // When using a cart type of page, we just simply redirect to the cart page
-        }
-
-        event.preventDefault(); // Prevent form to be submitted
-
-        event.stopPropagation(); // First, we switch the status of the button
-
-        target.setAttribute('disabled', 'disabled');
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // Then we add the product in Ajax
-
-        var formElement = this.element.querySelector('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
-          }
-        }).then(function (response) {
-          document.dispatchEvent(new CustomEvent('theme:loading:end'));
-
-          if (response.ok) {
-            target.removeAttribute('disabled'); // We simply trigger an event so the mini-cart can re-render
-
-            _this4.element.dispatchEvent(new CustomEvent('product:added', {
+    _createClass(ProductVariants, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off("click");
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "change",
+            ".product-form__single-selector",
+            this._onOptionChanged.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="add-to-cart"]',
+            this._addToCart.bind(this)
+          );
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * CODE THAT HANDLE VARIANT CHANGES IN THE FRONT
+         *
+         * Please note that this code is highly dependant on the markup and classes, so make sure to NOT
+         * edit this code
+         * ---------------------------------------------------------------------------------------------------
+         */
+
+        /**
+         * This callback is called whenever the variant changes and allows to update data about the active variant
+         */
+      },
+      {
+        key: "_onVariantChanged",
+        value: function _onVariantChanged(previousVariant, newVariant) {
+          // 1st: the prices
+          this._updateProductPrices(newVariant, previousVariant); // 2th: update inventory
+
+          this._updateInventory(newVariant, previousVariant); // 3th: update SKU
+
+          this._updateSku(newVariant, previousVariant); // 4th: update the discount label (if necessary)
+
+          this._updateDiscountLabel(newVariant, previousVariant); // 5th: update the unit price (if necessary)
+
+          this._updateUnitPrice(newVariant, previousVariant); // 6th: update selectors
+
+          this._updateSelectors(newVariant, previousVariant); // 7th: the add to cart button
+
+          this._updateAddToCartButton(newVariant, previousVariant); // Finally, we send an event so that other system could hook and do their own logic
+
+          this.element.dispatchEvent(
+            new CustomEvent("variant:changed", {
               bubbles: true,
               detail: {
-                variant: _this4.currentVariant,
-                quantity: parseInt(formElement.querySelector('[name="quantity"]').value)
-              }
-            })); // If we are in the context of quick view, we also force closing the modal
+                variant: newVariant,
+                previousVariant: previousVariant,
+              },
+            })
+          );
+        },
+        /**
+         * Update the prices (optionally showing compare at price)
+         */
+      },
+      {
+        key: "_updateProductPrices",
+        value: function _updateProductPrices(newVariant, previousVariant) {
+          var productPrices = this.element.querySelector(".price-list");
 
-
-            if (_this4.options['isQuickView']) {
-              document.dispatchEvent(new CustomEvent('modal:close'));
-            }
+          if (!newVariant) {
+            productPrices.style.display = "none";
           } else {
-            response.json().then(function (content) {
-              var errorMessageElement = document.createElement('div');
-              errorMessageElement.className = 'product-form__error';
-              errorMessageElement.innerHTML = "<p class=\"alert alert--error\">".concat(content['description'], "</p>");
-              target.removeAttribute('disabled');
-              target.parentNode.insertAdjacentElement('afterend', errorMessageElement);
-              Animation.slideDown(errorMessageElement);
-              setTimeout(function () {
-                Animation.slideUp(errorMessageElement, function () {
-                  errorMessageElement.remove();
-                });
-              }, 5500);
-            });
+            if (
+              previousVariant &&
+              previousVariant["price"] === newVariant["price"] &&
+              previousVariant["compare_at_price"] ===
+                newVariant["compare_at_price"]
+            ) {
+              return; // The price do not have changed so let's return to avoid changing the DOM for nothing
+            }
+
+            productPrices.innerHTML = "";
+
+            if (newVariant["compare_at_price"] > newVariant["price"]) {
+              productPrices.innerHTML += '<span class="price price--highlight" data-money-convertible>'.concat(
+                Currency.formatMoney(
+                  newVariant["price"],
+                  window.theme.moneyFormat
+                ),
+                "</span>"
+              );
+              productPrices.innerHTML += '<span class="price price--compare" data-money-convertible>'.concat(
+                Currency.formatMoney(
+                  newVariant["compare_at_price"],
+                  window.theme.moneyFormat
+                ),
+                "</span>"
+              );
+            } else {
+              productPrices.innerHTML += '<span class="price" data-money-convertible>'.concat(
+                Currency.formatMoney(
+                  newVariant["price"],
+                  window.theme.moneyFormat
+                ),
+                "</span>"
+              );
+            }
+
+            productPrices.style.display = "";
           }
-        });
-        event.preventDefault();
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
-       * ---------------------------------------------------------------------------------------------------
-       */
+        },
+        /**
+         * Update the inventory (if needed)
+         */
+      },
+      {
+        key: "_updateInventory",
+        value: function _updateInventory(newVariant) {
+          if (!this.options["showInventoryQuantity"] || !newVariant) {
+            return;
+          }
 
-      /**
-       * In order to have a small animation when the inventory bar is visible, we setup an intersection observer
-       */
+          var productFormInventoryElement = this.element.querySelector(
+              ".product-form__inventory"
+            ),
+            variantInventoryManagement = this.variantsInventories[
+              newVariant["id"]
+            ]["inventory_management"],
+            variantInventoryPolicy = this.variantsInventories[newVariant["id"]][
+              "inventory_policy"
+            ],
+            variantInventoryQuantity = this.variantsInventories[
+              newVariant["id"]
+            ]["inventory_quantity"],
+            variantInventoryMessage = this.variantsInventories[
+              newVariant["id"]
+            ]["inventory_message"];
+          productFormInventoryElement.classList.remove("inventory--high");
+          productFormInventoryElement.classList.remove("inventory--low");
 
-    }, {
-      key: "_setupStockCountdown",
-      value: function _setupStockCountdown() {
-        var _this5 = this;
-
-        // If there is an inventory bar, we trigger an intersection observer to add an animation
-        var stockCountdown = this.element.querySelector('.inventory-bar');
-
-        if (stockCountdown) {
-          var stockCountdownIntersectionObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (item) {
-              if (item.isIntersecting) {
-                var variantInventoryQuantity = _this5.variantsInventories[_this5.currentVariant['id']]['inventory_quantity'];
-                var stockCountdownProgress = Math.min(Math.max(variantInventoryQuantity / parseInt(stockCountdown.getAttribute('data-stock-countdown-max')) * 100.0, 0), 100);
-                stockCountdown.classList.toggle('inventory-bar--hidden', stockCountdownProgress === 0);
-                stockCountdown.firstElementChild.style.width = "".concat(stockCountdownProgress, "%");
-                stockCountdownIntersectionObserver.disconnect();
+          if (newVariant["available"]) {
+            if (
+              null !== variantInventoryManagement &&
+              variantInventoryPolicy === "deny" &&
+              this.options["lowInventoryThreshold"] > 0
+            ) {
+              if (
+                variantInventoryQuantity <=
+                this.options["lowInventoryThreshold"]
+              ) {
+                productFormInventoryElement.classList.add("inventory--low");
+              } else {
+                productFormInventoryElement.classList.add("inventory--high");
               }
-            });
+            } else {
+              productFormInventoryElement.classList.add("inventory--high");
+            }
+          } // We also need to update the stock countdown if setup
+
+          var stockCountdown = this.element.querySelector(".inventory-bar");
+
+          if (stockCountdown) {
+            var stockCountdownProgress = Math.min(
+              Math.max(
+                (variantInventoryQuantity /
+                  parseInt(
+                    stockCountdown.getAttribute("data-stock-countdown-max")
+                  )) *
+                  100.0,
+                0
+              ),
+              100
+            );
+            stockCountdown.classList.toggle(
+              "inventory-bar--hidden",
+              stockCountdownProgress === 0
+            );
+            stockCountdown.firstElementChild.style.width = "".concat(
+              stockCountdownProgress,
+              "%"
+            );
+          }
+
+          productFormInventoryElement.innerHTML = variantInventoryMessage;
+        },
+        /**
+         * Update SKU
+         */
+      },
+      {
+        key: "_updateSku",
+        value: function _updateSku(newVariant, previousVariant) {
+          var productSku = this.element.querySelector(".product-meta__sku");
+
+          if (!productSku) {
+            return;
+          }
+
+          var productSkuNumber = productSku.querySelector(
+            ".product-meta__sku-number"
+          );
+
+          if (!newVariant || newVariant["sku"] === "") {
+            productSku.style.display = "none";
+          } else {
+            if (
+              previousVariant &&
+              previousVariant["sku"] === newVariant["sku"]
+            ) {
+              return; // The SKU do not have changed so let's return to avoid changing the DOM for nothing
+            }
+
+            productSkuNumber.innerHTML = newVariant["sku"];
+            productSku.style.display = "";
+          }
+        },
+        /**
+         * Update the discount label
+         */
+      },
+      {
+        key: "_updateDiscountLabel",
+        value: function _updateDiscountLabel(newVariant, previousVariant) {
+          if (!window.theme.showDiscount) {
+            return; // Nothing to do if discount label is configured to be hidden
+          }
+
+          var discountLabel = this.element.querySelector(
+            ".product-meta .product-label--on-sale"
+          ); // Some merchants have removed it from the code so we have to act defensive
+
+          if (!discountLabel) {
+            return;
+          }
+
+          if (
+            !newVariant ||
+            !(newVariant["price"] < newVariant["compare_at_price"])
+          ) {
+            discountLabel.style.display = "none";
+          } else {
+            // We compute the savings based on the setting
+            var savings = null;
+
+            if (window.theme.discountMode === "percentage") {
+              savings = "".concat(
+                Math.round(
+                  ((newVariant["compare_at_price"] - newVariant["price"]) *
+                    100) /
+                    newVariant["compare_at_price"]
+                ),
+                "%"
+              );
+            } else {
+              savings = "<span data-money-convertible>".concat(
+                Currency.formatMoney(
+                  newVariant["compare_at_price"] - newVariant["price"],
+                  window.theme.moneyFormat
+                ),
+                "</span>"
+              );
+            }
+
+            discountLabel.innerHTML = "".concat(
+              window.languages.collectionOnSaleLabel.replace(
+                "{{savings}}",
+                savings
+              )
+            );
+            discountLabel.style.display = "inline-block";
+          }
+        },
+      },
+      {
+        key: "_updateUnitPrice",
+        value: function _updateUnitPrice(newVariant, previousVariant) {
+          var unitPriceMeasurement = this.element.querySelector(
+            ".unit-price-measurement"
+          );
+
+          if (!newVariant || !newVariant["unit_price_measurement"]) {
+            unitPriceMeasurement.parentNode.style.display = "none";
+          } else {
+            unitPriceMeasurement.parentNode.style.display = "block";
+            unitPriceMeasurement.querySelector(
+              ".unit-price-measurement__price"
+            ).innerHTML = Currency.formatMoney(
+              newVariant["unit_price"],
+              window.theme.moneyFormat
+            );
+            unitPriceMeasurement.querySelector(
+              ".unit-price-measurement__reference-unit"
+            ).innerHTML =
+              newVariant["unit_price_measurement"]["reference_unit"]; // Reference value may be absent
+
+            var unitPriceReferenceValue = unitPriceMeasurement.querySelector(
+              ".unit-price-measurement__reference-value"
+            );
+
+            if (unitPriceReferenceValue) {
+              unitPriceReferenceValue.innerHTML =
+                newVariant["unit_price_measurement"]["reference_value"];
+            }
+          }
+        },
+        /**
+         * Warehouse automatically adds a "disabled" state to sold out/unavailable variant. When we change the variant we have to recompute
+         * all the selectors
+         */
+      },
+      {
+        key: "_updateSelectors",
+        value: function _updateSelectors(newVariant) {
+          var _this2 = this;
+
+          // No need to recompute the combinations if variant does not exist
+          if (!newVariant) {
+            return;
+          }
+
+          var option1 = newVariant["option1"],
+            option2 = newVariant["option2"],
+            option3 = newVariant["option3"],
+            variantsCount = this.productData["variants"].length;
+          this.variantSelectors.forEach(function (selector, i) {
+            var selectorType = selector.getAttribute("data-selector-type");
+
+            if (selectorType !== "select") {
+              var optionIndex = i + 1,
+                optionValues = _this2.productOptionsWithValues[i]["values"];
+              optionValues.forEach(function (valueToCheck, j) {
+                var variantAvailable = false;
+
+                if (optionIndex === 1) {
+                  for (var k = 0; k !== variantsCount; ++k) {
+                    var currentVariant = _this2.productData["variants"][k];
+
+                    if (
+                      currentVariant["option1"] === valueToCheck &&
+                      currentVariant["option2"] === option2 &&
+                      currentVariant["option3"] === option3
+                    ) {
+                      variantAvailable = currentVariant["available"];
+                      break;
+                    }
+                  }
+                } else if (optionIndex === 2) {
+                  for (var _k = 0; _k !== variantsCount; ++_k) {
+                    var _currentVariant = _this2.productData["variants"][_k];
+
+                    if (
+                      _currentVariant["option1"] === option1 &&
+                      _currentVariant["option2"] === valueToCheck &&
+                      _currentVariant["option3"] === option3
+                    ) {
+                      variantAvailable = _currentVariant["available"];
+                      break;
+                    }
+                  }
+                } else if (optionIndex === 3) {
+                  for (var _k2 = 0; _k2 !== variantsCount; ++_k2) {
+                    var _currentVariant2 = _this2.productData["variants"][_k2];
+
+                    if (
+                      _currentVariant2["option1"] === option1 &&
+                      _currentVariant2["option2"] === option2 &&
+                      _currentVariant2["option3"] === valueToCheck
+                    ) {
+                      variantAvailable = _currentVariant2["available"];
+                      break;
+                    }
+                  }
+                }
+
+                switch (selectorType) {
+                  case "color":
+                    selector
+                      .querySelector(
+                        ".color-swatch:nth-child(".concat(j + 1, ")")
+                      )
+                      .classList.toggle(
+                        "color-swatch--disabled",
+                        !variantAvailable
+                      );
+                    break;
+
+                  case "variant":
+                    selector
+                      .querySelector(
+                        ".variant-swatch:nth-child(".concat(j + 1, ")")
+                      )
+                      .classList.toggle(
+                        "variant-swatch--disabled",
+                        !variantAvailable
+                      );
+                    break;
+
+                  case "block":
+                    selector
+                      .querySelector(
+                        ".block-swatch:nth-child(".concat(j + 1, ")")
+                      )
+                      .classList.toggle(
+                        "block-swatch--disabled",
+                        !variantAvailable
+                      );
+                    break;
+                }
+              });
+            }
           });
-          stockCountdownIntersectionObserver.observe(stockCountdown);
-        }
-      }
-    }]);
+        },
+        /**
+         * Update the add to cart
+         */
+      },
+      {
+        key: "_updateAddToCartButton",
+        value: function _updateAddToCartButton(newVariant) {
+          var addToCartButtonElement = this.element.querySelector(
+              ".product-form__add-button"
+            ),
+            infoListElement = this.element.querySelector(
+              ".product-form__info-list"
+            );
+
+          if (!addToCartButtonElement) {
+            return;
+          }
+
+          if (!newVariant) {
+            addToCartButtonElement.setAttribute("disabled", "disabled");
+            addToCartButtonElement.classList.add("button--disabled");
+            addToCartButtonElement.classList.remove("button--primary");
+            addToCartButtonElement.removeAttribute("data-action");
+            addToCartButtonElement.innerHTML =
+              window.languages.productFormUnavailable;
+            infoListElement.style.display = "none";
+          } else {
+            infoListElement.style.display = "block";
+
+            if (newVariant["available"]) {
+              addToCartButtonElement.removeAttribute("disabled");
+              addToCartButtonElement.classList.remove("button--disabled");
+              addToCartButtonElement.classList.add("button--primary");
+              addToCartButtonElement.setAttribute("data-action", "add-to-cart");
+              addToCartButtonElement.innerHTML =
+                window.languages.productFormAddToCart;
+            } else {
+              addToCartButtonElement.setAttribute("disabled", "disabled");
+              addToCartButtonElement.classList.add("button--disabled");
+              addToCartButtonElement.classList.remove("button--primary");
+              addToCartButtonElement.removeAttribute("data-action");
+              addToCartButtonElement.innerHTML =
+                window.languages.productFormSoldOut;
+            }
+          } // We handle the smart payment button
+
+          if (this.options["showPaymentButton"]) {
+            var paymentButtonElement = this.element.querySelector(
+              ".shopify-payment-button"
+            );
+
+            if (!newVariant || !newVariant["available"]) {
+              paymentButtonElement.style.display = "none";
+            } else {
+              paymentButtonElement.style.display = "block";
+            }
+          }
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE VARIANT CHANGES
+         * ---------------------------------------------------------------------------------------------------
+         */
+
+        /**
+         * Whenever an option is changed, this code fetch the corresponding active variant
+         */
+      },
+      {
+        key: "_onOptionChanged",
+        value: function _onOptionChanged(event, target) {
+          this["option" + target.getAttribute("data-option-position")] =
+            target.value; // We update the selected value
+
+          var selectedValueElement = target
+            .closest(".product-form__option")
+            .querySelector(".product-form__selected-value");
+
+          if (selectedValueElement) {
+            selectedValueElement.innerHTML = target.value;
+          } // Finally, we get the new variant
+
+          var previousVariant = this.currentVariant;
+          this.currentVariant = this._getCurrentVariantFromOptions();
+
+          this._onVariantChanged(previousVariant, this.currentVariant);
+
+          if (this.currentVariant) {
+            if (this.options["enableHistoryState"] && history.replaceState) {
+              var newUrl = ""
+                .concat(window.location.protocol, "//")
+                .concat(window.location.host)
+                .concat(window.location.pathname, "?variant=")
+                .concat(this.currentVariant.id);
+              window.history.replaceState(
+                {
+                  path: newUrl,
+                },
+                "",
+                newUrl
+              );
+            } // We need to modify the hidden select that contain the id attribute as well
+
+            this.masterSelector
+              .querySelector("[selected]")
+              .removeAttribute("selected");
+            this.masterSelector
+              .querySelector('[value="'.concat(this.currentVariant["id"], '"]'))
+              .setAttribute("selected", "selected");
+          }
+        },
+        /**
+         * Get the active variant based on the options
+         */
+      },
+      {
+        key: "_getCurrentVariantFromOptions",
+        value: function _getCurrentVariantFromOptions() {
+          var _this3 = this;
+
+          var found = false;
+          this.productData["variants"].forEach(function (variant) {
+            if (
+              variant["option1"] === _this3.option1 &&
+              variant["option2"] === _this3.option2 &&
+              variant["option3"] === _this3.option3
+            ) {
+              found = variant;
+            }
+          });
+          return found || null;
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
+         * ---------------------------------------------------------------------------------------------------
+         */
+      },
+      {
+        key: "_addToCart",
+        value: function _addToCart(event, target) {
+          var _this4 = this;
+
+          if (window.theme.cartType === "page") {
+            return; // When using a cart type of page, we just simply redirect to the cart page
+          }
+
+          event.preventDefault(); // Prevent form to be submitted
+
+          event.stopPropagation(); // First, we switch the status of the button
+
+          target.setAttribute("disabled", "disabled");
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // Then we add the product in Ajax
+
+          var formElement = this.element.querySelector(
+            'form[action*="/cart/add"]'
+          );
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function (response) {
+            document.dispatchEvent(new CustomEvent("theme:loading:end"));
+
+            if (response.ok) {
+              target.removeAttribute("disabled"); // We simply trigger an event so the mini-cart can re-render
+
+              _this4.element.dispatchEvent(
+                new CustomEvent("product:added", {
+                  bubbles: true,
+                  detail: {
+                    variant: _this4.currentVariant,
+                    quantity: parseInt(
+                      formElement.querySelector('[name="quantity"]').value
+                    ),
+                  },
+                })
+              ); // If we are in the context of quick view, we also force closing the modal
+
+              if (_this4.options["isQuickView"]) {
+                document.dispatchEvent(new CustomEvent("modal:close"));
+              }
+            } else {
+              response.json().then(function (content) {
+                var errorMessageElement = document.createElement("div");
+                errorMessageElement.className = "product-form__error";
+                errorMessageElement.innerHTML = '<p class="alert alert--error">'.concat(
+                  content["description"],
+                  "</p>"
+                );
+                target.removeAttribute("disabled");
+                target.parentNode.insertAdjacentElement(
+                  "afterend",
+                  errorMessageElement
+                );
+                Animation.slideDown(errorMessageElement);
+                setTimeout(function () {
+                  Animation.slideUp(errorMessageElement, function () {
+                    errorMessageElement.remove();
+                  });
+                }, 5500);
+              });
+            }
+          });
+          event.preventDefault();
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
+         * ---------------------------------------------------------------------------------------------------
+         */
+
+        /**
+         * In order to have a small animation when the inventory bar is visible, we setup an intersection observer
+         */
+      },
+      {
+        key: "_setupStockCountdown",
+        value: function _setupStockCountdown() {
+          var _this5 = this;
+
+          // If there is an inventory bar, we trigger an intersection observer to add an animation
+          var stockCountdown = this.element.querySelector(".inventory-bar");
+
+          if (stockCountdown) {
+            var stockCountdownIntersectionObserver = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (item) {
+                  if (item.isIntersecting) {
+                    var variantInventoryQuantity =
+                      _this5.variantsInventories[_this5.currentVariant["id"]][
+                        "inventory_quantity"
+                      ];
+                    var stockCountdownProgress = Math.min(
+                      Math.max(
+                        (variantInventoryQuantity /
+                          parseInt(
+                            stockCountdown.getAttribute(
+                              "data-stock-countdown-max"
+                            )
+                          )) *
+                          100.0,
+                        0
+                      ),
+                      100
+                    );
+                    stockCountdown.classList.toggle(
+                      "inventory-bar--hidden",
+                      stockCountdownProgress === 0
+                    );
+                    stockCountdown.firstElementChild.style.width = "".concat(
+                      stockCountdownProgress,
+                      "%"
+                    );
+                    stockCountdownIntersectionObserver.disconnect();
+                  }
+                });
+              }
+            );
+            stockCountdownIntersectionObserver.observe(stockCountdown);
+          }
+        },
+      },
+    ]);
 
     return ProductVariants;
-  }();
+  })();
 
-  var ProductModel = /*#__PURE__*/function () {
+  var ProductModel = /*#__PURE__*/ (function () {
     function ProductModel(element) {
       _classCallCheck(this, ProductModel);
 
@@ -3397,66 +4229,93 @@
 
       this._attachListeners();
 
-      var stylesheet = document.createElement('link');
-      stylesheet.rel = 'stylesheet';
-      stylesheet.href = 'https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css';
+      var stylesheet = document.createElement("link");
+      stylesheet.rel = "stylesheet";
+      stylesheet.href =
+        "https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css";
       document.head.appendChild(stylesheet);
-      window.Shopify.loadFeatures([{
-        name: 'model-viewer-ui',
-        version: '1.0',
-        onLoad: this._setupModelViewerUI.bind(this)
-      }, {
-        name: 'shopify-xr',
-        version: '1.0'
-      }]);
+      window.Shopify.loadFeatures([
+        {
+          name: "model-viewer-ui",
+          version: "1.0",
+          onLoad: this._setupModelViewerUI.bind(this),
+        },
+        {
+          name: "shopify-xr",
+          version: "1.0",
+        },
+      ]);
     }
 
-    _createClass(ProductModel, [{
-      key: "destroy",
-      value: function destroy() {}
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        var _this = this;
+    _createClass(ProductModel, [
+      {
+        key: "destroy",
+        value: function destroy() {},
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          var _this = this;
 
-        this.element.querySelector('model-viewer').addEventListener('shopify_model_viewer_ui_toggle_play', function () {
-          _this.element.dispatchEvent(new CustomEvent('model:played', {
-            bubbles: true
-          }));
-        });
-        this.element.querySelector('model-viewer').addEventListener('shopify_model_viewer_ui_toggle_pause', function () {
-          _this.element.dispatchEvent(new CustomEvent('model:paused', {
-            bubbles: true
-          }));
-        });
-      }
-    }, {
-      key: "hasBeenSelected",
-      value: function hasBeenSelected(isInitialLoading) {
-        // As per guidelines, we only need to autoplay when it's not a touch device, and on desktop only if it's not the
-        // initial loading
-        if (Responsive.matchesBreakpoint('supports-hover') && !isInitialLoading) {
-          this.modelUi.play();
-        }
-      }
-    }, {
-      key: "hasBeenDeselected",
-      value: function hasBeenDeselected() {
-        // In all cases, we just turn it off
-        this.modelUi.pause();
-      }
-    }, {
-      key: "_setupModelViewerUI",
-      value: function _setupModelViewerUI() {
-        this.modelElement = this.element.querySelector('model-viewer');
-        this.modelUi = new window.Shopify.ModelViewerUI(this.modelElement);
-      }
-    }]);
+          this.element
+            .querySelector("model-viewer")
+            .addEventListener(
+              "shopify_model_viewer_ui_toggle_play",
+              function () {
+                _this.element.dispatchEvent(
+                  new CustomEvent("model:played", {
+                    bubbles: true,
+                  })
+                );
+              }
+            );
+          this.element
+            .querySelector("model-viewer")
+            .addEventListener(
+              "shopify_model_viewer_ui_toggle_pause",
+              function () {
+                _this.element.dispatchEvent(
+                  new CustomEvent("model:paused", {
+                    bubbles: true,
+                  })
+                );
+              }
+            );
+        },
+      },
+      {
+        key: "hasBeenSelected",
+        value: function hasBeenSelected(isInitialLoading) {
+          // As per guidelines, we only need to autoplay when it's not a touch device, and on desktop only if it's not the
+          // initial loading
+          if (
+            Responsive.matchesBreakpoint("supports-hover") &&
+            !isInitialLoading
+          ) {
+            this.modelUi.play();
+          }
+        },
+      },
+      {
+        key: "hasBeenDeselected",
+        value: function hasBeenDeselected() {
+          // In all cases, we just turn it off
+          this.modelUi.pause();
+        },
+      },
+      {
+        key: "_setupModelViewerUI",
+        value: function _setupModelViewerUI() {
+          this.modelElement = this.element.querySelector("model-viewer");
+          this.modelUi = new window.Shopify.ModelViewerUI(this.modelElement);
+        },
+      },
+    ]);
 
     return ProductModel;
-  }();
+  })();
 
-  var ProductVideo = /*#__PURE__*/function () {
+  var ProductVideo = /*#__PURE__*/ (function () {
     function ProductVideo(element, enableVideoLooping) {
       _classCallCheck(this, ProductVideo);
 
@@ -3465,148 +4324,179 @@
       this.enableVideoLooping = enableVideoLooping;
       this.player = null;
 
-      switch (this.element.getAttribute('data-media-type')) {
-        case 'video':
-          var stylesheet = document.createElement('link');
-          stylesheet.rel = 'stylesheet';
-          stylesheet.href = 'https://cdn.shopify.com/shopifycloud/shopify-plyr/v1.0/shopify-plyr.css';
+      switch (this.element.getAttribute("data-media-type")) {
+        case "video":
+          var stylesheet = document.createElement("link");
+          stylesheet.rel = "stylesheet";
+          stylesheet.href =
+            "https://cdn.shopify.com/shopifycloud/shopify-plyr/v1.0/shopify-plyr.css";
           document.head.appendChild(stylesheet);
-          window.Shopify.loadFeatures([{
-            name: 'video-ui',
-            version: '1.0',
-            onLoad: this._setupHtml5Video.bind(this)
-          }]);
+          window.Shopify.loadFeatures([
+            {
+              name: "video-ui",
+              version: "1.0",
+              onLoad: this._setupHtml5Video.bind(this),
+            },
+          ]);
           break;
 
-        case 'external_video':
+        case "external_video":
           this._setupExternalVideo();
 
           break;
       }
     }
 
-    _createClass(ProductVideo, [{
-      key: "destroy",
-      value: function destroy() {
-        if (this.player) {
-          this.player.destroy(); // Both Plyr and YouTube API use the same name
-        }
-      }
-    }, {
-      key: "hasBeenSelected",
-      value: function hasBeenSelected(isInitialLoading) {
-        // As per guidelines, we only need to autoplay when it's not a touch device, and on desktop only if it's not the
-        // initial loading
-        if (Responsive.matchesBreakpoint('supports-hover') && !isInitialLoading) {
-          this.play();
-        }
-      }
-    }, {
-      key: "hasBeenDeselected",
-      value: function hasBeenDeselected() {
-        this.pause();
-      }
-    }, {
-      key: "play",
-      value: function play() {
-        switch (this.element.getAttribute('data-media-type')) {
-          case 'video':
-            this.player.play();
-            break;
-
-          case 'external_video':
-            this.player.playVideo(); // If we're using YouTube, we have to focus the parent div (as it's not possible to directly focus an iframe)
-
-            this.element.focus();
-            break;
-        }
-      }
-    }, {
-      key: "pause",
-      value: function pause() {
-        switch (this.element.getAttribute('data-media-type')) {
-          case 'video':
-            this.player.pause();
-            break;
-
-          case 'external_video':
-            this.player.pauseVideo();
-            break;
-        }
-      }
-    }, {
-      key: "_setupHtml5Video",
-      value: function _setupHtml5Video() {
-        var _this = this;
-
-        this.player = new Shopify.Plyr(this.element.querySelector('video'), {
-          controls: ['play', 'progress', 'mute', 'volume', 'play-large', 'fullscreen'],
-          loop: {
-            active: this.enableVideoLooping
-          },
-          hideControlsOnPause: true,
-          clickToPlay: true,
-          iconUrl: '//cdn.shopify.com/shopifycloud/shopify-plyr/v1.0/shopify-plyr.svg',
-          tooltips: {
-            controls: false,
-            seek: true
+    _createClass(ProductVideo, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          if (this.player) {
+            this.player.destroy(); // Both Plyr and YouTube API use the same name
           }
-        });
-        this.player.on('play', function () {
-          _this.element.dispatchEvent(new CustomEvent('video:played', {
-            bubbles: true
-          }));
-        });
-        this.player.on('pause', function () {
-          _this.element.dispatchEvent(new CustomEvent('video:paused', {
-            bubbles: true
-          }));
-        });
-      }
-    }, {
-      key: "_setupExternalVideo",
-      value: function _setupExternalVideo() {
-        if (this.element.getAttribute('data-media-host') === 'youtube') {
-          this._loadYouTubeScript().then(this._setupYouTubePlayer.bind(this));
-        }
-      }
-    }, {
-      key: "_setupYouTubePlayer",
-      value: function _setupYouTubePlayer() {
-        var _this2 = this;
+        },
+      },
+      {
+        key: "hasBeenSelected",
+        value: function hasBeenSelected(isInitialLoading) {
+          // As per guidelines, we only need to autoplay when it's not a touch device, and on desktop only if it's not the
+          // initial loading
+          if (
+            Responsive.matchesBreakpoint("supports-hover") &&
+            !isInitialLoading
+          ) {
+            this.play();
+          }
+        },
+      },
+      {
+        key: "hasBeenDeselected",
+        value: function hasBeenDeselected() {
+          this.pause();
+        },
+      },
+      {
+        key: "play",
+        value: function play() {
+          switch (this.element.getAttribute("data-media-type")) {
+            case "video":
+              this.player.play();
+              break;
 
-        var playerLoadingInterval = setInterval(function () {
-          if (window.YT !== undefined && window.YT.Player !== undefined) {
-            _this2.player = new YT.Player(_this2.element.querySelector('iframe'), {
-              videoId: _this2.element.getAttribute('data-video-id'),
-              events: {
-                onStateChange: function onStateChange(event) {
-                  if (event.data === 0 && _this2.enableVideoLooping) {
-                    event.target.seekTo(0);
-                  }
+            case "external_video":
+              this.player.playVideo(); // If we're using YouTube, we have to focus the parent div (as it's not possible to directly focus an iframe)
+
+              this.element.focus();
+              break;
+          }
+        },
+      },
+      {
+        key: "pause",
+        value: function pause() {
+          switch (this.element.getAttribute("data-media-type")) {
+            case "video":
+              this.player.pause();
+              break;
+
+            case "external_video":
+              this.player.pauseVideo();
+              break;
+          }
+        },
+      },
+      {
+        key: "_setupHtml5Video",
+        value: function _setupHtml5Video() {
+          var _this = this;
+
+          this.player = new Shopify.Plyr(this.element.querySelector("video"), {
+            controls: [
+              "play",
+              "progress",
+              "mute",
+              "volume",
+              "play-large",
+              "fullscreen",
+            ],
+            loop: {
+              active: this.enableVideoLooping,
+            },
+            hideControlsOnPause: true,
+            clickToPlay: true,
+            iconUrl:
+              "//cdn.shopify.com/shopifycloud/shopify-plyr/v1.0/shopify-plyr.svg",
+            tooltips: {
+              controls: false,
+              seek: true,
+            },
+          });
+          this.player.on("play", function () {
+            _this.element.dispatchEvent(
+              new CustomEvent("video:played", {
+                bubbles: true,
+              })
+            );
+          });
+          this.player.on("pause", function () {
+            _this.element.dispatchEvent(
+              new CustomEvent("video:paused", {
+                bubbles: true,
+              })
+            );
+          });
+        },
+      },
+      {
+        key: "_setupExternalVideo",
+        value: function _setupExternalVideo() {
+          if (this.element.getAttribute("data-media-host") === "youtube") {
+            this._loadYouTubeScript().then(this._setupYouTubePlayer.bind(this));
+          }
+        },
+      },
+      {
+        key: "_setupYouTubePlayer",
+        value: function _setupYouTubePlayer() {
+          var _this2 = this;
+
+          var playerLoadingInterval = setInterval(function () {
+            if (window.YT !== undefined && window.YT.Player !== undefined) {
+              _this2.player = new YT.Player(
+                _this2.element.querySelector("iframe"),
+                {
+                  videoId: _this2.element.getAttribute("data-video-id"),
+                  events: {
+                    onStateChange: function onStateChange(event) {
+                      if (event.data === 0 && _this2.enableVideoLooping) {
+                        event.target.seekTo(0);
+                      }
+                    },
+                  },
                 }
-              }
-            });
-            clearInterval(playerLoadingInterval);
-          }
-        }, 50);
-      }
-    }, {
-      key: "_loadYouTubeScript",
-      value: function _loadYouTubeScript() {
-        return new Promise(function (resolve, reject) {
-          var script = document.createElement('script');
-          document.body.appendChild(script);
-          script.onload = resolve;
-          script.onerror = reject;
-          script.async = true;
-          script.src = '//www.youtube.com/iframe_api';
-        });
-      }
-    }]);
+              );
+              clearInterval(playerLoadingInterval);
+            }
+          }, 50);
+        },
+      },
+      {
+        key: "_loadYouTubeScript",
+        value: function _loadYouTubeScript() {
+          return new Promise(function (resolve, reject) {
+            var script = document.createElement("script");
+            document.body.appendChild(script);
+            script.onload = resolve;
+            script.onerror = reject;
+            script.async = true;
+            script.src = "//www.youtube.com/iframe_api";
+          });
+        },
+      },
+    ]);
 
     return ProductVideo;
-  }();
+  })();
 
   var evEmitter = createCommonjsModule(function (module) {
     /**
@@ -3622,15 +4512,14 @@
       /* jshint strict: false */
 
       /* globals define, module, window */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS - Browserify, Webpack
         module.exports = factory();
       } else {
         // Browser globals
         global.EvEmitter = factory();
       }
-    })(typeof window != 'undefined' ? window : commonjsGlobal, function () {
-
+    })(typeof window != "undefined" ? window : commonjsGlobal, function () {
       function EvEmitter() {}
 
       var proto = EvEmitter.prototype;
@@ -3640,10 +4529,9 @@
           return;
         } // set events hash
 
+        var events = (this._events = this._events || {}); // set listeners array
 
-        var events = this._events = this._events || {}; // set listeners array
-
-        var listeners = events[eventName] = events[eventName] || []; // only add once
+        var listeners = (events[eventName] = events[eventName] || []); // only add once
 
         if (listeners.indexOf(listener) == -1) {
           listeners.push(listener);
@@ -3657,13 +4545,13 @@
           return;
         } // add event
 
-
         this.on(eventName, listener); // set once flag
         // set onceEvents hash
 
-        var onceEvents = this._onceEvents = this._onceEvents || {}; // set onceListeners object
+        var onceEvents = (this._onceEvents = this._onceEvents || {}); // set onceListeners object
 
-        var onceListeners = onceEvents[eventName] = onceEvents[eventName] || {}; // set flag
+        var onceListeners = (onceEvents[eventName] =
+          onceEvents[eventName] || {}); // set flag
 
         onceListeners[listener] = true;
         return this;
@@ -3692,7 +4580,6 @@
           return;
         } // copy over to avoid interference if .off() in listener
 
-
         listeners = listeners.slice(0);
         args = args || []; // once stuff
 
@@ -3709,7 +4596,6 @@
 
             delete onceListeners[listener];
           } // trigger listener
-
 
           listener.apply(this, args);
         }
@@ -3740,7 +4626,7 @@
       /* jshint strict: false */
 
       /* globals define, module */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory();
       } else {
@@ -3753,17 +4639,33 @@
       function getStyleSize(value) {
         var num = parseFloat(value); // not a percent like '100%', and a number
 
-        var isValid = value.indexOf('%') == -1 && !isNaN(num);
+        var isValid = value.indexOf("%") == -1 && !isNaN(num);
         return isValid && num;
       }
 
       function noop() {}
 
-      var logError = typeof console == 'undefined' ? noop : function (message) {
-        console.error(message);
-      }; // -------------------------- measurements -------------------------- //
+      var logError =
+        typeof console == "undefined"
+          ? noop
+          : function (message) {
+              console.error(message);
+            }; // -------------------------- measurements -------------------------- //
 
-      var measurements = ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom', 'borderLeftWidth', 'borderRightWidth', 'borderTopWidth', 'borderBottomWidth'];
+      var measurements = [
+        "paddingLeft",
+        "paddingRight",
+        "paddingTop",
+        "paddingBottom",
+        "marginLeft",
+        "marginRight",
+        "marginTop",
+        "marginBottom",
+        "borderLeftWidth",
+        "borderRightWidth",
+        "borderTopWidth",
+        "borderBottomWidth",
+      ];
       var measurementsLength = measurements.length;
 
       function getZeroSize() {
@@ -3773,7 +4675,7 @@
           innerWidth: 0,
           innerHeight: 0,
           outerWidth: 0,
-          outerHeight: 0
+          outerHeight: 0,
         };
 
         for (var i = 0; i < measurementsLength; i++) {
@@ -3789,17 +4691,20 @@
        * https://bugzilla.mozilla.org/show_bug.cgi?id=548397
        */
 
-
       function getStyle(elem) {
         var style = getComputedStyle(elem);
 
         if (!style) {
-          logError('Style returned ' + style + '. Are you running this code in a hidden iframe on Firefox? ' + 'See https://bit.ly/getsizebug1');
+          logError(
+            "Style returned " +
+              style +
+              ". Are you running this code in a hidden iframe on Firefox? " +
+              "See https://bit.ly/getsizebug1"
+          );
         }
 
         return style;
       } // -------------------------- setup -------------------------- //
-
 
       var isSetup = false;
       var isBoxSizeOuter;
@@ -3822,12 +4727,12 @@
          * IE11 & Firefox<29 measures the inner-width
          */
 
-        var div = document.createElement('div');
-        div.style.width = '200px';
-        div.style.padding = '1px 2px 3px 4px';
-        div.style.borderStyle = 'solid';
-        div.style.borderWidth = '1px 2px 3px 4px';
-        div.style.boxSizing = 'border-box';
+        var div = document.createElement("div");
+        div.style.width = "200px";
+        div.style.padding = "1px 2px 3px 4px";
+        div.style.borderStyle = "solid";
+        div.style.borderWidth = "1px 2px 3px 4px";
+        div.style.boxSizing = "border-box";
         var body = document.body || document.documentElement;
         body.appendChild(div);
         var style = getStyle(div); // round value for browser zoom. desandro/masonry#928
@@ -3837,29 +4742,27 @@
         body.removeChild(div);
       } // -------------------------- getSize -------------------------- //
 
-
       function getSize(elem) {
         setup(); // use querySeletor if elem is string
 
-        if (typeof elem == 'string') {
+        if (typeof elem == "string") {
           elem = document.querySelector(elem);
         } // do not proceed on non-objects
 
-
-        if (!elem || _typeof(elem) != 'object' || !elem.nodeType) {
+        if (!elem || _typeof(elem) != "object" || !elem.nodeType) {
           return;
         }
 
         var style = getStyle(elem); // if hidden, everything is 0
 
-        if (style.display == 'none') {
+        if (style.display == "none") {
           return getZeroSize();
         }
 
         var size = {};
         size.width = elem.offsetWidth;
         size.height = elem.offsetHeight;
-        var isBorderBox = size.isBorderBox = style.boxSizing == 'border-box'; // get all measurements
+        var isBorderBox = (size.isBorderBox = style.boxSizing == "border-box"); // get all measurements
 
         for (var i = 0; i < measurementsLength; i++) {
           var measurement = measurements[i];
@@ -3880,15 +4783,17 @@
         var styleWidth = getStyleSize(style.width);
 
         if (styleWidth !== false) {
-          size.width = styleWidth + ( // add padding and border unless it's already including it
-          isBorderBoxSizeOuter ? 0 : paddingWidth + borderWidth);
+          size.width =
+            styleWidth + // add padding and border unless it's already including it
+            (isBorderBoxSizeOuter ? 0 : paddingWidth + borderWidth);
         }
 
         var styleHeight = getStyleSize(style.height);
 
         if (styleHeight !== false) {
-          size.height = styleHeight + ( // add padding and border unless it's already including it
-          isBorderBoxSizeOuter ? 0 : paddingHeight + borderHeight);
+          size.height =
+            styleHeight + // add padding and border unless it's already including it
+            (isBorderBoxSizeOuter ? 0 : paddingHeight + borderHeight);
         }
 
         size.innerWidth = size.width - (paddingWidth + borderWidth);
@@ -3911,8 +4816,7 @@
 
     /*jshint browser: true, strict: true, undef: true, unused: true */
     (function (window, factory) {
-
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory();
       } else {
@@ -3920,31 +4824,28 @@
         window.matchesSelector = factory();
       }
     })(window, function factory() {
-
-      var matchesMethod = function () {
+      var matchesMethod = (function () {
         var ElemProto = window.Element.prototype; // check for the standard method name first
 
         if (ElemProto.matches) {
-          return 'matches';
+          return "matches";
         } // check un-prefixed
 
-
         if (ElemProto.matchesSelector) {
-          return 'matchesSelector';
+          return "matchesSelector";
         } // check vendor prefixes
 
-
-        var prefixes = ['webkit', 'moz', 'ms', 'o'];
+        var prefixes = ["webkit", "moz", "ms", "o"];
 
         for (var i = 0; i < prefixes.length; i++) {
           var prefix = prefixes[i];
-          var method = prefix + 'MatchesSelector';
+          var method = prefix + "MatchesSelector";
 
           if (ElemProto[method]) {
             return method;
           }
         }
-      }();
+      })();
 
       return function matchesSelector(elem, selector) {
         return elem[matchesMethod](selector);
@@ -3965,7 +4866,7 @@
       /*jshint strict: false */
 
       /*globals define, module, require */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, matchesSelector);
       } else {
@@ -3973,7 +4874,6 @@
         window.fizzyUIUtils = factory(window, window.matchesSelector);
       }
     })(window, function factory(window, matchesSelector) {
-
       var utils = {}; // ----- extend ----- //
       // extends objects
 
@@ -3985,11 +4885,9 @@
         return a;
       }; // ----- modulo ----- //
 
-
       utils.modulo = function (num, div) {
-        return (num % div + div) % div;
+        return ((num % div) + div) % div;
       }; // ----- makeArray ----- //
-
 
       var arraySlice = Array.prototype.slice; // turn element or nodeList into an array
 
@@ -3999,22 +4897,20 @@
           return obj;
         } // return empty array if undefined or null. #6
 
-
         if (obj === null || obj === undefined) {
           return [];
         }
 
-        var isArrayLike = _typeof(obj) == 'object' && typeof obj.length == 'number';
+        var isArrayLike =
+          _typeof(obj) == "object" && typeof obj.length == "number";
 
         if (isArrayLike) {
           // convert nodeList to array
           return arraySlice.call(obj);
         } // array of single index
 
-
         return [obj];
       }; // ----- removeFrom ----- //
-
 
       utils.removeFrom = function (ary, obj) {
         var index = ary.indexOf(obj);
@@ -4023,7 +4919,6 @@
           ary.splice(index, 1);
         }
       }; // ----- getParent ----- //
-
 
       utils.getParent = function (elem, selector) {
         while (elem.parentNode && elem != document.body) {
@@ -4036,9 +4931,8 @@
       }; // ----- getQueryElement ----- //
       // use element as selector string
 
-
       utils.getQueryElement = function (elem) {
-        if (typeof elem == 'string') {
+        if (typeof elem == "string") {
           return document.querySelector(elem);
         }
 
@@ -4046,15 +4940,13 @@
       }; // ----- handleEvent ----- //
       // enable .ontype to trigger from .addEventListener( elem, 'type' )
 
-
       utils.handleEvent = function (event) {
-        var method = 'on' + event.type;
+        var method = "on" + event.type;
 
         if (this[method]) {
           this[method](event);
         }
       }; // ----- filterFindElements ----- //
-
 
       utils.filterFindElements = function (elems, selector) {
         // make array of elems
@@ -4066,18 +4958,15 @@
             return;
           } // add elem if no selector
 
-
           if (!selector) {
             ffElems.push(elem);
             return;
           } // filter & find items if we have a selector
           // filter
 
-
           if (matchesSelector(elem, selector)) {
             ffElems.push(elem);
           } // find children
-
 
           var childElems = elem.querySelectorAll(selector); // concat childElems to filterFound array
 
@@ -4088,12 +4977,11 @@
         return ffElems;
       }; // ----- debounceMethod ----- //
 
-
       utils.debounceMethod = function (_class, methodName, threshold) {
         threshold = threshold || 100; // original method
 
         var method = _class.prototype[methodName];
-        var timeoutName = methodName + 'Timeout';
+        var timeoutName = methodName + "Timeout";
 
         _class.prototype[methodName] = function () {
           var timeout = this[timeoutName];
@@ -4109,24 +4997,24 @@
         };
       }; // ----- docReady ----- //
 
-
       utils.docReady = function (callback) {
         var readyState = document.readyState;
 
-        if (readyState == 'complete' || readyState == 'interactive') {
+        if (readyState == "complete" || readyState == "interactive") {
           // do async to allow for other scripts to run. metafizzy/flickity#441
           setTimeout(callback);
         } else {
-          document.addEventListener('DOMContentLoaded', callback);
+          document.addEventListener("DOMContentLoaded", callback);
         }
       }; // ----- htmlInit ----- //
       // http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/
 
-
       utils.toDashed = function (str) {
-        return str.replace(/(.)([A-Z])/g, function (match, $1, $2) {
-          return $1 + '-' + $2;
-        }).toLowerCase();
+        return str
+          .replace(/(.)([A-Z])/g, function (match, $1, $2) {
+            return $1 + "-" + $2;
+          })
+          .toLowerCase();
       };
 
       var console = window.console;
@@ -4139,14 +5027,17 @@
       utils.htmlInit = function (WidgetClass, namespace) {
         utils.docReady(function () {
           var dashedNamespace = utils.toDashed(namespace);
-          var dataAttr = 'data-' + dashedNamespace;
-          var dataAttrElems = document.querySelectorAll('[' + dataAttr + ']');
-          var jsDashElems = document.querySelectorAll('.js-' + dashedNamespace);
-          var elems = utils.makeArray(dataAttrElems).concat(utils.makeArray(jsDashElems));
-          var dataOptionsAttr = dataAttr + '-options';
+          var dataAttr = "data-" + dashedNamespace;
+          var dataAttrElems = document.querySelectorAll("[" + dataAttr + "]");
+          var jsDashElems = document.querySelectorAll(".js-" + dashedNamespace);
+          var elems = utils
+            .makeArray(dataAttrElems)
+            .concat(utils.makeArray(jsDashElems));
+          var dataOptionsAttr = dataAttr + "-options";
           var jQuery = window.jQuery;
           elems.forEach(function (elem) {
-            var attr = elem.getAttribute(dataAttr) || elem.getAttribute(dataOptionsAttr);
+            var attr =
+              elem.getAttribute(dataAttr) || elem.getAttribute(dataOptionsAttr);
             var options;
 
             try {
@@ -4154,12 +5045,18 @@
             } catch (error) {
               // log error, do not initialize
               if (console) {
-                console.error('Error parsing ' + dataAttr + ' on ' + elem.className + ': ' + error);
+                console.error(
+                  "Error parsing " +
+                    dataAttr +
+                    " on " +
+                    elem.className +
+                    ": " +
+                    error
+                );
               }
 
               return;
             } // initialize
-
 
             var instance = new WidgetClass(elem, options); // make available via $().data('namespace')
 
@@ -4169,7 +5066,6 @@
           });
         });
       }; // -----  ----- //
-
 
       return utils;
     });
@@ -4181,7 +5077,7 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, getSize);
       } else {
@@ -4190,7 +5086,6 @@
         window.Flickity.Cell = factory(window, window.getSize);
       }
     })(window, function factory(window, getSize) {
-
       function Cell(elem, parent) {
         this.element = elem;
         this.parent = parent;
@@ -4200,8 +5095,8 @@
       var proto = Cell.prototype;
 
       proto.create = function () {
-        this.element.style.position = 'absolute';
-        this.element.setAttribute('aria-hidden', 'true');
+        this.element.style.position = "absolute";
+        this.element.setAttribute("aria-hidden", "true");
         this.x = 0;
         this.shift = 0;
       };
@@ -4209,9 +5104,9 @@
       proto.destroy = function () {
         // reset style
         this.unselect();
-        this.element.style.position = '';
+        this.element.style.position = "";
         var side = this.parent.originSide;
-        this.element.style[side] = '';
+        this.element.style[side] = "";
       };
 
       proto.getSize = function () {
@@ -4224,10 +5119,13 @@
         this.renderPosition(x);
       }; // setDefaultTarget v1 method, backwards compatibility, remove in v3
 
-
       proto.updateTarget = proto.setDefaultTarget = function () {
-        var marginProperty = this.parent.originSide == 'left' ? 'marginLeft' : 'marginRight';
-        this.target = this.x + this.size[marginProperty] + this.size.width * this.parent.cellAlign;
+        var marginProperty =
+          this.parent.originSide == "left" ? "marginLeft" : "marginRight";
+        this.target =
+          this.x +
+          this.size[marginProperty] +
+          this.size.width * this.parent.cellAlign;
       };
 
       proto.renderPosition = function (x) {
@@ -4237,18 +5135,17 @@
       };
 
       proto.select = function () {
-        this.element.classList.add('is-selected');
-        this.element.removeAttribute('aria-hidden');
+        this.element.classList.add("is-selected");
+        this.element.removeAttribute("aria-hidden");
       };
 
       proto.unselect = function () {
-        this.element.classList.remove('is-selected');
-        this.element.setAttribute('aria-hidden', 'true');
+        this.element.classList.remove("is-selected");
+        this.element.setAttribute("aria-hidden", "true");
       };
       /**
        * @param {Integer} factor - 0, 1, or -1
-      **/
-
+       **/
 
       proto.wrapShift = function (shift) {
         this.shift = shift;
@@ -4269,7 +5166,7 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory();
       } else {
@@ -4278,10 +5175,9 @@
         window.Flickity.Slide = factory();
       }
     })(window, function factory() {
-
       function Slide(parent) {
         this.parent = parent;
-        this.isOriginLeft = parent.originSide == 'left';
+        this.isOriginLeft = parent.originSide == "left";
         this.cells = [];
         this.outerWidth = 0;
         this.height = 0;
@@ -4297,17 +5193,18 @@
         if (this.cells.length == 1) {
           this.x = cell.x; // x comes from first cell
 
-          var beginMargin = this.isOriginLeft ? 'marginLeft' : 'marginRight';
+          var beginMargin = this.isOriginLeft ? "marginLeft" : "marginRight";
           this.firstMargin = cell.size[beginMargin];
         }
       };
 
       proto.updateTarget = function () {
-        var endMargin = this.isOriginLeft ? 'marginRight' : 'marginLeft';
+        var endMargin = this.isOriginLeft ? "marginRight" : "marginLeft";
         var lastCell = this.getLastCell();
         var lastMargin = lastCell ? lastCell.size[endMargin] : 0;
         var slideWidth = this.outerWidth - (this.firstMargin + lastMargin);
-        this.target = this.x + this.firstMargin + slideWidth * this.parent.cellAlign;
+        this.target =
+          this.x + this.firstMargin + slideWidth * this.parent.cellAlign;
       };
 
       proto.getLastCell = function () {
@@ -4342,7 +5239,7 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, utils);
       } else {
@@ -4351,7 +5248,6 @@
         window.Flickity.animatePrototype = factory(window, window.fizzyUIUtils);
       }
     })(window, function factory(window, utils) {
-
       var proto = {};
 
       proto.startAnimation = function () {
@@ -4401,7 +5297,9 @@
         var translateX = this.getPositionValue(x); // use 3D tranforms for hardware acceleration on iOS
         // but use 2D when settled, for better font-rendering
 
-        this.slider.style.transform = is3d ? 'translate3d(' + translateX + ',0,0)' : 'translateX(' + translateX + ')';
+        this.slider.style.transform = is3d
+          ? "translate3d(" + translateX + ",0,0)"
+          : "translateX(" + translateX + ")";
       };
 
       proto.dispatchScrollEvent = function () {
@@ -4413,7 +5311,7 @@
 
         var positionX = -this.x - firstSlide.target;
         var progress = positionX / this.slidesWidth;
-        this.dispatchEvent('scroll', null, [progress, positionX]);
+        this.dispatchEvent("scroll", null, [progress, positionX]);
       };
 
       proto.positionSliderAtSelected = function () {
@@ -4430,26 +5328,30 @@
       proto.getPositionValue = function (position) {
         if (this.options.percentPosition) {
           // percent position, round to 2 digits, like 12.34%
-          return Math.round(position / this.size.innerWidth * 10000) * 0.01 + '%';
+          return (
+            Math.round((position / this.size.innerWidth) * 10000) * 0.01 + "%"
+          );
         } else {
           // pixel positioning
-          return Math.round(position) + 'px';
+          return Math.round(position) + "px";
         }
       };
 
       proto.settle = function (previousX) {
         // keep track of frames where x hasn't moved
-        if (!this.isPointerDown && Math.round(this.x * 100) == Math.round(previousX * 100)) {
+        if (
+          !this.isPointerDown &&
+          Math.round(this.x * 100) == Math.round(previousX * 100)
+        ) {
           this.restingFrames++;
         } // stop animating if resting for 3 or more frames
-
 
         if (this.restingFrames > 2) {
           this.isAnimating = false;
           delete this.isFreeScrolling; // render position with translateX when settled
 
           this.positionSlider();
-          this.dispatchEvent('settle', null, [this.selectedIndex]);
+          this.dispatchEvent("settle", null, [this.selectedIndex]);
         }
       };
 
@@ -4459,8 +5361,9 @@
 
         this._shiftCells(this.beforeShiftCells, beforeGap, -1); // shift after cells
 
-
-        var afterGap = this.size.innerWidth - (x + this.slideableWidth + this.cursorPosition);
+        var afterGap =
+          this.size.innerWidth -
+          (x + this.slideableWidth + this.cursorPosition);
 
         this._shiftCells(this.afterShiftCells, afterGap, 1);
       };
@@ -4484,7 +5387,6 @@
         }
       }; // -------------------------- physics -------------------------- //
 
-
       proto.integratePhysics = function () {
         this.x += this.velocity;
         this.velocity *= this.getFrictionFactor();
@@ -4495,7 +5397,10 @@
       };
 
       proto.getFrictionFactor = function () {
-        return 1 - this.options[this.isFreeScrolling ? 'freeScrollFriction' : 'friction'];
+        return (
+          1 -
+          this.options[this.isFreeScrolling ? "freeScrollFriction" : "friction"]
+        );
       };
 
       proto.getRestingPosition = function () {
@@ -4507,7 +5412,6 @@
         if (!this.isDraggable || !this.isPointerDown) {
           return;
         } // change the position to drag position by applying force
-
 
         var dragVelocity = this.dragX - this.x;
         var dragForce = dragVelocity - this.velocity;
@@ -4537,16 +5441,39 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
-        module.exports = factory(window, evEmitter, getSize, utils, cell, slide, animate);
+        module.exports = factory(
+          window,
+          evEmitter,
+          getSize,
+          utils,
+          cell,
+          slide,
+          animate
+        );
       } else {
         // browser global
         var _Flickity = window.Flickity;
-        window.Flickity = factory(window, window.EvEmitter, window.getSize, window.fizzyUIUtils, _Flickity.Cell, _Flickity.Slide, _Flickity.animatePrototype);
+        window.Flickity = factory(
+          window,
+          window.EvEmitter,
+          window.getSize,
+          window.fizzyUIUtils,
+          _Flickity.Cell,
+          _Flickity.Slide,
+          _Flickity.animatePrototype
+        );
       }
-    })(window, function factory(window, EvEmitter, getSize, utils, Cell, Slide, animatePrototype) {
-
+    })(window, function factory(
+      window,
+      EvEmitter,
+      getSize,
+      utils,
+      Cell,
+      Slide,
+      animatePrototype
+    ) {
       var jQuery = window.jQuery;
       var getComputedStyle = window.getComputedStyle;
       var console = window.console;
@@ -4560,7 +5487,6 @@
       } // -------------------------- Flickity -------------------------- //
       // globally unique identifiers
 
-
       var GUID = 0; // internal store of all Flickity intances
 
       var instances = {};
@@ -4570,7 +5496,9 @@
 
         if (!queryElement) {
           if (console) {
-            console.error('Bad element for Flickity: ' + (queryElement || element));
+            console.error(
+              "Bad element for Flickity: " + (queryElement || element)
+            );
           }
 
           return;
@@ -4584,11 +5512,9 @@
           return instance;
         } // add jQuery
 
-
         if (jQuery) {
           this.$element = jQuery(this.element);
         } // options
-
 
         this.options = utils.extend({}, this.constructor.defaults);
         this.option(options); // kick things off
@@ -4599,7 +5525,7 @@
       Flickity.defaults = {
         accessibility: true,
         // adaptiveHeight: false,
-        cellAlign: 'center',
+        cellAlign: "center",
         // cellSelector: undefined,
         // contain: false,
         freeScrollFriction: 0.075,
@@ -4611,9 +5537,8 @@
         percentPosition: true,
         resize: true,
         selectedAttraction: 0.025,
-        setGallerySize: true // watchCSS: false,
+        setGallerySize: true, // watchCSS: false,
         // wrapAround: false
-
       }; // hash of methods triggered on _create()
 
       Flickity.createMethods = [];
@@ -4623,7 +5548,7 @@
 
       proto._create = function () {
         // add id for Flickity.data
-        var id = this.guid = ++GUID;
+        var id = (this.guid = ++GUID);
         this.element.flickityGUID = id; // expando
 
         instances[id] = this; // associate via id
@@ -4635,17 +5560,16 @@
 
         this.x = 0;
         this.velocity = 0;
-        this.originSide = this.options.rightToLeft ? 'right' : 'left'; // create viewport & slider
+        this.originSide = this.options.rightToLeft ? "right" : "left"; // create viewport & slider
 
-        this.viewport = document.createElement('div');
-        this.viewport.className = 'flickity-viewport';
+        this.viewport = document.createElement("div");
+        this.viewport.className = "flickity-viewport";
 
         this._createSlider();
 
         if (this.options.resize || this.options.watchCSS) {
-          window.addEventListener('resize', this);
+          window.addEventListener("resize", this);
         } // add listeners from on option
-
 
         for (var eventName in this.options.on) {
           var listener = this.options.on[eventName];
@@ -4667,7 +5591,6 @@
        * @param {Object} opts
        */
 
-
       proto.option = function (opts) {
         utils.extend(this.options, opts);
       };
@@ -4678,10 +5601,10 @@
         }
 
         this.isActive = true;
-        this.element.classList.add('flickity-enabled');
+        this.element.classList.add("flickity-enabled");
 
         if (this.options.rightToLeft) {
-          this.element.classList.add('flickity-rtl');
+          this.element.classList.add("flickity-rtl");
         }
 
         this.getSize(); // move initial cell elements so they can be loaded as cells
@@ -4698,22 +5621,21 @@
           // allow element to focusable
           this.element.tabIndex = 0; // listen for key presses
 
-          this.element.addEventListener('keydown', this);
+          this.element.addEventListener("keydown", this);
         }
 
-        this.emitEvent('activate');
+        this.emitEvent("activate");
         this.selectInitialIndex(); // flag for initial activation, for using initialIndex
 
         this.isInitActivated = true; // ready event. #493
 
-        this.dispatchEvent('ready');
+        this.dispatchEvent("ready");
       }; // slider positions the cells
-
 
       proto._createSlider = function () {
         // slider element does all the positioning
-        var slider = document.createElement('div');
-        slider.className = 'flickity-slider';
+        var slider = document.createElement("div");
+        slider.className = "flickity-slider";
         slider.style[this.originSide] = 0;
         this.slider = slider;
       };
@@ -4721,7 +5643,6 @@
       proto._filterFindCellElements = function (elems) {
         return utils.filterFindElements(elems, this.options.cellSelector);
       }; // goes through all children
-
 
       proto.reloadCells = function () {
         // collection of item elements
@@ -4738,10 +5659,8 @@
        * @returns {Array} items - collection of new Flickity Cells
        */
 
-
       proto._makeCells = function (elems) {
         var cellElems = this._filterFindCellElements(elems); // create new Flickity for collection
-
 
         var cells = cellElems.map(function (cellElem) {
           return new Cell(cellElem, this);
@@ -4757,11 +5676,9 @@
         return this.slides[this.slides.length - 1];
       }; // positions all cells
 
-
       proto.positionCells = function () {
         // size all cells
         this._sizeCells(this.cells); // position all cells
-
 
         this._positionCells(0);
       };
@@ -4769,7 +5686,6 @@
        * position certain cells
        * @param {Integer} index - which cell to start with
        */
-
 
       proto._positionCells = function (index) {
         index = index || 0; // also measure maxCellHeight
@@ -4789,9 +5705,11 @@
           var cell = this.cells[i];
           cell.setPosition(cellX);
           cellX += cell.size.outerWidth;
-          this.maxCellHeight = Math.max(cell.size.outerHeight, this.maxCellHeight);
+          this.maxCellHeight = Math.max(
+            cell.size.outerHeight,
+            this.maxCellHeight
+          );
         } // keep track of cellX for wrap-around
-
 
         this.slideableWidth = cellX; // slides
 
@@ -4799,21 +5717,20 @@
 
         this._containSlides(); // update slidesWidth
 
-
-        this.slidesWidth = len ? this.getLastSlide().target - this.slides[0].target : 0;
+        this.slidesWidth = len
+          ? this.getLastSlide().target - this.slides[0].target
+          : 0;
       };
       /**
        * cell.getSize() on multiple cells
        * @param {Array} cells
        */
 
-
       proto._sizeCells = function (cells) {
         cells.forEach(function (cell) {
           cell.getSize();
         });
       }; // --------------------------  -------------------------- //
-
 
       proto.updateSlides = function () {
         this.slides = [];
@@ -4824,8 +5741,8 @@
 
         var slide = new Slide(this);
         this.slides.push(slide);
-        var isOriginLeft = this.originSide == 'left';
-        var nextMargin = isOriginLeft ? 'marginRight' : 'marginLeft';
+        var isOriginLeft = this.originSide == "left";
+        var nextMargin = isOriginLeft ? "marginRight" : "marginLeft";
 
         var canCellFit = this._getCanCellFit();
 
@@ -4836,7 +5753,10 @@
             return;
           }
 
-          var slideWidth = slide.outerWidth - slide.firstMargin + (cell.size.outerWidth - cell.size[nextMargin]);
+          var slideWidth =
+            slide.outerWidth -
+            slide.firstMargin +
+            (cell.size.outerWidth - cell.size[nextMargin]);
 
           if (canCellFit.call(this, i, slideWidth)) {
             slide.addCell(cell);
@@ -4861,7 +5781,7 @@
           return function () {
             return false;
           };
-        } else if (typeof groupCells == 'number') {
+        } else if (typeof groupCells == "number") {
           // group by number. 3 -> [0,1,2], [3,4,5], ...
           var number = parseInt(groupCells, 10);
           return function (i) {
@@ -4870,14 +5790,13 @@
         } // default, group by width of slide
         // parse '75%
 
-
-        var percentMatch = typeof groupCells == 'string' && groupCells.match(/^(\d+)%$/);
+        var percentMatch =
+          typeof groupCells == "string" && groupCells.match(/^(\d+)%$/);
         var percent = percentMatch ? parseInt(percentMatch[1], 10) / 100 : 1;
         return function (i, slideWidth) {
           return slideWidth <= (this.size.innerWidth + 1) * percent;
         };
       }; // alias _init for jQuery plugin .flickity()
-
 
       proto._init = proto.reposition = function () {
         this.positionCells();
@@ -4894,27 +5813,32 @@
         // cell align, then based on origin side
         center: {
           left: 0.5,
-          right: 0.5
+          right: 0.5,
         },
         left: {
           left: 0,
-          right: 1
+          right: 1,
         },
         right: {
           right: 0,
-          left: 1
-        }
+          left: 1,
+        },
       };
 
       proto.setCellAlign = function () {
         var shorthand = cellAlignShorthands[this.options.cellAlign];
-        this.cellAlign = shorthand ? shorthand[this.originSide] : this.options.cellAlign;
+        this.cellAlign = shorthand
+          ? shorthand[this.originSide]
+          : this.options.cellAlign;
       };
 
       proto.setGallerySize = function () {
         if (this.options.setGallerySize) {
-          var height = this.options.adaptiveHeight && this.selectedSlide ? this.selectedSlide.height : this.maxCellHeight;
-          this.viewport.style.height = height + 'px';
+          var height =
+            this.options.adaptiveHeight && this.selectedSlide
+              ? this.selectedSlide.height
+              : this.maxCellHeight;
+          this.viewport.style.height = height + "px";
         }
       };
 
@@ -4924,12 +5848,10 @@
           return;
         } // unshift previous cells
 
-
         this._unshiftCells(this.beforeShiftCells);
 
         this._unshiftCells(this.afterShiftCells); // get before cells
         // initial gap
-
 
         var gapX = this.cursorPosition;
         var cellIndex = this.cells.length - 1;
@@ -4961,21 +5883,26 @@
       }; // ----- contain ----- //
       // contain cell targets so no excess sliding
 
-
       proto._containSlides = function () {
-        if (!this.options.contain || this.options.wrapAround || !this.cells.length) {
+        if (
+          !this.options.contain ||
+          this.options.wrapAround ||
+          !this.cells.length
+        ) {
           return;
         }
 
         var isRightToLeft = this.options.rightToLeft;
-        var beginMargin = isRightToLeft ? 'marginRight' : 'marginLeft';
-        var endMargin = isRightToLeft ? 'marginLeft' : 'marginRight';
-        var contentWidth = this.slideableWidth - this.getLastCell().size[endMargin]; // content is less than gallery size
+        var beginMargin = isRightToLeft ? "marginRight" : "marginLeft";
+        var endMargin = isRightToLeft ? "marginLeft" : "marginRight";
+        var contentWidth =
+          this.slideableWidth - this.getLastCell().size[endMargin]; // content is less than gallery size
 
         var isContentSmaller = contentWidth < this.size.innerWidth; // bounds
 
         var beginBound = this.cursorPosition + this.cells[0].size[beginMargin];
-        var endBound = contentWidth - this.size.innerWidth * (1 - this.cellAlign); // contain each cell target
+        var endBound =
+          contentWidth - this.size.innerWidth * (1 - this.cellAlign); // contain each cell target
 
         this.slides.forEach(function (slide) {
           if (isContentSmaller) {
@@ -4996,14 +5923,13 @@
        * @param {Array} args - extra arguments
        */
 
-
       proto.dispatchEvent = function (type, event, args) {
         var emitArgs = event ? [event].concat(args) : args;
         this.emitEvent(type, emitArgs);
 
         if (jQuery && this.$element) {
           // default trigger with type if no event
-          type += this.options.namespaceJQueryEvents ? '.flickity' : '';
+          type += this.options.namespaceJQueryEvents ? ".flickity" : "";
           var $event = type;
 
           if (event) {
@@ -5023,7 +5949,6 @@
        * @param {Boolean} isInstant - will immediately set position at selected cell
        */
 
-
       proto.select = function (index, isWrap, isInstant) {
         if (!this.isActive) {
           return;
@@ -5036,7 +5961,6 @@
         if (this.options.wrapAround || isWrap) {
           index = utils.modulo(index, this.slides.length);
         } // bail if invalid index
-
 
         if (!this.slides[index]) {
           return;
@@ -5056,17 +5980,14 @@
           this.setGallerySize();
         } // events
 
-
-        this.dispatchEvent('select', null, [index]); // change event if new index
+        this.dispatchEvent("select", null, [index]); // change event if new index
 
         if (index != prevIndex) {
-          this.dispatchEvent('change', null, [index]);
+          this.dispatchEvent("change", null, [index]);
         } // old v1 event name, remove in v3
 
-
-        this.dispatchEvent('cellSelect');
+        this.dispatchEvent("cellSelect");
       }; // wraps position for wrapAround, to move to closest slide. #113
-
 
       proto._wrapSelect = function (index) {
         var len = this.slides.length;
@@ -5087,7 +6008,6 @@
         } else if (!this.isDragSelect && forewardWrapDelta < delta) {
           index -= len;
         } // wrap position so slider is within normal area
-
 
         if (index < 0) {
           this.x -= this.slideableWidth;
@@ -5110,7 +6030,6 @@
         if (!slide) {
           return;
         } // unselect previous selected slide
-
 
         this.unselectSelectedSlide(); // update new selected slide
 
@@ -5138,8 +6057,7 @@
           return;
         } // select with selector string
 
-
-        if (initialIndex && typeof initialIndex == 'string') {
+        if (initialIndex && typeof initialIndex == "string") {
           var cell = this.queryCell(initialIndex);
 
           if (cell) {
@@ -5154,14 +6072,12 @@
           index = initialIndex;
         } // select instantly
 
-
         this.select(index, false, true);
       };
       /**
        * select slide from number or cell element
        * @param {Element or Number} elem
        */
-
 
       proto.selectCell = function (value, isWrap, isInstant) {
         // get cell
@@ -5193,7 +6109,6 @@
        * @returns {Flickity.Cell} item
        */
 
-
       proto.getCell = function (elem) {
         // loop through cells to get the one that matches
         for (var i = 0; i < this.cells.length; i++) {
@@ -5209,7 +6124,6 @@
        * @param {Element, Array, NodeList} elems
        * @returns {Array} cells - Flickity.Cells
        */
-
 
       proto.getCells = function (elems) {
         elems = utils.makeArray(elems);
@@ -5228,7 +6142,6 @@
        * @returns {Array} cellElems
        */
 
-
       proto.getCellElements = function () {
         return this.cells.map(function (cell) {
           return cell.element;
@@ -5240,7 +6153,6 @@
        * @returns {Flickit.Cell} cell
        */
 
-
       proto.getParentCell = function (elem) {
         // first check if elem is cell
         var cell = this.getCell(elem);
@@ -5249,8 +6161,7 @@
           return cell;
         } // try to get parent cell elem
 
-
-        elem = utils.getParent(elem, '.flickity-slider > *');
+        elem = utils.getParent(elem, ".flickity-slider > *");
         return this.getCell(elem);
       };
       /**
@@ -5259,7 +6170,6 @@
        * @param {Integer} index - index of slide to start
        * @returns {Array} cells - array of Flickity.Cells
        */
-
 
       proto.getAdjacentCellElements = function (adjCount, index) {
         if (!adjCount) {
@@ -5291,49 +6201,43 @@
        * @param {Element, Selector String, or Number} selector
        */
 
-
       proto.queryCell = function (selector) {
-        if (typeof selector == 'number') {
+        if (typeof selector == "number") {
           // use number as index
           return this.cells[selector];
         }
 
-        if (typeof selector == 'string') {
+        if (typeof selector == "string") {
           // do not select invalid selectors from hash: #123, #/. #791
           if (selector.match(/^[#\.]?[\d\/]/)) {
             return;
           } // use string as selector, get element
 
-
           selector = this.element.querySelector(selector);
         } // get cell from element
-
 
         return this.getCell(selector);
       }; // -------------------------- events -------------------------- //
 
-
       proto.uiChange = function () {
-        this.emitEvent('uiChange');
+        this.emitEvent("uiChange");
       }; // keep focus on element when child UI elements are clicked
-
 
       proto.childUIPointerDown = function (event) {
         // HACK iOS does not allow touch events to bubble up?!
-        if (event.type != 'touchstart') {
+        if (event.type != "touchstart") {
           event.preventDefault();
         }
 
         this.focus();
       }; // ----- resize ----- //
 
-
       proto.onresize = function () {
         this.watchCSS();
         this.resize();
       };
 
-      utils.debounceMethod(Flickity, 'onresize', 150);
+      utils.debounceMethod(Flickity, "onresize", 150);
 
       proto.resize = function () {
         if (!this.isActive) {
@@ -5351,13 +6255,12 @@
         this._getWrapShiftCells();
 
         this.setGallerySize();
-        this.emitEvent('resize'); // update selected index for group slides, instant
+        this.emitEvent("resize"); // update selected index for group slides, instant
         // TODO: position can be lost between groups of various numbers
 
         var selectedElement = this.selectedElements && this.selectedElements[0];
         this.selectCell(selectedElement, false, true);
       }; // watches the :after property, activates/deactivates
-
 
       proto.watchCSS = function () {
         var watchOption = this.options.watchCSS;
@@ -5366,9 +6269,9 @@
           return;
         }
 
-        var afterContent = getComputedStyle(this.element, ':after').content; // activate if :after { content: 'flickity' }
+        var afterContent = getComputedStyle(this.element, ":after").content; // activate if :after { content: 'flickity' }
 
-        if (afterContent.indexOf('flickity') != -1) {
+        if (afterContent.indexOf("flickity") != -1) {
           this.activate();
         } else {
           this.deactivate();
@@ -5376,10 +6279,10 @@
       }; // ----- keydown ----- //
       // go previous/next if left/right keys pressed
 
-
       proto.onkeydown = function (event) {
         // only work if element is in focus
-        var isNotFocused = document.activeElement && document.activeElement != this.element;
+        var isNotFocused =
+          document.activeElement && document.activeElement != this.element;
 
         if (!this.options.accessibility || isNotFocused) {
           return;
@@ -5395,16 +6298,16 @@
       Flickity.keyboardHandlers = {
         // left arrow
         37: function _() {
-          var leftMethod = this.options.rightToLeft ? 'next' : 'previous';
+          var leftMethod = this.options.rightToLeft ? "next" : "previous";
           this.uiChange();
           this[leftMethod]();
         },
         // right arrow
         39: function _() {
-          var rightMethod = this.options.rightToLeft ? 'previous' : 'next';
+          var rightMethod = this.options.rightToLeft ? "previous" : "next";
           this.uiChange();
           this[rightMethod]();
-        }
+        },
       }; // ----- focus ----- //
 
       proto.focus = function () {
@@ -5412,7 +6315,7 @@
         // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#Browser_compatibility
         var prevScrollY = window.pageYOffset;
         this.element.focus({
-          preventScroll: true
+          preventScroll: true,
         }); // hack to fix scroll jump after focus, #76
 
         if (window.pageYOffset != prevScrollY) {
@@ -5421,14 +6324,13 @@
       }; // -------------------------- destroy -------------------------- //
       // deactivate all Flickity functionality, but keep stuff available
 
-
       proto.deactivate = function () {
         if (!this.isActive) {
           return;
         }
 
-        this.element.classList.remove('flickity-enabled');
-        this.element.classList.remove('flickity-rtl');
+        this.element.classList.remove("flickity-enabled");
+        this.element.classList.remove("flickity-rtl");
         this.unselectSelectedSlide(); // destroy cells
 
         this.cells.forEach(function (cell) {
@@ -5439,29 +6341,27 @@
         moveElements(this.slider.children, this.element);
 
         if (this.options.accessibility) {
-          this.element.removeAttribute('tabIndex');
-          this.element.removeEventListener('keydown', this);
+          this.element.removeAttribute("tabIndex");
+          this.element.removeEventListener("keydown", this);
         } // set flags
 
-
         this.isActive = false;
-        this.emitEvent('deactivate');
+        this.emitEvent("deactivate");
       };
 
       proto.destroy = function () {
         this.deactivate();
-        window.removeEventListener('resize', this);
+        window.removeEventListener("resize", this);
         this.allOff();
-        this.emitEvent('destroy');
+        this.emitEvent("destroy");
 
         if (jQuery && this.$element) {
-          jQuery.removeData(this.element, 'flickity');
+          jQuery.removeData(this.element, "flickity");
         }
 
         delete this.element.flickityGUID;
         delete instances[this.guid];
       }; // -------------------------- prototype -------------------------- //
-
 
       utils.extend(proto, animatePrototype); // -------------------------- extras -------------------------- //
 
@@ -5477,12 +6377,11 @@
         return id && instances[id];
       };
 
-      utils.htmlInit(Flickity, 'flickity');
+      utils.htmlInit(Flickity, "flickity");
 
       if (jQuery && jQuery.bridget) {
-        jQuery.bridget('flickity', Flickity);
+        jQuery.bridget("flickity", Flickity);
       } // set internal jQuery, for Webpack + jQuery v3, #478
-
 
       Flickity.setJQuery = function (jq) {
         jQuery = jq;
@@ -5508,7 +6407,7 @@
       /* jshint strict: false */
 
       /*global define, module, require */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, evEmitter);
       } else {
@@ -5516,13 +6415,11 @@
         window.Unipointer = factory(window, window.EvEmitter);
       }
     })(window, function factory(window, EvEmitter) {
-
       function noop() {}
 
       function Unipointer() {} // inherit EvEmitter
 
-
-      var proto = Unipointer.prototype = Object.create(EvEmitter.prototype);
+      var proto = (Unipointer.prototype = Object.create(EvEmitter.prototype));
 
       proto.bindStartEvent = function (elem) {
         this._bindStartEvent(elem, true);
@@ -5536,34 +6433,31 @@
        * @param {Boolean} isAdd - remove if falsey
        */
 
-
       proto._bindStartEvent = function (elem, isAdd) {
         // munge isAdd, default to true
         isAdd = isAdd === undefined ? true : isAdd;
-        var bindMethod = isAdd ? 'addEventListener' : 'removeEventListener'; // default to mouse events
+        var bindMethod = isAdd ? "addEventListener" : "removeEventListener"; // default to mouse events
 
-        var startEvent = 'mousedown';
+        var startEvent = "mousedown";
 
         if (window.PointerEvent) {
           // Pointer Events
-          startEvent = 'pointerdown';
-        } else if ('ontouchstart' in window) {
+          startEvent = "pointerdown";
+        } else if ("ontouchstart" in window) {
           // Touch Events. iOS Safari
-          startEvent = 'touchstart';
+          startEvent = "touchstart";
         }
 
         elem[bindMethod](startEvent, this);
       }; // trigger handler methods for events
 
-
       proto.handleEvent = function (event) {
-        var method = 'on' + event.type;
+        var method = "on" + event.type;
 
         if (this[method]) {
           this[method](event);
         }
       }; // returns the touch that we're keeping track of
-
 
       proto.getTouch = function (touches) {
         for (var i = 0; i < touches.length; i++) {
@@ -5574,7 +6468,6 @@
           }
         }
       }; // ----- start event ----- //
-
 
       proto.onmousedown = function (event) {
         // dismiss clicks from right or middle buttons
@@ -5600,7 +6493,6 @@
        * @param {Event or Touch} pointer
        */
 
-
       proto._pointerDown = function (event, pointer) {
         // dismiss right click and other pointers
         // button = 0 is okay, 1-4 not
@@ -5610,29 +6502,29 @@
 
         this.isPointerDown = true; // save pointer identifier to match up touch events
 
-        this.pointerIdentifier = pointer.pointerId !== undefined ? // pointerId for pointer events, touch.indentifier for touch events
-        pointer.pointerId : pointer.identifier;
+        this.pointerIdentifier =
+          pointer.pointerId !== undefined // pointerId for pointer events, touch.indentifier for touch events
+            ? pointer.pointerId
+            : pointer.identifier;
         this.pointerDown(event, pointer);
       };
 
       proto.pointerDown = function (event, pointer) {
         this._bindPostStartEvents(event);
 
-        this.emitEvent('pointerDown', [event, pointer]);
+        this.emitEvent("pointerDown", [event, pointer]);
       }; // hash of events to be bound after start event
 
-
       var postStartEvents = {
-        mousedown: ['mousemove', 'mouseup'],
-        touchstart: ['touchmove', 'touchend', 'touchcancel'],
-        pointerdown: ['pointermove', 'pointerup', 'pointercancel']
+        mousedown: ["mousemove", "mouseup"],
+        touchstart: ["touchmove", "touchend", "touchcancel"],
+        pointerdown: ["pointermove", "pointerup", "pointercancel"],
       };
 
       proto._bindPostStartEvents = function (event) {
         if (!event) {
           return;
         } // get proper events to match start event
-
 
         var events = postStartEvents[event.type]; // bind events to node
 
@@ -5655,7 +6547,6 @@
 
         delete this._boundPointerEvents;
       }; // ----- move event ----- //
-
 
       proto.onmousemove = function (event) {
         this._pointerMove(event, event);
@@ -5681,16 +6572,13 @@
        * @private
        */
 
-
       proto._pointerMove = function (event, pointer) {
         this.pointerMove(event, pointer);
       }; // public
 
-
       proto.pointerMove = function (event, pointer) {
-        this.emitEvent('pointerMove', [event, pointer]);
+        this.emitEvent("pointerMove", [event, pointer]);
       }; // ----- end event ----- //
-
 
       proto.onmouseup = function (event) {
         this._pointerUp(event, event);
@@ -5716,19 +6604,16 @@
        * @private
        */
 
-
       proto._pointerUp = function (event, pointer) {
         this._pointerDone();
 
         this.pointerUp(event, pointer);
       }; // public
 
-
       proto.pointerUp = function (event, pointer) {
-        this.emitEvent('pointerUp', [event, pointer]);
+        this.emitEvent("pointerUp", [event, pointer]);
       }; // ----- pointer done ----- //
       // triggered on pointer up & pointer cancel
-
 
       proto._pointerDone = function () {
         this._pointerReset();
@@ -5766,27 +6651,23 @@
        * @private
        */
 
-
       proto._pointerCancel = function (event, pointer) {
         this._pointerDone();
 
         this.pointerCancel(event, pointer);
       }; // public
 
-
       proto.pointerCancel = function (event, pointer) {
-        this.emitEvent('pointerCancel', [event, pointer]);
+        this.emitEvent("pointerCancel", [event, pointer]);
       }; // -----  ----- //
       // utility function for getting x/y coords from event
-
 
       Unipointer.getPointerPoint = function (pointer) {
         return {
           x: pointer.pageX,
-          y: pointer.pageY
+          y: pointer.pageY,
         };
       }; // -----  ----- //
-
 
       return Unipointer;
     });
@@ -5806,7 +6687,7 @@
       /*jshint strict: false */
 
       /*globals define, module, require */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, unipointer);
       } else {
@@ -5814,11 +6695,9 @@
         window.Unidragger = factory(window, window.Unipointer);
       }
     })(window, function factory(window, Unipointer) {
-
       function Unidragger() {} // inherit Unipointer & EvEmitter
 
-
-      var proto = Unidragger.prototype = Object.create(Unipointer.prototype); // ----- bind start ----- //
+      var proto = (Unidragger.prototype = Object.create(Unipointer.prototype)); // ----- bind start ----- //
 
       proto.bindHandles = function () {
         this._bindHandles(true);
@@ -5832,20 +6711,19 @@
        * @param {Boolean} isAdd
        */
 
-
       proto._bindHandles = function (isAdd) {
         // munge isAdd, default to true
         isAdd = isAdd === undefined ? true : isAdd; // bind each handle
 
-        var bindMethod = isAdd ? 'addEventListener' : 'removeEventListener';
-        var touchAction = isAdd ? this._touchActionValue : '';
+        var bindMethod = isAdd ? "addEventListener" : "removeEventListener";
+        var touchAction = isAdd ? this._touchActionValue : "";
 
         for (var i = 0; i < this.handles.length; i++) {
           var handle = this.handles[i];
 
           this._bindStartEvent(handle, isAdd);
 
-          handle[bindMethod]('click', this); // touch-action: none to override browser touch gestures. metafizzy/flickity#540
+          handle[bindMethod]("click", this); // touch-action: none to override browser touch gestures. metafizzy/flickity#540
 
           if (window.PointerEvent) {
             handle.style.touchAction = touchAction;
@@ -5853,8 +6731,7 @@
         }
       }; // prototype so it can be overwriteable by Flickity
 
-
-      proto._touchActionValue = 'none'; // ----- start event ----- //
+      proto._touchActionValue = "none"; // ----- start event ----- //
 
       /**
        * pointer start
@@ -5870,25 +6747,23 @@
         } // track start event position
         // Safari 9 overrides pageX and pageY. These values needs to be copied. flickity#842
 
-
         this.pointerDownPointer = {
           pageX: pointer.pageX,
-          pageY: pointer.pageY
+          pageY: pointer.pageY,
         };
         event.preventDefault();
         this.pointerDownBlur(); // bind move and end events
 
         this._bindPostStartEvents(event);
 
-        this.emitEvent('pointerDown', [event, pointer]);
+        this.emitEvent("pointerDown", [event, pointer]);
       }; // nodes that have text fields
-
 
       var cursorNodes = {
         TEXTAREA: true,
         INPUT: true,
         SELECT: true,
-        OPTION: true
+        OPTION: true,
       }; // input types that do not have text fields
 
       var clickTypes = {
@@ -5897,7 +6772,7 @@
         button: true,
         submit: true,
         image: true,
-        file: true
+        file: true,
       }; // dismiss inputs with text fields. flickity#403, flickity#404
 
       proto.okayPointerDown = function (event) {
@@ -5911,7 +6786,6 @@
 
         return isOkay;
       }; // kludge to blur previously focused input
-
 
       proto.pointerDownBlur = function () {
         var focused = document.activeElement; // do not blur body for IE10, metafizzy/flickity#117
@@ -5929,20 +6803,18 @@
        * @param {Event or Touch} pointer
        */
 
-
       proto.pointerMove = function (event, pointer) {
         var moveVector = this._dragPointerMove(event, pointer);
 
-        this.emitEvent('pointerMove', [event, pointer, moveVector]);
+        this.emitEvent("pointerMove", [event, pointer, moveVector]);
 
         this._dragMove(event, pointer, moveVector);
       }; // base pointer move logic
 
-
       proto._dragPointerMove = function (event, pointer) {
         var moveVector = {
           x: pointer.pageX - this.pointerDownPointer.pageX,
-          y: pointer.pageY - this.pointerDownPointer.pageY
+          y: pointer.pageY - this.pointerDownPointer.pageY,
         }; // start drag if pointer has moved far enough to start drag
 
         if (!this.isDragging && this.hasDragStarted(moveVector)) {
@@ -5951,7 +6823,6 @@
 
         return moveVector;
       }; // condition if pointer has moved far enough to start drag
-
 
       proto.hasDragStarted = function (moveVector) {
         return Math.abs(moveVector.x) > 3 || Math.abs(moveVector.y) > 3;
@@ -5963,9 +6834,8 @@
        * @param {Event or Touch} pointer
        */
 
-
       proto.pointerUp = function (event, pointer) {
-        this.emitEvent('pointerUp', [event, pointer]);
+        this.emitEvent("pointerUp", [event, pointer]);
 
         this._dragPointerUp(event, pointer);
       };
@@ -5980,7 +6850,6 @@
       }; // -------------------------- drag -------------------------- //
       // dragStart
 
-
       proto._dragStart = function (event, pointer) {
         this.isDragging = true; // prevent clicks
 
@@ -5989,9 +6858,8 @@
       };
 
       proto.dragStart = function (event, pointer) {
-        this.emitEvent('dragStart', [event, pointer]);
+        this.emitEvent("dragStart", [event, pointer]);
       }; // dragMove
-
 
       proto._dragMove = function (event, pointer, moveVector) {
         // do not drag if not dragging yet
@@ -6004,25 +6872,25 @@
 
       proto.dragMove = function (event, pointer, moveVector) {
         event.preventDefault();
-        this.emitEvent('dragMove', [event, pointer, moveVector]);
+        this.emitEvent("dragMove", [event, pointer, moveVector]);
       }; // dragEnd
-
 
       proto._dragEnd = function (event, pointer) {
         // set flags
         this.isDragging = false; // re-enable clicking async
 
-        setTimeout(function () {
-          delete this.isPreventingClicks;
-        }.bind(this));
+        setTimeout(
+          function () {
+            delete this.isPreventingClicks;
+          }.bind(this)
+        );
         this.dragEnd(event, pointer);
       };
 
       proto.dragEnd = function (event, pointer) {
-        this.emitEvent('dragEnd', [event, pointer]);
+        this.emitEvent("dragEnd", [event, pointer]);
       }; // ----- onclick ----- //
       // handle all clicks and prevent clicks when dragging
-
 
       proto.onclick = function (event) {
         if (this.isPreventingClicks) {
@@ -6031,28 +6899,29 @@
       }; // ----- staticClick ----- //
       // triggered after pointer down & up with no/tiny movement
 
-
       proto._staticClick = function (event, pointer) {
         // ignore emulated mouse up clicks
-        if (this.isIgnoringMouseUp && event.type == 'mouseup') {
+        if (this.isIgnoringMouseUp && event.type == "mouseup") {
           return;
         }
 
         this.staticClick(event, pointer); // set flag for emulated clicks 300ms after touchend
 
-        if (event.type != 'mouseup') {
+        if (event.type != "mouseup") {
           this.isIgnoringMouseUp = true; // reset flag after 300ms
 
-          setTimeout(function () {
-            delete this.isIgnoringMouseUp;
-          }.bind(this), 400);
+          setTimeout(
+            function () {
+              delete this.isIgnoringMouseUp;
+            }.bind(this),
+            400
+          );
         }
       };
 
       proto.staticClick = function (event, pointer) {
-        this.emitEvent('staticClick', [event, pointer]);
+        this.emitEvent("staticClick", [event, pointer]);
       }; // ----- utils ----- //
-
 
       Unidragger.getPointerPoint = Unipointer.getPointerPoint; // -----  ----- //
 
@@ -6066,39 +6935,43 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, flickity, unidragger, utils);
       } else {
         // browser global
-        window.Flickity = factory(window, window.Flickity, window.Unidragger, window.fizzyUIUtils);
+        window.Flickity = factory(
+          window,
+          window.Flickity,
+          window.Unidragger,
+          window.fizzyUIUtils
+        );
       }
     })(window, function factory(window, Flickity, Unidragger, utils) {
-
       utils.extend(Flickity.defaults, {
-        draggable: '>1',
-        dragThreshold: 3
+        draggable: ">1",
+        dragThreshold: 3,
       }); // ----- create ----- //
 
-      Flickity.createMethods.push('_createDrag'); // -------------------------- drag prototype -------------------------- //
+      Flickity.createMethods.push("_createDrag"); // -------------------------- drag prototype -------------------------- //
 
       var proto = Flickity.prototype;
       utils.extend(proto, Unidragger.prototype);
-      proto._touchActionValue = 'pan-y'; // --------------------------  -------------------------- //
+      proto._touchActionValue = "pan-y"; // --------------------------  -------------------------- //
 
-      var isTouch = ('createTouch' in document);
+      var isTouch = "createTouch" in document;
       var isTouchmoveScrollCanceled = false;
 
       proto._createDrag = function () {
-        this.on('activate', this.onActivateDrag);
-        this.on('uiChange', this._uiChangeDrag);
-        this.on('deactivate', this.onDeactivateDrag);
-        this.on('cellChange', this.updateDraggable); // TODO updateDraggable on resize? if groupCells & slides change
+        this.on("activate", this.onActivateDrag);
+        this.on("uiChange", this._uiChangeDrag);
+        this.on("deactivate", this.onDeactivateDrag);
+        this.on("cellChange", this.updateDraggable); // TODO updateDraggable on resize? if groupCells & slides change
         // HACK - add seemingly innocuous handler to fix iOS 10 scroll behavior
         // #457, RubaXa/Sortable#973
 
         if (isTouch && !isTouchmoveScrollCanceled) {
-          window.addEventListener('touchmove', function () {});
+          window.addEventListener("touchmove", function () {});
           isTouchmoveScrollCanceled = true;
         }
       };
@@ -6111,24 +6984,23 @@
 
       proto.onDeactivateDrag = function () {
         this.unbindHandles();
-        this.element.classList.remove('is-draggable');
+        this.element.classList.remove("is-draggable");
       };
 
       proto.updateDraggable = function () {
         // disable dragging if less than 2 slides. #278
-        if (this.options.draggable == '>1') {
+        if (this.options.draggable == ">1") {
           this.isDraggable = this.slides.length > 1;
         } else {
           this.isDraggable = this.options.draggable;
         }
 
         if (this.isDraggable) {
-          this.element.classList.add('is-draggable');
+          this.element.classList.add("is-draggable");
         } else {
-          this.element.classList.remove('is-draggable');
+          this.element.classList.remove("is-draggable");
         }
       }; // backwards compatibility
-
 
       proto.bindDrag = function () {
         this.options.draggable = true;
@@ -6143,7 +7015,6 @@
       proto._uiChangeDrag = function () {
         delete this.isFreeScrolling;
       }; // -------------------------- pointer events -------------------------- //
-
 
       proto.pointerDown = function (event, pointer) {
         if (!this.isDraggable) {
@@ -6167,34 +7038,32 @@
           this.pointerDownBlur();
         } // stop if it was moving
 
-
         this.dragX = this.x;
-        this.viewport.classList.add('is-pointer-down'); // track scrolling
+        this.viewport.classList.add("is-pointer-down"); // track scrolling
 
         this.pointerDownScroll = getScrollPosition();
-        window.addEventListener('scroll', this);
+        window.addEventListener("scroll", this);
 
         this._pointerDownDefault(event, pointer);
       }; // default pointerDown logic, used for staticClick
-
 
       proto._pointerDownDefault = function (event, pointer) {
         // track start event position
         // Safari 9 overrides pageX and pageY. These values needs to be copied. #779
         this.pointerDownPointer = {
           pageX: pointer.pageX,
-          pageY: pointer.pageY
+          pageY: pointer.pageY,
         }; // bind move and end events
 
         this._bindPostStartEvents(event);
 
-        this.dispatchEvent('pointerDown', event, [pointer]);
+        this.dispatchEvent("pointerDown", event, [pointer]);
       };
 
       var focusNodes = {
         INPUT: true,
         TEXTAREA: true,
-        SELECT: true
+        SELECT: true,
       };
 
       proto.pointerDownFocus = function (event) {
@@ -6206,8 +7075,8 @@
       };
 
       proto._pointerDownPreventDefault = function (event) {
-        var isTouchStart = event.type == 'touchstart';
-        var isTouchPointer = event.pointerType == 'touch';
+        var isTouchStart = event.type == "touchstart";
+        var isTouchPointer = event.pointerType == "touch";
         var isFocusNode = focusNodes[event.target.nodeName];
 
         if (!isTouchStart && !isTouchPointer && !isFocusNode) {
@@ -6215,25 +7084,22 @@
         }
       }; // ----- move ----- //
 
-
       proto.hasDragStarted = function (moveVector) {
         return Math.abs(moveVector.x) > this.options.dragThreshold;
       }; // ----- up ----- //
 
-
       proto.pointerUp = function (event, pointer) {
         delete this.isTouchScrolling;
-        this.viewport.classList.remove('is-pointer-down');
-        this.dispatchEvent('pointerUp', event, [pointer]);
+        this.viewport.classList.remove("is-pointer-down");
+        this.dispatchEvent("pointerUp", event, [pointer]);
 
         this._dragPointerUp(event, pointer);
       };
 
       proto.pointerDone = function () {
-        window.removeEventListener('scroll', this);
+        window.removeEventListener("scroll", this);
         delete this.pointerDownScroll;
       }; // -------------------------- dragging -------------------------- //
-
 
       proto.dragStart = function (event, pointer) {
         if (!this.isDraggable) {
@@ -6242,14 +7108,14 @@
 
         this.dragStartPosition = this.x;
         this.startAnimation();
-        window.removeEventListener('scroll', this);
-        this.dispatchEvent('dragStart', event, [pointer]);
+        window.removeEventListener("scroll", this);
+        this.dispatchEvent("dragStart", event, [pointer]);
       };
 
       proto.pointerMove = function (event, pointer) {
         var moveVector = this._dragPointerMove(event, pointer);
 
-        this.dispatchEvent('pointerMove', event, [pointer, moveVector]);
+        this.dispatchEvent("pointerMove", event, [pointer, moveVector]);
 
         this._dragMove(event, pointer, moveVector);
       };
@@ -6273,15 +7139,21 @@
 
         if (!this.options.wrapAround && this.slides.length) {
           // slow drag
-          var originBound = Math.max(-this.slides[0].target, this.dragStartPosition);
+          var originBound = Math.max(
+            -this.slides[0].target,
+            this.dragStartPosition
+          );
           dragX = dragX > originBound ? (dragX + originBound) * 0.5 : dragX;
-          var endBound = Math.min(-this.getLastSlide().target, this.dragStartPosition);
+          var endBound = Math.min(
+            -this.getLastSlide().target,
+            this.dragStartPosition
+          );
           dragX = dragX < endBound ? (dragX + endBound) * 0.5 : dragX;
         }
 
         this.dragX = dragX;
         this.dragMoveTime = new Date();
-        this.dispatchEvent('dragMove', event, [pointer, moveVector]);
+        this.dispatchEvent("dragMove", event, [pointer, moveVector]);
       };
 
       proto.dragEnd = function (event, pointer) {
@@ -6293,7 +7165,6 @@
           this.isFreeScrolling = true;
         } // set selectedIndex based on where flick will end up
 
-
         var index = this.dragEndRestingSelect();
 
         if (this.options.freeScroll && !this.options.wrapAround) {
@@ -6301,7 +7172,9 @@
           // do not free-scroll if going outside of bounding slides
           // so bounding slides can attract slider, and keep it in bounds
           var restingX = this.getRestingPosition();
-          this.isFreeScrolling = -restingX > this.slides[0].target && -restingX < this.getLastSlide().target;
+          this.isFreeScrolling =
+            -restingX > this.slides[0].target &&
+            -restingX < this.getLastSlide().target;
         } else if (!this.options.freeScroll && index == this.selectedIndex) {
           // boost selection if selected index has not changed
           index += this.dragEndBoostSelect();
@@ -6314,20 +7187,24 @@
         this.isDragSelect = this.options.wrapAround;
         this.select(index);
         delete this.isDragSelect;
-        this.dispatchEvent('dragEnd', event, [pointer]);
+        this.dispatchEvent("dragEnd", event, [pointer]);
       };
 
       proto.dragEndRestingSelect = function () {
         var restingX = this.getRestingPosition(); // how far away from selected slide
 
-        var distance = Math.abs(this.getSlideDistance(-restingX, this.selectedIndex)); // get closet resting going up and going down
+        var distance = Math.abs(
+          this.getSlideDistance(-restingX, this.selectedIndex)
+        ); // get closet resting going up and going down
 
         var positiveResting = this._getClosestResting(restingX, distance, 1);
 
         var negativeResting = this._getClosestResting(restingX, distance, -1); // use closer resting for wrap-around
 
-
-        var index = positiveResting.distance < negativeResting.distance ? positiveResting.index : negativeResting.index;
+        var index =
+          positiveResting.distance < negativeResting.distance
+            ? positiveResting.index
+            : negativeResting.index;
         return index;
       };
       /**
@@ -6339,16 +7216,17 @@
        * @returns {Object} - { distance: {Number}, index: {Integer} }
        */
 
-
       proto._getClosestResting = function (restingX, distance, increment) {
         var index = this.selectedIndex;
         var minDistance = Infinity;
-        var condition = this.options.contain && !this.options.wrapAround ? // if contain, keep going if distance is equal to minDistance
-        function (d, md) {
-          return d <= md;
-        } : function (d, md) {
-          return d < md;
-        };
+        var condition =
+          this.options.contain && !this.options.wrapAround // if contain, keep going if distance is equal to minDistance
+            ? function (d, md) {
+                return d <= md;
+              }
+            : function (d, md) {
+                return d < md;
+              };
 
         while (condition(distance, minDistance)) {
           // measure distance to next cell
@@ -6366,7 +7244,7 @@
         return {
           distance: minDistance,
           // selected was previous index
-          index: index - increment
+          index: index - increment,
         };
       };
       /**
@@ -6374,7 +7252,6 @@
        * @param {Number} x
        * @param {Integer} index - slide index
        */
-
 
       proto.getSlideDistance = function (x, index) {
         var len = this.slides.length; // wrap around if at least 2 slides
@@ -6387,15 +7264,19 @@
           return null;
         } // add distance for wrap-around slides
 
-
-        var wrap = isWrapAround ? this.slideableWidth * Math.floor(index / len) : 0;
+        var wrap = isWrapAround
+          ? this.slideableWidth * Math.floor(index / len)
+          : 0;
         return x - (slide.target + wrap);
       };
 
       proto.dragEndBoostSelect = function () {
         // do not boost if no previousDragX or dragMoveTime
-        if (this.previousDragX === undefined || !this.dragMoveTime || // or if drag was held for 100 ms
-        new Date() - this.dragMoveTime > 100) {
+        if (
+          this.previousDragX === undefined ||
+          !this.dragMoveTime || // or if drag was held for 100 ms
+          new Date() - this.dragMoveTime > 100
+        ) {
           return 0;
         }
 
@@ -6413,15 +7294,17 @@
         return 0;
       }; // ----- staticClick ----- //
 
-
       proto.staticClick = function (event, pointer) {
         // get clickedCell, if cell was clicked
         var clickedCell = this.getParentCell(event.target);
         var cellElem = clickedCell && clickedCell.element;
         var cellIndex = clickedCell && this.cells.indexOf(clickedCell);
-        this.dispatchEvent('staticClick', event, [pointer, cellElem, cellIndex]);
+        this.dispatchEvent("staticClick", event, [
+          pointer,
+          cellElem,
+          cellIndex,
+        ]);
       }; // ----- scroll ----- //
-
 
       proto.onscroll = function () {
         var scroll = getScrollPosition();
@@ -6433,14 +7316,12 @@
         }
       }; // ----- utils ----- //
 
-
       function getScrollPosition() {
         return {
           x: window.pageXOffset,
-          y: window.pageYOffset
+          y: window.pageYOffset,
         };
       } // -----  ----- //
-
 
       return Flickity;
     });
@@ -6452,16 +7333,20 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, flickity, unipointer, utils);
       } else {
         // browser global
-        factory(window, window.Flickity, window.Unipointer, window.fizzyUIUtils);
+        factory(
+          window,
+          window.Flickity,
+          window.Unipointer,
+          window.fizzyUIUtils
+        );
       }
     })(window, function factory(window, Flickity, Unipointer, utils) {
-
-      var svgURI = 'http://www.w3.org/2000/svg'; // -------------------------- PrevNextButton -------------------------- //
+      var svgURI = "http://www.w3.org/2000/svg"; // -------------------------- PrevNextButton -------------------------- //
 
       function PrevNextButton(direction, parent) {
         this.direction = direction;
@@ -6478,25 +7363,31 @@
         this.isPrevious = this.direction == -1;
         var leftDirection = this.parent.options.rightToLeft ? 1 : -1;
         this.isLeft = this.direction == leftDirection;
-        var element = this.element = document.createElement('button');
-        element.className = 'flickity-button flickity-prev-next-button';
-        element.className += this.isPrevious ? ' previous' : ' next'; // prevent button from submitting form http://stackoverflow.com/a/10836076/182183
+        var element = (this.element = document.createElement("button"));
+        element.className = "flickity-button flickity-prev-next-button";
+        element.className += this.isPrevious ? " previous" : " next"; // prevent button from submitting form http://stackoverflow.com/a/10836076/182183
 
-        element.setAttribute('type', 'button'); // init as disabled
+        element.setAttribute("type", "button"); // init as disabled
 
         this.disable();
-        element.setAttribute('aria-label', this.isPrevious ? 'Previous' : 'Next'); // create arrow
+        element.setAttribute(
+          "aria-label",
+          this.isPrevious ? "Previous" : "Next"
+        ); // create arrow
 
         var svg = this.createSVG();
         element.appendChild(svg); // events
 
-        this.parent.on('select', this.update.bind(this));
-        this.on('pointerDown', this.parent.childUIPointerDown.bind(this.parent));
+        this.parent.on("select", this.update.bind(this));
+        this.on(
+          "pointerDown",
+          this.parent.childUIPointerDown.bind(this.parent)
+        );
       };
 
       PrevNextButton.prototype.activate = function () {
         this.bindStartEvent(this.element);
-        this.element.addEventListener('click', this); // add to DOM
+        this.element.addEventListener("click", this); // add to DOM
 
         this.parent.element.appendChild(this.element);
       };
@@ -6506,35 +7397,57 @@
         this.parent.element.removeChild(this.element); // click events
 
         this.unbindStartEvent(this.element);
-        this.element.removeEventListener('click', this);
+        this.element.removeEventListener("click", this);
       };
 
       PrevNextButton.prototype.createSVG = function () {
-        var svg = document.createElementNS(svgURI, 'svg');
-        svg.setAttribute('class', 'flickity-button-icon');
-        svg.setAttribute('viewBox', '0 0 100 100');
-        var path = document.createElementNS(svgURI, 'path');
+        var svg = document.createElementNS(svgURI, "svg");
+        svg.setAttribute("class", "flickity-button-icon");
+        svg.setAttribute("viewBox", "0 0 100 100");
+        var path = document.createElementNS(svgURI, "path");
         var pathMovements = getArrowMovements(this.parent.options.arrowShape);
-        path.setAttribute('d', pathMovements);
-        path.setAttribute('class', 'arrow'); // rotate arrow
+        path.setAttribute("d", pathMovements);
+        path.setAttribute("class", "arrow"); // rotate arrow
 
         if (!this.isLeft) {
-          path.setAttribute('transform', 'translate(100, 100) rotate(180) ');
+          path.setAttribute("transform", "translate(100, 100) rotate(180) ");
         }
 
         svg.appendChild(path);
         return svg;
       }; // get SVG path movmement
 
-
       function getArrowMovements(shape) {
         // use shape as movement if string
-        if (typeof shape == 'string') {
+        if (typeof shape == "string") {
           return shape;
         } // create movement string
 
-
-        return 'M ' + shape.x0 + ',50' + ' L ' + shape.x1 + ',' + (shape.y1 + 50) + ' L ' + shape.x2 + ',' + (shape.y2 + 50) + ' L ' + shape.x3 + ',50 ' + ' L ' + shape.x2 + ',' + (50 - shape.y2) + ' L ' + shape.x1 + ',' + (50 - shape.y1) + ' Z';
+        return (
+          "M " +
+          shape.x0 +
+          ",50" +
+          " L " +
+          shape.x1 +
+          "," +
+          (shape.y1 + 50) +
+          " L " +
+          shape.x2 +
+          "," +
+          (shape.y2 + 50) +
+          " L " +
+          shape.x3 +
+          ",50 " +
+          " L " +
+          shape.x2 +
+          "," +
+          (50 - shape.y2) +
+          " L " +
+          shape.x1 +
+          "," +
+          (50 - shape.y1) +
+          " Z"
+        );
       }
 
       PrevNextButton.prototype.handleEvent = utils.handleEvent;
@@ -6545,10 +7458,9 @@
         }
 
         this.parent.uiChange();
-        var method = this.isPrevious ? 'previous' : 'next';
+        var method = this.isPrevious ? "previous" : "next";
         this.parent[method]();
       }; // -----  ----- //
-
 
       PrevNextButton.prototype.enable = function () {
         if (this.isEnabled) {
@@ -6579,7 +7491,8 @@
 
         var lastIndex = slides.length ? slides.length - 1 : 0;
         var boundIndex = this.isPrevious ? 0 : lastIndex;
-        var method = this.parent.selectedIndex == boundIndex ? 'disable' : 'enable';
+        var method =
+          this.parent.selectedIndex == boundIndex ? "disable" : "enable";
         this[method]();
       };
 
@@ -6587,7 +7500,6 @@
         this.deactivate();
         this.allOff();
       }; // -------------------------- Flickity prototype -------------------------- //
-
 
       utils.extend(Flickity.defaults, {
         prevNextButtons: true,
@@ -6597,10 +7509,10 @@
           y1: 50,
           x2: 70,
           y2: 40,
-          x3: 30
-        }
+          x3: 30,
+        },
       });
-      Flickity.createMethods.push('_createPrevNextButtons');
+      Flickity.createMethods.push("_createPrevNextButtons");
       var proto = Flickity.prototype;
 
       proto._createPrevNextButtons = function () {
@@ -6610,21 +7522,20 @@
 
         this.prevButton = new PrevNextButton(-1, this);
         this.nextButton = new PrevNextButton(1, this);
-        this.on('activate', this.activatePrevNextButtons);
+        this.on("activate", this.activatePrevNextButtons);
       };
 
       proto.activatePrevNextButtons = function () {
         this.prevButton.activate();
         this.nextButton.activate();
-        this.on('deactivate', this.deactivatePrevNextButtons);
+        this.on("deactivate", this.deactivatePrevNextButtons);
       };
 
       proto.deactivatePrevNextButtons = function () {
         this.prevButton.deactivate();
         this.nextButton.deactivate();
-        this.off('deactivate', this.deactivatePrevNextButtons);
+        this.off("deactivate", this.deactivatePrevNextButtons);
       }; // --------------------------  -------------------------- //
-
 
       Flickity.PrevNextButton = PrevNextButton;
       return Flickity;
@@ -6637,15 +7548,19 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, flickity, unipointer, utils);
       } else {
         // browser global
-        factory(window, window.Flickity, window.Unipointer, window.fizzyUIUtils);
+        factory(
+          window,
+          window.Flickity,
+          window.Unipointer,
+          window.fizzyUIUtils
+        );
       }
     })(window, function factory(window, Flickity, Unipointer, utils) {
-
       function PageDots(parent) {
         this.parent = parent;
 
@@ -6656,25 +7571,28 @@
 
       PageDots.prototype._create = function () {
         // create holder element
-        this.holder = document.createElement('ol');
-        this.holder.className = 'flickity-page-dots'; // create dots, array of elements
+        this.holder = document.createElement("ol");
+        this.holder.className = "flickity-page-dots"; // create dots, array of elements
 
         this.dots = []; // events
 
         this.handleClick = this.onClick.bind(this);
-        this.on('pointerDown', this.parent.childUIPointerDown.bind(this.parent));
+        this.on(
+          "pointerDown",
+          this.parent.childUIPointerDown.bind(this.parent)
+        );
       };
 
       PageDots.prototype.activate = function () {
         this.setDots();
-        this.holder.addEventListener('click', this.handleClick);
+        this.holder.addEventListener("click", this.handleClick);
         this.bindStartEvent(this.holder); // add to DOM
 
         this.parent.element.appendChild(this.holder);
       };
 
       PageDots.prototype.deactivate = function () {
-        this.holder.removeEventListener('click', this.handleClick);
+        this.holder.removeEventListener("click", this.handleClick);
         this.unbindStartEvent(this.holder); // remove from DOM
 
         this.parent.element.removeChild(this.holder);
@@ -6698,9 +7616,9 @@
         var max = length + count;
 
         for (var i = length; i < max; i++) {
-          var dot = document.createElement('li');
-          dot.className = 'dot';
-          dot.setAttribute('aria-label', 'Page dot ' + (i + 1));
+          var dot = document.createElement("li");
+          dot.className = "dot";
+          dot.setAttribute("aria-label", "Page dot " + (i + 1));
           fragment.appendChild(dot);
           newDots.push(dot);
         }
@@ -6721,25 +7639,24 @@
       PageDots.prototype.updateSelected = function () {
         // remove selected class on previous
         if (this.selectedDot) {
-          this.selectedDot.className = 'dot';
-          this.selectedDot.removeAttribute('aria-current');
+          this.selectedDot.className = "dot";
+          this.selectedDot.removeAttribute("aria-current");
         } // don't proceed if no dots
-
 
         if (!this.dots.length) {
           return;
         }
 
         this.selectedDot = this.dots[this.parent.selectedIndex];
-        this.selectedDot.className = 'dot is-selected';
-        this.selectedDot.setAttribute('aria-current', 'step');
+        this.selectedDot.className = "dot is-selected";
+        this.selectedDot.setAttribute("aria-current", "step");
       };
 
-      PageDots.prototype.onTap = // old method name, backwards-compatible
-      PageDots.prototype.onClick = function (event) {
+      PageDots.prototype.onTap = PageDots.prototype.onClick = function (event) {
+        // old method name, backwards-compatible
         var target = event.target; // only care about dot clicks
 
-        if (target.nodeName != 'LI') {
+        if (target.nodeName != "LI") {
           return;
         }
 
@@ -6756,9 +7673,9 @@
       Flickity.PageDots = PageDots; // -------------------------- Flickity -------------------------- //
 
       utils.extend(Flickity.defaults, {
-        pageDots: true
+        pageDots: true,
       });
-      Flickity.createMethods.push('_createPageDots');
+      Flickity.createMethods.push("_createPageDots");
       var proto = Flickity.prototype;
 
       proto._createPageDots = function () {
@@ -6768,11 +7685,11 @@
 
         this.pageDots = new PageDots(this); // events
 
-        this.on('activate', this.activatePageDots);
-        this.on('select', this.updateSelectedPageDots);
-        this.on('cellChange', this.updatePageDots);
-        this.on('resize', this.updatePageDots);
-        this.on('deactivate', this.deactivatePageDots);
+        this.on("activate", this.activatePageDots);
+        this.on("select", this.updateSelectedPageDots);
+        this.on("cellChange", this.updatePageDots);
+        this.on("resize", this.updatePageDots);
+        this.on("deactivate", this.deactivatePageDots);
       };
 
       proto.activatePageDots = function () {
@@ -6791,7 +7708,6 @@
         this.pageDots.deactivate();
       }; // -----  ----- //
 
-
       Flickity.PageDots = PageDots;
       return Flickity;
     });
@@ -6803,7 +7719,7 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(evEmitter, utils, flickity);
       } else {
@@ -6811,10 +7727,9 @@
         factory(window.EvEmitter, window.fizzyUIUtils, window.Flickity);
       }
     })(window, function factory(EvEmitter, utils, Flickity) {
-
       function Player(parent) {
         this.parent = parent;
-        this.state = 'stopped'; // visibility change event handler
+        this.state = "stopped"; // visibility change event handler
 
         this.onVisibilityChange = this.visibilityChange.bind(this);
         this.onVisibilityPlay = this.visibilityPlay.bind(this);
@@ -6823,37 +7738,35 @@
       Player.prototype = Object.create(EvEmitter.prototype); // start play
 
       Player.prototype.play = function () {
-        if (this.state == 'playing') {
+        if (this.state == "playing") {
           return;
         } // do not play if page is hidden, start playing when page is visible
-
 
         var isPageHidden = document.hidden;
 
         if (isPageHidden) {
-          document.addEventListener('visibilitychange', this.onVisibilityPlay);
+          document.addEventListener("visibilitychange", this.onVisibilityPlay);
           return;
         }
 
-        this.state = 'playing'; // listen to visibility change
+        this.state = "playing"; // listen to visibility change
 
-        document.addEventListener('visibilitychange', this.onVisibilityChange); // start ticking
+        document.addEventListener("visibilitychange", this.onVisibilityChange); // start ticking
 
         this.tick();
       };
 
       Player.prototype.tick = function () {
         // do not tick if not playing
-        if (this.state != 'playing') {
+        if (this.state != "playing") {
           return;
         }
 
         var time = this.parent.options.autoPlay; // default to 3 seconds
 
-        time = typeof time == 'number' ? time : 3000;
+        time = typeof time == "number" ? time : 3000;
 
         var _this = this; // HACK: reset ticks if stopped and started within interval
-
 
         this.clear();
         this.timeout = setTimeout(function () {
@@ -6864,10 +7777,13 @@
       };
 
       Player.prototype.stop = function () {
-        this.state = 'stopped';
+        this.state = "stopped";
         this.clear(); // remove visibility change event
 
-        document.removeEventListener('visibilitychange', this.onVisibilityChange);
+        document.removeEventListener(
+          "visibilitychange",
+          this.onVisibilityChange
+        );
       };
 
       Player.prototype.clear = function () {
@@ -6875,43 +7791,41 @@
       };
 
       Player.prototype.pause = function () {
-        if (this.state == 'playing') {
-          this.state = 'paused';
+        if (this.state == "playing") {
+          this.state = "paused";
           this.clear();
         }
       };
 
       Player.prototype.unpause = function () {
         // re-start play if paused
-        if (this.state == 'paused') {
+        if (this.state == "paused") {
           this.play();
         }
       }; // pause if page visibility is hidden, unpause if visible
 
-
       Player.prototype.visibilityChange = function () {
         var isPageHidden = document.hidden;
-        this[isPageHidden ? 'pause' : 'unpause']();
+        this[isPageHidden ? "pause" : "unpause"]();
       };
 
       Player.prototype.visibilityPlay = function () {
         this.play();
-        document.removeEventListener('visibilitychange', this.onVisibilityPlay);
+        document.removeEventListener("visibilitychange", this.onVisibilityPlay);
       }; // -------------------------- Flickity -------------------------- //
 
-
       utils.extend(Flickity.defaults, {
-        pauseAutoPlayOnHover: true
+        pauseAutoPlayOnHover: true,
       });
-      Flickity.createMethods.push('_createPlayer');
+      Flickity.createMethods.push("_createPlayer");
       var proto = Flickity.prototype;
 
       proto._createPlayer = function () {
         this.player = new Player(this);
-        this.on('activate', this.activatePlayer);
-        this.on('uiChange', this.stopPlayer);
-        this.on('pointerDown', this.stopPlayer);
-        this.on('deactivate', this.deactivatePlayer);
+        this.on("activate", this.activatePlayer);
+        this.on("uiChange", this.stopPlayer);
+        this.on("pointerDown", this.stopPlayer);
+        this.on("deactivate", this.deactivatePlayer);
       };
 
       proto.activatePlayer = function () {
@@ -6920,9 +7834,8 @@
         }
 
         this.player.play();
-        this.element.addEventListener('mouseenter', this);
+        this.element.addEventListener("mouseenter", this);
       }; // Player API, don't hate the ... thanks I know where the door is
-
 
       proto.playPlayer = function () {
         this.player.play();
@@ -6942,10 +7855,9 @@
 
       proto.deactivatePlayer = function () {
         this.player.stop();
-        this.element.removeEventListener('mouseenter', this);
+        this.element.removeEventListener("mouseenter", this);
       }; // ----- mouseenter/leave ----- //
       // pause auto-play on hover
-
 
       proto.onmouseenter = function () {
         if (!this.options.pauseAutoPlayOnHover) {
@@ -6953,15 +7865,13 @@
         }
 
         this.player.pause();
-        this.element.addEventListener('mouseleave', this);
+        this.element.addEventListener("mouseleave", this);
       }; // resume auto-play on hover off
-
 
       proto.onmouseleave = function () {
         this.player.unpause();
-        this.element.removeEventListener('mouseleave', this);
+        this.element.removeEventListener("mouseleave", this);
       }; // -----  ----- //
-
 
       Flickity.Player = Player;
       return Flickity;
@@ -6974,7 +7884,7 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, flickity, utils);
       } else {
@@ -6982,7 +7892,6 @@
         factory(window, window.Flickity, window.fizzyUIUtils);
       }
     })(window, function factory(window, Flickity, utils) {
-
       function getCellsFragment(cells) {
         var fragment = document.createDocumentFragment();
         cells.forEach(function (cell) {
@@ -6990,7 +7899,6 @@
         });
         return fragment;
       } // -------------------------- add/remove cell prototype -------------------------- //
-
 
       var proto = Flickity.prototype;
       /**
@@ -7021,7 +7929,6 @@
           this.slider.insertBefore(fragment, insertCellElement);
         } // add to this.cells
 
-
         if (index === 0) {
           // prepend, add to start
           this.cells = cells.concat(this.cells);
@@ -7051,7 +7958,6 @@
        * @param {Element, Array, NodeList} elems
        */
 
-
       proto.remove = function (elems) {
         var cells = this.getCells(elems);
 
@@ -7074,7 +7980,6 @@
        * @param {Element} elem - cell's element
        */
 
-
       proto.cellSizeChange = function (elem) {
         var cell = this.getCell(elem);
 
@@ -7090,7 +7995,6 @@
        * logic any time a cell is changed: added, removed, or size changed
        * @param {Integer} changedCellIndex - index of the changed cell, optional
        */
-
 
       proto.cellChange = function (changedCellIndex, isPositioningSlider) {
         var prevSelectedElem = this.selectedElement;
@@ -7108,8 +8012,11 @@
           this.selectedIndex = this.getCellSlideIndex(cell);
         }
 
-        this.selectedIndex = Math.min(this.slides.length - 1, this.selectedIndex);
-        this.emitEvent('cellChange', [changedCellIndex]); // position slider
+        this.selectedIndex = Math.min(
+          this.slides.length - 1,
+          this.selectedIndex
+        );
+        this.emitEvent("cellChange", [changedCellIndex]); // position slider
 
         this.select(this.selectedIndex); // do not position slider after lazy load
 
@@ -7117,7 +8024,6 @@
           this.positionSliderAtSelected();
         }
       }; // -----  ----- //
-
 
       return Flickity;
     });
@@ -7129,7 +8035,7 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(window, flickity, utils);
       } else {
@@ -7137,12 +8043,11 @@
         factory(window, window.Flickity, window.fizzyUIUtils);
       }
     })(window, function factory(window, Flickity, utils) {
-
-      Flickity.createMethods.push('_createLazyload');
+      Flickity.createMethods.push("_createLazyload");
       var proto = Flickity.prototype;
 
       proto._createLazyload = function () {
-        this.on('select', this.lazyLoad);
+        this.on("select", this.lazyLoad);
       };
 
       proto.lazyLoad = function () {
@@ -7152,8 +8057,7 @@
           return;
         } // get adjacent cells, use lazyLoad option for adjacent count
 
-
-        var adjCount = typeof lazyLoad == 'number' ? lazyLoad : 0;
+        var adjCount = typeof lazyLoad == "number" ? lazyLoad : 0;
         var cellElems = this.getAdjacentCellElements(adjCount); // get lazy images in those cells
 
         var lazyImages = [];
@@ -7169,18 +8073,21 @@
 
       function getCellLazyImages(cellElem) {
         // check if cell element is lazy image
-        if (cellElem.nodeName == 'IMG') {
-          var lazyloadAttr = cellElem.getAttribute('data-flickity-lazyload');
-          var srcAttr = cellElem.getAttribute('data-flickity-lazyload-src');
-          var srcsetAttr = cellElem.getAttribute('data-flickity-lazyload-srcset');
+        if (cellElem.nodeName == "IMG") {
+          var lazyloadAttr = cellElem.getAttribute("data-flickity-lazyload");
+          var srcAttr = cellElem.getAttribute("data-flickity-lazyload-src");
+          var srcsetAttr = cellElem.getAttribute(
+            "data-flickity-lazyload-srcset"
+          );
 
           if (lazyloadAttr || srcAttr || srcsetAttr) {
             return [cellElem];
           }
         } // select lazy images in cell
 
-
-        var lazySelector = 'img[data-flickity-lazyload], ' + 'img[data-flickity-lazyload-src], img[data-flickity-lazyload-srcset]';
+        var lazySelector =
+          "img[data-flickity-lazyload], " +
+          "img[data-flickity-lazyload-src], img[data-flickity-lazyload-srcset]";
         var imgs = cellElem.querySelectorAll(lazySelector);
         return utils.makeArray(imgs);
       } // -------------------------- LazyLoader -------------------------- //
@@ -7188,7 +8095,6 @@
       /**
        * class to handle loading images
        */
-
 
       function LazyLoader(img, flickity) {
         this.img = img;
@@ -7199,43 +8105,43 @@
       LazyLoader.prototype.handleEvent = utils.handleEvent;
 
       LazyLoader.prototype.load = function () {
-        this.img.addEventListener('load', this);
-        this.img.addEventListener('error', this); // get src & srcset
+        this.img.addEventListener("load", this);
+        this.img.addEventListener("error", this); // get src & srcset
 
-        var src = this.img.getAttribute('data-flickity-lazyload') || this.img.getAttribute('data-flickity-lazyload-src');
-        var srcset = this.img.getAttribute('data-flickity-lazyload-srcset'); // set src & serset
+        var src =
+          this.img.getAttribute("data-flickity-lazyload") ||
+          this.img.getAttribute("data-flickity-lazyload-src");
+        var srcset = this.img.getAttribute("data-flickity-lazyload-srcset"); // set src & serset
 
         this.img.src = src;
 
         if (srcset) {
-          this.img.setAttribute('srcset', srcset);
+          this.img.setAttribute("srcset", srcset);
         } // remove attr
 
-
-        this.img.removeAttribute('data-flickity-lazyload');
-        this.img.removeAttribute('data-flickity-lazyload-src');
-        this.img.removeAttribute('data-flickity-lazyload-srcset');
+        this.img.removeAttribute("data-flickity-lazyload");
+        this.img.removeAttribute("data-flickity-lazyload-src");
+        this.img.removeAttribute("data-flickity-lazyload-srcset");
       };
 
       LazyLoader.prototype.onload = function (event) {
-        this.complete(event, 'flickity-lazyloaded');
+        this.complete(event, "flickity-lazyloaded");
       };
 
       LazyLoader.prototype.onerror = function (event) {
-        this.complete(event, 'flickity-lazyerror');
+        this.complete(event, "flickity-lazyerror");
       };
 
       LazyLoader.prototype.complete = function (event, className) {
         // unbind events
-        this.img.removeEventListener('load', this);
-        this.img.removeEventListener('error', this);
+        this.img.removeEventListener("load", this);
+        this.img.removeEventListener("error", this);
         var cell = this.flickity.getParentCell(this.img);
         var cellElem = cell && cell.element;
         this.flickity.cellSizeChange(cellElem);
         this.img.classList.add(className);
-        this.flickity.dispatchEvent('lazyLoad', event, cellElem);
+        this.flickity.dispatchEvent("lazyLoad", event, cellElem);
       }; // -----  ----- //
-
 
       Flickity.LazyLoader = LazyLoader;
       return Flickity;
@@ -7257,9 +8163,17 @@
       // universal module definition
 
       /* jshint strict: false */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
-        module.exports = factory(flickity, drag, prevNextButton, pageDots, player, addRemoveCell, lazyload);
+        module.exports = factory(
+          flickity,
+          drag,
+          prevNextButton,
+          pageDots,
+          player,
+          addRemoveCell,
+          lazyload
+        );
       }
     })(window, function factory(Flickity) {
       /*jshint strict: false*/
@@ -7278,7 +8192,7 @@
       // universal module definition
 
       /*globals define, module, require */
-      if ( module.exports) {
+      if (module.exports) {
         // CommonJS
         module.exports = factory(js, utils);
       } else {
@@ -7297,7 +8211,6 @@
           return;
         } // position cells at selected target
 
-
         var slideTargetX = this.target - this.x;
         var firstCellX = this.cells[0].x;
         this.cells.forEach(function (cell) {
@@ -7312,18 +8225,17 @@
         });
       }; // ---- Flickity ---- //
 
-
       var proto = Flickity.prototype;
-      Flickity.createMethods.push('_createFade');
+      Flickity.createMethods.push("_createFade");
 
       proto._createFade = function () {
         this.fadeIndex = this.selectedIndex;
         this.prevSelectedIndex = this.selectedIndex;
-        this.on('select', this.onSelectFade);
-        this.on('dragEnd', this.onDragEndFade);
-        this.on('settle', this.onSettleFade);
-        this.on('activate', this.onActivateFade);
-        this.on('deactivate', this.onDeactivateFade);
+        this.on("select", this.onSelectFade);
+        this.on("dragEnd", this.onDragEndFade);
+        this.on("settle", this.onSettleFade);
+        this.on("activate", this.onActivateFade);
+        this.on("deactivate", this.onDeactivateFade);
       };
 
       var updateSlides = proto.updateSlides;
@@ -7335,7 +8247,6 @@
           return;
         } // set initial opacity
 
-
         this.slides.forEach(function (slide, i) {
           var alpha = i == this.selectedIndex ? 1 : 0;
           slide.setOpacity(alpha);
@@ -7343,10 +8254,12 @@
       };
       /* ---- events ---- */
 
-
       proto.onSelectFade = function () {
         // in case of resize, keep fadeIndex within current count
-        this.fadeIndex = Math.min(this.prevSelectedIndex, this.slides.length - 1);
+        this.fadeIndex = Math.min(
+          this.prevSelectedIndex,
+          this.slides.length - 1
+        );
         this.prevSelectedIndex = this.selectedIndex;
       };
 
@@ -7356,7 +8269,6 @@
         if (!this.options.fade) {
           return;
         } // set full and 0 opacity on selected & faded slides
-
 
         this.selectedSlide.setOpacity(1);
         var fadedSlide = this.slides[this.fadeIndex];
@@ -7373,7 +8285,7 @@
 
       proto.onActivateFade = function () {
         if (this.options.fade) {
-          this.element.classList.add('is-fade');
+          this.element.classList.add("is-fade");
         }
       };
 
@@ -7382,14 +8294,13 @@
           return;
         }
 
-        this.element.classList.remove('is-fade'); // reset opacity
+        this.element.classList.remove("is-fade"); // reset opacity
 
         this.slides.forEach(function (slide) {
-          slide.setOpacity('');
+          slide.setOpacity("");
         });
       };
       /* ---- position & fading ---- */
-
 
       var positionSlider = proto.positionSlider;
 
@@ -7419,11 +8330,13 @@
           return;
         } // get slides to fade-in & fade-out
 
-
         var indexes = this.getFadeIndexes();
         var fadeSlideA = this.slides[indexes.a];
         var fadeSlideB = this.slides[indexes.b];
-        var distance = this.wrapDifference(fadeSlideA.target, fadeSlideB.target);
+        var distance = this.wrapDifference(
+          fadeSlideA.target,
+          fadeSlideB.target
+        );
         var progress = this.wrapDifference(fadeSlideA.target, -this.x);
         progress = progress / distance;
         fadeSlideA.setOpacity(1 - progress);
@@ -7435,7 +8348,11 @@
           fadeHideIndex = progress > 0.5 ? indexes.a : indexes.b;
         }
 
-        var isNewHideIndex = this.fadeHideIndex != undefined && this.fadeHideIndex != fadeHideIndex && this.fadeHideIndex != indexes.a && this.fadeHideIndex != indexes.b;
+        var isNewHideIndex =
+          this.fadeHideIndex != undefined &&
+          this.fadeHideIndex != fadeHideIndex &&
+          this.fadeHideIndex != indexes.a &&
+          this.fadeHideIndex != indexes.b;
 
         if (isNewHideIndex) {
           // new fadeHideSlide set, hide previous
@@ -7449,7 +8366,7 @@
         if (!this.isDragging && !this.didDragEnd) {
           return {
             a: this.fadeIndex,
-            b: this.selectedIndex
+            b: this.selectedIndex,
           };
         }
 
@@ -7474,7 +8391,7 @@
         var delta = distance >= 0 ? 1 : -1;
         return {
           a: closestIndex,
-          b: utils.modulo(closestIndex + delta, len)
+          b: utils.modulo(closestIndex + delta, len),
         };
       };
 
@@ -7494,7 +8411,7 @@
 
         return {
           a: dragIndex,
-          b: dragIndex + 1
+          b: dragIndex + 1,
         };
       };
 
@@ -7518,7 +8435,6 @@
 
         return diff;
       }; // ---- wrapAround ---- //
-
 
       var _getWrapShiftCells = proto._getWrapShiftCells;
 
@@ -7547,7 +8463,12 @@
       };
     } else {
       _typeof$1 = function _typeof$1(obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
+        return obj &&
+          typeof Symbol === "function" &&
+          obj.constructor === Symbol &&
+          obj !== Symbol.prototype
+          ? "symbol"
+          : _typeof(obj);
       };
     }
 
@@ -7555,10 +8476,18 @@
   } // This is not really a perfect check, but works fine.
   // From http://stackoverflow.com/questions/384286
 
-
-  var HAS_DOM_2 = (typeof HTMLElement === "undefined" ? "undefined" : _typeof$1(HTMLElement)) === "object";
+  var HAS_DOM_2 =
+    (typeof HTMLElement === "undefined"
+      ? "undefined"
+      : _typeof$1(HTMLElement)) === "object";
   function isDOMElement(obj) {
-    return HAS_DOM_2 ? obj instanceof HTMLElement : obj && _typeof$1(obj) === "object" && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === "string";
+    return HAS_DOM_2
+      ? obj instanceof HTMLElement
+      : obj &&
+          _typeof$1(obj) === "object" &&
+          obj !== null &&
+          obj.nodeType === 1 &&
+          typeof obj.nodeName === "string";
   }
   function addClasses(el, classNames) {
     classNames.forEach(function (className) {
@@ -7619,7 +8548,8 @@
   `;
 
   */
-  var RULES = ".drift-bounding-box,.drift-zoom-pane{position:absolute;pointer-events:none}@keyframes noop{0%{zoom:1}}@-webkit-keyframes noop{0%{zoom:1}}.drift-zoom-pane.drift-open{display:block}.drift-zoom-pane.drift-closing,.drift-zoom-pane.drift-opening{animation:noop 1ms;-webkit-animation:noop 1ms}.drift-zoom-pane{overflow:hidden;width:100%;height:100%;top:0;left:0}.drift-zoom-pane-loader{display:none}.drift-zoom-pane img{position:absolute;display:block;max-width:none;max-height:none}";
+  var RULES =
+    ".drift-bounding-box,.drift-zoom-pane{position:absolute;pointer-events:none}@keyframes noop{0%{zoom:1}}@-webkit-keyframes noop{0%{zoom:1}}.drift-zoom-pane.drift-open{display:block}.drift-zoom-pane.drift-closing,.drift-zoom-pane.drift-opening{animation:noop 1ms;-webkit-animation:noop 1ms}.drift-zoom-pane{overflow:hidden;width:100%;height:100%;top:0;left:0}.drift-zoom-pane-loader{display:none}.drift-zoom-pane img{position:absolute;display:block;max-width:none;max-height:none}";
   function injectBaseStylesheet() {
     if (document.querySelector(".drift-base-styles")) {
       return;
@@ -7659,92 +8589,136 @@
     return Constructor;
   }
 
-  var BoundingBox = /*#__PURE__*/function () {
+  var BoundingBox = /*#__PURE__*/ (function () {
     function BoundingBox(options) {
       _classCallCheck$1(this, BoundingBox);
 
       this.isShowing = false;
       var _options$namespace = options.namespace,
-          namespace = _options$namespace === void 0 ? null : _options$namespace,
-          _options$zoomFactor = options.zoomFactor,
-          zoomFactor = _options$zoomFactor === void 0 ? throwIfMissing() : _options$zoomFactor,
-          _options$containerEl = options.containerEl,
-          containerEl = _options$containerEl === void 0 ? throwIfMissing() : _options$containerEl;
+        namespace = _options$namespace === void 0 ? null : _options$namespace,
+        _options$zoomFactor = options.zoomFactor,
+        zoomFactor =
+          _options$zoomFactor === void 0
+            ? throwIfMissing()
+            : _options$zoomFactor,
+        _options$containerEl = options.containerEl,
+        containerEl =
+          _options$containerEl === void 0
+            ? throwIfMissing()
+            : _options$containerEl;
       this.settings = {
         namespace: namespace,
         zoomFactor: zoomFactor,
-        containerEl: containerEl
+        containerEl: containerEl,
       };
       this.openClasses = this._buildClasses("open");
 
       this._buildElement();
     }
 
-    _createClass$1(BoundingBox, [{
-      key: "_buildClasses",
-      value: function _buildClasses(suffix) {
-        var classes = ["drift-".concat(suffix)];
-        var ns = this.settings.namespace;
+    _createClass$1(BoundingBox, [
+      {
+        key: "_buildClasses",
+        value: function _buildClasses(suffix) {
+          var classes = ["drift-".concat(suffix)];
+          var ns = this.settings.namespace;
 
-        if (ns) {
-          classes.push("".concat(ns, "-").concat(suffix));
-        }
+          if (ns) {
+            classes.push("".concat(ns, "-").concat(suffix));
+          }
 
-        return classes;
-      }
-    }, {
-      key: "_buildElement",
-      value: function _buildElement() {
-        this.el = document.createElement("div");
-        addClasses(this.el, this._buildClasses("bounding-box"));
-      }
-    }, {
-      key: "show",
-      value: function show(zoomPaneWidth, zoomPaneHeight) {
-        this.isShowing = true;
-        this.settings.containerEl.appendChild(this.el);
-        var style = this.el.style;
-        style.width = "".concat(Math.round(zoomPaneWidth / this.settings.zoomFactor), "px");
-        style.height = "".concat(Math.round(zoomPaneHeight / this.settings.zoomFactor), "px");
-        addClasses(this.el, this.openClasses);
-      }
-    }, {
-      key: "hide",
-      value: function hide() {
-        if (this.isShowing) {
-          this.settings.containerEl.removeChild(this.el);
-        }
+          return classes;
+        },
+      },
+      {
+        key: "_buildElement",
+        value: function _buildElement() {
+          this.el = document.createElement("div");
+          addClasses(this.el, this._buildClasses("bounding-box"));
+        },
+      },
+      {
+        key: "show",
+        value: function show(zoomPaneWidth, zoomPaneHeight) {
+          this.isShowing = true;
+          this.settings.containerEl.appendChild(this.el);
+          var style = this.el.style;
+          style.width = "".concat(
+            Math.round(zoomPaneWidth / this.settings.zoomFactor),
+            "px"
+          );
+          style.height = "".concat(
+            Math.round(zoomPaneHeight / this.settings.zoomFactor),
+            "px"
+          );
+          addClasses(this.el, this.openClasses);
+        },
+      },
+      {
+        key: "hide",
+        value: function hide() {
+          if (this.isShowing) {
+            this.settings.containerEl.removeChild(this.el);
+          }
 
-        this.isShowing = false;
-        removeClasses(this.el, this.openClasses);
-      }
-    }, {
-      key: "setPosition",
-      value: function setPosition(percentageOffsetX, percentageOffsetY, triggerRect) {
-        var pageXOffset = window.pageXOffset;
-        var pageYOffset = window.pageYOffset;
-        var inlineLeft = triggerRect.left + percentageOffsetX * triggerRect.width - this.el.clientWidth / 2 + pageXOffset;
-        var inlineTop = triggerRect.top + percentageOffsetY * triggerRect.height - this.el.clientHeight / 2 + pageYOffset;
+          this.isShowing = false;
+          removeClasses(this.el, this.openClasses);
+        },
+      },
+      {
+        key: "setPosition",
+        value: function setPosition(
+          percentageOffsetX,
+          percentageOffsetY,
+          triggerRect
+        ) {
+          var pageXOffset = window.pageXOffset;
+          var pageYOffset = window.pageYOffset;
+          var inlineLeft =
+            triggerRect.left +
+            percentageOffsetX * triggerRect.width -
+            this.el.clientWidth / 2 +
+            pageXOffset;
+          var inlineTop =
+            triggerRect.top +
+            percentageOffsetY * triggerRect.height -
+            this.el.clientHeight / 2 +
+            pageYOffset;
 
-        if (inlineLeft < triggerRect.left + pageXOffset) {
-          inlineLeft = triggerRect.left + pageXOffset;
-        } else if (inlineLeft + this.el.clientWidth > triggerRect.left + triggerRect.width + pageXOffset) {
-          inlineLeft = triggerRect.left + triggerRect.width - this.el.clientWidth + pageXOffset;
-        }
+          if (inlineLeft < triggerRect.left + pageXOffset) {
+            inlineLeft = triggerRect.left + pageXOffset;
+          } else if (
+            inlineLeft + this.el.clientWidth >
+            triggerRect.left + triggerRect.width + pageXOffset
+          ) {
+            inlineLeft =
+              triggerRect.left +
+              triggerRect.width -
+              this.el.clientWidth +
+              pageXOffset;
+          }
 
-        if (inlineTop < triggerRect.top + pageYOffset) {
-          inlineTop = triggerRect.top + pageYOffset;
-        } else if (inlineTop + this.el.clientHeight > triggerRect.top + triggerRect.height + pageYOffset) {
-          inlineTop = triggerRect.top + triggerRect.height - this.el.clientHeight + pageYOffset;
-        }
+          if (inlineTop < triggerRect.top + pageYOffset) {
+            inlineTop = triggerRect.top + pageYOffset;
+          } else if (
+            inlineTop + this.el.clientHeight >
+            triggerRect.top + triggerRect.height + pageYOffset
+          ) {
+            inlineTop =
+              triggerRect.top +
+              triggerRect.height -
+              this.el.clientHeight +
+              pageYOffset;
+          }
 
-        this.el.style.left = "".concat(inlineLeft, "px");
-        this.el.style.top = "".concat(inlineTop, "px");
-      }
-    }]);
+          this.el.style.left = "".concat(inlineLeft, "px");
+          this.el.style.top = "".concat(inlineTop, "px");
+        },
+      },
+    ]);
 
     return BoundingBox;
-  }();
+  })();
 
   function _classCallCheck$2(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -7768,9 +8742,10 @@
     return Constructor;
   }
 
-  var Trigger = /*#__PURE__*/function () {
+  var Trigger = /*#__PURE__*/ (function () {
     function Trigger() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options =
+        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       _classCallCheck$2(this, Trigger);
 
@@ -7779,31 +8754,50 @@
       this._handleEntry = this._handleEntry.bind(this);
       this._handleMovement = this._handleMovement.bind(this);
       var _options$el = options.el,
-          el = _options$el === void 0 ? throwIfMissing() : _options$el,
-          _options$zoomPane = options.zoomPane,
-          zoomPane = _options$zoomPane === void 0 ? throwIfMissing() : _options$zoomPane,
-          _options$sourceAttrib = options.sourceAttribute,
-          sourceAttribute = _options$sourceAttrib === void 0 ? throwIfMissing() : _options$sourceAttrib,
-          _options$handleTouch = options.handleTouch,
-          handleTouch = _options$handleTouch === void 0 ? throwIfMissing() : _options$handleTouch,
-          _options$onShow = options.onShow,
-          onShow = _options$onShow === void 0 ? null : _options$onShow,
-          _options$onHide = options.onHide,
-          onHide = _options$onHide === void 0 ? null : _options$onHide,
-          _options$hoverDelay = options.hoverDelay,
-          hoverDelay = _options$hoverDelay === void 0 ? 0 : _options$hoverDelay,
-          _options$touchDelay = options.touchDelay,
-          touchDelay = _options$touchDelay === void 0 ? 0 : _options$touchDelay,
-          _options$hoverBoundin = options.hoverBoundingBox,
-          hoverBoundingBox = _options$hoverBoundin === void 0 ? throwIfMissing() : _options$hoverBoundin,
-          _options$touchBoundin = options.touchBoundingBox,
-          touchBoundingBox = _options$touchBoundin === void 0 ? throwIfMissing() : _options$touchBoundin,
-          _options$namespace = options.namespace,
-          namespace = _options$namespace === void 0 ? null : _options$namespace,
-          _options$zoomFactor = options.zoomFactor,
-          zoomFactor = _options$zoomFactor === void 0 ? throwIfMissing() : _options$zoomFactor,
-          _options$boundingBoxC = options.boundingBoxContainer,
-          boundingBoxContainer = _options$boundingBoxC === void 0 ? throwIfMissing() : _options$boundingBoxC;
+        el = _options$el === void 0 ? throwIfMissing() : _options$el,
+        _options$zoomPane = options.zoomPane,
+        zoomPane =
+          _options$zoomPane === void 0 ? throwIfMissing() : _options$zoomPane,
+        _options$sourceAttrib = options.sourceAttribute,
+        sourceAttribute =
+          _options$sourceAttrib === void 0
+            ? throwIfMissing()
+            : _options$sourceAttrib,
+        _options$handleTouch = options.handleTouch,
+        handleTouch =
+          _options$handleTouch === void 0
+            ? throwIfMissing()
+            : _options$handleTouch,
+        _options$onShow = options.onShow,
+        onShow = _options$onShow === void 0 ? null : _options$onShow,
+        _options$onHide = options.onHide,
+        onHide = _options$onHide === void 0 ? null : _options$onHide,
+        _options$hoverDelay = options.hoverDelay,
+        hoverDelay = _options$hoverDelay === void 0 ? 0 : _options$hoverDelay,
+        _options$touchDelay = options.touchDelay,
+        touchDelay = _options$touchDelay === void 0 ? 0 : _options$touchDelay,
+        _options$hoverBoundin = options.hoverBoundingBox,
+        hoverBoundingBox =
+          _options$hoverBoundin === void 0
+            ? throwIfMissing()
+            : _options$hoverBoundin,
+        _options$touchBoundin = options.touchBoundingBox,
+        touchBoundingBox =
+          _options$touchBoundin === void 0
+            ? throwIfMissing()
+            : _options$touchBoundin,
+        _options$namespace = options.namespace,
+        namespace = _options$namespace === void 0 ? null : _options$namespace,
+        _options$zoomFactor = options.zoomFactor,
+        zoomFactor =
+          _options$zoomFactor === void 0
+            ? throwIfMissing()
+            : _options$zoomFactor,
+        _options$boundingBoxC = options.boundingBoxContainer,
+        boundingBoxContainer =
+          _options$boundingBoxC === void 0
+            ? throwIfMissing()
+            : _options$boundingBoxC;
       this.settings = {
         el: el,
         zoomPane: zoomPane,
@@ -7817,14 +8811,14 @@
         touchBoundingBox: touchBoundingBox,
         namespace: namespace,
         zoomFactor: zoomFactor,
-        boundingBoxContainer: boundingBoxContainer
+        boundingBoxContainer: boundingBoxContainer,
       };
 
       if (this.settings.hoverBoundingBox || this.settings.touchBoundingBox) {
         this.boundingBox = new BoundingBox({
           namespace: this.settings.namespace,
           zoomFactor: this.settings.zoomFactor,
-          containerEl: this.settings.boundingBoxContainer
+          containerEl: this.settings.boundingBoxContainer,
         });
       }
 
@@ -7833,169 +8827,264 @@
       this._bindEvents();
     }
 
-    _createClass$2(Trigger, [{
-      key: "_preventDefault",
-      value: function _preventDefault(event) {
-        event.preventDefault();
-      }
-    }, {
-      key: "_preventDefaultAllowTouchScroll",
-      value: function _preventDefaultAllowTouchScroll(event) {
-        if (!this.settings.touchDelay || !this._isTouchEvent(event) || this.isShowing) {
+    _createClass$2(Trigger, [
+      {
+        key: "_preventDefault",
+        value: function _preventDefault(event) {
           event.preventDefault();
-        }
-      }
-    }, {
-      key: "_isTouchEvent",
-      value: function _isTouchEvent(event) {
-        return !!event.touches;
-      }
-    }, {
-      key: "_bindEvents",
-      value: function _bindEvents() {
-        this.settings.el.addEventListener("mouseenter", this._handleEntry, false);
-        this.settings.el.addEventListener("mouseleave", this._hide, false);
-        this.settings.el.addEventListener("mousemove", this._handleMovement, false);
-
-        if (this.settings.handleTouch) {
-          this.settings.el.addEventListener("touchstart", this._handleEntry, false);
-          this.settings.el.addEventListener("touchend", this._hide, false);
-          this.settings.el.addEventListener("touchmove", this._handleMovement, false);
-        } else {
-          this.settings.el.addEventListener("touchstart", this._preventDefault, false);
-          this.settings.el.addEventListener("touchend", this._preventDefault, false);
-          this.settings.el.addEventListener("touchmove", this._preventDefault, false);
-        }
-      }
-    }, {
-      key: "_unbindEvents",
-      value: function _unbindEvents() {
-        this.settings.el.removeEventListener("mouseenter", this._handleEntry, false);
-        this.settings.el.removeEventListener("mouseleave", this._hide, false);
-        this.settings.el.removeEventListener("mousemove", this._handleMovement, false);
-
-        if (this.settings.handleTouch) {
-          this.settings.el.removeEventListener("touchstart", this._handleEntry, false);
-          this.settings.el.removeEventListener("touchend", this._hide, false);
-          this.settings.el.removeEventListener("touchmove", this._handleMovement, false);
-        } else {
-          this.settings.el.removeEventListener("touchstart", this._preventDefault, false);
-          this.settings.el.removeEventListener("touchend", this._preventDefault, false);
-          this.settings.el.removeEventListener("touchmove", this._preventDefault, false);
-        }
-      }
-    }, {
-      key: "_handleEntry",
-      value: function _handleEntry(e) {
-        this._preventDefaultAllowTouchScroll(e);
-
-        this._lastMovement = e;
-
-        if (e.type == "mouseenter" && this.settings.hoverDelay) {
-          this.entryTimeout = setTimeout(this._show, this.settings.hoverDelay);
-        } else if (this.settings.touchDelay) {
-          this.entryTimeout = setTimeout(this._show, this.settings.touchDelay);
-        } else {
-          this._show();
-        }
-      }
-    }, {
-      key: "_show",
-      value: function _show() {
-        if (!this.enabled) {
-          return;
-        }
-
-        var onShow = this.settings.onShow;
-
-        if (onShow && typeof onShow === "function") {
-          onShow();
-        }
-
-        this.settings.zoomPane.show(this.settings.el.getAttribute(this.settings.sourceAttribute), this.settings.el.clientWidth, this.settings.el.clientHeight);
-
-        if (this._lastMovement) {
-          var touchActivated = this._lastMovement.touches;
-
-          if (touchActivated && this.settings.touchBoundingBox || !touchActivated && this.settings.hoverBoundingBox) {
-            this.boundingBox.show(this.settings.zoomPane.el.clientWidth, this.settings.zoomPane.el.clientHeight);
+        },
+      },
+      {
+        key: "_preventDefaultAllowTouchScroll",
+        value: function _preventDefaultAllowTouchScroll(event) {
+          if (
+            !this.settings.touchDelay ||
+            !this._isTouchEvent(event) ||
+            this.isShowing
+          ) {
+            event.preventDefault();
           }
-        }
+        },
+      },
+      {
+        key: "_isTouchEvent",
+        value: function _isTouchEvent(event) {
+          return !!event.touches;
+        },
+      },
+      {
+        key: "_bindEvents",
+        value: function _bindEvents() {
+          this.settings.el.addEventListener(
+            "mouseenter",
+            this._handleEntry,
+            false
+          );
+          this.settings.el.addEventListener("mouseleave", this._hide, false);
+          this.settings.el.addEventListener(
+            "mousemove",
+            this._handleMovement,
+            false
+          );
 
-        this._handleMovement();
-      }
-    }, {
-      key: "_hide",
-      value: function _hide(e) {
-        if (e) {
-          this._preventDefaultAllowTouchScroll(e);
-        }
+          if (this.settings.handleTouch) {
+            this.settings.el.addEventListener(
+              "touchstart",
+              this._handleEntry,
+              false
+            );
+            this.settings.el.addEventListener("touchend", this._hide, false);
+            this.settings.el.addEventListener(
+              "touchmove",
+              this._handleMovement,
+              false
+            );
+          } else {
+            this.settings.el.addEventListener(
+              "touchstart",
+              this._preventDefault,
+              false
+            );
+            this.settings.el.addEventListener(
+              "touchend",
+              this._preventDefault,
+              false
+            );
+            this.settings.el.addEventListener(
+              "touchmove",
+              this._preventDefault,
+              false
+            );
+          }
+        },
+      },
+      {
+        key: "_unbindEvents",
+        value: function _unbindEvents() {
+          this.settings.el.removeEventListener(
+            "mouseenter",
+            this._handleEntry,
+            false
+          );
+          this.settings.el.removeEventListener("mouseleave", this._hide, false);
+          this.settings.el.removeEventListener(
+            "mousemove",
+            this._handleMovement,
+            false
+          );
 
-        this._lastMovement = null;
-
-        if (this.entryTimeout) {
-          clearTimeout(this.entryTimeout);
-        }
-
-        if (this.boundingBox) {
-          this.boundingBox.hide();
-        }
-
-        var onHide = this.settings.onHide;
-
-        if (onHide && typeof onHide === "function") {
-          onHide();
-        }
-
-        this.settings.zoomPane.hide();
-      }
-    }, {
-      key: "_handleMovement",
-      value: function _handleMovement(e) {
-        if (e) {
+          if (this.settings.handleTouch) {
+            this.settings.el.removeEventListener(
+              "touchstart",
+              this._handleEntry,
+              false
+            );
+            this.settings.el.removeEventListener("touchend", this._hide, false);
+            this.settings.el.removeEventListener(
+              "touchmove",
+              this._handleMovement,
+              false
+            );
+          } else {
+            this.settings.el.removeEventListener(
+              "touchstart",
+              this._preventDefault,
+              false
+            );
+            this.settings.el.removeEventListener(
+              "touchend",
+              this._preventDefault,
+              false
+            );
+            this.settings.el.removeEventListener(
+              "touchmove",
+              this._preventDefault,
+              false
+            );
+          }
+        },
+      },
+      {
+        key: "_handleEntry",
+        value: function _handleEntry(e) {
           this._preventDefaultAllowTouchScroll(e);
 
           this._lastMovement = e;
-        } else if (this._lastMovement) {
-          e = this._lastMovement;
-        } else {
-          return;
-        }
 
-        var movementX;
-        var movementY;
+          if (e.type == "mouseenter" && this.settings.hoverDelay) {
+            this.entryTimeout = setTimeout(
+              this._show,
+              this.settings.hoverDelay
+            );
+          } else if (this.settings.touchDelay) {
+            this.entryTimeout = setTimeout(
+              this._show,
+              this.settings.touchDelay
+            );
+          } else {
+            this._show();
+          }
+        },
+      },
+      {
+        key: "_show",
+        value: function _show() {
+          if (!this.enabled) {
+            return;
+          }
 
-        if (e.touches) {
-          var firstTouch = e.touches[0];
-          movementX = firstTouch.clientX;
-          movementY = firstTouch.clientY;
-        } else {
-          movementX = e.clientX;
-          movementY = e.clientY;
-        }
+          var onShow = this.settings.onShow;
 
-        var el = this.settings.el;
-        var rect = el.getBoundingClientRect();
-        var offsetX = movementX - rect.left;
-        var offsetY = movementY - rect.top;
-        var percentageOffsetX = offsetX / this.settings.el.clientWidth;
-        var percentageOffsetY = offsetY / this.settings.el.clientHeight;
+          if (onShow && typeof onShow === "function") {
+            onShow();
+          }
 
-        if (this.boundingBox) {
-          this.boundingBox.setPosition(percentageOffsetX, percentageOffsetY, rect);
-        }
+          this.settings.zoomPane.show(
+            this.settings.el.getAttribute(this.settings.sourceAttribute),
+            this.settings.el.clientWidth,
+            this.settings.el.clientHeight
+          );
 
-        this.settings.zoomPane.setPosition(percentageOffsetX, percentageOffsetY, rect);
-      }
-    }, {
-      key: "isShowing",
-      get: function get() {
-        return this.settings.zoomPane.isShowing;
-      }
-    }]);
+          if (this._lastMovement) {
+            var touchActivated = this._lastMovement.touches;
+
+            if (
+              (touchActivated && this.settings.touchBoundingBox) ||
+              (!touchActivated && this.settings.hoverBoundingBox)
+            ) {
+              this.boundingBox.show(
+                this.settings.zoomPane.el.clientWidth,
+                this.settings.zoomPane.el.clientHeight
+              );
+            }
+          }
+
+          this._handleMovement();
+        },
+      },
+      {
+        key: "_hide",
+        value: function _hide(e) {
+          if (e) {
+            this._preventDefaultAllowTouchScroll(e);
+          }
+
+          this._lastMovement = null;
+
+          if (this.entryTimeout) {
+            clearTimeout(this.entryTimeout);
+          }
+
+          if (this.boundingBox) {
+            this.boundingBox.hide();
+          }
+
+          var onHide = this.settings.onHide;
+
+          if (onHide && typeof onHide === "function") {
+            onHide();
+          }
+
+          this.settings.zoomPane.hide();
+        },
+      },
+      {
+        key: "_handleMovement",
+        value: function _handleMovement(e) {
+          if (e) {
+            this._preventDefaultAllowTouchScroll(e);
+
+            this._lastMovement = e;
+          } else if (this._lastMovement) {
+            e = this._lastMovement;
+          } else {
+            return;
+          }
+
+          var movementX;
+          var movementY;
+
+          if (e.touches) {
+            var firstTouch = e.touches[0];
+            movementX = firstTouch.clientX;
+            movementY = firstTouch.clientY;
+          } else {
+            movementX = e.clientX;
+            movementY = e.clientY;
+          }
+
+          var el = this.settings.el;
+          var rect = el.getBoundingClientRect();
+          var offsetX = movementX - rect.left;
+          var offsetY = movementY - rect.top;
+          var percentageOffsetX = offsetX / this.settings.el.clientWidth;
+          var percentageOffsetY = offsetY / this.settings.el.clientHeight;
+
+          if (this.boundingBox) {
+            this.boundingBox.setPosition(
+              percentageOffsetX,
+              percentageOffsetY,
+              rect
+            );
+          }
+
+          this.settings.zoomPane.setPosition(
+            percentageOffsetX,
+            percentageOffsetY,
+            rect
+          );
+        },
+      },
+      {
+        key: "isShowing",
+        get: function get() {
+          return this.settings.zoomPane.isShowing;
+        },
+      },
+    ]);
 
     return Trigger;
-  }();
+  })();
 
   function _classCallCheck$3(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -8021,11 +9110,15 @@
   // account for, just in case.
 
   var divStyle = document.createElement("div").style;
-  var HAS_ANIMATION = typeof document === "undefined" ? false : "animation" in divStyle || "webkitAnimation" in divStyle;
+  var HAS_ANIMATION =
+    typeof document === "undefined"
+      ? false
+      : "animation" in divStyle || "webkitAnimation" in divStyle;
 
-  var ZoomPane = /*#__PURE__*/function () {
+  var ZoomPane = /*#__PURE__*/ (function () {
     function ZoomPane() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var options =
+        arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       _classCallCheck$3(this, ZoomPane);
 
@@ -8034,23 +9127,38 @@
       this._handleLoad = this._handleLoad.bind(this);
       this.isShowing = false;
       var _options$container = options.container,
-          container = _options$container === void 0 ? null : _options$container,
-          _options$zoomFactor = options.zoomFactor,
-          zoomFactor = _options$zoomFactor === void 0 ? throwIfMissing() : _options$zoomFactor,
-          _options$inline = options.inline,
-          inline = _options$inline === void 0 ? throwIfMissing() : _options$inline,
-          _options$namespace = options.namespace,
-          namespace = _options$namespace === void 0 ? null : _options$namespace,
-          _options$showWhitespa = options.showWhitespaceAtEdges,
-          showWhitespaceAtEdges = _options$showWhitespa === void 0 ? throwIfMissing() : _options$showWhitespa,
-          _options$containInlin = options.containInline,
-          containInline = _options$containInlin === void 0 ? throwIfMissing() : _options$containInlin,
-          _options$inlineOffset = options.inlineOffsetX,
-          inlineOffsetX = _options$inlineOffset === void 0 ? 0 : _options$inlineOffset,
-          _options$inlineOffset2 = options.inlineOffsetY,
-          inlineOffsetY = _options$inlineOffset2 === void 0 ? 0 : _options$inlineOffset2,
-          _options$inlineContai = options.inlineContainer,
-          inlineContainer = _options$inlineContai === void 0 ? document.body : _options$inlineContai;
+        container = _options$container === void 0 ? null : _options$container,
+        _options$zoomFactor = options.zoomFactor,
+        zoomFactor =
+          _options$zoomFactor === void 0
+            ? throwIfMissing()
+            : _options$zoomFactor,
+        _options$inline = options.inline,
+        inline =
+          _options$inline === void 0 ? throwIfMissing() : _options$inline,
+        _options$namespace = options.namespace,
+        namespace = _options$namespace === void 0 ? null : _options$namespace,
+        _options$showWhitespa = options.showWhitespaceAtEdges,
+        showWhitespaceAtEdges =
+          _options$showWhitespa === void 0
+            ? throwIfMissing()
+            : _options$showWhitespa,
+        _options$containInlin = options.containInline,
+        containInline =
+          _options$containInlin === void 0
+            ? throwIfMissing()
+            : _options$containInlin,
+        _options$inlineOffset = options.inlineOffsetX,
+        inlineOffsetX =
+          _options$inlineOffset === void 0 ? 0 : _options$inlineOffset,
+        _options$inlineOffset2 = options.inlineOffsetY,
+        inlineOffsetY =
+          _options$inlineOffset2 === void 0 ? 0 : _options$inlineOffset2,
+        _options$inlineContai = options.inlineContainer,
+        inlineContainer =
+          _options$inlineContai === void 0
+            ? document.body
+            : _options$inlineContai;
       this.settings = {
         container: container,
         zoomFactor: zoomFactor,
@@ -8060,7 +9168,7 @@
         containInline: containInline,
         inlineOffsetX: inlineOffsetX,
         inlineOffsetY: inlineOffsetY,
-        inlineContainer: inlineContainer
+        inlineContainer: inlineContainer,
       };
       this.openClasses = this._buildClasses("open");
       this.openingClasses = this._buildClasses("opening");
@@ -8071,216 +9179,316 @@
       this._buildElement();
     }
 
-    _createClass$3(ZoomPane, [{
-      key: "_buildClasses",
-      value: function _buildClasses(suffix) {
-        var classes = ["drift-".concat(suffix)];
-        var ns = this.settings.namespace;
+    _createClass$3(ZoomPane, [
+      {
+        key: "_buildClasses",
+        value: function _buildClasses(suffix) {
+          var classes = ["drift-".concat(suffix)];
+          var ns = this.settings.namespace;
 
-        if (ns) {
-          classes.push("".concat(ns, "-").concat(suffix));
-        }
+          if (ns) {
+            classes.push("".concat(ns, "-").concat(suffix));
+          }
 
-        return classes;
-      }
-    }, {
-      key: "_buildElement",
-      value: function _buildElement() {
-        this.el = document.createElement("div");
-        addClasses(this.el, this._buildClasses("zoom-pane"));
-        var loaderEl = document.createElement("div");
-        addClasses(loaderEl, this._buildClasses("zoom-pane-loader"));
-        this.el.appendChild(loaderEl);
-        this.imgEl = document.createElement("img");
-        this.el.appendChild(this.imgEl);
-      }
-    }, {
-      key: "_setImageURL",
-      value: function _setImageURL(imageURL) {
-        this.imgEl.setAttribute("src", imageURL);
-      }
-    }, {
-      key: "_setImageSize",
-      value: function _setImageSize(triggerWidth, triggerHeight) {
-        this.imgEl.style.width = "".concat(triggerWidth * this.settings.zoomFactor, "px");
-        this.imgEl.style.height = "".concat(triggerHeight * this.settings.zoomFactor, "px");
-      } // `percentageOffsetX` and `percentageOffsetY` must be percentages
-      // expressed as floats between `0' and `1`.
+          return classes;
+        },
+      },
+      {
+        key: "_buildElement",
+        value: function _buildElement() {
+          this.el = document.createElement("div");
+          addClasses(this.el, this._buildClasses("zoom-pane"));
+          var loaderEl = document.createElement("div");
+          addClasses(loaderEl, this._buildClasses("zoom-pane-loader"));
+          this.el.appendChild(loaderEl);
+          this.imgEl = document.createElement("img");
+          this.el.appendChild(this.imgEl);
+        },
+      },
+      {
+        key: "_setImageURL",
+        value: function _setImageURL(imageURL) {
+          this.imgEl.setAttribute("src", imageURL);
+        },
+      },
+      {
+        key: "_setImageSize",
+        value: function _setImageSize(triggerWidth, triggerHeight) {
+          this.imgEl.style.width = "".concat(
+            triggerWidth * this.settings.zoomFactor,
+            "px"
+          );
+          this.imgEl.style.height = "".concat(
+            triggerHeight * this.settings.zoomFactor,
+            "px"
+          );
+        }, // `percentageOffsetX` and `percentageOffsetY` must be percentages
+        // expressed as floats between `0' and `1`.
+      },
+      {
+        key: "setPosition",
+        value: function setPosition(
+          percentageOffsetX,
+          percentageOffsetY,
+          triggerRect
+        ) {
+          var imgElWidth = this.imgEl.offsetWidth;
+          var imgElHeight = this.imgEl.offsetHeight;
+          var elWidth = this.el.offsetWidth;
+          var elHeight = this.el.offsetHeight;
+          var centreOfContainerX = elWidth / 2;
+          var centreOfContainerY = elHeight / 2;
+          var targetImgXToBeCentre = imgElWidth * percentageOffsetX;
+          var targetImgYToBeCentre = imgElHeight * percentageOffsetY;
+          var left = centreOfContainerX - targetImgXToBeCentre;
+          var top = centreOfContainerY - targetImgYToBeCentre;
+          var differenceBetweenContainerWidthAndImgWidth = elWidth - imgElWidth;
+          var differenceBetweenContainerHeightAndImgHeight =
+            elHeight - imgElHeight;
+          var isContainerLargerThanImgX =
+            differenceBetweenContainerWidthAndImgWidth > 0;
+          var isContainerLargerThanImgY =
+            differenceBetweenContainerHeightAndImgHeight > 0;
+          var minLeft = isContainerLargerThanImgX
+            ? differenceBetweenContainerWidthAndImgWidth / 2
+            : 0;
+          var minTop = isContainerLargerThanImgY
+            ? differenceBetweenContainerHeightAndImgHeight / 2
+            : 0;
+          var maxLeft = isContainerLargerThanImgX
+            ? differenceBetweenContainerWidthAndImgWidth / 2
+            : differenceBetweenContainerWidthAndImgWidth;
+          var maxTop = isContainerLargerThanImgY
+            ? differenceBetweenContainerHeightAndImgHeight / 2
+            : differenceBetweenContainerHeightAndImgHeight;
 
-    }, {
-      key: "setPosition",
-      value: function setPosition(percentageOffsetX, percentageOffsetY, triggerRect) {
-        var imgElWidth = this.imgEl.offsetWidth;
-        var imgElHeight = this.imgEl.offsetHeight;
-        var elWidth = this.el.offsetWidth;
-        var elHeight = this.el.offsetHeight;
-        var centreOfContainerX = elWidth / 2;
-        var centreOfContainerY = elHeight / 2;
-        var targetImgXToBeCentre = imgElWidth * percentageOffsetX;
-        var targetImgYToBeCentre = imgElHeight * percentageOffsetY;
-        var left = centreOfContainerX - targetImgXToBeCentre;
-        var top = centreOfContainerY - targetImgYToBeCentre;
-        var differenceBetweenContainerWidthAndImgWidth = elWidth - imgElWidth;
-        var differenceBetweenContainerHeightAndImgHeight = elHeight - imgElHeight;
-        var isContainerLargerThanImgX = differenceBetweenContainerWidthAndImgWidth > 0;
-        var isContainerLargerThanImgY = differenceBetweenContainerHeightAndImgHeight > 0;
-        var minLeft = isContainerLargerThanImgX ? differenceBetweenContainerWidthAndImgWidth / 2 : 0;
-        var minTop = isContainerLargerThanImgY ? differenceBetweenContainerHeightAndImgHeight / 2 : 0;
-        var maxLeft = isContainerLargerThanImgX ? differenceBetweenContainerWidthAndImgWidth / 2 : differenceBetweenContainerWidthAndImgWidth;
-        var maxTop = isContainerLargerThanImgY ? differenceBetweenContainerHeightAndImgHeight / 2 : differenceBetweenContainerHeightAndImgHeight;
+          if (this.el.parentElement === this.settings.inlineContainer) {
+            // This may be needed in the future to deal with browser event
+            // inconsistencies, but it's difficult to tell for sure.
+            // let scrollX = isTouch ? 0 : window.scrollX;
+            // let scrollY = isTouch ? 0 : window.scrollY;
+            var scrollX = window.pageXOffset;
+            var scrollY = window.pageYOffset;
+            var inlineLeft =
+              triggerRect.left +
+              percentageOffsetX * triggerRect.width -
+              elWidth / 2 +
+              this.settings.inlineOffsetX +
+              scrollX;
+            var inlineTop =
+              triggerRect.top +
+              percentageOffsetY * triggerRect.height -
+              elHeight / 2 +
+              this.settings.inlineOffsetY +
+              scrollY;
 
-        if (this.el.parentElement === this.settings.inlineContainer) {
-          // This may be needed in the future to deal with browser event
-          // inconsistencies, but it's difficult to tell for sure.
-          // let scrollX = isTouch ? 0 : window.scrollX;
-          // let scrollY = isTouch ? 0 : window.scrollY;
-          var scrollX = window.pageXOffset;
-          var scrollY = window.pageYOffset;
-          var inlineLeft = triggerRect.left + percentageOffsetX * triggerRect.width - elWidth / 2 + this.settings.inlineOffsetX + scrollX;
-          var inlineTop = triggerRect.top + percentageOffsetY * triggerRect.height - elHeight / 2 + this.settings.inlineOffsetY + scrollY;
+            if (this.settings.containInline) {
+              if (inlineLeft < triggerRect.left + scrollX) {
+                inlineLeft = triggerRect.left + scrollX;
+              } else if (
+                inlineLeft + elWidth >
+                triggerRect.left + triggerRect.width + scrollX
+              ) {
+                inlineLeft =
+                  triggerRect.left + triggerRect.width - elWidth + scrollX;
+              }
 
-          if (this.settings.containInline) {
-            if (inlineLeft < triggerRect.left + scrollX) {
-              inlineLeft = triggerRect.left + scrollX;
-            } else if (inlineLeft + elWidth > triggerRect.left + triggerRect.width + scrollX) {
-              inlineLeft = triggerRect.left + triggerRect.width - elWidth + scrollX;
+              if (inlineTop < triggerRect.top + scrollY) {
+                inlineTop = triggerRect.top + scrollY;
+              } else if (
+                inlineTop + elHeight >
+                triggerRect.top + triggerRect.height + scrollY
+              ) {
+                inlineTop =
+                  triggerRect.top + triggerRect.height - elHeight + scrollY;
+              }
             }
 
-            if (inlineTop < triggerRect.top + scrollY) {
-              inlineTop = triggerRect.top + scrollY;
-            } else if (inlineTop + elHeight > triggerRect.top + triggerRect.height + scrollY) {
-              inlineTop = triggerRect.top + triggerRect.height - elHeight + scrollY;
+            this.el.style.left = "".concat(inlineLeft, "px");
+            this.el.style.top = "".concat(inlineTop, "px");
+          }
+
+          if (!this.settings.showWhitespaceAtEdges) {
+            if (left > minLeft) {
+              left = minLeft;
+            } else if (left < maxLeft) {
+              left = maxLeft;
+            }
+
+            if (top > minTop) {
+              top = minTop;
+            } else if (top < maxTop) {
+              top = maxTop;
             }
           }
 
-          this.el.style.left = "".concat(inlineLeft, "px");
-          this.el.style.top = "".concat(inlineTop, "px");
-        }
-
-        if (!this.settings.showWhitespaceAtEdges) {
-          if (left > minLeft) {
-            left = minLeft;
-          } else if (left < maxLeft) {
-            left = maxLeft;
-          }
-
-          if (top > minTop) {
-            top = minTop;
-          } else if (top < maxTop) {
-            top = maxTop;
-          }
-        }
-
-        this.imgEl.style.transform = "translate(".concat(left, "px, ").concat(top, "px)");
-        this.imgEl.style.webkitTransform = "translate(".concat(left, "px, ").concat(top, "px)");
-      }
-    }, {
-      key: "_removeListenersAndResetClasses",
-      value: function _removeListenersAndResetClasses() {
-        this.el.removeEventListener("animationend", this._completeShow, false);
-        this.el.removeEventListener("animationend", this._completeHide, false);
-        this.el.removeEventListener("webkitAnimationEnd", this._completeShow, false);
-        this.el.removeEventListener("webkitAnimationEnd", this._completeHide, false);
-        removeClasses(this.el, this.openClasses);
-        removeClasses(this.el, this.closingClasses);
-      }
-    }, {
-      key: "show",
-      value: function show(imageURL, triggerWidth, triggerHeight) {
-        this._removeListenersAndResetClasses();
-
-        this.isShowing = true;
-        addClasses(this.el, this.openClasses);
-
-        if (this.imgEl.getAttribute("src") != imageURL) {
-          addClasses(this.el, this.loadingClasses);
-          this.imgEl.addEventListener("load", this._handleLoad, false);
-
-          this._setImageURL(imageURL);
-        }
-
-        this._setImageSize(triggerWidth, triggerHeight);
-
-        if (this._isInline) {
-          this._showInline();
-        } else {
-          this._showInContainer();
-        }
-
-        if (HAS_ANIMATION) {
-          this.el.addEventListener("animationend", this._completeShow, false);
-          this.el.addEventListener("webkitAnimationEnd", this._completeShow, false);
-          addClasses(this.el, this.openingClasses);
-        }
-      }
-    }, {
-      key: "_showInline",
-      value: function _showInline() {
-        this.settings.inlineContainer.appendChild(this.el);
-        addClasses(this.el, this.inlineClasses);
-      }
-    }, {
-      key: "_showInContainer",
-      value: function _showInContainer() {
-        this.settings.container.appendChild(this.el);
-      }
-    }, {
-      key: "hide",
-      value: function hide() {
-        this._removeListenersAndResetClasses();
-
-        this.isShowing = false;
-
-        if (HAS_ANIMATION) {
-          this.el.addEventListener("animationend", this._completeHide, false);
-          this.el.addEventListener("webkitAnimationEnd", this._completeHide, false);
-          addClasses(this.el, this.closingClasses);
-        } else {
+          this.imgEl.style.transform = "translate("
+            .concat(left, "px, ")
+            .concat(top, "px)");
+          this.imgEl.style.webkitTransform = "translate("
+            .concat(left, "px, ")
+            .concat(top, "px)");
+        },
+      },
+      {
+        key: "_removeListenersAndResetClasses",
+        value: function _removeListenersAndResetClasses() {
+          this.el.removeEventListener(
+            "animationend",
+            this._completeShow,
+            false
+          );
+          this.el.removeEventListener(
+            "animationend",
+            this._completeHide,
+            false
+          );
+          this.el.removeEventListener(
+            "webkitAnimationEnd",
+            this._completeShow,
+            false
+          );
+          this.el.removeEventListener(
+            "webkitAnimationEnd",
+            this._completeHide,
+            false
+          );
           removeClasses(this.el, this.openClasses);
-          removeClasses(this.el, this.inlineClasses);
-        }
-      }
-    }, {
-      key: "_completeShow",
-      value: function _completeShow() {
-        this.el.removeEventListener("animationend", this._completeShow, false);
-        this.el.removeEventListener("webkitAnimationEnd", this._completeShow, false);
-        removeClasses(this.el, this.openingClasses);
-      }
-    }, {
-      key: "_completeHide",
-      value: function _completeHide() {
-        this.el.removeEventListener("animationend", this._completeHide, false);
-        this.el.removeEventListener("webkitAnimationEnd", this._completeHide, false);
-        removeClasses(this.el, this.openClasses);
-        removeClasses(this.el, this.closingClasses);
-        removeClasses(this.el, this.inlineClasses);
-        this.el.setAttribute("style", ""); // The window could have been resized above or below `inline`
-        // limits since the ZoomPane was shown. Because of this, we
-        // can't rely on `this._isInline` here.
+          removeClasses(this.el, this.closingClasses);
+        },
+      },
+      {
+        key: "show",
+        value: function show(imageURL, triggerWidth, triggerHeight) {
+          this._removeListenersAndResetClasses();
 
-        if (this.el.parentElement === this.settings.container) {
-          this.settings.container.removeChild(this.el);
-        } else if (this.el.parentElement === this.settings.inlineContainer) {
-          this.settings.inlineContainer.removeChild(this.el);
-        }
-      }
-    }, {
-      key: "_handleLoad",
-      value: function _handleLoad() {
-        this.imgEl.removeEventListener("load", this._handleLoad, false);
-        removeClasses(this.el, this.loadingClasses);
-      }
-    }, {
-      key: "_isInline",
-      get: function get() {
-        var inline = this.settings.inline;
-        return inline === true || typeof inline === "number" && window.innerWidth <= inline;
-      }
-    }]);
+          this.isShowing = true;
+          addClasses(this.el, this.openClasses);
+
+          if (this.imgEl.getAttribute("src") != imageURL) {
+            addClasses(this.el, this.loadingClasses);
+            this.imgEl.addEventListener("load", this._handleLoad, false);
+
+            this._setImageURL(imageURL);
+          }
+
+          this._setImageSize(triggerWidth, triggerHeight);
+
+          if (this._isInline) {
+            this._showInline();
+          } else {
+            this._showInContainer();
+          }
+
+          if (HAS_ANIMATION) {
+            this.el.addEventListener("animationend", this._completeShow, false);
+            this.el.addEventListener(
+              "webkitAnimationEnd",
+              this._completeShow,
+              false
+            );
+            addClasses(this.el, this.openingClasses);
+          }
+        },
+      },
+      {
+        key: "_showInline",
+        value: function _showInline() {
+          this.settings.inlineContainer.appendChild(this.el);
+          addClasses(this.el, this.inlineClasses);
+        },
+      },
+      {
+        key: "_showInContainer",
+        value: function _showInContainer() {
+          this.settings.container.appendChild(this.el);
+        },
+      },
+      {
+        key: "hide",
+        value: function hide() {
+          this._removeListenersAndResetClasses();
+
+          this.isShowing = false;
+
+          if (HAS_ANIMATION) {
+            this.el.addEventListener("animationend", this._completeHide, false);
+            this.el.addEventListener(
+              "webkitAnimationEnd",
+              this._completeHide,
+              false
+            );
+            addClasses(this.el, this.closingClasses);
+          } else {
+            removeClasses(this.el, this.openClasses);
+            removeClasses(this.el, this.inlineClasses);
+          }
+        },
+      },
+      {
+        key: "_completeShow",
+        value: function _completeShow() {
+          this.el.removeEventListener(
+            "animationend",
+            this._completeShow,
+            false
+          );
+          this.el.removeEventListener(
+            "webkitAnimationEnd",
+            this._completeShow,
+            false
+          );
+          removeClasses(this.el, this.openingClasses);
+        },
+      },
+      {
+        key: "_completeHide",
+        value: function _completeHide() {
+          this.el.removeEventListener(
+            "animationend",
+            this._completeHide,
+            false
+          );
+          this.el.removeEventListener(
+            "webkitAnimationEnd",
+            this._completeHide,
+            false
+          );
+          removeClasses(this.el, this.openClasses);
+          removeClasses(this.el, this.closingClasses);
+          removeClasses(this.el, this.inlineClasses);
+          this.el.setAttribute("style", ""); // The window could have been resized above or below `inline`
+          // limits since the ZoomPane was shown. Because of this, we
+          // can't rely on `this._isInline` here.
+
+          if (this.el.parentElement === this.settings.container) {
+            this.settings.container.removeChild(this.el);
+          } else if (this.el.parentElement === this.settings.inlineContainer) {
+            this.settings.inlineContainer.removeChild(this.el);
+          }
+        },
+      },
+      {
+        key: "_handleLoad",
+        value: function _handleLoad() {
+          this.imgEl.removeEventListener("load", this._handleLoad, false);
+          removeClasses(this.el, this.loadingClasses);
+        },
+      },
+      {
+        key: "_isInline",
+        get: function get() {
+          var inline = this.settings.inline;
+          return (
+            inline === true ||
+            (typeof inline === "number" && window.innerWidth <= inline)
+          );
+        },
+      },
+    ]);
 
     return ZoomPane;
-  }();
+  })();
 
   function _classCallCheck$4(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -8304,9 +9512,10 @@
     return Constructor;
   }
 
-  var Drift = /*#__PURE__*/function () {
+  var Drift = /*#__PURE__*/ (function () {
     function Drift(triggerEl) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options =
+        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       _classCallCheck$4(this, Drift);
 
@@ -8315,11 +9524,12 @@
       this.destroy = this.destroy.bind(this);
 
       if (!isDOMElement(this.triggerEl)) {
-        throw new TypeError("`new Drift` requires a DOM element as its first argument.");
+        throw new TypeError(
+          "`new Drift` requires a DOM element as its first argument."
+        );
       } // Prefix for generated element class names (e.g. `my-ns` will
       // result in classes such as `my-ns-pane`. Default `drift-`
       // prefixed classes will always be added as well.
-
 
       var namespace = options["namespace"] || null; // Whether the ZoomPane should show whitespace when near the edges.
 
@@ -8341,13 +9551,17 @@
       var zoomFactor = options["zoomFactor"] || 3; // A DOM element to append the non-inline ZoomPane to.
       // Required if `inlinePane !== true`.
 
-      var paneContainer = options["paneContainer"] === undefined ? document.body : options["paneContainer"]; // When to switch to an inline ZoomPane. This can be a boolean or
+      var paneContainer =
+        options["paneContainer"] === undefined
+          ? document.body
+          : options["paneContainer"]; // When to switch to an inline ZoomPane. This can be a boolean or
       // an integer. If `true`, the ZoomPane will always be inline,
       // if `false`, it will switch to inline when `windowWidth <= inlinePane`
 
       var inlinePane = options["inlinePane"] || 375; // If `true`, touch events will trigger the zoom, like mouse events.
 
-      var handleTouch = "handleTouch" in options ? !!options["handleTouch"] : true; // If present (and a function), this will be called
+      var handleTouch =
+        "handleTouch" in options ? !!options["handleTouch"] : true; // If present (and a function), this will be called
       // whenever the ZoomPane is shown.
 
       var onShow = options["onShow"] || null; // If present (and a function), this will be called
@@ -8356,7 +9570,8 @@
       var onHide = options["onHide"] || null; // Add base styles to the page. See the "Theming"
       // section of README.md for more information.
 
-      var injectBaseStyles = "injectBaseStyles" in options ? !!options["injectBaseStyles"] : true; // An optional number that determines how long to wait before
+      var injectBaseStyles =
+        "injectBaseStyles" in options ? !!options["injectBaseStyles"] : true; // An optional number that determines how long to wait before
       // showing the ZoomPane because of a `mouseenter` event.
 
       var hoverDelay = options["hoverDelay"] || 0; // An optional number that determines how long to wait before
@@ -8372,10 +9587,13 @@
 
       var touchBoundingBox = options["touchBoundingBox"] || false; // A DOM element to append the bounding box to.
 
-      var boundingBoxContainer = options["boundingBoxContainer"] || document.body;
+      var boundingBoxContainer =
+        options["boundingBoxContainer"] || document.body;
 
       if (inlinePane !== true && !isDOMElement(paneContainer)) {
-        throw new TypeError("`paneContainer` must be a DOM element when `inlinePane !== true`");
+        throw new TypeError(
+          "`paneContainer` must be a DOM element when `inlinePane !== true`"
+        );
       }
 
       if (!isDOMElement(inlineContainer)) {
@@ -8401,7 +9619,7 @@
         touchDelay: touchDelay,
         hoverBoundingBox: hoverBoundingBox,
         touchBoundingBox: touchBoundingBox,
-        boundingBoxContainer: boundingBoxContainer
+        boundingBoxContainer: boundingBoxContainer,
       };
 
       if (this.settings.injectBaseStyles) {
@@ -8413,86 +9631,95 @@
       this._buildTrigger();
     }
 
-    _createClass$4(Drift, [{
-      key: "_buildZoomPane",
-      value: function _buildZoomPane() {
-        this.zoomPane = new ZoomPane({
-          container: this.settings.paneContainer,
-          zoomFactor: this.settings.zoomFactor,
-          showWhitespaceAtEdges: this.settings.showWhitespaceAtEdges,
-          containInline: this.settings.containInline,
-          inline: this.settings.inlinePane,
-          namespace: this.settings.namespace,
-          inlineOffsetX: this.settings.inlineOffsetX,
-          inlineOffsetY: this.settings.inlineOffsetY,
-          inlineContainer: this.settings.inlineContainer
-        });
-      }
-    }, {
-      key: "_buildTrigger",
-      value: function _buildTrigger() {
-        this.trigger = new Trigger({
-          el: this.triggerEl,
-          zoomPane: this.zoomPane,
-          handleTouch: this.settings.handleTouch,
-          onShow: this.settings.onShow,
-          onHide: this.settings.onHide,
-          sourceAttribute: this.settings.sourceAttribute,
-          hoverDelay: this.settings.hoverDelay,
-          touchDelay: this.settings.touchDelay,
-          hoverBoundingBox: this.settings.hoverBoundingBox,
-          touchBoundingBox: this.settings.touchBoundingBox,
-          namespace: this.settings.namespace,
-          zoomFactor: this.settings.zoomFactor,
-          boundingBoxContainer: this.settings.boundingBoxContainer
-        });
-      }
-    }, {
-      key: "setZoomImageURL",
-      value: function setZoomImageURL(imageURL) {
-        this.zoomPane._setImageURL(imageURL);
-      }
-    }, {
-      key: "disable",
-      value: function disable() {
-        this.trigger.enabled = false;
-      }
-    }, {
-      key: "enable",
-      value: function enable() {
-        this.trigger.enabled = true;
-      }
-    }, {
-      key: "destroy",
-      value: function destroy() {
-        this.trigger._hide();
-
-        this.trigger._unbindEvents();
-      }
-    }, {
-      key: "isShowing",
-      get: function get() {
-        return this.zoomPane.isShowing;
-      }
-    }, {
-      key: "zoomFactor",
-      get: function get() {
-        return this.settings.zoomFactor;
+    _createClass$4(Drift, [
+      {
+        key: "_buildZoomPane",
+        value: function _buildZoomPane() {
+          this.zoomPane = new ZoomPane({
+            container: this.settings.paneContainer,
+            zoomFactor: this.settings.zoomFactor,
+            showWhitespaceAtEdges: this.settings.showWhitespaceAtEdges,
+            containInline: this.settings.containInline,
+            inline: this.settings.inlinePane,
+            namespace: this.settings.namespace,
+            inlineOffsetX: this.settings.inlineOffsetX,
+            inlineOffsetY: this.settings.inlineOffsetY,
+            inlineContainer: this.settings.inlineContainer,
+          });
+        },
       },
-      set: function set(zf) {
-        this.settings.zoomFactor = zf;
-        this.zoomPane.settings.zoomFactor = zf;
-        this.trigger.settings.zoomFactor = zf;
-        this.boundingBox.settings.zoomFactor = zf;
-      }
-    }]);
+      {
+        key: "_buildTrigger",
+        value: function _buildTrigger() {
+          this.trigger = new Trigger({
+            el: this.triggerEl,
+            zoomPane: this.zoomPane,
+            handleTouch: this.settings.handleTouch,
+            onShow: this.settings.onShow,
+            onHide: this.settings.onHide,
+            sourceAttribute: this.settings.sourceAttribute,
+            hoverDelay: this.settings.hoverDelay,
+            touchDelay: this.settings.touchDelay,
+            hoverBoundingBox: this.settings.hoverBoundingBox,
+            touchBoundingBox: this.settings.touchBoundingBox,
+            namespace: this.settings.namespace,
+            zoomFactor: this.settings.zoomFactor,
+            boundingBoxContainer: this.settings.boundingBoxContainer,
+          });
+        },
+      },
+      {
+        key: "setZoomImageURL",
+        value: function setZoomImageURL(imageURL) {
+          this.zoomPane._setImageURL(imageURL);
+        },
+      },
+      {
+        key: "disable",
+        value: function disable() {
+          this.trigger.enabled = false;
+        },
+      },
+      {
+        key: "enable",
+        value: function enable() {
+          this.trigger.enabled = true;
+        },
+      },
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.trigger._hide();
+
+          this.trigger._unbindEvents();
+        },
+      },
+      {
+        key: "isShowing",
+        get: function get() {
+          return this.zoomPane.isShowing;
+        },
+      },
+      {
+        key: "zoomFactor",
+        get: function get() {
+          return this.settings.zoomFactor;
+        },
+        set: function set(zf) {
+          this.settings.zoomFactor = zf;
+          this.zoomPane.settings.zoomFactor = zf;
+          this.trigger.settings.zoomFactor = zf;
+          this.boundingBox.settings.zoomFactor = zf;
+        },
+      },
+    ]);
 
     return Drift;
-  }(); // Public API
+  })(); // Public API
   Object.defineProperty(Drift.prototype, "isShowing", {
     get: function get() {
       return this.isShowing;
-    }
+    },
   });
   Object.defineProperty(Drift.prototype, "zoomFactor", {
     get: function get() {
@@ -8500,7 +9727,7 @@
     },
     set: function set(value) {
       this.zoomFactor = value;
-    }
+    },
   });
   Drift.prototype["setZoomImageURL"] = Drift.prototype.setZoomImageURL;
   Drift.prototype["disable"] = Drift.prototype.disable;
@@ -8508,13 +9735,13 @@
   Drift.prototype["destroy"] = Drift.prototype.destroy;
   /* eslint-enable no-self-assign */
 
-  var ProductGallery = /*#__PURE__*/function () {
+  var ProductGallery = /*#__PURE__*/ (function () {
     function ProductGallery(element, options) {
       _classCallCheck(this, ProductGallery);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.viewInSpaceElement = this.element.querySelector('[data-shopify-xr]');
+      this.viewInSpaceElement = this.element.querySelector("[data-shopify-xr]");
       this.options = options; // The media property will hold all the media manages by the gallery so we can easily turn them off. They are
       // indexed by the media ID
 
@@ -8528,305 +9755,447 @@
       this._attachListeners();
     }
 
-    _createClass(ProductGallery, [{
-      key: "destroy",
-      value: function destroy() {
-        if (this.flickityInstance) {
-          this.flickityInstance.destroy();
-        }
-
-        for (var mediaId in this.media) {
-          if (this.media.hasOwnProperty(mediaId)) {
-            this.media[mediaId].destroy();
+    _createClass(ProductGallery, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          if (this.flickityInstance) {
+            this.flickityInstance.destroy();
           }
-        }
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('model:played', this._disableDrag.bind(this));
-        this.delegateElement.on('video:played', this._disableDrag.bind(this));
-        this.delegateElement.on('model:paused', this._enableDrag.bind(this));
-        this.delegateElement.on('video:paused', this._enableDrag.bind(this));
-      }
-      /**
-       * This method must be called whenever the variant is changed
-       */
 
-    }, {
-      key: "variantHasChanged",
-      value: function variantHasChanged(newVariant) {
-        var _this = this;
+          for (var mediaId in this.media) {
+            if (this.media.hasOwnProperty(mediaId)) {
+              this.media[mediaId].destroy();
+            }
+          }
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on("model:played", this._disableDrag.bind(this));
+          this.delegateElement.on("video:played", this._disableDrag.bind(this));
+          this.delegateElement.on("model:paused", this._enableDrag.bind(this));
+          this.delegateElement.on("video:paused", this._enableDrag.bind(this));
+        },
+        /**
+         * This method must be called whenever the variant is changed
+         */
+      },
+      {
+        key: "variantHasChanged",
+        value: function variantHasChanged(newVariant) {
+          var _this = this;
 
-        // We may have selected a variant that will cause the set of images to change completely. To do that we need to iterate through all images,
-        // check for the attribute "data-group-name" and verify if some images need to be filtered or not
-        var shouldReload = false;
-        fastdom.mutate(function () {
-          _this.productGalleryCellsElements.forEach(function (cell, imageIndex) {
-            if (cell.hasAttribute('data-group-name')) {
-              // If it has an attribute, we get the group name, and match it against the option
-              var groupName = cell.getAttribute('data-group-name');
+          // We may have selected a variant that will cause the set of images to change completely. To do that we need to iterate through all images,
+          // check for the attribute "data-group-name" and verify if some images need to be filtered or not
+          var shouldReload = false;
+          fastdom.mutate(function () {
+            _this.productGalleryCellsElements.forEach(function (
+              cell,
+              imageIndex
+            ) {
+              if (cell.hasAttribute("data-group-name")) {
+                // If it has an attribute, we get the group name, and match it against the option
+                var groupName = cell.getAttribute("data-group-name");
 
-              _this.options['productOptions'].forEach(function (option, optionIndex) {
-                if (option.toLowerCase() === groupName) {
-                  // groupName from attribute is already lowercased in Liquid
-                  // Now we compare the value: if it's the same or that the image is part of the variant we keep it, otherwise we filter it
-                  if (newVariant["option".concat(optionIndex + 1)].toLowerCase() === cell.getAttribute('data-group-value') || newVariant['featured_media'] && newVariant['featured_media']['id'] === parseInt(cell.getAttribute('data-media-id'))) {
-                    cell.classList.remove('is-filtered');
+                _this.options["productOptions"].forEach(function (
+                  option,
+                  optionIndex
+                ) {
+                  if (option.toLowerCase() === groupName) {
+                    // groupName from attribute is already lowercased in Liquid
+                    // Now we compare the value: if it's the same or that the image is part of the variant we keep it, otherwise we filter it
+                    if (
+                      newVariant[
+                        "option".concat(optionIndex + 1)
+                      ].toLowerCase() ===
+                        cell.getAttribute("data-group-value") ||
+                      (newVariant["featured_media"] &&
+                        newVariant["featured_media"]["id"] ===
+                          parseInt(cell.getAttribute("data-media-id")))
+                    ) {
+                      cell.classList.remove("is-filtered");
 
-                    _this.productThumbnailsCellsElements[imageIndex].classList.remove('is-filtered');
-                  } else {
-                    cell.classList.add('is-filtered');
+                      _this.productThumbnailsCellsElements[
+                        imageIndex
+                      ].classList.remove("is-filtered");
+                    } else {
+                      cell.classList.add("is-filtered");
 
-                    _this.productThumbnailsCellsElements[imageIndex].classList.add('is-filtered');
+                      _this.productThumbnailsCellsElements[
+                        imageIndex
+                      ].classList.add("is-filtered");
+                    }
                   }
-                }
-              });
+                });
 
-              shouldReload = true;
-            }
-          });
-
-          if (shouldReload) {
-            _this.flickityInstance.deactivate();
-
-            _this.flickityInstance.activate();
-          }
-
-          if (Responsive.matchesBreakpoint('lap-and-up')) {
-            var slides = _this.element.querySelectorAll('.product-gallery__carousel-item');
-
-            slides.forEach(function (slide) {
-              slide.classList.remove('product-gallery__carousel-item--hidden');
-            });
-          }
-
-          if (newVariant && newVariant['featured_media']) {
-            _this.flickityInstance.selectCell("[data-media-id=\"".concat(newVariant['featured_media']['id'], "\"]"));
-          }
-        });
-      }
-    }, {
-      key: "_createCarousel",
-      value: function _createCarousel() {
-        var _this2 = this;
-
-        this.productGalleryElement = this.element.querySelector('.product-gallery__carousel');
-        this.productGalleryCellsElements = this.productGalleryElement ? this.productGalleryElement.querySelectorAll('.product-gallery__carousel-item') : [];
-
-        if (this.productGalleryElement) {
-          // We need to create a list of media (for now we only handle video and model a bit differently)
-          this.productGalleryCellsElements.forEach(function (item) {
-            switch (item.getAttribute('data-media-type')) {
-              case 'external_video':
-              case 'video':
-                _this2.media[item.getAttribute('data-media-id')] = new ProductVideo(item, _this2.options['enableVideoLooping']);
-                break;
-
-              case 'model':
-                _this2.media[item.getAttribute('data-media-id')] = new ProductModel(item);
-                break;
-            }
-          });
-
-          if (parseInt(this.productGalleryElement.getAttribute('data-media-count')) > 1) {
-            // Due to the fact that some images may be filtered, we have to do additional logic to compute the initial index
-            var filteredCells = [].slice.call(this.productGalleryCellsElements).filter(function (item) {
-              return !item.classList.contains('is-filtered');
-            });
-            var initialIndex = 0;
-            filteredCells.forEach(function (item, index) {
-              if (item.getAttribute('data-media-id') === _this2.productGalleryElement.getAttribute('data-initial-media-id')) {
-                initialIndex = index;
+                shouldReload = true;
               }
             });
-            this.flickityInstance = new flickityFade(this.productGalleryElement, {
-              accessibility: false,
-              prevNextButtons: false,
-              pageDots: false,
-              adaptiveHeight: true,
-              draggable: !Responsive.matchesBreakpoint('supports-hover'),
-              fade: this.options['galleryTransitionEffect'] === 'fade',
-              cellSelector: '.product-gallery__carousel-item:not(.is-filtered)',
-              initialIndex: initialIndex
+
+            if (shouldReload) {
+              _this.flickityInstance.deactivate();
+
+              _this.flickityInstance.activate();
+            }
+
+            if (Responsive.matchesBreakpoint("lap-and-up")) {
+              var slides = _this.element.querySelectorAll(
+                ".product-gallery__carousel-item"
+              );
+
+              slides.forEach(function (slide) {
+                slide.classList.remove(
+                  "product-gallery__carousel-item--hidden"
+                );
+              });
+            }
+
+            if (newVariant && newVariant["featured_media"]) {
+              _this.flickityInstance.selectCell(
+                '[data-media-id="'.concat(
+                  newVariant["featured_media"]["id"],
+                  '"]'
+                )
+              );
+            }
+          });
+        },
+      },
+      {
+        key: "_createCarousel",
+        value: function _createCarousel() {
+          var _this2 = this;
+
+          this.productGalleryElement = this.element.querySelector(
+            ".product-gallery__carousel"
+          );
+          this.productGalleryCellsElements = this.productGalleryElement
+            ? this.productGalleryElement.querySelectorAll(
+                ".product-gallery__carousel-item"
+              )
+            : [];
+
+          if (this.productGalleryElement) {
+            // We need to create a list of media (for now we only handle video and model a bit differently)
+            this.productGalleryCellsElements.forEach(function (item) {
+              switch (item.getAttribute("data-media-type")) {
+                case "external_video":
+                case "video":
+                  _this2.media[
+                    item.getAttribute("data-media-id")
+                  ] = new ProductVideo(
+                    item,
+                    _this2.options["enableVideoLooping"]
+                  );
+                  break;
+
+                case "model":
+                  _this2.media[
+                    item.getAttribute("data-media-id")
+                  ] = new ProductModel(item);
+                  break;
+              }
             });
+
+            if (
+              parseInt(
+                this.productGalleryElement.getAttribute("data-media-count")
+              ) > 1
+            ) {
+              // Due to the fact that some images may be filtered, we have to do additional logic to compute the initial index
+              var filteredCells = [].slice
+                .call(this.productGalleryCellsElements)
+                .filter(function (item) {
+                  return !item.classList.contains("is-filtered");
+                });
+              var initialIndex = 0;
+              filteredCells.forEach(function (item, index) {
+                if (
+                  item.getAttribute("data-media-id") ===
+                  _this2.productGalleryElement.getAttribute(
+                    "data-initial-media-id"
+                  )
+                ) {
+                  initialIndex = index;
+                }
+              });
+              this.flickityInstance = new flickityFade(
+                this.productGalleryElement,
+                {
+                  accessibility: false,
+                  prevNextButtons: false,
+                  pageDots: false,
+                  adaptiveHeight: true,
+                  draggable: !Responsive.matchesBreakpoint("supports-hover"),
+                  fade: this.options["galleryTransitionEffect"] === "fade",
+                  cellSelector:
+                    ".product-gallery__carousel-item:not(.is-filtered)",
+                  initialIndex: initialIndex,
+                }
+              );
+            }
+          } // If there are thumbnails, we need to synchronize the thumbnails
+
+          this.productThumbnailsListElement = this.element.querySelector(
+            ".product-gallery__thumbnail-list"
+          );
+          this.delegateElement.on(
+            "click",
+            ".product-gallery__thumbnail",
+            this._onThumbnailClicked.bind(this)
+          );
+
+          if (this.productThumbnailsListElement && this.flickityInstance) {
+            this.productThumbnailsCellsElements = this.productThumbnailsListElement.querySelectorAll(
+              ".product-gallery__thumbnail"
+            );
+            this.flickityInstance.on(
+              "select",
+              this._onGallerySlideChanged.bind(this)
+            );
+
+            if (this.options["galleryTransitionEffect"] === "fade") {
+              this.flickityInstance.on(
+                "select",
+                this._onGallerySlideSettled.bind(this)
+              );
+            } else {
+              this.flickityInstance.on(
+                "settle",
+                this._onGallerySlideSettled.bind(this)
+              );
+            }
+
+            this._onGallerySlideChanged(false); // We call it once initially to force adjust the thumbnails
+
+            this._onGallerySlideSettled();
           }
-        } // If there are thumbnails, we need to synchronize the thumbnails
+        },
+      },
+      {
+        key: "_createZoom",
+        value: function _createZoom() {
+          var _this3 = this;
 
+          if (this.options["enableImageZoom"]) {
+            this.driftObjects = [];
+            var zoomWrapper = this.element.querySelector(
+              ".product__zoom-wrapper"
+            ); // While Drift has a "handleTouch" option, we've found it's not working well, so we are doing our own
+            // test here to prevent loading it at all on mobile
 
-        this.productThumbnailsListElement = this.element.querySelector('.product-gallery__thumbnail-list');
-        this.delegateElement.on('click', '.product-gallery__thumbnail', this._onThumbnailClicked.bind(this));
-
-        if (this.productThumbnailsListElement && this.flickityInstance) {
-          this.productThumbnailsCellsElements = this.productThumbnailsListElement.querySelectorAll('.product-gallery__thumbnail');
-          this.flickityInstance.on('select', this._onGallerySlideChanged.bind(this));
-
-          if (this.options['galleryTransitionEffect'] === 'fade') {
-            this.flickityInstance.on('select', this._onGallerySlideSettled.bind(this));
-          } else {
-            this.flickityInstance.on('settle', this._onGallerySlideSettled.bind(this));
+            if (Responsive.matchesBreakpoint("supports-hover")) {
+              this.element
+                .querySelectorAll(".product-gallery__image")
+                .forEach(function (image) {
+                  _this3.driftObjects.push(
+                    new Drift(image, {
+                      containInline: _this3.options["zoomEffect"] === "outside",
+                      inlinePane:
+                        window.innerWidth < 1024
+                          ? true
+                          : _this3.options["zoomEffect"] !== "outside",
+                      hoverBoundingBox:
+                        _this3.options["zoomEffect"] === "outside",
+                      handleTouch: false,
+                      inlineOffsetY: window.innerWidth < 1024 ? -85 : 0,
+                      paneContainer: zoomWrapper,
+                    })
+                  );
+                });
+            }
           }
+        },
+      },
+      {
+        key: "_onGallerySlideChanged",
+        value: function _onGallerySlideChanged() {
+          var _this4 = this;
 
-          this._onGallerySlideChanged(false); // We call it once initially to force adjust the thumbnails
-
-
-          this._onGallerySlideSettled();
-        }
-      }
-    }, {
-      key: "_createZoom",
-      value: function _createZoom() {
-        var _this3 = this;
-
-        if (this.options['enableImageZoom']) {
-          this.driftObjects = [];
-          var zoomWrapper = this.element.querySelector('.product__zoom-wrapper'); // While Drift has a "handleTouch" option, we've found it's not working well, so we are doing our own
-          // test here to prevent loading it at all on mobile
-
-          if (Responsive.matchesBreakpoint('supports-hover')) {
-            this.element.querySelectorAll('.product-gallery__image').forEach(function (image) {
-              _this3.driftObjects.push(new Drift(image, {
-                containInline: _this3.options['zoomEffect'] === 'outside',
-                inlinePane: window.innerWidth < 1024 ? true : _this3.options['zoomEffect'] !== 'outside',
-                hoverBoundingBox: _this3.options['zoomEffect'] === 'outside',
-                handleTouch: false,
-                inlineOffsetY: window.innerWidth < 1024 ? -85 : 0,
-                paneContainer: zoomWrapper
-              }));
-            });
-          }
-        }
-      }
-    }, {
-      key: "_onGallerySlideChanged",
-      value: function _onGallerySlideChanged() {
-        var _this4 = this;
-
-        var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-        var previousNavElement = null,
+          var animate =
+            arguments.length > 0 && arguments[0] !== undefined
+              ? arguments[0]
+              : true;
+          var previousNavElement = null,
             newNavElement = null;
-        this.productThumbnailsCellsElements.forEach(function (item) {
-          if (item.classList.contains('is-nav-selected')) {
-            previousNavElement = item;
-          }
+          this.productThumbnailsCellsElements.forEach(function (item) {
+            if (item.classList.contains("is-nav-selected")) {
+              previousNavElement = item;
+            }
 
-          if (item.getAttribute('data-media-id') === _this4.flickityInstance.selectedElement.getAttribute('data-media-id')) {
-            newNavElement = item;
-          }
-        });
-        previousNavElement.classList.remove('is-nav-selected');
-        newNavElement.classList.add('is-nav-selected'); // We animate to move the selected nav item
-
-        if (Responsive.matchesBreakpoint('pocket')) {
-          var scrollX = newNavElement.offsetLeft - (this.productThumbnailsListElement.parentNode.clientWidth - newNavElement.clientWidth) / 2;
-          this.productThumbnailsListElement.parentNode.scrollTo({
-            left: scrollX,
-            behavior: animate ? 'smooth' : 'auto'
+            if (
+              item.getAttribute("data-media-id") ===
+              _this4.flickityInstance.selectedElement.getAttribute(
+                "data-media-id"
+              )
+            ) {
+              newNavElement = item;
+            }
           });
-        } else {
-          var scrollY = newNavElement.offsetTop - (this.productThumbnailsListElement.clientHeight - newNavElement.clientHeight) / 2;
-          this.productThumbnailsListElement.scrollTo({
-            top: scrollY,
-            behavior: animate ? 'smooth' : 'auto'
-          });
-        }
-      }
-      /**
-       * The difference with "change" is that this function is called after the item has transitioned
-       */
+          previousNavElement.classList.remove("is-nav-selected");
+          newNavElement.classList.add("is-nav-selected"); // We animate to move the selected nav item
 
-    }, {
-      key: "_onGallerySlideSettled",
-      value: function _onGallerySlideSettled() {
-        this._handleMedia(this.flickityInstance.selectedElement);
-
-        if (Responsive.matchesBreakpoint('lap-and-up')) {
-          var slides = this.element.querySelectorAll('.product-gallery__carousel-item:not(.is-selected)');
-          slides.forEach(function (slide) {
-            slide.classList.add('product-gallery__carousel-item--hidden');
-          });
-        }
-      }
-    }, {
-      key: "_onThumbnailClicked",
-      value: function _onThumbnailClicked(event, target) {
-        event.preventDefault();
-
-        if (this.flickityInstance) {
-          this.flickityInstance.selectCell("[data-media-id=\"".concat(target.getAttribute('data-media-id'), "\"]"));
-
-          if (Responsive.matchesBreakpoint('lap-and-up')) {
-            var slides = this.element.querySelectorAll('.product-gallery__carousel-item');
-            slides.forEach(function (slide) {
-              slide.classList.remove('product-gallery__carousel-item--hidden');
+          if (Responsive.matchesBreakpoint("pocket")) {
+            var scrollX =
+              newNavElement.offsetLeft -
+              (this.productThumbnailsListElement.parentNode.clientWidth -
+                newNavElement.clientWidth) /
+                2;
+            this.productThumbnailsListElement.parentNode.scrollTo({
+              left: scrollX,
+              behavior: animate ? "smooth" : "auto",
+            });
+          } else {
+            var scrollY =
+              newNavElement.offsetTop -
+              (this.productThumbnailsListElement.clientHeight -
+                newNavElement.clientHeight) /
+                2;
+            this.productThumbnailsListElement.scrollTo({
+              top: scrollY,
+              behavior: animate ? "smooth" : "auto",
             });
           }
-        }
-      }
-    }, {
-      key: "_disableDrag",
-      value: function _disableDrag() {
-        this.flickityInstance.options.draggable = false;
-        this.flickityInstance.updateDraggable();
-      }
-    }, {
-      key: "_enableDrag",
-      value: function _enableDrag() {
-        this.flickityInstance.options.draggable = !Responsive.matchesBreakpoint('supports-hover');
-        this.flickityInstance.updateDraggable();
-      }
-      /**
-       * This method will handle the given media (for now model and video) to do the appropriate actions (such as launching
-       * a video for instance)
-       */
+        },
+        /**
+         * The difference with "change" is that this function is called after the item has transitioned
+         */
+      },
+      {
+        key: "_onGallerySlideSettled",
+        value: function _onGallerySlideSettled() {
+          this._handleMedia(this.flickityInstance.selectedElement);
 
-    }, {
-      key: "_handleMedia",
-      value: function _handleMedia(item) {
-        var isInitialLoading = this.previouslySelectedMedia === null; // First, we need to turn off the previous media (if any)
-
-        if (this.previouslySelectedMedia && this.previouslySelectedMedia !== item) {
-          switch (this.previouslySelectedMedia.getAttribute('data-media-type')) {
-            case 'video':
-            case 'external_video':
-            case 'model':
-              this.media[this.previouslySelectedMedia.getAttribute('data-media-id')].hasBeenDeselected();
-          } // If the previous media was a model, we need to adjust the "view in space" button to go back to initial value
-
-
-          if (this.previouslySelectedMedia.getAttribute('data-media-type') === 'model' && this.viewInSpaceElement) {
-            this.viewInSpaceElement.setAttribute('data-shopify-model3d-id', this.viewInSpaceElement.getAttribute('data-shopify-model3d-default-id'));
+          if (Responsive.matchesBreakpoint("lap-and-up")) {
+            var slides = this.element.querySelectorAll(
+              ".product-gallery__carousel-item:not(.is-selected)"
+            );
+            slides.forEach(function (slide) {
+              slide.classList.add("product-gallery__carousel-item--hidden");
+            });
           }
-        } // Then, we have to handle the currently selected media
+        },
+      },
+      {
+        key: "_onThumbnailClicked",
+        value: function _onThumbnailClicked(event, target) {
+          event.preventDefault();
 
+          if (this.flickityInstance) {
+            this.flickityInstance.selectCell(
+              '[data-media-id="'.concat(
+                target.getAttribute("data-media-id"),
+                '"]'
+              )
+            );
 
-        switch (item.getAttribute('data-media-type')) {
-          case 'video':
-          case 'external_video':
-          case 'model':
-            this.media[item.getAttribute('data-media-id')].hasBeenSelected(isInitialLoading);
-            this.element.querySelector('.product-gallery__carousel').classList.remove('product-gallery__carousel--zoomable');
-            break;
+            if (Responsive.matchesBreakpoint("lap-and-up")) {
+              var slides = this.element.querySelectorAll(
+                ".product-gallery__carousel-item"
+              );
+              slides.forEach(function (slide) {
+                slide.classList.remove(
+                  "product-gallery__carousel-item--hidden"
+                );
+              });
+            }
+          }
+        },
+      },
+      {
+        key: "_disableDrag",
+        value: function _disableDrag() {
+          this.flickityInstance.options.draggable = false;
+          this.flickityInstance.updateDraggable();
+        },
+      },
+      {
+        key: "_enableDrag",
+        value: function _enableDrag() {
+          this.flickityInstance.options.draggable = !Responsive.matchesBreakpoint(
+            "supports-hover"
+          );
+          this.flickityInstance.updateDraggable();
+        },
+        /**
+         * This method will handle the given media (for now model and video) to do the appropriate actions (such as launching
+         * a video for instance)
+         */
+      },
+      {
+        key: "_handleMedia",
+        value: function _handleMedia(item) {
+          var isInitialLoading = this.previouslySelectedMedia === null; // First, we need to turn off the previous media (if any)
 
-          case 'image':
-            this.element.querySelector('.product-gallery__carousel').classList.add('product-gallery__carousel--zoomable');
-            break;
-        } // If the media is a model, we need to adjust the "view in space" button
+          if (
+            this.previouslySelectedMedia &&
+            this.previouslySelectedMedia !== item
+          ) {
+            switch (
+              this.previouslySelectedMedia.getAttribute("data-media-type")
+            ) {
+              case "video":
+              case "external_video":
+              case "model":
+                this.media[
+                  this.previouslySelectedMedia.getAttribute("data-media-id")
+                ].hasBeenDeselected();
+            } // If the previous media was a model, we need to adjust the "view in space" button to go back to initial value
 
+            if (
+              this.previouslySelectedMedia.getAttribute("data-media-type") ===
+                "model" &&
+              this.viewInSpaceElement
+            ) {
+              this.viewInSpaceElement.setAttribute(
+                "data-shopify-model3d-id",
+                this.viewInSpaceElement.getAttribute(
+                  "data-shopify-model3d-default-id"
+                )
+              );
+            }
+          } // Then, we have to handle the currently selected media
 
-        if (item.getAttribute('data-media-type') === 'model' && this.viewInSpaceElement) {
-          this.viewInSpaceElement.setAttribute('data-shopify-model3d-id', item.getAttribute('data-media-id'));
-        } // We set the previously selected media to the currently new one, so that when it changes it can be properly accounted
+          switch (item.getAttribute("data-media-type")) {
+            case "video":
+            case "external_video":
+            case "model":
+              this.media[item.getAttribute("data-media-id")].hasBeenSelected(
+                isInitialLoading
+              );
+              this.element
+                .querySelector(".product-gallery__carousel")
+                .classList.remove("product-gallery__carousel--zoomable");
+              break;
 
+            case "image":
+              this.element
+                .querySelector(".product-gallery__carousel")
+                .classList.add("product-gallery__carousel--zoomable");
+              break;
+          } // If the media is a model, we need to adjust the "view in space" button
 
-        this.previouslySelectedMedia = item;
-      }
-    }]);
+          if (
+            item.getAttribute("data-media-type") === "model" &&
+            this.viewInSpaceElement
+          ) {
+            this.viewInSpaceElement.setAttribute(
+              "data-shopify-model3d-id",
+              item.getAttribute("data-media-id")
+            );
+          } // We set the previously selected media to the currently new one, so that when it changes it can be properly accounted
+
+          this.previouslySelectedMedia = item;
+        },
+      },
+    ]);
 
     return ProductGallery;
-  }();
+  })();
 
-  var QuantityPicker = /*#__PURE__*/function () {
+  var QuantityPicker = /*#__PURE__*/ (function () {
     function QuantityPicker(element) {
       _classCallCheck(this, QuantityPicker);
 
@@ -8835,454 +10204,644 @@
       this._attachListeners();
     }
 
-    _createClass(QuantityPicker, [{
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.element.addEventListener('change', this._onSelectValueChanged.bind(this));
-      }
-    }, {
-      key: "_onSelectValueChanged",
-      value: function _onSelectValueChanged(event) {
-        var value = parseInt(event.target.value); // If 10, we switch to standard input for easier selection of large quantities
+    _createClass(QuantityPicker, [
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.element.addEventListener(
+            "change",
+            this._onSelectValueChanged.bind(this)
+          );
+        },
+      },
+      {
+        key: "_onSelectValueChanged",
+        value: function _onSelectValueChanged(event) {
+          var value = parseInt(event.target.value); // If 10, we switch to standard input for easier selection of large quantities
 
-        if (value === 10) {
-          var selectWrapper = event.target.closest('.select-wrapper'),
-              inputElement = document.createElement('input');
-          inputElement.id = event.target.id;
-          inputElement.className = 'product-form__quantity form__field form__field--small form__field--text';
-          inputElement.pattern = '[0-9]*';
-          inputElement.name = 'quantity';
-          inputElement.value = '10';
-          selectWrapper.parentNode.replaceChild(inputElement, selectWrapper);
-          inputElement.focus(); // We need to start listening to the event now
+          if (value === 10) {
+            var selectWrapper = event.target.closest(".select-wrapper"),
+              inputElement = document.createElement("input");
+            inputElement.id = event.target.id;
+            inputElement.className =
+              "product-form__quantity form__field form__field--small form__field--text";
+            inputElement.pattern = "[0-9]*";
+            inputElement.name = "quantity";
+            inputElement.value = "10";
+            selectWrapper.parentNode.replaceChild(inputElement, selectWrapper);
+            inputElement.focus(); // We need to start listening to the event now
 
-          inputElement.addEventListener('keyup', this._onInputValueChanged.bind(this));
-          inputElement.addEventListener('focusout', this._onInputFocusOut.bind(this));
-        }
-      }
-    }, {
-      key: "_onInputValueChanged",
-      value: function _onInputValueChanged(event) {
-        var value = event.target.value;
+            inputElement.addEventListener(
+              "keyup",
+              this._onInputValueChanged.bind(this)
+            );
+            inputElement.addEventListener(
+              "focusout",
+              this._onInputFocusOut.bind(this)
+            );
+          }
+        },
+      },
+      {
+        key: "_onInputValueChanged",
+        value: function _onInputValueChanged(event) {
+          var value = event.target.value;
 
-        if (value !== '' && isNaN(value)) {
-          event.target.value = Math.max(1, parseInt(value) || 1);
-        }
-      }
-    }, {
-      key: "_onInputFocusOut",
-      value: function _onInputFocusOut(event) {
-        event.target.value = Math.max(1, parseInt(event.target.value) || 1);
-      }
-    }]);
+          if (value !== "" && isNaN(value)) {
+            event.target.value = Math.max(1, parseInt(value) || 1);
+          }
+        },
+      },
+      {
+        key: "_onInputFocusOut",
+        value: function _onInputFocusOut(event) {
+          event.target.value = Math.max(1, parseInt(event.target.value) || 1);
+        },
+      },
+    ]);
 
     return QuantityPicker;
-  }();
+  })();
 
-  var ShippingEstimator = /*#__PURE__*/function () {
+  var ShippingEstimator = /*#__PURE__*/ (function () {
     function ShippingEstimator(element, options) {
       _classCallCheck(this, ShippingEstimator);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
       this.options = options;
-      this.countrySelector = new CountrySelector(this.element.querySelector('[name="country"]'), this.element.querySelector('[name="province"]'));
+      this.countrySelector = new CountrySelector(
+        this.element.querySelector('[name="country"]'),
+        this.element.querySelector('[name="province"]')
+      );
 
       this._attachListeners();
     }
 
-    _createClass(ShippingEstimator, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off('click');
-        this.countrySelector.destroy();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('click', '[data-action="estimate-shipping"]', this._fetchRates.bind(this));
-      }
-    }, {
-      key: "_fetchRates",
-      value: function _fetchRates() {
-        document.dispatchEvent(new CustomEvent('theme:loading:start'));
+    _createClass(ShippingEstimator, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off("click");
+          this.countrySelector.destroy();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "click",
+            '[data-action="estimate-shipping"]',
+            this._fetchRates.bind(this)
+          );
+        },
+      },
+      {
+        key: "_fetchRates",
+        value: function _fetchRates() {
+          document.dispatchEvent(new CustomEvent("theme:loading:start"));
 
-        if (this.options['singleProduct']) {
-          this._fetchRatesForProduct();
-        } else {
-          this._fetchRatesForCart();
-        }
-      }
-    }, {
-      key: "_fetchRatesForCart",
-      value: function _fetchRatesForCart() {
-        var _this = this;
+          if (this.options["singleProduct"]) {
+            this._fetchRatesForProduct();
+          } else {
+            this._fetchRatesForCart();
+          }
+        },
+      },
+      {
+        key: "_fetchRatesForCart",
+        value: function _fetchRatesForCart() {
+          var _this = this;
 
-        var country = this.element.querySelector('[name="country"]').value,
+          var country = this.element.querySelector('[name="country"]').value,
             province = this.element.querySelector('[name="province"]').value,
             zip = this.element.querySelector('[name="zip"]').value;
-        fetch("".concat(window.routes.cartUrl, "/shipping_rates.json?shipping_address[zip]=").concat(zip, "&shipping_address[country]=").concat(country, "&shipping_address[province]=").concat(province), {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          document.dispatchEvent(new CustomEvent('theme:loading:end'));
-          response.json().then(function (result) {
-            _this._formatResults(response.ok, result);
-          });
-        });
-      }
-      /**
-       * Technique is coming from this website: https://freakdesign.com.au/blogs/news/get-shipping-estimates-on-a-product-page
-       */
-
-    }, {
-      key: "_fetchRatesForProduct",
-      value: function _fetchRatesForProduct() {
-        var _this2 = this;
-
-        // grab the current cookie for the cart and we store it
-        var cartCookie = this._getCookie('cart'),
-            tempCookieValue = 'temp-cart-cookie___' + Date.now() + parseInt(Math.random() * 1000),
-            fakeCookieValue = 'fake-cart-cookie___' + Date.now() + parseInt(Math.random() * 1000); // if not found, make a new temp cookie
-
-
-        if (!cartCookie) {
-          this._updateCartCookie(tempCookieValue);
-
-          cartCookie = this._getCookie('cart');
-        } // if found but has a weird length, bail
-
-
-        if (cartCookie.length < 32) {
-          return;
-        } // change the cookie value to a new 32 character value
-
-
-        this._updateCartCookie(fakeCookieValue); // add the product to our fake cart
-
-
-        var formElement = document.querySelector('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
-          },
-          method: 'POST'
-        }).then(function (response) {
-          response.json().then(function () {
-            var country = _this2.element.querySelector('[name="country"]').value,
-                province = _this2.element.querySelector('[name="province"]').value,
-                zip = _this2.element.querySelector('[name="zip"]').value;
-
-            fetch("".concat(window.routes.cartUrl, "/shipping_rates.json?shipping_address[zip]=").concat(zip, "&shipping_address[country]=").concat(country, "&shipping_address[province]=").concat(province), {
-              credentials: 'same-origin',
-              method: 'GET'
-            }).then(function (response) {
-              document.dispatchEvent(new CustomEvent('theme:loading:end'));
-              response.json().then(function (result) {
-                _this2._formatResults(response.ok, result);
-              });
-
-              _this2._updateCartCookie(cartCookie); // We can restore the cookie
-
-            })["catch"](function () {
-              _this2._updateCartCookie(cartCookie);
-            });
-          })["catch"](function () {
-            // We have error so we have to reset cookie
-            _this2._updateCartCookie(cartCookie);
-
-            document.dispatchEvent(new CustomEvent('theme:loading:end'));
-          });
-        });
-      }
-    }, {
-      key: "_formatResults",
-      value: function _formatResults(isOk, results) {
-        var resultsElement = this.element.querySelector('.shipping-estimator__results');
-        resultsElement.innerHTML = '';
-
-        if (isOk) {
-          var shippingRates = results['shipping_rates'];
-
-          if (shippingRates.length === 0) {
-            resultsElement.innerHTML = "<p>".concat(window.languages.shippingEstimatorNoResults, "</p>");
-          } else {
-            if (shippingRates.length === 1) {
-              resultsElement.innerHTML = "<p>".concat(window.languages.shippingEstimatorOneResult, "</p>");
-            } else {
-              resultsElement.innerHTML = "<p>".concat(window.languages.shippingEstimatorMultipleResults.replace('{{count}}', shippingRates.length), "</p>");
+          fetch(
+            ""
+              .concat(
+                window.routes.cartUrl,
+                "/shipping_rates.json?shipping_address[zip]="
+              )
+              .concat(zip, "&shipping_address[country]=")
+              .concat(country, "&shipping_address[province]=")
+              .concat(province),
+            {
+              credentials: "same-origin",
+              method: "GET",
             }
-
-            var listRatesHtml = '';
-            shippingRates.forEach(function (item) {
-              listRatesHtml += "<li>".concat(item['name'], ": ").concat(Currency.formatMoney(item['price'], window.theme.moneyFormat), "</li>");
+          ).then(function (response) {
+            document.dispatchEvent(new CustomEvent("theme:loading:end"));
+            response.json().then(function (result) {
+              _this._formatResults(response.ok, result);
             });
-            resultsElement.innerHTML += "<ul>".concat(listRatesHtml, "</ul>");
-          }
-        } else {
-          resultsElement.innerHTML = "<p>".concat(window.languages.shippingEstimatorErrors, "</p>");
-          var errorHtml = '';
-          Object.keys(results).forEach(function (key) {
-            errorHtml += "<li class=\"alert__list-item\">".concat(key, " ").concat(results[key], "</li>");
           });
-          resultsElement.innerHTML += "<ul>".concat(errorHtml, "</ul>");
-        }
+        },
+        /**
+         * Technique is coming from this website: https://freakdesign.com.au/blogs/news/get-shipping-estimates-on-a-product-page
+         */
+      },
+      {
+        key: "_fetchRatesForProduct",
+        value: function _fetchRatesForProduct() {
+          var _this2 = this;
 
-        resultsElement.style.display = 'block';
-      }
-    }, {
-      key: "_getCookie",
-      value: function _getCookie(name) {
-        var value = "; ".concat(document.cookie),
-            parts = value.split('; ' + name + '=');
+          // grab the current cookie for the cart and we store it
+          var cartCookie = this._getCookie("cart"),
+            tempCookieValue =
+              "temp-cart-cookie___" +
+              Date.now() +
+              parseInt(Math.random() * 1000),
+            fakeCookieValue =
+              "fake-cart-cookie___" +
+              Date.now() +
+              parseInt(Math.random() * 1000); // if not found, make a new temp cookie
 
-        if (parts.length === 2) {
-          return parts.pop().split(';').shift();
-        }
-      }
-    }, {
-      key: "_updateCartCookie",
-      value: function _updateCartCookie(value) {
-        var date = new Date();
-        date.setTime(date.getTime() + 14 * 86400000);
-        document.cookie = "cart=".concat(value, "; expires=").concat(date.toUTCString(), "; path=/");
-      }
-    }]);
+          if (!cartCookie) {
+            this._updateCartCookie(tempCookieValue);
+
+            cartCookie = this._getCookie("cart");
+          } // if found but has a weird length, bail
+
+          if (cartCookie.length < 32) {
+            return;
+          } // change the cookie value to a new 32 character value
+
+          this._updateCartCookie(fakeCookieValue); // add the product to our fake cart
+
+          var formElement = document.querySelector('form[action*="/cart/add"]');
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+            method: "POST",
+          }).then(function (response) {
+            response
+              .json()
+              .then(function () {
+                var country = _this2.element.querySelector('[name="country"]')
+                    .value,
+                  province = _this2.element.querySelector('[name="province"]')
+                    .value,
+                  zip = _this2.element.querySelector('[name="zip"]').value;
+
+                fetch(
+                  ""
+                    .concat(
+                      window.routes.cartUrl,
+                      "/shipping_rates.json?shipping_address[zip]="
+                    )
+                    .concat(zip, "&shipping_address[country]=")
+                    .concat(country, "&shipping_address[province]=")
+                    .concat(province),
+                  {
+                    credentials: "same-origin",
+                    method: "GET",
+                  }
+                )
+                  .then(function (response) {
+                    document.dispatchEvent(
+                      new CustomEvent("theme:loading:end")
+                    );
+                    response.json().then(function (result) {
+                      _this2._formatResults(response.ok, result);
+                    });
+
+                    _this2._updateCartCookie(cartCookie); // We can restore the cookie
+                  })
+                  ["catch"](function () {
+                    _this2._updateCartCookie(cartCookie);
+                  });
+              })
+              ["catch"](function () {
+                // We have error so we have to reset cookie
+                _this2._updateCartCookie(cartCookie);
+
+                document.dispatchEvent(new CustomEvent("theme:loading:end"));
+              });
+          });
+        },
+      },
+      {
+        key: "_formatResults",
+        value: function _formatResults(isOk, results) {
+          var resultsElement = this.element.querySelector(
+            ".shipping-estimator__results"
+          );
+          resultsElement.innerHTML = "";
+
+          if (isOk) {
+            var shippingRates = results["shipping_rates"];
+
+            if (shippingRates.length === 0) {
+              resultsElement.innerHTML = "<p>".concat(
+                window.languages.shippingEstimatorNoResults,
+                "</p>"
+              );
+            } else {
+              if (shippingRates.length === 1) {
+                resultsElement.innerHTML = "<p>".concat(
+                  window.languages.shippingEstimatorOneResult,
+                  "</p>"
+                );
+              } else {
+                resultsElement.innerHTML = "<p>".concat(
+                  window.languages.shippingEstimatorMultipleResults.replace(
+                    "{{count}}",
+                    shippingRates.length
+                  ),
+                  "</p>"
+                );
+              }
+
+              var listRatesHtml = "";
+              shippingRates.forEach(function (item) {
+                listRatesHtml += "<li>"
+                  .concat(item["name"], ": ")
+                  .concat(
+                    Currency.formatMoney(
+                      item["price"],
+                      window.theme.moneyFormat
+                    ),
+                    "</li>"
+                  );
+              });
+              resultsElement.innerHTML += "<ul>".concat(listRatesHtml, "</ul>");
+            }
+          } else {
+            resultsElement.innerHTML = "<p>".concat(
+              window.languages.shippingEstimatorErrors,
+              "</p>"
+            );
+            var errorHtml = "";
+            Object.keys(results).forEach(function (key) {
+              errorHtml += '<li class="alert__list-item">'
+                .concat(key, " ")
+                .concat(results[key], "</li>");
+            });
+            resultsElement.innerHTML += "<ul>".concat(errorHtml, "</ul>");
+          }
+
+          resultsElement.style.display = "block";
+        },
+      },
+      {
+        key: "_getCookie",
+        value: function _getCookie(name) {
+          var value = "; ".concat(document.cookie),
+            parts = value.split("; " + name + "=");
+
+          if (parts.length === 2) {
+            return parts.pop().split(";").shift();
+          }
+        },
+      },
+      {
+        key: "_updateCartCookie",
+        value: function _updateCartCookie(value) {
+          var date = new Date();
+          date.setTime(date.getTime() + 14 * 86400000);
+          document.cookie = "cart="
+            .concat(value, "; expires=")
+            .concat(date.toUTCString(), "; path=/");
+        },
+      },
+    ]);
 
     return ShippingEstimator;
-  }();
+  })();
 
   /**
    * The given ID must be the value picker itself (the element that contains the class "value-picker", not the button that toggles it
    */
 
-  var ValuePicker = /*#__PURE__*/function () {
+  var ValuePicker = /*#__PURE__*/ (function () {
     function ValuePicker(id) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var options =
+        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       _classCallCheck(this, ValuePicker);
 
       this.id = id;
       this.delegateRoot = new Delegate(document.documentElement);
       this.isOpen = false;
-      this.togglerElement = document.querySelector("[data-action=\"open-value-picker\"][aria-controls=\"".concat(this.id, "\"]"));
+      this.togglerElement = document.querySelector(
+        '[data-action="open-value-picker"][aria-controls="'.concat(
+          this.id,
+          '"]'
+        )
+      );
 
-      this.onSelect = options['onValueSelect'] || function () {};
+      this.onSelect = options["onValueSelect"] || function () {};
 
       this._attachListeners();
     }
 
-    _createClass(ValuePicker, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateRoot.off();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateRoot.on('click', "[data-action=\"open-value-picker\"][aria-controls=\"".concat(this.id, "\"]"), this._toggle.bind(this));
-        this.delegateRoot.on('click', "[data-action=\"close-value-picker\"][aria-controls=\"".concat(this.id, "\"]"), this._toggle.bind(this));
-        this.delegateRoot.on('click', "#".concat(this.id, " [data-action=\"select-value\"]"), this._selectValue.bind(this));
-        this.delegateRoot.on('click', this._detectOutsideClick.bind(this), true);
-        this.delegateRoot.on('focusout', "#".concat(this.id), this._onFocusOut.bind(this));
-      }
-    }, {
-      key: "_toggle",
-      value: function _toggle(event) {
-        if (this.isOpen) {
-          this._close(event);
-        } else {
-          this._open(event);
-        }
-      }
-    }, {
-      key: "_open",
-      value: function _open() {
-        document.querySelector("[data-action=\"open-value-picker\"][aria-controls=\"".concat(this.id, "\"]")).setAttribute('aria-expanded', 'true');
-        document.getElementById(this.id).setAttribute('aria-hidden', 'false'); // This is quite ugly, but in order to avoid an issue with the header that has a higher z-index, we have to temporarily reduce
-        // it while we have the element open
+    _createClass(ValuePicker, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateRoot.off();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateRoot.on(
+            "click",
+            '[data-action="open-value-picker"][aria-controls="'.concat(
+              this.id,
+              '"]'
+            ),
+            this._toggle.bind(this)
+          );
+          this.delegateRoot.on(
+            "click",
+            '[data-action="close-value-picker"][aria-controls="'.concat(
+              this.id,
+              '"]'
+            ),
+            this._toggle.bind(this)
+          );
+          this.delegateRoot.on(
+            "click",
+            "#".concat(this.id, ' [data-action="select-value"]'),
+            this._selectValue.bind(this)
+          );
+          this.delegateRoot.on(
+            "click",
+            this._detectOutsideClick.bind(this),
+            true
+          );
+          this.delegateRoot.on(
+            "focusout",
+            "#".concat(this.id),
+            this._onFocusOut.bind(this)
+          );
+        },
+      },
+      {
+        key: "_toggle",
+        value: function _toggle(event) {
+          if (this.isOpen) {
+            this._close(event);
+          } else {
+            this._open(event);
+          }
+        },
+      },
+      {
+        key: "_open",
+        value: function _open() {
+          document
+            .querySelector(
+              '[data-action="open-value-picker"][aria-controls="'.concat(
+                this.id,
+                '"]'
+              )
+            )
+            .setAttribute("aria-expanded", "true");
+          document.getElementById(this.id).setAttribute("aria-hidden", "false"); // This is quite ugly, but in order to avoid an issue with the header that has a higher z-index, we have to temporarily reduce
+          // it while we have the element open
 
-        if (Responsive.matchesBreakpoint('phone')) {
-          var headerElement = document.querySelector('.shopify-section__header');
-          headerElement.style.zIndex = '3';
-        }
+          if (Responsive.matchesBreakpoint("phone")) {
+            var headerElement = document.querySelector(
+              ".shopify-section__header"
+            );
+            headerElement.style.zIndex = "3";
+          }
 
-        this.isOpen = true;
-        document.body.classList.add('no-mobile-scroll');
-      }
-    }, {
-      key: "_close",
-      value: function _close() {
-        document.querySelector("[data-action=\"open-value-picker\"][aria-controls=\"".concat(this.id, "\"]")).setAttribute('aria-expanded', 'false');
-        document.getElementById(this.id).setAttribute('aria-hidden', 'true'); // This is quite ugly, but in order to avoid an issue with the header that has a higher z-index, we have to temporarily reduce
-        // it while we have the element open
+          this.isOpen = true;
+          document.body.classList.add("no-mobile-scroll");
+        },
+      },
+      {
+        key: "_close",
+        value: function _close() {
+          document
+            .querySelector(
+              '[data-action="open-value-picker"][aria-controls="'.concat(
+                this.id,
+                '"]'
+              )
+            )
+            .setAttribute("aria-expanded", "false");
+          document.getElementById(this.id).setAttribute("aria-hidden", "true"); // This is quite ugly, but in order to avoid an issue with the header that has a higher z-index, we have to temporarily reduce
+          // it while we have the element open
 
-        var headerElement = document.querySelector('.shopify-section__header');
-        headerElement.style.zIndex = '';
-        this.isOpen = false;
-        document.body.classList.remove('no-mobile-scroll');
-      }
-    }, {
-      key: "_selectValue",
-      value: function _selectValue(event, target) {
-        this.onSelect(target.getAttribute('data-value'));
+          var headerElement = document.querySelector(
+            ".shopify-section__header"
+          );
+          headerElement.style.zIndex = "";
+          this.isOpen = false;
+          document.body.classList.remove("no-mobile-scroll");
+        },
+      },
+      {
+        key: "_selectValue",
+        value: function _selectValue(event, target) {
+          this.onSelect(target.getAttribute("data-value"));
 
-        this._close();
-      }
-    }, {
-      key: "_onFocusOut",
-      value: function _onFocusOut(event) {
-        var container = document.getElementById(this.id); // If the element that get the new focus is not contains within the value picker, we close it
-
-        if (!container.contains(event.relatedTarget)) {
           this._close();
-        }
-      }
-    }, {
-      key: "_detectOutsideClick",
-      value: function _detectOutsideClick(event) {
-        // If already closed, nothing to do
-        if (!this.isOpen || this.togglerElement === event.target || this.togglerElement.contains(event.target)) {
-          return;
-        }
+        },
+      },
+      {
+        key: "_onFocusOut",
+        value: function _onFocusOut(event) {
+          var container = document.getElementById(this.id); // If the element that get the new focus is not contains within the value picker, we close it
 
-        if (!event.target.closest('.value-picker__inner') && this.isOpen) {
-          this._close(event);
-        }
-      }
-    }]);
+          if (!container.contains(event.relatedTarget)) {
+            this._close();
+          }
+        },
+      },
+      {
+        key: "_detectOutsideClick",
+        value: function _detectOutsideClick(event) {
+          // If already closed, nothing to do
+          if (
+            !this.isOpen ||
+            this.togglerElement === event.target ||
+            this.togglerElement.contains(event.target)
+          ) {
+            return;
+          }
+
+          if (!event.target.closest(".value-picker__inner") && this.isOpen) {
+            this._close(event);
+          }
+        },
+      },
+    ]);
 
     return ValuePicker;
-  }();
+  })();
 
-  var AccountSection = /*#__PURE__*/function () {
+  var AccountSection = /*#__PURE__*/ (function () {
     function AccountSection(element) {
       _classCallCheck(this, AccountSection);
 
       this.element = element;
       this.domDelegate = new Delegate(this.element);
-      this.element.querySelectorAll('[action*="/account/addresses"]').forEach(function (addressForm) {
-        new CountrySelector(addressForm.querySelector('[name="address[country]"]'), addressForm.querySelector('[name="address[province]"]'));
-      });
-      this.pageSelector = new ValuePicker('account-selector');
+      this.element
+        .querySelectorAll('[action*="/account/addresses"]')
+        .forEach(function (addressForm) {
+          new CountrySelector(
+            addressForm.querySelector('[name="address[country]"]'),
+            addressForm.querySelector('[name="address[province]"]')
+          );
+        });
+      this.pageSelector = new ValuePicker("account-selector");
     }
 
-    _createClass(AccountSection, [{
-      key: "_onUnload",
-      value: function _onUnload() {
-        this.pageSelector.destroy();
-      }
-    }]);
+    _createClass(AccountSection, [
+      {
+        key: "_onUnload",
+        value: function _onUnload() {
+          this.pageSelector.destroy();
+        },
+      },
+    ]);
 
     return AccountSection;
-  }();
+  })();
 
-  var AnnouncementBarSection = /*#__PURE__*/function () {
+  var AnnouncementBarSection = /*#__PURE__*/ (function () {
     function AnnouncementBarSection(element) {
       _classCallCheck(this, AnnouncementBarSection);
 
       this.element = element;
       this.domDelegate = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
       this.isOpen = false; // We set the new width of the announcement bar button if any
 
-      if (this.options['showNewsletter']) {
-        document.documentElement.style.setProperty('--announcement-bar-button-width', this.element.querySelector('.announcement-bar__button').clientWidth + 'px');
+      if (this.options["showNewsletter"]) {
+        document.documentElement.style.setProperty(
+          "--announcement-bar-button-width",
+          this.element.querySelector(".announcement-bar__button").clientWidth +
+            "px"
+        );
       } else {
-        document.documentElement.style.removeProperty('--announcement-bar-button-width');
+        document.documentElement.style.removeProperty(
+          "--announcement-bar-button-width"
+        );
       }
 
       this._attachListeners();
     }
 
-    _createClass(AnnouncementBarSection, [{
-      key: "onSelect",
-      value: function onSelect() {
-        if (this.options['showNewsletter'] && !this.isOpen) {
-          this._toggleNewsletter();
-        }
-      }
-    }, {
-      key: "onDeselect",
-      value: function onDeselect() {
-        if (this.options['showNewsletter'] && this.isOpen) {
-          this._toggleNewsletter();
-        }
-      }
-    }, {
-      key: "onUnload",
-      value: function onUnload() {
-        this.domDelegate.off();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.domDelegate.on('click', '[data-action="toggle-newsletter"]', this._toggleNewsletter.bind(this));
-        this.domDelegate.on('keyup', this._handleKey.bind(this));
-      }
-    }, {
-      key: "_toggleNewsletter",
-      value: function _toggleNewsletter() {
-        var togglerElement = this.element.querySelector('.announcement-bar__button'),
-            newsletterElement = this.element.querySelector('.announcement-bar__newsletter');
+    _createClass(AnnouncementBarSection, [
+      {
+        key: "onSelect",
+        value: function onSelect() {
+          if (this.options["showNewsletter"] && !this.isOpen) {
+            this._toggleNewsletter();
+          }
+        },
+      },
+      {
+        key: "onDeselect",
+        value: function onDeselect() {
+          if (this.options["showNewsletter"] && this.isOpen) {
+            this._toggleNewsletter();
+          }
+        },
+      },
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.domDelegate.off();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.domDelegate.on(
+            "click",
+            '[data-action="toggle-newsletter"]',
+            this._toggleNewsletter.bind(this)
+          );
+          this.domDelegate.on("keyup", this._handleKey.bind(this));
+        },
+      },
+      {
+        key: "_toggleNewsletter",
+        value: function _toggleNewsletter() {
+          var togglerElement = this.element.querySelector(
+              ".announcement-bar__button"
+            ),
+            newsletterElement = this.element.querySelector(
+              ".announcement-bar__newsletter"
+            );
 
-        if (togglerElement.getAttribute('aria-expanded') === 'false') {
-          togglerElement.setAttribute('aria-expanded', 'true');
-          newsletterElement.setAttribute('aria-hidden', 'false');
-          Animation.slideDown(newsletterElement, function () {
-            Accessibility.trapFocus(newsletterElement, 'announcement-bar');
-          });
-        } else {
-          togglerElement.setAttribute('aria-expanded', 'false');
-          newsletterElement.setAttribute('aria-hidden', 'true');
-          Animation.slideUp(newsletterElement);
-          Accessibility.removeTrapFocus(newsletterElement, 'announcement-bar');
-        }
+          if (togglerElement.getAttribute("aria-expanded") === "false") {
+            togglerElement.setAttribute("aria-expanded", "true");
+            newsletterElement.setAttribute("aria-hidden", "false");
+            Animation.slideDown(newsletterElement, function () {
+              Accessibility.trapFocus(newsletterElement, "announcement-bar");
+            });
+          } else {
+            togglerElement.setAttribute("aria-expanded", "false");
+            newsletterElement.setAttribute("aria-hidden", "true");
+            Animation.slideUp(newsletterElement);
+            Accessibility.removeTrapFocus(
+              newsletterElement,
+              "announcement-bar"
+            );
+          }
 
-        this.isOpen = !this.isOpen;
-      }
-    }, {
-      key: "_handleKey",
-      value: function _handleKey(event) {
-        if (event.keyCode === 27 && this.isOpen) {
-          this._toggleNewsletter();
-        }
-      }
-    }]);
+          this.isOpen = !this.isOpen;
+        },
+      },
+      {
+        key: "_handleKey",
+        value: function _handleKey(event) {
+          if (event.keyCode === 27 && this.isOpen) {
+            this._toggleNewsletter();
+          }
+        },
+      },
+    ]);
 
     return AnnouncementBarSection;
-  }();
+  })();
 
-  var BlogSection = /*#__PURE__*/function () {
+  var BlogSection = /*#__PURE__*/ (function () {
     function BlogSection(element) {
       _classCallCheck(this, BlogSection);
 
       this.element = element;
-      this.blogTagSelector = new ValuePicker('blog-tag-selector');
+      this.blogTagSelector = new ValuePicker("blog-tag-selector");
 
       if (Shopify.designMode) {
-        var elementToAdd = this.element.querySelector('.page__header');
+        var elementToAdd = this.element.querySelector(".page__header");
 
         if (elementToAdd) {
-          document.querySelector('.blog-container').previousElementSibling.remove();
-          document.querySelector('.blog-container').insertAdjacentElement('beforebegin', elementToAdd);
+          document
+            .querySelector(".blog-container")
+            .previousElementSibling.remove();
+          document
+            .querySelector(".blog-container")
+            .insertAdjacentElement("beforebegin", elementToAdd);
         }
       }
     }
 
-    _createClass(BlogSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.blogTagSelector.destroy();
-      }
-    }]);
+    _createClass(BlogSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.blogTagSelector.destroy();
+        },
+      },
+    ]);
 
     return BlogSection;
-  }();
+  })();
 
   var BlogPostSection = function BlogPostSection(element) {
     _classCallCheck(this, BlogPostSection);
@@ -9290,16 +10849,20 @@
     this.element = element;
 
     if (Shopify.designMode) {
-      var elementToAdd = this.element.querySelector('.page__header');
+      var elementToAdd = this.element.querySelector(".page__header");
 
       if (elementToAdd) {
-        document.querySelector('.blog-container').previousElementSibling.remove();
-        document.querySelector('.blog-container').insertAdjacentElement('beforebegin', elementToAdd);
+        document
+          .querySelector(".blog-container")
+          .previousElementSibling.remove();
+        document
+          .querySelector(".blog-container")
+          .insertAdjacentElement("beforebegin", elementToAdd);
       }
     }
   };
 
-  var BlogSidebarSection = /*#__PURE__*/function () {
+  var BlogSidebarSection = /*#__PURE__*/ (function () {
     function BlogSidebarSection(element) {
       _classCallCheck(this, BlogSidebarSection);
 
@@ -9310,7 +10873,7 @@
         window.SPR.loadBadges();
       }
 
-      if (window.theme.pageType === 'blog') {
+      if (window.theme.pageType === "blog") {
         this._fixItemsPerRow();
       }
     }
@@ -9319,36 +10882,49 @@
      * Because Shopify sections are independent, I didn't find a better approach than changing it in JavaScript
      */
 
+    _createClass(BlogSidebarSection, [
+      {
+        key: "_fixItemsPerRow",
+        value: function _fixItemsPerRow() {
+          var blocks = this.element.querySelectorAll(".blog-sidebar__item");
 
-    _createClass(BlogSidebarSection, [{
-      key: "_fixItemsPerRow",
-      value: function _fixItemsPerRow() {
-        var blocks = this.element.querySelectorAll('.blog-sidebar__item');
-
-        if (blocks.length === 0) {
-          document.querySelector('.blog-container').classList.add('blog-container--without-sidebar');
-          document.querySelectorAll('.shopify-section__blog-posts .block-list__item').forEach(function (item) {
-            if (item.classList.contains('1/2--lap-and-up')) {
-              item.classList.remove('1/2--lap-and-up');
-              item.classList.add('1/3--lap-and-up');
-            }
-          });
-        } else {
-          document.querySelector('.blog-container').classList.remove('blog-container--without-sidebar');
-          document.querySelectorAll('.shopify-section__blog-posts .block-list__item').forEach(function (item) {
-            if (item.classList.contains('1/3--lap-and-up')) {
-              item.classList.remove('1/3--lap-and-up');
-              item.classList.add('1/2--lap-and-up');
-            }
-          });
-        }
-      }
-    }]);
+          if (blocks.length === 0) {
+            document
+              .querySelector(".blog-container")
+              .classList.add("blog-container--without-sidebar");
+            document
+              .querySelectorAll(
+                ".shopify-section__blog-posts .block-list__item"
+              )
+              .forEach(function (item) {
+                if (item.classList.contains("1/2--lap-and-up")) {
+                  item.classList.remove("1/2--lap-and-up");
+                  item.classList.add("1/3--lap-and-up");
+                }
+              });
+          } else {
+            document
+              .querySelector(".blog-container")
+              .classList.remove("blog-container--without-sidebar");
+            document
+              .querySelectorAll(
+                ".shopify-section__blog-posts .block-list__item"
+              )
+              .forEach(function (item) {
+                if (item.classList.contains("1/3--lap-and-up")) {
+                  item.classList.remove("1/3--lap-and-up");
+                  item.classList.add("1/2--lap-and-up");
+                }
+              });
+          }
+        },
+      },
+    ]);
 
     return BlogSidebarSection;
-  }();
+  })();
 
-  var ProductSection = /*#__PURE__*/function () {
+  var ProductSection = /*#__PURE__*/ (function () {
     function ProductSection(element) {
       var _this = this;
 
@@ -9356,52 +10932,81 @@
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
       this.productGallery = new ProductGallery(this.element, this.options);
 
       this._initShopifyReviews(); // If loaded by quick view, we need to do various initialization stuff
 
-
-      if (this.options['isQuickView'] && this.options['showPaymentButton'] && window.Shopify.PaymentButton) {
+      if (
+        this.options["isQuickView"] &&
+        this.options["showPaymentButton"] &&
+        window.Shopify.PaymentButton
+      ) {
         Shopify.PaymentButton.init();
       }
 
       this.productVariants = new ProductVariants(this.element, this.options);
 
-      if (this.options['showShippingEstimator']) {
-        this.shippingEstimator = new ShippingEstimator(this.element.querySelector('.shipping-estimator'), {
-          singleProduct: true
-        });
+      if (this.options["showShippingEstimator"]) {
+        this.shippingEstimator = new ShippingEstimator(
+          this.element.querySelector(".shipping-estimator"),
+          {
+            singleProduct: true,
+          }
+        );
       }
 
-      if (this.options['showQuantitySelector']) {
-        var quantityPickerElement = this.element.querySelector('select[name="quantity"]');
+      if (this.options["showQuantitySelector"]) {
+        var quantityPickerElement = this.element.querySelector(
+          'select[name="quantity"]'
+        );
 
         if (quantityPickerElement) {
           this.quantityPicker = new QuantityPicker(quantityPickerElement);
         }
       }
 
-      var productInfoElement = this.element.querySelector('.product-block-list__item--info .card');
+      var productInfoElement = this.element.querySelector(
+        ".product-block-list__item--info .card"
+      );
 
       if (productInfoElement) {
-        this.element.querySelector('.product-block-list__wrapper').style.minHeight = "".concat(productInfoElement.clientHeight, "px");
+        this.element.querySelector(
+          ".product-block-list__wrapper"
+        ).style.minHeight = "".concat(productInfoElement.clientHeight, "px");
 
         if (window.ResizeObserver) {
           this.productInfoResizeObserver = new ResizeObserver(function (event) {
             if (event[0].contentBoxSize) {
-              _this.element.querySelector('.product-block-list__wrapper').style.minHeight = "".concat(event[0].contentBoxSize.blockSize, "px");
+              _this.element.querySelector(
+                ".product-block-list__wrapper"
+              ).style.minHeight = "".concat(
+                event[0].contentBoxSize.blockSize,
+                "px"
+              );
             } else {
-              _this.element.querySelector('.product-block-list__wrapper').style.minHeight = "".concat(event[0].contentRect.height, "px");
+              _this.element.querySelector(
+                ".product-block-list__wrapper"
+              ).style.minHeight = "".concat(event[0].contentRect.height, "px");
             }
           });
           this.productInfoResizeObserver.observe(productInfoElement);
         }
 
-        if (this.options['infoOverflowScroll']) {
+        if (this.options["infoOverflowScroll"]) {
           this.infoOverflowScroller = new OverflowScroller(productInfoElement, {
-            offsetTop: document.documentElement.style.getPropertyValue('--header-is-sticky') * parseInt(document.documentElement.style.getPropertyValue('--header-height') + 30),
-            offsetBottom: 30
+            offsetTop:
+              document.documentElement.style.getPropertyValue(
+                "--header-is-sticky"
+              ) *
+              parseInt(
+                document.documentElement.style.getPropertyValue(
+                  "--header-height"
+                ) + 30
+              ),
+            offsetBottom: 30,
           });
         }
       }
@@ -9409,91 +11014,109 @@
       this._attachListeners();
     }
 
-    _createClass(ProductSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.productVariants.destroy();
-        this.productGallery.destroy();
+    _createClass(ProductSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.productVariants.destroy();
+          this.productGallery.destroy();
 
-        if (this.options['showShippingEstimator']) {
-          this.shippingEstimator.destroy();
-        }
-
-        if (this.options['infoOverflowScroll']) {
-          this.infoOverflowScroller.destroy();
-        }
-
-        if (window.ResizeObserver && this.productInfoResizeObserver) {
-          this.productInfoResizeObserver.disconnect();
-        }
-
-        this.delegateElement.off();
-        this.element.removeEventListener('variant:changed', this._onVariantChangedListener);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._onVariantChangedListener = this._onVariantChanged.bind(this);
-        this.element.addEventListener('variant:changed', this._onVariantChangedListener);
-      }
-      /**
-       * Shopify Reviews app is quite funky and hard to extend... excuse this code
-       */
-
-    }, {
-      key: "_initShopifyReviews",
-      value: function _initShopifyReviews() {
-        var _this2 = this;
-
-        if (Shopify.designMode && window.SPR) {
-          window.SPR.initDomEls();
-          window.SPR.loadBadges();
-          window.SPR.loadProducts();
-        }
-
-        window.SPRCallbacks = {}; // This allows us to add some class to adjust the styling
-
-        window.SPRCallbacks.onFormSuccess = function () {
-          _this2.element.querySelector('#shopify-product-reviews .spr-form').classList.add('spr-form-submitted');
-        }; // If loaded by quick view, we need to do various initialization stuff
-
-
-        if (this.options['isQuickView'] && window.SPR) {
-          window.SPR.initDomEls();
-          window.SPR.loadBadges();
-
-          if (this.options['showPaymentButton'] && window.Shopify.PaymentButton) {
-            Shopify.PaymentButton.init();
+          if (this.options["showShippingEstimator"]) {
+            this.shippingEstimator.destroy();
           }
-        }
-      }
-      /**
-       * This method is called when the variant is changed due to option
-       */
 
-    }, {
-      key: "_onVariantChanged",
-      value: function _onVariantChanged(event) {
-        this.productGallery.variantHasChanged(event.detail.variant);
-      }
-    }]);
+          if (this.options["infoOverflowScroll"]) {
+            this.infoOverflowScroller.destroy();
+          }
+
+          if (window.ResizeObserver && this.productInfoResizeObserver) {
+            this.productInfoResizeObserver.disconnect();
+          }
+
+          this.delegateElement.off();
+          this.element.removeEventListener(
+            "variant:changed",
+            this._onVariantChangedListener
+          );
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._onVariantChangedListener = this._onVariantChanged.bind(this);
+          this.element.addEventListener(
+            "variant:changed",
+            this._onVariantChangedListener
+          );
+        },
+        /**
+         * Shopify Reviews app is quite funky and hard to extend... excuse this code
+         */
+      },
+      {
+        key: "_initShopifyReviews",
+        value: function _initShopifyReviews() {
+          var _this2 = this;
+
+          if (Shopify.designMode && window.SPR) {
+            window.SPR.initDomEls();
+            window.SPR.loadBadges();
+            window.SPR.loadProducts();
+          }
+
+          window.SPRCallbacks = {}; // This allows us to add some class to adjust the styling
+
+          window.SPRCallbacks.onFormSuccess = function () {
+            _this2.element
+              .querySelector("#shopify-product-reviews .spr-form")
+              .classList.add("spr-form-submitted");
+          }; // If loaded by quick view, we need to do various initialization stuff
+
+          if (this.options["isQuickView"] && window.SPR) {
+            window.SPR.initDomEls();
+            window.SPR.loadBadges();
+
+            if (
+              this.options["showPaymentButton"] &&
+              window.Shopify.PaymentButton
+            ) {
+              Shopify.PaymentButton.init();
+            }
+          }
+        },
+        /**
+         * This method is called when the variant is changed due to option
+         */
+      },
+      {
+        key: "_onVariantChanged",
+        value: function _onVariantChanged(event) {
+          this.productGallery.variantHasChanged(event.detail.variant);
+        },
+      },
+    ]);
 
     return ProductSection;
-  }();
+  })();
 
-  var CartSection = /*#__PURE__*/function () {
+  var CartSection = /*#__PURE__*/ (function () {
     function CartSection(element) {
       _classCallCheck(this, CartSection);
 
       this.element = element;
       this.domDelegate = new Delegate(this.element);
       this.delegateRoot = new Delegate(document.documentElement);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
 
-      if (this.options['showShippingEstimator']) {
-        this.shippingEstimator = new ShippingEstimator(this.element.querySelector('.shipping-estimator'), {
-          singleProduct: false
-        });
+      if (this.options["showShippingEstimator"]) {
+        this.shippingEstimator = new ShippingEstimator(
+          this.element.querySelector(".shipping-estimator"),
+          {
+            singleProduct: false,
+          }
+        );
       }
 
       this._attachListeners();
@@ -9501,209 +11124,274 @@
       this._enforceMinimumHeight();
     }
 
-    _createClass(CartSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        if (this.options['showShippingEstimator']) {
-          this.shippingEstimator.destroy();
-        }
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.domDelegate.on('click', '[data-action="add-to-cart"]', this._addToCart.bind(this));
-        this.domDelegate.on('click', '[data-action="save-note"]', this._saveNote.bind(this));
-        this.domDelegate.on('click', '[data-secondary-action="open-quick-view"]', this._openQuickView.bind(this));
-        this.delegateRoot.on('cart:rerendered', this._onCartRerendered.bind(this));
-      }
-    }, {
-      key: "_saveNote",
-      value: function _saveNote() {
-        var noteValue = this.element.querySelector('[name="cart[note]"]').value;
-        fetch("".concat(window.routes.cartUrl, "/update.js"), {
-          body: JSON.stringify({
-            note: noteValue
-          }),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
+    _createClass(CartSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          if (this.options["showShippingEstimator"]) {
+            this.shippingEstimator.destroy();
           }
-        }); // Hide or show the note edit button depending on content
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.domDelegate.on(
+            "click",
+            '[data-action="add-to-cart"]',
+            this._addToCart.bind(this)
+          );
+          this.domDelegate.on(
+            "click",
+            '[data-action="save-note"]',
+            this._saveNote.bind(this)
+          );
+          this.domDelegate.on(
+            "click",
+            '[data-secondary-action="open-quick-view"]',
+            this._openQuickView.bind(this)
+          );
+          this.delegateRoot.on(
+            "cart:rerendered",
+            this._onCartRerendered.bind(this)
+          );
+        },
+      },
+      {
+        key: "_saveNote",
+        value: function _saveNote() {
+          var noteValue = this.element.querySelector('[name="cart[note]"]')
+            .value;
+          fetch("".concat(window.routes.cartUrl, "/update.js"), {
+            body: JSON.stringify({
+              note: noteValue,
+            }),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }); // Hide or show the note edit button depending on content
 
-        this.element.querySelector('.cart-recap__note-edit').classList.toggle('is-visible', noteValue !== ''); // Close the button by sending a global event
+          this.element
+            .querySelector(".cart-recap__note-edit")
+            .classList.toggle("is-visible", noteValue !== ""); // Close the button by sending a global event
 
-        document.dispatchEvent(new CustomEvent('collapsible:toggle', {
-          detail: {
-            id: 'order-note'
-          }
-        }));
-      }
-    }, {
-      key: "_addToCart",
-      value: function _addToCart(event, target) {
-        var _this = this;
-
-        if (window.theme.cartType === 'page') {
-          return; // When using a cart type of page, we just simply redirect to the cart page
-        }
-
-        event.preventDefault(); // Prevent form to be submitted
-
-        event.stopPropagation(); // First, we switch the status of the button
-
-        target.setAttribute('disabled', 'disabled');
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // Then we add the product in Ajax
-
-        var formElement = target.closest('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
-          }
-        }).then(function (response) {
-          if (response.ok) {
-            target.removeAttribute('disabled'); // We simply trigger an event so the mini-cart can re-render
-
-            _this.element.dispatchEvent(new CustomEvent('product:added', {
-              bubbles: true,
+          document.dispatchEvent(
+            new CustomEvent("collapsible:toggle", {
               detail: {
-                variant: null,
-                quantity: parseInt(formElement.querySelector('[name="quantity"]').value)
-              }
-            }));
-          } else {
-            target.removeAttribute('disabled');
+                id: "order-note",
+              },
+            })
+          );
+        },
+      },
+      {
+        key: "_addToCart",
+        value: function _addToCart(event, target) {
+          var _this = this;
+
+          if (window.theme.cartType === "page") {
+            return; // When using a cart type of page, we just simply redirect to the cart page
           }
-        });
-        event.preventDefault();
-      }
-    }, {
-      key: "_openQuickView",
-      value: function _openQuickView(event, target) {
-        var modal = document.getElementById(target.getAttribute('aria-controls'));
-        modal.classList.add('is-loading');
-        fetch("".concat(target.getAttribute('data-product-url'), "?view=quick-view"), {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            modal.querySelector('.modal__inner').innerHTML = content;
-            modal.classList.remove('is-loading'); // Register a new section to power the JS
 
-            var modalProductSection = new ProductSection(modal.querySelector('[data-section-type="product"]')); // We set a listener so we can cleanup on close
+          event.preventDefault(); // Prevent form to be submitted
 
-            var doCleanUp = function doCleanUp() {
-              modalProductSection.onUnload();
-              modal.removeEventListener('modal:closed', doCleanUp);
-            };
+          event.stopPropagation(); // First, we switch the status of the button
 
-            modal.addEventListener('modal:closed', doCleanUp);
+          target.setAttribute("disabled", "disabled");
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // Then we add the product in Ajax
+
+          var formElement = target.closest('form[action*="/cart/add"]');
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function (response) {
+            if (response.ok) {
+              target.removeAttribute("disabled"); // We simply trigger an event so the mini-cart can re-render
+
+              _this.element.dispatchEvent(
+                new CustomEvent("product:added", {
+                  bubbles: true,
+                  detail: {
+                    variant: null,
+                    quantity: parseInt(
+                      formElement.querySelector('[name="quantity"]').value
+                    ),
+                  },
+                })
+              );
+            } else {
+              target.removeAttribute("disabled");
+            }
           });
-        });
-      }
-      /**
-       * On desktop we need to enforce a minimum height for the cart-wrapper
-       */
+          event.preventDefault();
+        },
+      },
+      {
+        key: "_openQuickView",
+        value: function _openQuickView(event, target) {
+          var modal = document.getElementById(
+            target.getAttribute("aria-controls")
+          );
+          modal.classList.add("is-loading");
+          fetch(
+            "".concat(
+              target.getAttribute("data-product-url"),
+              "?view=quick-view"
+            ),
+            {
+              credentials: "same-origin",
+              method: "GET",
+            }
+          ).then(function (response) {
+            response.text().then(function (content) {
+              modal.querySelector(".modal__inner").innerHTML = content;
+              modal.classList.remove("is-loading"); // Register a new section to power the JS
 
-    }, {
-      key: "_enforceMinimumHeight",
-      value: function _enforceMinimumHeight() {
-        var cartWrapperElement = this.element.querySelector('.cart-wrapper'),
-            cartRecapScrollerElement = this.element.querySelector('.cart-recap__scroller');
+              var modalProductSection = new ProductSection(
+                modal.querySelector('[data-section-type="product"]')
+              ); // We set a listener so we can cleanup on close
 
-        if (cartWrapperElement && cartRecapScrollerElement) {
-          cartWrapperElement.style.minHeight = "".concat(cartRecapScrollerElement.clientHeight, "px");
+              var doCleanUp = function doCleanUp() {
+                modalProductSection.onUnload();
+                modal.removeEventListener("modal:closed", doCleanUp);
+              };
 
-          if (window.ResizeObserver) {
-            var resizeObserver = new ResizeObserver(function (entries) {
-              var _iterator = _createForOfIteratorHelper(entries),
+              modal.addEventListener("modal:closed", doCleanUp);
+            });
+          });
+        },
+        /**
+         * On desktop we need to enforce a minimum height for the cart-wrapper
+         */
+      },
+      {
+        key: "_enforceMinimumHeight",
+        value: function _enforceMinimumHeight() {
+          var cartWrapperElement = this.element.querySelector(".cart-wrapper"),
+            cartRecapScrollerElement = this.element.querySelector(
+              ".cart-recap__scroller"
+            );
+
+          if (cartWrapperElement && cartRecapScrollerElement) {
+            cartWrapperElement.style.minHeight = "".concat(
+              cartRecapScrollerElement.clientHeight,
+              "px"
+            );
+
+            if (window.ResizeObserver) {
+              var resizeObserver = new ResizeObserver(function (entries) {
+                var _iterator = _createForOfIteratorHelper(entries),
                   _step;
 
-              try {
-                for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                  var entry = _step.value;
-                  cartWrapperElement.style.minHeight = "".concat(parseInt(entry.contentRect.height), "px");
+                try {
+                  for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+                    var entry = _step.value;
+                    cartWrapperElement.style.minHeight = "".concat(
+                      parseInt(entry.contentRect.height),
+                      "px"
+                    );
+                  }
+                } catch (err) {
+                  _iterator.e(err);
+                } finally {
+                  _iterator.f();
                 }
-              } catch (err) {
-                _iterator.e(err);
-              } finally {
-                _iterator.f();
-              }
-            });
-            resizeObserver.observe(cartRecapScrollerElement);
+              });
+              resizeObserver.observe(cartRecapScrollerElement);
+            }
           }
-        }
-      }
-      /* When the cart re-render, we have some operations to do */
+        },
+        /* When the cart re-render, we have some operations to do */
+      },
+      {
+        key: "_onCartRerendered",
+        value: function _onCartRerendered() {
+          // For now the only thing we have to do is re-create the shipping estimator
+          if (this.options["showShippingEstimator"]) {
+            this.shippingEstimator.destroy();
+            this.shippingEstimator = new ShippingEstimator(
+              this.element.querySelector(".shipping-estimator"),
+              {
+                singleProduct: false,
+              }
+            );
+          }
 
-    }, {
-      key: "_onCartRerendered",
-      value: function _onCartRerendered() {
-        // For now the only thing we have to do is re-create the shipping estimator
-        if (this.options['showShippingEstimator']) {
-          this.shippingEstimator.destroy();
-          this.shippingEstimator = new ShippingEstimator(this.element.querySelector('.shipping-estimator'), {
-            singleProduct: false
-          });
-        }
-
-        this._enforceMinimumHeight();
-      }
-    }]);
+          this._enforceMinimumHeight();
+        },
+      },
+    ]);
 
     return CartSection;
-  }();
+  })();
 
-  var CollectionListSection = /*#__PURE__*/function () {
+  var CollectionListSection = /*#__PURE__*/ (function () {
     function CollectionListSection(element) {
       _classCallCheck(this, CollectionListSection);
 
       this.element = element;
-      this.flickityInstance = new js(this.element.querySelector('.collection-list'), {
-        watchCSS: true,
-        prevNextButtons: true,
-        draggable: !window.matchMedia('(-moz-touch-enabled: 0), (hover: hover)').matches,
-        pageDots: false,
-        cellAlign: 'left',
-        contain: true,
-        groupCells: true
-      });
+      this.flickityInstance = new js(
+        this.element.querySelector(".collection-list"),
+        {
+          watchCSS: true,
+          prevNextButtons: true,
+          draggable: !window.matchMedia(
+            "(-moz-touch-enabled: 0), (hover: hover)"
+          ).matches,
+          pageDots: false,
+          cellAlign: "left",
+          contain: true,
+          groupCells: true,
+        }
+      );
     }
 
-    _createClass(CollectionListSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.flickityInstance.destroy();
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        if (this.flickityInstance.isActive) {
-          this.flickityInstance.selectCell(parseInt(event.target.getAttribute('data-collection-index')), null, event.detail.load);
-        }
-      }
-    }]);
+    _createClass(CollectionListSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.flickityInstance.destroy();
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          if (this.flickityInstance.isActive) {
+            this.flickityInstance.selectCell(
+              parseInt(event.target.getAttribute("data-collection-index")),
+              null,
+              event.detail.load
+            );
+          }
+        },
+      },
+    ]);
 
     return CollectionListSection;
-  }();
+  })();
 
-  var CollectionSection = /*#__PURE__*/function () {
+  var CollectionSection = /*#__PURE__*/ (function () {
     function CollectionSection(element) {
       _classCallCheck(this, CollectionSection);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
-      this.collectionFilterTagElements = this.element.querySelectorAll('[data-tag]');
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
+      this.collectionFilterTagElements = this.element.querySelectorAll(
+        "[data-tag]"
+      );
       this.currentUrl = new URL(window.location.href);
-      this.currentTags = this.options['currentTags'];
+      this.currentTags = this.options["currentTags"];
 
       if (Shopify.designMode && window.SPR) {
         window.SPR.initDomEls();
@@ -9711,461 +11399,580 @@
       }
 
       this.mobileFilterDrawer = new CollectionFilterDrawer(this.options);
-      this.displayByValuePicker = new ValuePicker('display-by-selector', {
-        onValueSelect: this._showingCountChanged.bind(this)
+      this.displayByValuePicker = new ValuePicker("display-by-selector", {
+        onValueSelect: this._showingCountChanged.bind(this),
       });
-      this.sortByValuePicker = new ValuePicker('sort-by-selector', {
-        onValueSelect: this._sortByChanged.bind(this)
+      this.sortByValuePicker = new ValuePicker("sort-by-selector", {
+        onValueSelect: this._sortByChanged.bind(this),
       });
       this.productItemColorSwatch = new ProductItemColorSwatch(this.element); // If we are in the template search and that we are supposed to show pages and blog posts, we do more work
 
-      if (window.theme.pageType === 'search' && window.theme.searchMode !== 'product') {
+      if (
+        window.theme.pageType === "search" &&
+        window.theme.searchMode !== "product"
+      ) {
         this._loadContentResults();
       }
 
       this._attachListeners();
     }
 
-    _createClass(CollectionSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.delegateElement.off();
-        this.mobileFilterDrawer.destroy();
-        this.displayByValuePicker.destroy();
-        this.sortByValuePicker.destroy();
-        this.productItemColorSwatch.destroy();
-      }
-    }, {
-      key: "onSelect",
-      value: function onSelect(event) {
-        if (Shopify.designMode && event.detail.load) {
-          // We also force the layout and number of items per page in the editor, no matter if you have choose an explicit mode
-          this.element.querySelector(".collection__layout-button[data-layout-mode=\"".concat(this.options['defaultLayout'], "\"]")).click();
+    _createClass(CollectionSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.delegateElement.off();
+          this.mobileFilterDrawer.destroy();
+          this.displayByValuePicker.destroy();
+          this.sortByValuePicker.destroy();
+          this.productItemColorSwatch.destroy();
+        },
+      },
+      {
+        key: "onSelect",
+        value: function onSelect(event) {
+          if (Shopify.designMode && event.detail.load) {
+            // We also force the layout and number of items per page in the editor, no matter if you have choose an explicit mode
+            this.element
+              .querySelector(
+                '.collection__layout-button[data-layout-mode="'.concat(
+                  this.options["defaultLayout"],
+                  '"]'
+                )
+              )
+              .click();
 
-          this._showingCountChanged(this.options['defaultProductsPerPage']);
-        }
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        var _this = this;
-
-        this.delegateElement.on('click', '[data-action="change-layout"]', this._changeLayout.bind(this));
-        this.delegateElement.on('change', '#mobile-sort-by, #desktop-sort-by', this._sortByChanged.bind(this));
-        this.delegateElement.on('change', '#showing-count', this._showingCountChanged.bind(this));
-        this.delegateElement.on('click', '.pagination [data-page]', this._paginationPageChanged.bind(this));
-        this.delegateElement.on('click', '[data-action="toggle-tag"]', this._tagToggled.bind(this));
-        this.delegateElement.on('click', '[data-action="clear-tags"]', this._clearTags.bind(this));
-        this.delegateElement.on('click', '[data-secondary-action="open-quick-view"]', this._openQuickView.bind(this));
-        this.delegateElement.on('click', '[data-action="add-to-cart"]', this._addToCart.bind(this));
-        window.addEventListener('popstate', function (event) {
-          if (event.state.path) {
-            _this.currentUrl = new URL(event.state.path);
-
-            _this._reload(false);
+            this._showingCountChanged(this.options["defaultProductsPerPage"]);
           }
-        });
-      }
-    }, {
-      key: "_openQuickView",
-      value: function _openQuickView(event, target) {
-        var productUrl = new URL("".concat(window.location.origin).concat(target.getAttribute('data-product-url'))); // If we are on mobile or tablet, we redirect to product page directly
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          var _this = this;
 
-        if (Responsive.matchesBreakpoint('phone') || Responsive.matchesBreakpoint('tablet')) {
-          window.location.href = productUrl.href;
-          return false;
-        }
+          this.delegateElement.on(
+            "click",
+            '[data-action="change-layout"]',
+            this._changeLayout.bind(this)
+          );
+          this.delegateElement.on(
+            "change",
+            "#mobile-sort-by, #desktop-sort-by",
+            this._sortByChanged.bind(this)
+          );
+          this.delegateElement.on(
+            "change",
+            "#showing-count",
+            this._showingCountChanged.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            ".pagination [data-page]",
+            this._paginationPageChanged.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="toggle-tag"]',
+            this._tagToggled.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="clear-tags"]',
+            this._clearTags.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-secondary-action="open-quick-view"]',
+            this._openQuickView.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="add-to-cart"]',
+            this._addToCart.bind(this)
+          );
+          window.addEventListener("popstate", function (event) {
+            if (event.state.path) {
+              _this.currentUrl = new URL(event.state.path);
 
-        var modal = document.getElementById(target.getAttribute('aria-controls'));
-        modal.classList.add('is-loading');
-        productUrl.searchParams.set('view', 'quick-view');
-        fetch(productUrl.href, {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            modal.querySelector('.modal__inner').innerHTML = content;
-            modal.classList.remove('is-loading'); // Register a new section to power the JS
-
-            var modalProductSection = new ProductSection(modal.querySelector('[data-section-type="product"]')); // We set a listener so we can cleanup on close
-
-            var doCleanUp = function doCleanUp() {
-              modalProductSection.onUnload();
-              modal.removeEventListener('modal:closed', doCleanUp);
-            };
-
-            modal.addEventListener('modal:closed', doCleanUp);
+              _this._reload(false);
+            }
           });
-        });
-      }
-      /**
-       * Switch layout mode
-       */
+        },
+      },
+      {
+        key: "_openQuickView",
+        value: function _openQuickView(event, target) {
+          var productUrl = new URL(
+            ""
+              .concat(window.location.origin)
+              .concat(target.getAttribute("data-product-url"))
+          ); // If we are on mobile or tablet, we redirect to product page directly
 
-    }, {
-      key: "_changeLayout",
-      value: function _changeLayout(event, target) {
-        var _this2 = this;
-
-        if (target.classList.contains('is-selected')) {
-          return;
-        }
-
-        var newLayoutMode = target.getAttribute('data-layout-mode'); // We save the new attribute so that we can select the appropriate mode without causing reflow
-
-        fetch("".concat(window.routes.cartUrl, "/update.js"), {
-          body: JSON.stringify({
-            attributes: {
-              'collection_layout': newLayoutMode
-            }
-          }),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
+          if (
+            Responsive.matchesBreakpoint("phone") ||
+            Responsive.matchesBreakpoint("tablet")
+          ) {
+            window.location.href = productUrl.href;
+            return false;
           }
-        }); // Finally, we change everything!
 
-        fastdom.mutate(function () {
-          Dom.getSiblings(target, '.is-selected').forEach(function (button) {
-            return button.classList.remove('is-selected');
+          var modal = document.getElementById(
+            target.getAttribute("aria-controls")
+          );
+          modal.classList.add("is-loading");
+          productUrl.searchParams.set("view", "quick-view");
+          fetch(productUrl.href, {
+            credentials: "same-origin",
+            method: "GET",
+          }).then(function (response) {
+            response.text().then(function (content) {
+              modal.querySelector(".modal__inner").innerHTML = content;
+              modal.classList.remove("is-loading"); // Register a new section to power the JS
+
+              var modalProductSection = new ProductSection(
+                modal.querySelector('[data-section-type="product"]')
+              ); // We set a listener so we can cleanup on close
+
+              var doCleanUp = function doCleanUp() {
+                modalProductSection.onUnload();
+                modal.removeEventListener("modal:closed", doCleanUp);
+              };
+
+              modal.addEventListener("modal:closed", doCleanUp);
+            });
           });
-          target.classList.add('is-selected');
+        },
+        /**
+         * Switch layout mode
+         */
+      },
+      {
+        key: "_changeLayout",
+        value: function _changeLayout(event, target) {
+          var _this2 = this;
 
-          _this2.element.querySelectorAll('.product-item').forEach(function (item) {
-            if (newLayoutMode === 'grid') {
-              item.className = "product-item product-item--vertical ".concat(_this2.options['gridClasses']);
-            } else {
-              item.className = 'product-item product-item--list';
-            }
-          }); // Reload the swatches
-
-
-          _this2.productItemColorSwatch.recalculateSwatches();
-        });
-      }
-      /**
-       * Update the URL and reload products
-       */
-
-    }, {
-      key: "_sortByChanged",
-      value: function _sortByChanged(value) {
-        this.currentUrl.searchParams.set('sort_by', value);
-        this.currentUrl.searchParams["delete"]('page');
-
-        this._reload(true);
-      }
-      /**
-       * When the number of items has changed
-       */
-
-    }, {
-      key: "_showingCountChanged",
-      value: function _showingCountChanged(value) {
-        var _this3 = this;
-
-        this.currentUrl.searchParams["delete"]('page'); // We save the new value as a cart attribute, so it can be retrieved in Liquid easily :)
-
-        fetch("".concat(window.routes.cartUrl, "/update.js"), {
-          body: JSON.stringify({
-            attributes: {
-              'collection_products_per_page': value
-            }
-          }),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
+          if (target.classList.contains("is-selected")) {
+            return;
           }
-        }).then(function () {
-          _this3._reload(true);
-        });
-      }
-      /**
-       * When the page has changed
-       */
 
-    }, {
-      key: "_paginationPageChanged",
-      value: function _paginationPageChanged(event, target) {
-        event.preventDefault();
-        this.currentUrl.searchParams.set('page', parseInt(target.getAttribute('data-page')));
+          var newLayoutMode = target.getAttribute("data-layout-mode"); // We save the new attribute so that we can select the appropriate mode without causing reflow
 
-        this._reload(true);
-      }
-      /**
-       * When a new tag is selected
-       */
+          fetch("".concat(window.routes.cartUrl, "/update.js"), {
+            body: JSON.stringify({
+              attributes: {
+                collection_layout: newLayoutMode,
+              },
+            }),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }); // Finally, we change everything!
 
-    }, {
-      key: "_tagToggled",
-      value: function _tagToggled(event, target) {
-        var _this4 = this;
+          fastdom.mutate(function () {
+            Dom.getSiblings(target, ".is-selected").forEach(function (button) {
+              return button.classList.remove("is-selected");
+            });
+            target.classList.add("is-selected");
 
-        var newTag = target.getAttribute('data-tag'),
+            _this2.element
+              .querySelectorAll(".product-item")
+              .forEach(function (item) {
+                if (newLayoutMode === "grid") {
+                  item.className = "product-item product-item--vertical ".concat(
+                    _this2.options["gridClasses"]
+                  );
+                } else {
+                  item.className = "product-item product-item--list";
+                }
+              }); // Reload the swatches
+
+            _this2.productItemColorSwatch.recalculateSwatches();
+          });
+        },
+        /**
+         * Update the URL and reload products
+         */
+      },
+      {
+        key: "_sortByChanged",
+        value: function _sortByChanged(value) {
+          this.currentUrl.searchParams.set("sort_by", value);
+          this.currentUrl.searchParams["delete"]("page");
+
+          this._reload(true);
+        },
+        /**
+         * When the number of items has changed
+         */
+      },
+      {
+        key: "_showingCountChanged",
+        value: function _showingCountChanged(value) {
+          var _this3 = this;
+
+          this.currentUrl.searchParams["delete"]("page"); // We save the new value as a cart attribute, so it can be retrieved in Liquid easily :)
+
+          fetch("".concat(window.routes.cartUrl, "/update.js"), {
+            body: JSON.stringify({
+              attributes: {
+                collection_products_per_page: value,
+              },
+            }),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function () {
+            _this3._reload(true);
+          });
+        },
+        /**
+         * When the page has changed
+         */
+      },
+      {
+        key: "_paginationPageChanged",
+        value: function _paginationPageChanged(event, target) {
+          event.preventDefault();
+          this.currentUrl.searchParams.set(
+            "page",
+            parseInt(target.getAttribute("data-page"))
+          );
+
+          this._reload(true);
+        },
+        /**
+         * When a new tag is selected
+         */
+      },
+      {
+        key: "_tagToggled",
+        value: function _tagToggled(event, target) {
+          var _this4 = this;
+
+          var newTag = target.getAttribute("data-tag"),
             hadTags = this.currentTags.length > 0;
 
-        if (this.currentTags.includes(newTag)) {
-          this.currentTags = this.currentTags.filter(function (value) {
-            return value !== newTag;
-          });
-        } else {
-          if (this.options['filterType'] === 'tag') {
-            this.currentTags = [newTag]; // When using tag mode, we only allow one tag at maximum
+          if (this.currentTags.includes(newTag)) {
+            this.currentTags = this.currentTags.filter(function (value) {
+              return value !== newTag;
+            });
           } else {
-            // In the group mode, we need to make sure to remove the other tags that are matching the given group
-            var tagGroup = newTag.split('_')[0];
-            this.currentTags.forEach(function (existingTag) {
-              if (existingTag.split('_')[0] === tagGroup) {
-                _this4.currentTags = _this4.currentTags.filter(function (value) {
-                  return value !== existingTag;
-                });
+            if (this.options["filterType"] === "tag") {
+              this.currentTags = [newTag]; // When using tag mode, we only allow one tag at maximum
+            } else {
+              // In the group mode, we need to make sure to remove the other tags that are matching the given group
+              var tagGroup = newTag.split("_")[0];
+              this.currentTags.forEach(function (existingTag) {
+                if (existingTag.split("_")[0] === tagGroup) {
+                  _this4.currentTags = _this4.currentTags.filter(function (
+                    value
+                  ) {
+                    return value !== existingTag;
+                  });
+                }
+              });
+              this.currentTags.push(newTag);
+            }
+          }
+
+          this.currentUrl.searchParams["delete"]("page");
+
+          this._updateTagUrl(hadTags); // Finally, we can reload!
+
+          this._reload(true);
+        },
+      },
+      {
+        key: "_clearTags",
+        value: function _clearTags() {
+          var hadTags = this.currentTags.length > 0;
+          this.currentTags = [];
+          this.currentUrl.searchParams["delete"]("page");
+
+          this._updateTagUrl(hadTags); // Finally, we can reload!
+
+          this._reload(true).then(function () {
+            document.dispatchEvent(new CustomEvent("collection-filter:close"));
+          });
+        },
+      },
+      {
+        key: "_updateTagUrl",
+        value: function _updateTagUrl(hadTags) {
+          var _this5 = this;
+
+          // Then, we update the DOM
+          fastdom.mutate(function () {
+            _this5.collectionFilterTagElements.forEach(function (tagElement) {
+              if (
+                _this5.currentTags.includes(tagElement.getAttribute("data-tag"))
+              ) {
+                tagElement.classList.add("is-selected");
+
+                if (tagElement.tagName === "INPUT") {
+                  tagElement.checked = true;
+                }
+              } else {
+                tagElement.classList.remove("is-selected");
+
+                if (tagElement.tagName === "INPUT") {
+                  tagElement.checked = false;
+                }
               }
             });
-            this.currentTags.push(newTag);
-          }
-        }
+          }); // Then, update the URL. When the collection is automatic (such as vendors and types collections), tags must be added
+          // within a constraint query parameter, otherwise they must be appended to the path
 
-        this.currentUrl.searchParams["delete"]('page');
-
-        this._updateTagUrl(hadTags); // Finally, we can reload!
-
-
-        this._reload(true);
-      }
-    }, {
-      key: "_clearTags",
-      value: function _clearTags() {
-        var hadTags = this.currentTags.length > 0;
-        this.currentTags = [];
-        this.currentUrl.searchParams["delete"]('page');
-
-        this._updateTagUrl(hadTags); // Finally, we can reload!
-
-
-        this._reload(true).then(function () {
-          document.dispatchEvent(new CustomEvent('collection-filter:close'));
-        });
-      }
-    }, {
-      key: "_updateTagUrl",
-      value: function _updateTagUrl(hadTags) {
-        var _this5 = this;
-
-        // Then, we update the DOM
-        fastdom.mutate(function () {
-          _this5.collectionFilterTagElements.forEach(function (tagElement) {
-            if (_this5.currentTags.includes(tagElement.getAttribute('data-tag'))) {
-              tagElement.classList.add('is-selected');
-
-              if (tagElement.tagName === 'INPUT') {
-                tagElement.checked = true;
-              }
+          if (this.options["isAutomatic"]) {
+            if (this.currentTags.length === 0) {
+              this.currentUrl.searchParams["delete"]("constraint");
             } else {
-              tagElement.classList.remove('is-selected');
+              this.currentUrl.searchParams.set(
+                "constraint",
+                this.currentTags.join("+")
+              );
+            }
+          } else {
+            var tagPath = this.currentTags.join("+"),
+              currentPathName =
+                this.currentUrl.pathname.substr(-1) === "/"
+                  ? this.currentUrl.pathname.substr(
+                      0,
+                      this.currentUrl.pathname.length - 1
+                    )
+                  : this.currentUrl.pathname;
 
-              if (tagElement.tagName === 'INPUT') {
-                tagElement.checked = false;
+            if (hadTags) {
+              var pathParts = currentPathName.split("/");
+              pathParts.pop();
+              this.currentUrl.pathname = ""
+                .concat(pathParts.join("/"), "/")
+                .concat(tagPath);
+            } else {
+              this.currentUrl.pathname = ""
+                .concat(currentPathName, "/")
+                .concat(tagPath);
+            }
+          }
+        },
+        /**
+         * Reload all products from the current URL
+         *
+         * @private
+         */
+      },
+      {
+        key: "_reload",
+        value: function _reload(pushState) {
+          var _this6 = this;
+
+          // Then, we replace the URL
+          if (pushState) {
+            window.history.pushState(
+              {
+                path: this.currentUrl.toString(),
+              },
+              "",
+              this.currentUrl.toString()
+            );
+          }
+
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // We notify the mobile collection drawer that it has changed
+
+          this.mobileFilterDrawer._filtersHaveChanged(this.currentTags); // We scroll to the top
+
+          var computedStyles = window.getComputedStyle(
+            document.documentElement
+          ); // To load the content we use the newly introduced "Sections API", which also to get data much more efficiently
+
+          var sectionUrl = "";
+
+          if (this.currentUrl.search) {
+            sectionUrl = ""
+              .concat(this.currentUrl.pathname, "/")
+              .concat(this.currentUrl.search, "&section_id=")
+              .concat(this.element.getAttribute("data-section-id"));
+          } else {
+            sectionUrl = ""
+              .concat(this.currentUrl.pathname, "?section_id=")
+              .concat(this.element.getAttribute("data-section-id"));
+          }
+
+          return fetch(sectionUrl, {
+            credentials: "same-origin",
+            method: "GET",
+          }).then(function (response) {
+            response.text().then(function (content) {
+              var tempElement = document.createElement("div");
+              tempElement.innerHTML = content;
+              _this6.element.querySelector(
+                ".collection__dynamic-part"
+              ).innerHTML = tempElement.querySelector(
+                ".collection__dynamic-part"
+              ).innerHTML;
+
+              var activeFilters = _this6.element.querySelector(
+                ".collection__active-filters"
+              ); // A given collection may not have any filters
+
+              if (activeFilters) {
+                activeFilters.innerHTML = tempElement.querySelector(
+                  ".collection__active-filters"
+                ).innerHTML;
+              } // Reload the Shopify Review badges
+
+              if (window.SPR) {
+                window.SPR.initDomEls();
+                window.SPR.loadBadges();
+              } // Reload the swatches
+
+              _this6.productItemColorSwatch.recalculateSwatches();
+
+              var elementOffset =
+                _this6.element
+                  .querySelector(".collection")
+                  .getBoundingClientRect().top -
+                25 -
+                parseInt(
+                  computedStyles.getPropertyValue("--header-is-sticky")
+                ) *
+                  parseInt(computedStyles.getPropertyValue("--header-height"));
+
+              if (elementOffset < 0) {
+                window.scrollBy({
+                  top: elementOffset,
+                  behavior: "smooth",
+                });
+              } // Finally, we scroll to the element
+
+              document.dispatchEvent(new CustomEvent("theme:loading:end"));
+            });
+          });
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * SEARCH PAGE SPECIFIC METHOD
+         * ---------------------------------------------------------------------------------------------------
+         */
+      },
+      {
+        key: "_loadContentResults",
+        value: function _loadContentResults() {
+          var _this7 = this;
+
+          var currentUrl = new URL(window.location.href);
+          fetch(
+            ""
+              .concat(window.routes.searchUrl, "?view=content&q=")
+              .concat(currentUrl.searchParams.get("q"), "&type=")
+              .concat(window.theme.searchMode.replace("product,", "")),
+            {
+              credentials: "same-origin",
+            }
+          ).then(function (response) {
+            response.text().then(function (content) {
+              var linkSearchResults = _this7.element.querySelector(
+                ".link-search-results"
+              );
+
+              if (linkSearchResults && content.trim() !== "") {
+                linkSearchResults.innerHTML = content;
+                linkSearchResults.style.display = "block";
               }
+            });
+          });
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
+         * ---------------------------------------------------------------------------------------------------
+         */
+      },
+      {
+        key: "_addToCart",
+        value: function _addToCart(event, target) {
+          var _this8 = this;
+
+          if (window.theme.cartType === "page") {
+            return; // When using a cart type of page, we just simply redirect to the cart page
+          }
+
+          event.preventDefault(); // Prevent form to be submitted
+
+          event.stopPropagation(); // First, we switch the status of the button
+
+          target.setAttribute("disabled", "disabled");
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // Then we add the product in Ajax
+
+          var formElement = target.closest('form[action*="/cart/add"]');
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function (response) {
+            target.removeAttribute("disabled");
+
+            if (response.ok) {
+              // We simply trigger an event so the mini-cart can re-render
+              _this8.element.dispatchEvent(
+                new CustomEvent("product:added", {
+                  bubbles: true,
+                  detail: {
+                    variant: null,
+                    quantity: parseInt(
+                      formElement.querySelector('[name="quantity"]').value
+                    ),
+                  },
+                })
+              );
+            } else {
+              document.dispatchEvent(new CustomEvent("theme:loading:end"));
             }
           });
-        }); // Then, update the URL. When the collection is automatic (such as vendors and types collections), tags must be added
-        // within a constraint query parameter, otherwise they must be appended to the path
-
-        if (this.options['isAutomatic']) {
-          if (this.currentTags.length === 0) {
-            this.currentUrl.searchParams["delete"]('constraint');
-          } else {
-            this.currentUrl.searchParams.set('constraint', this.currentTags.join('+'));
-          }
-        } else {
-          var tagPath = this.currentTags.join('+'),
-              currentPathName = this.currentUrl.pathname.substr(-1) === '/' ? this.currentUrl.pathname.substr(0, this.currentUrl.pathname.length - 1) : this.currentUrl.pathname;
-
-          if (hadTags) {
-            var pathParts = currentPathName.split('/');
-            pathParts.pop();
-            this.currentUrl.pathname = "".concat(pathParts.join('/'), "/").concat(tagPath);
-          } else {
-            this.currentUrl.pathname = "".concat(currentPathName, "/").concat(tagPath);
-          }
-        }
-      }
-      /**
-       * Reload all products from the current URL
-       *
-       * @private
-       */
-
-    }, {
-      key: "_reload",
-      value: function _reload(pushState) {
-        var _this6 = this;
-
-        // Then, we replace the URL
-        if (pushState) {
-          window.history.pushState({
-            path: this.currentUrl.toString()
-          }, '', this.currentUrl.toString());
-        }
-
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // We notify the mobile collection drawer that it has changed
-
-        this.mobileFilterDrawer._filtersHaveChanged(this.currentTags); // We scroll to the top
-
-
-        var computedStyles = window.getComputedStyle(document.documentElement); // To load the content we use the newly introduced "Sections API", which also to get data much more efficiently
-
-        var sectionUrl = '';
-
-        if (this.currentUrl.search) {
-          sectionUrl = "".concat(this.currentUrl.pathname, "/").concat(this.currentUrl.search, "&section_id=").concat(this.element.getAttribute('data-section-id'));
-        } else {
-          sectionUrl = "".concat(this.currentUrl.pathname, "?section_id=").concat(this.element.getAttribute('data-section-id'));
-        }
-
-        return fetch(sectionUrl, {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            var tempElement = document.createElement('div');
-            tempElement.innerHTML = content;
-            _this6.element.querySelector('.collection__dynamic-part').innerHTML = tempElement.querySelector('.collection__dynamic-part').innerHTML;
-
-            var activeFilters = _this6.element.querySelector('.collection__active-filters'); // A given collection may not have any filters
-
-
-            if (activeFilters) {
-              activeFilters.innerHTML = tempElement.querySelector('.collection__active-filters').innerHTML;
-            } // Reload the Shopify Review badges
-
-
-            if (window.SPR) {
-              window.SPR.initDomEls();
-              window.SPR.loadBadges();
-            } // Reload the swatches
-
-
-            _this6.productItemColorSwatch.recalculateSwatches();
-
-            var elementOffset = _this6.element.querySelector('.collection').getBoundingClientRect().top - 25 - parseInt(computedStyles.getPropertyValue('--header-is-sticky')) * parseInt(computedStyles.getPropertyValue('--header-height'));
-
-            if (elementOffset < 0) {
-              window.scrollBy({
-                top: elementOffset,
-                behavior: 'smooth'
-              });
-            } // Finally, we scroll to the element
-
-
-            document.dispatchEvent(new CustomEvent('theme:loading:end'));
-          });
-        });
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * SEARCH PAGE SPECIFIC METHOD
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-    }, {
-      key: "_loadContentResults",
-      value: function _loadContentResults() {
-        var _this7 = this;
-
-        var currentUrl = new URL(window.location.href);
-        fetch("".concat(window.routes.searchUrl, "?view=content&q=").concat(currentUrl.searchParams.get('q'), "&type=").concat(window.theme.searchMode.replace('product,', '')), {
-          credentials: 'same-origin'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            var linkSearchResults = _this7.element.querySelector('.link-search-results');
-
-            if (linkSearchResults && content.trim() !== '') {
-              linkSearchResults.innerHTML = content;
-              linkSearchResults.style.display = 'block';
-            }
-          });
-        });
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-    }, {
-      key: "_addToCart",
-      value: function _addToCart(event, target) {
-        var _this8 = this;
-
-        if (window.theme.cartType === 'page') {
-          return; // When using a cart type of page, we just simply redirect to the cart page
-        }
-
-        event.preventDefault(); // Prevent form to be submitted
-
-        event.stopPropagation(); // First, we switch the status of the button
-
-        target.setAttribute('disabled', 'disabled');
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // Then we add the product in Ajax
-
-        var formElement = target.closest('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
-          }
-        }).then(function (response) {
-          target.removeAttribute('disabled');
-
-          if (response.ok) {
-            // We simply trigger an event so the mini-cart can re-render
-            _this8.element.dispatchEvent(new CustomEvent('product:added', {
-              bubbles: true,
-              detail: {
-                variant: null,
-                quantity: parseInt(formElement.querySelector('[name="quantity"]').value)
-              }
-            }));
-          } else {
-            document.dispatchEvent(new CustomEvent('theme:loading:end'));
-          }
-        });
-        event.preventDefault();
-      }
-    }]);
+          event.preventDefault();
+        },
+      },
+    ]);
 
     return CollectionSection;
-  }();
+  })();
 
-  var FeaturedCollectionSection = /*#__PURE__*/function () {
+  var FeaturedCollectionSection = /*#__PURE__*/ (function () {
     function FeaturedCollectionSection(element) {
       _classCallCheck(this, FeaturedCollectionSection);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
 
-      if (!this.options['stackable']) {
-        this.flickityInstance = new js(this.element.querySelector('.product-list'), {
-          watchCSS: true,
-          pageDots: false,
-          prevNextButtons: true,
-          contain: true,
-          groupCells: true,
-          cellAlign: 'left',
-          draggable: !window.matchMedia('(-moz-touch-enabled: 0), (hover: hover)').matches
-        });
+      if (!this.options["stackable"]) {
+        this.flickityInstance = new js(
+          this.element.querySelector(".product-list"),
+          {
+            watchCSS: true,
+            pageDots: false,
+            prevNextButtons: true,
+            contain: true,
+            groupCells: true,
+            cellAlign: "left",
+            draggable: !window.matchMedia(
+              "(-moz-touch-enabled: 0), (hover: hover)"
+            ).matches,
+          }
+        );
       }
 
       if (Shopify.designMode && window.SPR) {
@@ -10180,138 +11987,176 @@
       this._attachListeners();
     }
 
-    _createClass(FeaturedCollectionSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        if (!this.options['stackable']) {
-          this.flickityInstance.destroy();
-        }
+    _createClass(FeaturedCollectionSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          if (!this.options["stackable"]) {
+            this.flickityInstance.destroy();
+          }
 
-        window.removeEventListener('resize', this._fixSafariListener);
-        this.delegateElement.off('change');
-        this.productItemColorSwatch.destroy();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._fixSafariListener = this._fixSafari.bind(this);
-        window.addEventListener('resize', this._fixSafariListener);
-        this.delegateElement.on('click', '[data-action="add-to-cart"]', this._addToCart.bind(this));
-        this.delegateElement.on('click', '[data-secondary-action="open-quick-view"]', this._openQuickView.bind(this));
-      }
-      /**
-       * On Safari 11.1 and lower, the browser incorrectly calculate the height of flex and grid items due to a bug
-       * on how padding percentage is calculated (that we use for allocating image space). This is solved in Safari 11.1 and higher.
-       *
-       * For those browsers, we fix that in JavaScript by setting the height directly for each aspect ratio image
-       *
-       * @private
-       */
+          window.removeEventListener("resize", this._fixSafariListener);
+          this.delegateElement.off("change");
+          this.productItemColorSwatch.destroy();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._fixSafariListener = this._fixSafari.bind(this);
+          window.addEventListener("resize", this._fixSafariListener);
+          this.delegateElement.on(
+            "click",
+            '[data-action="add-to-cart"]',
+            this._addToCart.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-secondary-action="open-quick-view"]',
+            this._openQuickView.bind(this)
+          );
+        },
+        /**
+         * On Safari 11.1 and lower, the browser incorrectly calculate the height of flex and grid items due to a bug
+         * on how padding percentage is calculated (that we use for allocating image space). This is solved in Safari 11.1 and higher.
+         *
+         * For those browsers, we fix that in JavaScript by setting the height directly for each aspect ratio image
+         *
+         * @private
+         */
+      },
+      {
+        key: "_fixSafari",
+        value: function _fixSafari() {
+          var userAgent = window.navigator.userAgent.toLowerCase();
 
-    }, {
-      key: "_fixSafari",
-      value: function _fixSafari() {
-        var userAgent = window.navigator.userAgent.toLowerCase();
+          if (
+            userAgent.includes("safari") &&
+            (userAgent.includes("version/10.1") ||
+              userAgent.includes("version/10.3") ||
+              userAgent.includes("version/11.0"))
+          ) {
+            var isPhone = Responsive.matchesBreakpoint("phone");
+            this.element
+              .querySelectorAll(
+                ".product-item__image-wrapper .aspect-ratio, .product-item__image-wrapper .placeholder-svg"
+              )
+              .forEach(function (image) {
+                if (isPhone) {
+                  image.parentNode.style.height = null;
+                } else {
+                  image.parentNode.style.height = "".concat(
+                    image.clientHeight,
+                    "px"
+                  );
+                }
+              });
+          }
+        },
+      },
+      {
+        key: "_openQuickView",
+        value: function _openQuickView(event, target) {
+          var productUrl = new URL(
+            ""
+              .concat(window.location.origin)
+              .concat(target.getAttribute("data-product-url"))
+          ); // If we are on mobile or tablet, we redirect to product page directly
 
-        if (userAgent.includes('safari') && (userAgent.includes('version/10.1') || userAgent.includes('version/10.3') || userAgent.includes('version/11.0'))) {
-          var isPhone = Responsive.matchesBreakpoint('phone');
-          this.element.querySelectorAll('.product-item__image-wrapper .aspect-ratio, .product-item__image-wrapper .placeholder-svg').forEach(function (image) {
-            if (isPhone) {
-              image.parentNode.style.height = null;
+          if (
+            Responsive.matchesBreakpoint("phone") ||
+            Responsive.matchesBreakpoint("tablet")
+          ) {
+            window.location.href = productUrl.href;
+            return false;
+          }
+
+          var modal = document.getElementById(
+            target.getAttribute("aria-controls")
+          );
+          modal.classList.add("is-loading");
+          productUrl.searchParams.set("view", "quick-view");
+          fetch(productUrl.href, {
+            credentials: "same-origin",
+            method: "GET",
+          }).then(function (response) {
+            response.text().then(function (content) {
+              modal.querySelector(".modal__inner").innerHTML = content;
+              modal.classList.remove("is-loading"); // Register a new section to power the JS
+
+              var modalProductSection = new ProductSection(
+                modal.querySelector('[data-section-type="product"]')
+              ); // We set a listener so we can cleanup on close
+
+              var doCleanUp = function doCleanUp() {
+                modalProductSection.onUnload();
+                modal.removeEventListener("modal:closed", doCleanUp);
+              };
+
+              modal.addEventListener("modal:closed", doCleanUp);
+            });
+          });
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
+         * ---------------------------------------------------------------------------------------------------
+         */
+      },
+      {
+        key: "_addToCart",
+        value: function _addToCart(event, target) {
+          var _this = this;
+
+          if (window.theme.cartType === "page") {
+            return; // When using a cart type of page, we just simply redirect to the cart page
+          }
+
+          event.preventDefault(); // Prevent form to be submitted
+
+          event.stopPropagation(); // First, we switch the status of the button
+
+          target.setAttribute("disabled", "disabled");
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // Then we add the product in Ajax
+
+          var formElement = target.closest('form[action*="/cart/add"]');
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function (response) {
+            target.removeAttribute("disabled");
+
+            if (response.ok) {
+              // We simply trigger an event so the mini-cart can re-render
+              _this.element.dispatchEvent(
+                new CustomEvent("product:added", {
+                  bubbles: true,
+                  detail: {
+                    variant: null,
+                    quantity: parseInt(
+                      formElement.querySelector('[name="quantity"]').value
+                    ),
+                  },
+                })
+              );
             } else {
-              image.parentNode.style.height = "".concat(image.clientHeight, "px");
+              document.dispatchEvent(new CustomEvent("theme:loading:end"));
             }
           });
-        }
-      }
-    }, {
-      key: "_openQuickView",
-      value: function _openQuickView(event, target) {
-        var productUrl = new URL("".concat(window.location.origin).concat(target.getAttribute('data-product-url'))); // If we are on mobile or tablet, we redirect to product page directly
-
-        if (Responsive.matchesBreakpoint('phone') || Responsive.matchesBreakpoint('tablet')) {
-          window.location.href = productUrl.href;
-          return false;
-        }
-
-        var modal = document.getElementById(target.getAttribute('aria-controls'));
-        modal.classList.add('is-loading');
-        productUrl.searchParams.set('view', 'quick-view');
-        fetch(productUrl.href, {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            modal.querySelector('.modal__inner').innerHTML = content;
-            modal.classList.remove('is-loading'); // Register a new section to power the JS
-
-            var modalProductSection = new ProductSection(modal.querySelector('[data-section-type="product"]')); // We set a listener so we can cleanup on close
-
-            var doCleanUp = function doCleanUp() {
-              modalProductSection.onUnload();
-              modal.removeEventListener('modal:closed', doCleanUp);
-            };
-
-            modal.addEventListener('modal:closed', doCleanUp);
-          });
-        });
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-    }, {
-      key: "_addToCart",
-      value: function _addToCart(event, target) {
-        var _this = this;
-
-        if (window.theme.cartType === 'page') {
-          return; // When using a cart type of page, we just simply redirect to the cart page
-        }
-
-        event.preventDefault(); // Prevent form to be submitted
-
-        event.stopPropagation(); // First, we switch the status of the button
-
-        target.setAttribute('disabled', 'disabled');
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // Then we add the product in Ajax
-
-        var formElement = target.closest('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
-          }
-        }).then(function (response) {
-          target.removeAttribute('disabled');
-
-          if (response.ok) {
-            // We simply trigger an event so the mini-cart can re-render
-            _this.element.dispatchEvent(new CustomEvent('product:added', {
-              bubbles: true,
-              detail: {
-                variant: null,
-                quantity: parseInt(formElement.querySelector('[name="quantity"]').value)
-              }
-            }));
-          } else {
-            document.dispatchEvent(new CustomEvent('theme:loading:end'));
-          }
-        });
-        event.preventDefault();
-      }
-    }]);
+          event.preventDefault();
+        },
+      },
+    ]);
 
     return FeaturedCollectionSection;
-  }();
+  })();
 
-  var GiftCardSection = /*#__PURE__*/function () {
+  var GiftCardSection = /*#__PURE__*/ (function () {
     function GiftCardSection(container) {
       _classCallCheck(this, GiftCardSection);
 
@@ -10323,53 +12168,67 @@
       this._attachListeners();
     }
 
-    _createClass(GiftCardSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.delegateElement.off();
-      }
-    }, {
-      key: "_createQrCode",
-      value: function _createQrCode() {
-        var qrCodeElements = document.querySelectorAll('.gift-card__qr');
-        qrCodeElements.forEach(function (qrCodeElement) {
-          new QRCode(qrCodeElement, {
-            text: qrCodeElement.getAttribute('data-identifier'),
-            width: 200,
-            height: 200
+    _createClass(GiftCardSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.delegateElement.off();
+        },
+      },
+      {
+        key: "_createQrCode",
+        value: function _createQrCode() {
+          var qrCodeElements = document.querySelectorAll(".gift-card__qr");
+          qrCodeElements.forEach(function (qrCodeElement) {
+            new QRCode(qrCodeElement, {
+              text: qrCodeElement.getAttribute("data-identifier"),
+              width: 200,
+              height: 200,
+            });
           });
-        });
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('click', '[data-action="print"]', this._print.bind(this));
-        this.delegateElement.on('click', '[data-action="select-code"]', this._selectCode.bind(this));
-      }
-    }, {
-      key: "_print",
-      value: function _print() {
-        window.print();
-      }
-    }, {
-      key: "_selectCode",
-      value: function _selectCode(event, element) {
-        element.select();
-      }
-    }]);
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "click",
+            '[data-action="print"]',
+            this._print.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="select-code"]',
+            this._selectCode.bind(this)
+          );
+        },
+      },
+      {
+        key: "_print",
+        value: function _print() {
+          window.print();
+        },
+      },
+      {
+        key: "_selectCode",
+        value: function _selectCode(event, element) {
+          element.select();
+        },
+      },
+    ]);
 
     return GiftCardSection;
-  }();
+  })();
 
-  var FooterSection = /*#__PURE__*/function () {
+  var FooterSection = /*#__PURE__*/ (function () {
     function FooterSection(element) {
       _classCallCheck(this, FooterSection);
 
       this.element = element;
       this.domDelegate = new Delegate(this.element);
-      this.localeValuePicker = new ValuePicker('footer-locale-picker');
-      this.currencyValuePicker = new ValuePicker('footer-currency-picker');
-      this.cookieBarElement = this.element.querySelector('.cookie-bar');
+      this.localeValuePicker = new ValuePicker("footer-locale-picker");
+      this.currencyValuePicker = new ValuePicker("footer-currency-picker");
+      this.cookieBarElement = this.element.querySelector(".cookie-bar");
 
       if (this.cookieBarElement) {
         this._setupCookieBar();
@@ -10380,385 +12239,493 @@
       this._attachListeners();
     }
 
-    _createClass(FooterSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        window.removeEventListener('resize', this._setupCollapsiblesListener);
-        this.domDelegate.off();
-        this.localeValuePicker.destroy();
-        this.currencyValuePicker.destroy();
-      }
-    }, {
-      key: "onSelect",
-      value: function onSelect() {
-        if (this.cookieBarElement) {
-          this.cookieBarElement.setAttribute('aria-hidden', 'false');
-        }
-      }
-    }, {
-      key: "onDeselect",
-      value: function onDeselect() {
-        if (this.cookieBarElement) {
-          this.cookieBarElement.setAttribute('aria-hidden', 'true');
-        }
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._setupCollapsiblesListener = this._setupCollapsibles.bind(this);
-        window.addEventListener('resize', this._setupCollapsiblesListener);
-        this.domDelegate.on('click', '[data-action="accept-terms"]', this._acceptCookieBarTerms.bind(this));
-      }
-      /**
-       * On mobile, some block items are collapsed, so we must slightly edit their HTML
-       */
-
-    }, {
-      key: "_setupCollapsibles",
-      value: function _setupCollapsibles() {
-        var collapsibleToggles = this.element.querySelectorAll('[data-action="toggle-collapsible"]'),
-            isPhone = Responsive.matchesBreakpoint('phone');
-        collapsibleToggles.forEach(function (collapsibleToggle) {
-          if (isPhone) {
-            collapsibleToggle.removeAttribute('disabled');
-          } else {
-            collapsibleToggle.setAttribute('disabled', 'disabled');
-            document.getElementById(collapsibleToggle.getAttribute('aria-controls')).style.height = '';
+    _createClass(FooterSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          window.removeEventListener("resize", this._setupCollapsiblesListener);
+          this.domDelegate.off();
+          this.localeValuePicker.destroy();
+          this.currencyValuePicker.destroy();
+        },
+      },
+      {
+        key: "onSelect",
+        value: function onSelect() {
+          if (this.cookieBarElement) {
+            this.cookieBarElement.setAttribute("aria-hidden", "false");
           }
-        });
-      }
-    }, {
-      key: "_setupCookieBar",
-      value: function _setupCookieBar() {
-        // We check if we should make it visible
-        try {
-          if (localStorage.getItem('cookieWasAccepted') === null) {
-            this.cookieBarElement.setAttribute('aria-hidden', 'false');
+        },
+      },
+      {
+        key: "onDeselect",
+        value: function onDeselect() {
+          if (this.cookieBarElement) {
+            this.cookieBarElement.setAttribute("aria-hidden", "true");
           }
-        } catch (exception) {// Some browser may throw an exception when trying to access the local storage in private mode for instance, so we just ignore it
-        }
-      }
-    }, {
-      key: "_acceptCookieBarTerms",
-      value: function _acceptCookieBarTerms() {
-        // We close the cookie bar and we set a value in local storage to not show it again
-        this.cookieBarElement.setAttribute('aria-hidden', 'true');
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._setupCollapsiblesListener = this._setupCollapsibles.bind(this);
+          window.addEventListener("resize", this._setupCollapsiblesListener);
+          this.domDelegate.on(
+            "click",
+            '[data-action="accept-terms"]',
+            this._acceptCookieBarTerms.bind(this)
+          );
+        },
+        /**
+         * On mobile, some block items are collapsed, so we must slightly edit their HTML
+         */
+      },
+      {
+        key: "_setupCollapsibles",
+        value: function _setupCollapsibles() {
+          var collapsibleToggles = this.element.querySelectorAll(
+              '[data-action="toggle-collapsible"]'
+            ),
+            isPhone = Responsive.matchesBreakpoint("phone");
+          collapsibleToggles.forEach(function (collapsibleToggle) {
+            if (isPhone) {
+              collapsibleToggle.removeAttribute("disabled");
+            } else {
+              collapsibleToggle.setAttribute("disabled", "disabled");
+              document.getElementById(
+                collapsibleToggle.getAttribute("aria-controls")
+              ).style.height = "";
+            }
+          });
+        },
+      },
+      {
+        key: "_setupCookieBar",
+        value: function _setupCookieBar() {
+          // We check if we should make it visible
+          try {
+            if (localStorage.getItem("cookieWasAccepted") === null) {
+              this.cookieBarElement.setAttribute("aria-hidden", "false");
+            }
+          } catch (exception) {
+            // Some browser may throw an exception when trying to access the local storage in private mode for instance, so we just ignore it
+          }
+        },
+      },
+      {
+        key: "_acceptCookieBarTerms",
+        value: function _acceptCookieBarTerms() {
+          // We close the cookie bar and we set a value in local storage to not show it again
+          this.cookieBarElement.setAttribute("aria-hidden", "true");
 
-        try {
-          localStorage.setItem('cookieWasAccepted', 'true');
-        } catch (exception) {}
-      }
-    }]);
+          try {
+            localStorage.setItem("cookieWasAccepted", "true");
+          } catch (exception) {}
+        },
+      },
+    ]);
 
     return FooterSection;
-  }();
+  })();
 
-  var SearchBar = /*#__PURE__*/function () {
+  var SearchBar = /*#__PURE__*/ (function () {
     function SearchBar(element) {
       _classCallCheck(this, SearchBar);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.headerElement = this.element.closest('.header');
-      this.searchBarElement = this.element.querySelector('.search-bar');
+      this.headerElement = this.element.closest(".header");
+      this.searchBarElement = this.element.querySelector(".search-bar");
       this.inputElement = this.element.querySelector('[name="q"]');
-      this.searchMenuElement = this.element.querySelector('.search-bar__menu-wrapper');
-      this.searchResultsElement = this.element.querySelector('.search-bar__results');
-      this.closeButtonElement = this.element.querySelector('.search-bar__close-button');
-      this.productTypeFilter = '';
+      this.searchMenuElement = this.element.querySelector(
+        ".search-bar__menu-wrapper"
+      );
+      this.searchResultsElement = this.element.querySelector(
+        ".search-bar__results"
+      );
+      this.closeButtonElement = this.element.querySelector(
+        ".search-bar__close-button"
+      );
+      this.productTypeFilter = "";
       this.isSearchOpen = false;
 
       this._attachListeners();
     }
 
-    _createClass(SearchBar, [{
-      key: "destroy",
-      value: function destroy() {
-        this.delegateElement.off();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('click', '[data-action="clear-input"]', this._clearInput.bind(this));
-        this.delegateElement.on('click', '[data-action="unfix-search"]', this._unfixMobileSearch.bind(this));
-        this.delegateElement.on('focusin', '[name="q"]', this._onInputFocus.bind(this));
-        this.delegateElement.on('focusout', this._onFocusOut.bind(this));
-        this.delegateElement.on('keydown', '[name="q"]', this._handleTab.bind(this));
-        this.delegateElement.on('input', '[name="q"]', this._debounce(this._doSearch.bind(this), 250));
-        this.delegateElement.on('change', '#search-product-type', this._productTypeChanged.bind(this));
-        this.delegateElement.on('submit', this._onFormSubmit.bind(this));
-      }
-      /**
-       * Toggle the mobile search (only applicable if the show condensed search is shown)
-       */
-
-    }, {
-      key: "toggleMobileSearch",
-      value: function toggleMobileSearch() {
-        if (this.isSearchOpen) {
-          this.headerElement.classList.remove('header--search-expanded');
-          this.element.classList.remove('is-visible');
-        } else {
-          this.headerElement.classList.add('header--search-expanded');
-          this.element.classList.add('is-visible');
-        }
-
-        this.isSearchOpen = !this.isSearchOpen;
-      }
-    }, {
-      key: "_unfixMobileSearch",
-      value: function _unfixMobileSearch() {
-        this.element.classList.remove('is-fixed');
-        this.closeButtonElement.style.width = '';
-        this.searchBarElement.classList.remove('is-expanded');
-        this.searchResultsElement.setAttribute('aria-hidden', 'true');
-        this.inputElement.classList.remove('is-filled');
-        document.body.classList.remove('no-mobile-scroll');
-
-        if (this.searchMenuElement) {
-          this.searchMenuElement.setAttribute('aria-hidden', 'true');
-        }
-      }
-      /**
-       * Only on mobile
-       */
-
-    }, {
-      key: "_clearInput",
-      value: function _clearInput() {
-        this.inputElement.value = '';
-        this.inputElement.classList.remove('is-filled');
-        this.searchResultsElement.setAttribute('aria-hidden', 'true');
-
-        if (this.searchMenuElement) {
-          this.searchMenuElement.setAttribute('aria-hidden', 'false');
-        }
-      }
-      /**
-       * When the input get focus, we display the quick links if they were specified by the merchant, or we open results if
-       * results were previously loaded
-       */
-
-    }, {
-      key: "_onInputFocus",
-      value: function _onInputFocus() {
-        this.element.classList.add('is-fixed');
-        this.closeButtonElement.style.width = "".concat(this.closeButtonElement.firstElementChild.offsetWidth, "px");
-        document.body.classList.add('no-mobile-scroll');
-
-        if (this.inputElement.value === '') {
-          if (this.searchMenuElement) {
-            this.searchMenuElement.setAttribute('aria-hidden', 'false');
-          }
-
-          this.searchResultsElement.setAttribute('aria-hidden', 'true');
-        } else {
-          if (this.searchMenuElement) {
-            this.searchMenuElement.setAttribute('aria-hidden', 'true');
-          }
-
-          this.searchResultsElement.setAttribute('aria-hidden', 'false');
-          this.inputElement.classList.add('is-filled');
-          this.searchBarElement.classList.add('is-expanded');
-        }
-
-        if (this.searchMenuElement) {
-          this.searchBarElement.classList.add('is-expanded');
-        }
-      }
-      /**
-       * Whenever the focus leaves the search, we close everything (both search results and quick links)
-       */
-
-    }, {
-      key: "_onFocusOut",
-      value: function _onFocusOut(event) {
-        // On phone, nothing happens on focus out
-        if (Responsive.matchesBreakpoint('phone')) {
-          return;
-        }
-
-        this.element.classList.remove('is-fixed');
-        document.body.classList.remove('no-mobile-scroll'); // event.relatedTarget allows to get the new element that get focus. If it's outside the div that contains the search, we close it
-
-        if (!this.element.contains(event.relatedTarget)) {
-          if (this.searchMenuElement) {
-            this.searchMenuElement.setAttribute('aria-hidden', 'true');
-          }
-
-          this.searchResultsElement.setAttribute('aria-hidden', 'true');
-          this.searchBarElement.classList.remove('is-expanded');
-        }
-      }
-      /**
-       * This allows to slightly improve the accessibility and user experience by directly focusing on the first search results (if any)
-       */
-
-    }, {
-      key: "_handleTab",
-      value: function _handleTab(event) {
-        if (event.keyCode !== 9) {
-          return;
-        } // Try to get the first link into the results to give focus to this element
-
-
-        var firstFocusableElement = this.searchResultsElement.querySelector('a');
-
-        if (firstFocusableElement) {
-          firstFocusableElement.focus();
-          event.preventDefault();
-        }
-      }
-      /**
-       * Fire the different Ajax requests
-       */
-
-    }, {
-      key: "_doSearch",
-      value: function _doSearch() {
-        var _this = this;
-
-        // Unfortunately, fetch does not support as of today cancelling a request. As a consequence what we do is that we manually
-        // keep track of sent requests, and only use the results of the last one
-        var currentInput = this.inputElement.value;
-        this.lastInputValue = currentInput;
-
-        if (currentInput === '') {
-          if (this.searchMenuElement) {
-            this.searchMenuElement.setAttribute('aria-hidden', 'false');
+    _createClass(SearchBar, [
+      {
+        key: "destroy",
+        value: function destroy() {
+          this.delegateElement.off();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "click",
+            '[data-action="clear-input"]',
+            this._clearInput.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-action="unfix-search"]',
+            this._unfixMobileSearch.bind(this)
+          );
+          this.delegateElement.on(
+            "focusin",
+            '[name="q"]',
+            this._onInputFocus.bind(this)
+          );
+          this.delegateElement.on("focusout", this._onFocusOut.bind(this));
+          this.delegateElement.on(
+            "keydown",
+            '[name="q"]',
+            this._handleTab.bind(this)
+          );
+          this.delegateElement.on(
+            "input",
+            '[name="q"]',
+            this._debounce(this._doSearch.bind(this), 250)
+          );
+          this.delegateElement.on(
+            "change",
+            "#search-product-type",
+            this._productTypeChanged.bind(this)
+          );
+          this.delegateElement.on("submit", this._onFormSubmit.bind(this));
+        },
+        /**
+         * Toggle the mobile search (only applicable if the show condensed search is shown)
+         */
+      },
+      {
+        key: "toggleMobileSearch",
+        value: function toggleMobileSearch() {
+          if (this.isSearchOpen) {
+            this.headerElement.classList.remove("header--search-expanded");
+            this.element.classList.remove("is-visible");
           } else {
-            this.searchBarElement.classList.remove('is-expanded');
+            this.headerElement.classList.add("header--search-expanded");
+            this.element.classList.add("is-visible");
           }
 
-          this.searchResultsElement.setAttribute('aria-hidden', 'true');
-        } else {
+          this.isSearchOpen = !this.isSearchOpen;
+        },
+      },
+      {
+        key: "_unfixMobileSearch",
+        value: function _unfixMobileSearch() {
+          this.element.classList.remove("is-fixed");
+          this.closeButtonElement.style.width = "";
+          this.searchBarElement.classList.remove("is-expanded");
+          this.searchResultsElement.setAttribute("aria-hidden", "true");
+          this.inputElement.classList.remove("is-filled");
+          document.body.classList.remove("no-mobile-scroll");
+
           if (this.searchMenuElement) {
-            this.searchMenuElement.setAttribute('aria-hidden', 'true');
+            this.searchMenuElement.setAttribute("aria-hidden", "true");
           }
+        },
+        /**
+         * Only on mobile
+         */
+      },
+      {
+        key: "_clearInput",
+        value: function _clearInput() {
+          this.inputElement.value = "";
+          this.inputElement.classList.remove("is-filled");
+          this.searchResultsElement.setAttribute("aria-hidden", "true");
 
-          this.searchResultsElement.setAttribute('aria-hidden', 'false');
-          this.searchBarElement.classList.add('is-expanded', 'is-loading');
-          var queryOptions = {
-            method: 'GET',
-            credentials: 'same-origin'
-          },
-              productQuery = "".concat(this.productTypeFilter !== '' ? "product_type:".concat(this.productTypeFilter, " AND ") : '').concat(encodeURIComponent(this.lastInputValue)),
-              queries = [fetch("".concat(window.routes.searchUrl, "?view=ajax&q=").concat(productQuery, "&options[prefix]=last&type=product"), queryOptions)];
-
-          if (window.theme.searchMode !== 'product') {
-            queries.push(fetch("".concat(window.routes.searchUrl, "?view=ajax&q=").concat(encodeURIComponent(this.lastInputValue), "&options[prefix]=last&type=").concat(window.theme.searchMode.replace('product,', '')), queryOptions));
+          if (this.searchMenuElement) {
+            this.searchMenuElement.setAttribute("aria-hidden", "false");
           }
+        },
+        /**
+         * When the input get focus, we display the quick links if they were specified by the merchant, or we open results if
+         * results were previously loaded
+         */
+      },
+      {
+        key: "_onInputFocus",
+        value: function _onInputFocus() {
+          this.element.classList.add("is-fixed");
+          this.closeButtonElement.style.width = "".concat(
+            this.closeButtonElement.firstElementChild.offsetWidth,
+            "px"
+          );
+          document.body.classList.add("no-mobile-scroll");
 
-          Promise.all(queries).then(function (responses) {
-            // If we receive the result for a query that is not the last one, we simply do not process the result
-            if (_this.lastInputValue !== currentInput) {
-              return;
+          if (this.inputElement.value === "") {
+            if (this.searchMenuElement) {
+              this.searchMenuElement.setAttribute("aria-hidden", "false");
             }
 
-            Promise.all(responses.map(function (response) {
-              return response.text();
-            })).then(function (contents) {
-              _this.searchBarElement.classList.remove('is-loading');
+            this.searchResultsElement.setAttribute("aria-hidden", "true");
+          } else {
+            if (this.searchMenuElement) {
+              this.searchMenuElement.setAttribute("aria-hidden", "true");
+            }
 
-              var searchContent = document.createElement('div');
-              searchContent.innerHTML = contents.join('').trim(); // If there is a "view all" button, we move it at the end of the results
+            this.searchResultsElement.setAttribute("aria-hidden", "false");
+            this.inputElement.classList.add("is-filled");
+            this.searchBarElement.classList.add("is-expanded");
+          }
 
-              var viewAll = searchContent.querySelector('.search-bar__view-all');
+          if (this.searchMenuElement) {
+            this.searchBarElement.classList.add("is-expanded");
+          }
+        },
+        /**
+         * Whenever the focus leaves the search, we close everything (both search results and quick links)
+         */
+      },
+      {
+        key: "_onFocusOut",
+        value: function _onFocusOut(event) {
+          // On phone, nothing happens on focus out
+          if (Responsive.matchesBreakpoint("phone")) {
+            return;
+          }
 
-              if (viewAll) {
-                searchContent.insertAdjacentElement('beforeend', viewAll);
+          this.element.classList.remove("is-fixed");
+          document.body.classList.remove("no-mobile-scroll"); // event.relatedTarget allows to get the new element that get focus. If it's outside the div that contains the search, we close it
+
+          if (!this.element.contains(event.relatedTarget)) {
+            if (this.searchMenuElement) {
+              this.searchMenuElement.setAttribute("aria-hidden", "true");
+            }
+
+            this.searchResultsElement.setAttribute("aria-hidden", "true");
+            this.searchBarElement.classList.remove("is-expanded");
+          }
+        },
+        /**
+         * This allows to slightly improve the accessibility and user experience by directly focusing on the first search results (if any)
+         */
+      },
+      {
+        key: "_handleTab",
+        value: function _handleTab(event) {
+          if (event.keyCode !== 9) {
+            return;
+          } // Try to get the first link into the results to give focus to this element
+
+          var firstFocusableElement = this.searchResultsElement.querySelector(
+            "a"
+          );
+
+          if (firstFocusableElement) {
+            firstFocusableElement.focus();
+            event.preventDefault();
+          }
+        },
+        /**
+         * Fire the different Ajax requests
+         */
+      },
+      {
+        key: "_doSearch",
+        value: function _doSearch() {
+          var _this = this;
+
+          // Unfortunately, fetch does not support as of today cancelling a request. As a consequence what we do is that we manually
+          // keep track of sent requests, and only use the results of the last one
+          var currentInput = this.inputElement.value;
+          this.lastInputValue = currentInput;
+
+          if (currentInput === "") {
+            if (this.searchMenuElement) {
+              this.searchMenuElement.setAttribute("aria-hidden", "false");
+            } else {
+              this.searchBarElement.classList.remove("is-expanded");
+            }
+
+            this.searchResultsElement.setAttribute("aria-hidden", "true");
+          } else {
+            if (this.searchMenuElement) {
+              this.searchMenuElement.setAttribute("aria-hidden", "true");
+            }
+
+            this.searchResultsElement.setAttribute("aria-hidden", "false");
+            this.searchBarElement.classList.add("is-expanded", "is-loading");
+            var queryOptions = {
+                method: "GET",
+                credentials: "same-origin",
+              },
+              productQuery = ""
+                .concat(
+                  this.productTypeFilter !== ""
+                    ? "product_type:".concat(this.productTypeFilter, " AND ")
+                    : ""
+                )
+                .concat(encodeURIComponent(this.lastInputValue)),
+              queries = [
+                fetch(
+                  ""
+                    .concat(window.routes.searchUrl, "?view=ajax&q=")
+                    .concat(productQuery, "&options[prefix]=last&type=product"),
+                  queryOptions
+                ),
+              ];
+
+            if (window.theme.searchMode !== "product") {
+              queries.push(
+                fetch(
+                  ""
+                    .concat(window.routes.searchUrl, "?view=ajax&q=")
+                    .concat(
+                      encodeURIComponent(this.lastInputValue),
+                      "&options[prefix]=last&type="
+                    )
+                    .concat(window.theme.searchMode.replace("product,", "")),
+                  queryOptions
+                )
+              );
+            }
+
+            Promise.all(queries).then(function (responses) {
+              // If we receive the result for a query that is not the last one, we simply do not process the result
+              if (_this.lastInputValue !== currentInput) {
+                return;
               }
 
-              _this.searchBarElement.querySelector('.search-bar__results-inner').innerHTML = searchContent.innerHTML;
+              Promise.all(
+                responses.map(function (response) {
+                  return response.text();
+                })
+              ).then(function (contents) {
+                _this.searchBarElement.classList.remove("is-loading");
+
+                var searchContent = document.createElement("div");
+                searchContent.innerHTML = contents.join("").trim(); // If there is a "view all" button, we move it at the end of the results
+
+                var viewAll = searchContent.querySelector(
+                  ".search-bar__view-all"
+                );
+
+                if (viewAll) {
+                  searchContent.insertAdjacentElement("beforeend", viewAll);
+                }
+
+                _this.searchBarElement.querySelector(
+                  ".search-bar__results-inner"
+                ).innerHTML = searchContent.innerHTML;
+              });
             });
-          });
-        }
-      }
-      /**
-       * Warehouse allows to display a filter by type. When its value change, we re-do a new search to get the new data
-       */
-
-    }, {
-      key: "_productTypeChanged",
-      value: function _productTypeChanged(event, target) {
-        target.closest('.search-bar__filter').querySelector('.search-bar__filter-active').innerText = target.options[target.selectedIndex].innerText;
-        this.productTypeFilter = target.value;
-
-        if (this.inputElement.value !== '') {
-          this._doSearch();
-        }
-      }
-      /**
-       * Called when the form is submitted using the Enter key. We have to capture it and transform the query to include the wildcard
-       */
-
-    }, {
-      key: "_onFormSubmit",
-      value: function _onFormSubmit(event) {
-        // To prevent for the value to temporarily shows the "*", we clone the input as a hidden field
-        var cloneNode = this.inputElement.cloneNode();
-        cloneNode.setAttribute('type', 'hidden');
-        cloneNode.value = '';
-
-        if (this.productTypeFilter !== '') {
-          cloneNode.value += "product_type:".concat(this.productTypeFilter);
-
-          if (this.inputElement.value !== '') {
-            cloneNode.value += ' AND ';
           }
-        }
+        },
+        /**
+         * Warehouse allows to display a filter by type. When its value change, we re-do a new search to get the new data
+         */
+      },
+      {
+        key: "_productTypeChanged",
+        value: function _productTypeChanged(event, target) {
+          target
+            .closest(".search-bar__filter")
+            .querySelector(".search-bar__filter-active").innerText =
+            target.options[target.selectedIndex].innerText;
+          this.productTypeFilter = target.value;
 
-        cloneNode.value += this.inputElement.value; // We remove the "q" attribute on existing node so it's not submitted
+          if (this.inputElement.value !== "") {
+            this._doSearch();
+          }
+        },
+        /**
+         * Called when the form is submitted using the Enter key. We have to capture it and transform the query to include the wildcard
+         */
+      },
+      {
+        key: "_onFormSubmit",
+        value: function _onFormSubmit(event) {
+          // To prevent for the value to temporarily shows the "*", we clone the input as a hidden field
+          var cloneNode = this.inputElement.cloneNode();
+          cloneNode.setAttribute("type", "hidden");
+          cloneNode.value = "";
 
-        this.inputElement.removeAttribute('name'); // And we insert it into the DOM
+          if (this.productTypeFilter !== "") {
+            cloneNode.value += "product_type:".concat(this.productTypeFilter);
 
-        this.inputElement.insertAdjacentElement('afterend', cloneNode);
-      }
-      /**
-       * Simple function that allows to debounce
-       */
-
-    }, {
-      key: "_debounce",
-      value: function _debounce(fn, delay) {
-        var _this2 = this;
-
-        var timer = null;
-        return function () {
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
+            if (this.inputElement.value !== "") {
+              cloneNode.value += " AND ";
+            }
           }
 
-          clearTimeout(timer);
-          timer = setTimeout(function () {
-            fn.apply(_this2, args);
-          }, delay);
-        };
-      }
-    }]);
+          cloneNode.value += this.inputElement.value; // We remove the "q" attribute on existing node so it's not submitted
+
+          this.inputElement.removeAttribute("name"); // And we insert it into the DOM
+
+          this.inputElement.insertAdjacentElement("afterend", cloneNode);
+        },
+        /**
+         * Simple function that allows to debounce
+         */
+      },
+      {
+        key: "_debounce",
+        value: function _debounce(fn, delay) {
+          var _this2 = this;
+
+          var timer = null;
+          return function () {
+            for (
+              var _len = arguments.length, args = new Array(_len), _key = 0;
+              _key < _len;
+              _key++
+            ) {
+              args[_key] = arguments[_key];
+            }
+
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              fn.apply(_this2, args);
+            }, delay);
+          };
+        },
+      },
+    ]);
 
     return SearchBar;
-  }();
+  })();
 
-  var HeaderSection = /*#__PURE__*/function () {
+  var HeaderSection = /*#__PURE__*/ (function () {
     function HeaderSection(element) {
       _classCallCheck(this, HeaderSection);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
-      this.searchBar = new SearchBar(this.element.querySelector('.header__search-bar-wrapper'));
-      this.cart = new Cart(this.element.querySelector('.header__action-item--cart'), {
-        useStickyHeader: this.options['useStickyHeader']
-      }); // We create the desktop and mobile navigation conditionally as we've found that some merchants may have no menu
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
+      this.searchBar = new SearchBar(
+        this.element.querySelector(".header__search-bar-wrapper")
+      );
+      this.cart = new Cart(
+        this.element.querySelector(".header__action-item--cart"),
+        {
+          useStickyHeader: this.options["useStickyHeader"],
+        }
+      ); // We create the desktop and mobile navigation conditionally as we've found that some merchants may have no menu
 
-      var desktopNavigationElement = this.element.querySelector(this.options['navigationLayout'] === 'inline' ? '.nav-bar' : '.header__desktop-nav');
+      var desktopNavigationElement = this.element.querySelector(
+        this.options["navigationLayout"] === "inline"
+          ? ".nav-bar"
+          : ".header__desktop-nav"
+      );
 
       if (desktopNavigationElement) {
-        this.desktopNavigation = new DesktopNavigation(desktopNavigationElement, this.options['navigationLayout'], this.options['desktopOpenTrigger']);
+        this.desktopNavigation = new DesktopNavigation(
+          desktopNavigationElement,
+          this.options["navigationLayout"],
+          this.options["desktopOpenTrigger"]
+        );
       }
 
-      var mobileNavigationElement = this.element.querySelector('.header__mobile-nav');
+      var mobileNavigationElement = this.element.querySelector(
+        ".header__mobile-nav"
+      );
 
       if (mobileNavigationElement) {
         this.mobileNavigation = new MobileNavigation(mobileNavigationElement);
@@ -10769,295 +12736,372 @@
       this._attachListeners();
     }
 
-    _createClass(HeaderSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.searchBar.destroy();
-        this.cart.destroy();
+    _createClass(HeaderSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.searchBar.destroy();
+          this.cart.destroy();
 
-        if (this.desktopNavigation) {
-          this.desktopNavigation.destroy();
-        }
+          if (this.desktopNavigation) {
+            this.desktopNavigation.destroy();
+          }
 
-        if (this.mobileNavigation) {
-          this.mobileNavigation.destroy();
-        }
+          if (this.mobileNavigation) {
+            this.mobileNavigation.destroy();
+          }
 
-        window.removeEventListener('resize', this._setupCssVariablesListener);
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        if (this.desktopNavigation) {
-          this.desktopNavigation.onBlockSelect(event);
-        }
-      }
-    }, {
-      key: "onBlockDeselect",
-      value: function onBlockDeselect(event) {
-        if (this.desktopNavigation) {
-          this.desktopNavigation.onBlockDeselect(event);
-        }
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._setupCssVariablesListener = this._setupCssVariables.bind(this);
-        window.addEventListener('resize', this._setupCssVariablesListener);
-        this.delegateElement.on('click', '[data-action="toggle-search"]', this._toggleMobileSearch.bind(this));
-      }
-      /**
-       * We have some positioning that is based on the CSS variables, so we must make sure to update them whenever
-       * the section is reloaded into the editor
-       */
-
-    }, {
-      key: "_setupCssVariables",
-      value: function _setupCssVariables() {
-        document.documentElement.style.setProperty('--header-height', this.element.parentNode.clientHeight + 'px');
-      }
-      /**
-       * Toggle the mobile search
-       */
-
-    }, {
-      key: "_toggleMobileSearch",
-      value: function _toggleMobileSearch(event) {
-        this.searchBar.toggleMobileSearch();
-        event.preventDefault();
-      }
-    }]);
+          window.removeEventListener("resize", this._setupCssVariablesListener);
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          if (this.desktopNavigation) {
+            this.desktopNavigation.onBlockSelect(event);
+          }
+        },
+      },
+      {
+        key: "onBlockDeselect",
+        value: function onBlockDeselect(event) {
+          if (this.desktopNavigation) {
+            this.desktopNavigation.onBlockDeselect(event);
+          }
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._setupCssVariablesListener = this._setupCssVariables.bind(this);
+          window.addEventListener("resize", this._setupCssVariablesListener);
+          this.delegateElement.on(
+            "click",
+            '[data-action="toggle-search"]',
+            this._toggleMobileSearch.bind(this)
+          );
+        },
+        /**
+         * We have some positioning that is based on the CSS variables, so we must make sure to update them whenever
+         * the section is reloaded into the editor
+         */
+      },
+      {
+        key: "_setupCssVariables",
+        value: function _setupCssVariables() {
+          document.documentElement.style.setProperty(
+            "--header-height",
+            this.element.parentNode.clientHeight + "px"
+          );
+        },
+        /**
+         * Toggle the mobile search
+         */
+      },
+      {
+        key: "_toggleMobileSearch",
+        value: function _toggleMobileSearch(event) {
+          this.searchBar.toggleMobileSearch();
+          event.preventDefault();
+        },
+      },
+    ]);
 
     return HeaderSection;
-  }();
+  })();
 
-  var LoginSection = /*#__PURE__*/function () {
+  var LoginSection = /*#__PURE__*/ (function () {
     function LoginSection(element) {
       _classCallCheck(this, LoginSection);
 
       this.element = element;
       this.domDelegate = new Delegate(this.element);
-      this.customerLoginForm = this.element.querySelector('#customer_login');
-      this.recoverPasswordForm = this.element.querySelector('#recover_customer_password');
-      this.domDelegate.on('click', '[data-action="toggle-login-form"]', this._showRecoverPassword.bind(this));
+      this.customerLoginForm = this.element.querySelector("#customer_login");
+      this.recoverPasswordForm = this.element.querySelector(
+        "#recover_customer_password"
+      );
+      this.domDelegate.on(
+        "click",
+        '[data-action="toggle-login-form"]',
+        this._showRecoverPassword.bind(this)
+      );
     }
 
-    _createClass(LoginSection, [{
-      key: "_showRecoverPassword",
-      value: function _showRecoverPassword() {
-        var isLoginActive = this.customerLoginForm.style.display === 'block';
+    _createClass(LoginSection, [
+      {
+        key: "_showRecoverPassword",
+        value: function _showRecoverPassword() {
+          var isLoginActive = this.customerLoginForm.style.display === "block";
 
-        if (isLoginActive) {
-          this.customerLoginForm.style.display = 'none';
-          this.recoverPasswordForm.style.display = 'block';
-        } else {
-          this.customerLoginForm.style.display = 'block';
-          this.recoverPasswordForm.style.display = 'none';
-        }
-      }
-    }]);
+          if (isLoginActive) {
+            this.customerLoginForm.style.display = "none";
+            this.recoverPasswordForm.style.display = "block";
+          } else {
+            this.customerLoginForm.style.display = "block";
+            this.recoverPasswordForm.style.display = "none";
+          }
+        },
+      },
+    ]);
 
     return LoginSection;
-  }();
+  })();
 
-  var MapSection = /*#__PURE__*/function () {
+  var MapSection = /*#__PURE__*/ (function () {
     function MapSection(element) {
       _classCallCheck(this, MapSection);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(element.getAttribute("data-section-settings"));
       this.mapPositions = [];
       this.desktopMarkers = [];
       this.desktopMapElement = null;
       this.mobileMarkers = [];
       this.mobileMapElements = [];
 
-      if (this.options['apiKey'] && this.options['mapAddresses'].length > 0) {
+      if (this.options["apiKey"] && this.options["mapAddresses"].length > 0) {
         this._loadScript().then(this._initMaps.bind(this));
       }
 
       this._attachListeners();
     }
 
-    _createClass(MapSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.delegateElement.off('click');
+    _createClass(MapSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.delegateElement.off("click");
 
-        if (this.options['apiKey'] && this.options['mapAddresses'].length > 0) {
-          google.maps.event.clearInstanceListeners(window);
-        }
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        this._showStore(event.target);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        var _this = this;
-
-        this.delegateElement.on('click', '[data-action="toggle-store"]', function (event, target) {
-          _this._showStore(target.closest('.map__store-item'));
-        });
-      }
-    }, {
-      key: "_showStore",
-      value: function _showStore(storeItem) {
-        var _this2 = this;
-
-        var toggleButton = storeItem.querySelector('[data-action="toggle-store"]'); // If already open, we do nothing unless we are on mobile (as we need at least one store visible on desktop)
-
-        if (Responsive.getCurrentBreakpoint() !== 'phone' && toggleButton.getAttribute('aria-expanded') === 'true') {
-          return;
-        } // Otherwise, we activate it
-
-
-        if (toggleButton.getAttribute('aria-expanded') === 'true') {
-          toggleButton.setAttribute('aria-expanded', 'false');
-          Animation.slideUp(storeItem.querySelector('.map__store-collapsible'));
-        } else {
-          toggleButton.setAttribute('aria-expanded', 'true');
-          Animation.slideDown(storeItem.querySelector('.map__store-collapsible'));
-        } // Finally, we close the other ones (if any is open)
-
-
-        Dom.getSiblings(storeItem).forEach(function (storeItemToClose) {
-          storeItemToClose.querySelector('[data-action="toggle-store"]').setAttribute('aria-expanded', 'false');
-          Animation.slideUp(storeItemToClose.querySelector('.map__store-collapsible'));
-        }); // We need to move the map to the new center, and we need to change its color to make it active
-
-        var storeIndex = parseInt(storeItem.getAttribute('data-store-index'));
-        this.desktopMapElement.panTo(this.mapPositions[storeIndex]);
-        this.desktopMarkers.forEach(function (marker, index) {
-          marker.setMap(_this2.desktopMapElement);
-
-          if (index === storeIndex) {
-            marker.icon.fillColor = _this2.options['markerActiveColor'];
-          } else {
-            marker.icon.fillColor = _this2.options['markerColor'];
+          if (
+            this.options["apiKey"] &&
+            this.options["mapAddresses"].length > 0
+          ) {
+            google.maps.event.clearInstanceListeners(window);
           }
-        });
-      }
-    }, {
-      key: "_loadScript",
-      value: function _loadScript() {
-        var _this3 = this;
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          this._showStore(event.target);
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          var _this = this;
 
-        return new Promise(function (resolve, reject) {
-          var script = document.createElement('script');
-          document.body.appendChild(script);
-          script.onload = resolve;
-          script.onerror = reject;
-          script.async = true;
-          script.src = "https://maps.googleapis.com/maps/api/js?key=".concat(_this3.options['apiKey']);
-        });
-      }
-    }, {
-      key: "_initMaps",
-      value: function _initMaps() {
-        var _this4 = this;
+          this.delegateElement.on(
+            "click",
+            '[data-action="toggle-store"]',
+            function (event, target) {
+              _this._showStore(target.closest(".map__store-item"));
+            }
+          );
+        },
+      },
+      {
+        key: "_showStore",
+        value: function _showStore(storeItem) {
+          var _this2 = this;
 
-        // First, we gather all the maps (desktop and mobile)
-        var mapOptions = {
-          zoom: this.options['zoom'],
-          draggable: this.options['draggableMap'],
-          clickableIcons: false,
-          scrollwheel: this.options['draggableMap'],
-          disableDoubleClickZoom: true,
-          disableDefaultUI: !this.options['showMapControls'],
-          styles: JSON.parse(this.element.querySelector('[data-gmap-style]').innerHTML)
-        };
-        this.desktopMapElement = new google.maps.Map(this.element.querySelector('.map__map-container--desktop .map__gmap'), mapOptions);
-        this.mobileMapElements = [];
-        this.element.querySelectorAll('.map__map-container--mobile .map__gmap').forEach(function (item, index) {
-          _this4.mobileMapElements[index] = new google.maps.Map(item, mapOptions);
-        }); // Then we geocode all addresses
+          var toggleButton = storeItem.querySelector(
+            '[data-action="toggle-store"]'
+          ); // If already open, we do nothing unless we are on mobile (as we need at least one store visible on desktop)
 
-        this._geocodeAddresses(); // Make sure we attach the listeners so that it's properly resized
+          if (
+            Responsive.getCurrentBreakpoint() !== "phone" &&
+            toggleButton.getAttribute("aria-expanded") === "true"
+          ) {
+            return;
+          } // Otherwise, we activate it
 
+          if (toggleButton.getAttribute("aria-expanded") === "true") {
+            toggleButton.setAttribute("aria-expanded", "false");
+            Animation.slideUp(
+              storeItem.querySelector(".map__store-collapsible")
+            );
+          } else {
+            toggleButton.setAttribute("aria-expanded", "true");
+            Animation.slideDown(
+              storeItem.querySelector(".map__store-collapsible")
+            );
+          } // Finally, we close the other ones (if any is open)
 
-        google.maps.event.addDomListener(window, 'resize', function () {
-          var desktopCenter = _this4.desktopMapElement.getCenter();
+          Dom.getSiblings(storeItem).forEach(function (storeItemToClose) {
+            storeItemToClose
+              .querySelector('[data-action="toggle-store"]')
+              .setAttribute("aria-expanded", "false");
+            Animation.slideUp(
+              storeItemToClose.querySelector(".map__store-collapsible")
+            );
+          }); // We need to move the map to the new center, and we need to change its color to make it active
 
-          google.maps.event.trigger(_this4.desktopMapElement, 'resize');
+          var storeIndex = parseInt(storeItem.getAttribute("data-store-index"));
+          this.desktopMapElement.panTo(this.mapPositions[storeIndex]);
+          this.desktopMarkers.forEach(function (marker, index) {
+            marker.setMap(_this2.desktopMapElement);
 
-          _this4.desktopMapElement.setCenter(desktopCenter);
-
-          _this4.mobileMapElements.forEach(function (mobileMap) {
-            var mobileCenter = mobileMap.getCenter();
-            google.maps.event.trigger(mobileMap, 'resize');
-            mobileMap.setCenter(mobileCenter);
-          });
-        });
-      }
-    }, {
-      key: "_onMarkerClicked",
-      value: function _onMarkerClicked(address) {
-        window.open("https://www.google.com/maps/search/?api=1&query=".concat(address), '_blank');
-      }
-    }, {
-      key: "_geocodeAddresses",
-      value: function _geocodeAddresses() {
-        var _this5 = this;
-
-        // Then, we geocode all the addresses, and place them on the map
-        var geocoder = new google.maps.Geocoder();
-        this.options['mapAddresses'].forEach(function (address, index) {
-          geocoder.geocode({
-            address: address
-          }, function (results, status) {
-            if (status !== google.maps.GeocoderStatus.OK) {
-              if (Shopify.designMode) ;
+            if (index === storeIndex) {
+              marker.icon.fillColor = _this2.options["markerActiveColor"];
             } else {
-              var position = results[0].geometry.location;
-              _this5.mapPositions[index] = position; // The desktop map holds all the markers, so we add it to the desktop global map.
-
-              _this5.desktopMarkers[index] = new google.maps.Marker({
-                map: index === 0 ? _this5.desktopMapElement : null,
-                position: position,
-                icon: {
-                  path: 'M12.5,0 C6.388889,0 0,4.7304348 0,12.5217391 C0,19.8956522 11.111111,31.1652174 11.527778,31.5826087 C11.805556,31.8608696 12.083333,32 12.5,32 C12.916667,32 13.194444,31.8608696 13.472222,31.5826087 C13.888889,31.1652174 25,19.8956522 25,12.5217391 C25,4.7304348 18.611111,0 12.5,0 Z M12,16 C9.733333,16 8,14.2666667 8,12 C8,9.7333333 9.733333,8 12,8 C14.266667,8 16,9.7333333 16,12 C16,14.2666667 14.266667,16 12,16 Z',
-                  fillColor: index === 0 ? _this5.options['markerActiveColor'] : _this5.options['markerColor'],
-                  fillOpacity: 1,
-                  anchor: new google.maps.Point(12, 30),
-                  strokeWeight: 0
-                }
-              }); // We then add it on the corresponding mobile map
-
-              _this5.mobileMarkers[index] = new google.maps.Marker({
-                map: _this5.mobileMapElements[index],
-                position: position,
-                icon: {
-                  path: 'M12.5,0 C6.388889,0 0,4.7304348 0,12.5217391 C0,19.8956522 11.111111,31.1652174 11.527778,31.5826087 C11.805556,31.8608696 12.083333,32 12.5,32 C12.916667,32 13.194444,31.8608696 13.472222,31.5826087 C13.888889,31.1652174 25,19.8956522 25,12.5217391 C25,4.7304348 18.611111,0 12.5,0 Z M12,16 C9.733333,16 8,14.2666667 8,12 C8,9.7333333 9.733333,8 12,8 C14.266667,8 16,9.7333333 16,12 C16,14.2666667 14.266667,16 12,16 Z',
-                  fillColor: _this5.options['markerActiveColor'],
-                  fillOpacity: 1,
-                  anchor: new google.maps.Point(12, 30),
-                  strokeWeight: 0
-                }
-              });
-
-              _this5.desktopMarkers[index].addListener('click', _this5._onMarkerClicked.bind(_this5, address));
-
-              _this5.mobileMarkers[index].addListener('click', _this5._onMarkerClicked.bind(_this5, address));
-
-              if (index === 0) {
-                _this5.desktopMapElement.setCenter(position);
-              }
-
-              _this5.mobileMapElements[index].setCenter(position);
+              marker.icon.fillColor = _this2.options["markerColor"];
             }
           });
-        });
-      }
-    }]);
+        },
+      },
+      {
+        key: "_loadScript",
+        value: function _loadScript() {
+          var _this3 = this;
+
+          return new Promise(function (resolve, reject) {
+            var script = document.createElement("script");
+            document.body.appendChild(script);
+            script.onload = resolve;
+            script.onerror = reject;
+            script.async = true;
+            script.src = "https://maps.googleapis.com/maps/api/js?key=".concat(
+              _this3.options["apiKey"]
+            );
+          });
+        },
+      },
+      {
+        key: "_initMaps",
+        value: function _initMaps() {
+          var _this4 = this;
+
+          // First, we gather all the maps (desktop and mobile)
+          var mapOptions = {
+            zoom: this.options["zoom"],
+            draggable: this.options["draggableMap"],
+            clickableIcons: false,
+            scrollwheel: this.options["draggableMap"],
+            disableDoubleClickZoom: true,
+            disableDefaultUI: !this.options["showMapControls"],
+            styles: JSON.parse(
+              this.element.querySelector("[data-gmap-style]").innerHTML
+            ),
+          };
+          this.desktopMapElement = new google.maps.Map(
+            this.element.querySelector(
+              ".map__map-container--desktop .map__gmap"
+            ),
+            mapOptions
+          );
+          this.mobileMapElements = [];
+          this.element
+            .querySelectorAll(".map__map-container--mobile .map__gmap")
+            .forEach(function (item, index) {
+              _this4.mobileMapElements[index] = new google.maps.Map(
+                item,
+                mapOptions
+              );
+            }); // Then we geocode all addresses
+
+          this._geocodeAddresses(); // Make sure we attach the listeners so that it's properly resized
+
+          google.maps.event.addDomListener(window, "resize", function () {
+            var desktopCenter = _this4.desktopMapElement.getCenter();
+
+            google.maps.event.trigger(_this4.desktopMapElement, "resize");
+
+            _this4.desktopMapElement.setCenter(desktopCenter);
+
+            _this4.mobileMapElements.forEach(function (mobileMap) {
+              var mobileCenter = mobileMap.getCenter();
+              google.maps.event.trigger(mobileMap, "resize");
+              mobileMap.setCenter(mobileCenter);
+            });
+          });
+        },
+      },
+      {
+        key: "_onMarkerClicked",
+        value: function _onMarkerClicked(address) {
+          window.open(
+            "https://www.google.com/maps/search/?api=1&query=".concat(address),
+            "_blank"
+          );
+        },
+      },
+      {
+        key: "_geocodeAddresses",
+        value: function _geocodeAddresses() {
+          var _this5 = this;
+
+          // Then, we geocode all the addresses, and place them on the map
+          var geocoder = new google.maps.Geocoder();
+          this.options["mapAddresses"].forEach(function (address, index) {
+            geocoder.geocode(
+              {
+                address: address,
+              },
+              function (results, status) {
+                if (status !== google.maps.GeocoderStatus.OK) {
+                  if (Shopify.designMode);
+                } else {
+                  var position = results[0].geometry.location;
+                  _this5.mapPositions[index] = position; // The desktop map holds all the markers, so we add it to the desktop global map.
+
+                  _this5.desktopMarkers[index] = new google.maps.Marker({
+                    map: index === 0 ? _this5.desktopMapElement : null,
+                    position: position,
+                    icon: {
+                      path:
+                        "M12.5,0 C6.388889,0 0,4.7304348 0,12.5217391 C0,19.8956522 11.111111,31.1652174 11.527778,31.5826087 C11.805556,31.8608696 12.083333,32 12.5,32 C12.916667,32 13.194444,31.8608696 13.472222,31.5826087 C13.888889,31.1652174 25,19.8956522 25,12.5217391 C25,4.7304348 18.611111,0 12.5,0 Z M12,16 C9.733333,16 8,14.2666667 8,12 C8,9.7333333 9.733333,8 12,8 C14.266667,8 16,9.7333333 16,12 C16,14.2666667 14.266667,16 12,16 Z",
+                      fillColor:
+                        index === 0
+                          ? _this5.options["markerActiveColor"]
+                          : _this5.options["markerColor"],
+                      fillOpacity: 1,
+                      anchor: new google.maps.Point(12, 30),
+                      strokeWeight: 0,
+                    },
+                  }); // We then add it on the corresponding mobile map
+
+                  _this5.mobileMarkers[index] = new google.maps.Marker({
+                    map: _this5.mobileMapElements[index],
+                    position: position,
+                    icon: {
+                      path:
+                        "M12.5,0 C6.388889,0 0,4.7304348 0,12.5217391 C0,19.8956522 11.111111,31.1652174 11.527778,31.5826087 C11.805556,31.8608696 12.083333,32 12.5,32 C12.916667,32 13.194444,31.8608696 13.472222,31.5826087 C13.888889,31.1652174 25,19.8956522 25,12.5217391 C25,4.7304348 18.611111,0 12.5,0 Z M12,16 C9.733333,16 8,14.2666667 8,12 C8,9.7333333 9.733333,8 12,8 C14.266667,8 16,9.7333333 16,12 C16,14.2666667 14.266667,16 12,16 Z",
+                      fillColor: _this5.options["markerActiveColor"],
+                      fillOpacity: 1,
+                      anchor: new google.maps.Point(12, 30),
+                      strokeWeight: 0,
+                    },
+                  });
+
+                  _this5.desktopMarkers[index].addListener(
+                    "click",
+                    _this5._onMarkerClicked.bind(_this5, address)
+                  );
+
+                  _this5.mobileMarkers[index].addListener(
+                    "click",
+                    _this5._onMarkerClicked.bind(_this5, address)
+                  );
+
+                  if (index === 0) {
+                    _this5.desktopMapElement.setCenter(position);
+                  }
+
+                  _this5.mobileMapElements[index].setCenter(position);
+                }
+              }
+            );
+          });
+        },
+      },
+    ]);
 
     return MapSection;
-  }();
+  })();
 
-  var MinimalHeaderSection = /*#__PURE__*/function () {
+  var MinimalHeaderSection = /*#__PURE__*/ (function () {
     function MinimalHeaderSection(element) {
       _classCallCheck(this, MinimalHeaderSection);
 
@@ -11068,31 +13112,37 @@
       this._attachListeners();
     }
 
-    _createClass(MinimalHeaderSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        window.removeEventListener('resize', this._setupCssVariablesListener);
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._setupCssVariablesListener = this._setupCssVariables.bind(this);
-        window.addEventListener('resize', this._setupCssVariablesListener);
-      }
-      /**
-       * We have some positioning that is based on the CSS variables, so we must make sure to update them whenever
-       * the section is reloaded into the editor
-       */
-
-    }, {
-      key: "_setupCssVariables",
-      value: function _setupCssVariables() {
-        document.documentElement.style.setProperty('--header-height', this.element.parentNode.clientHeight + 'px');
-      }
-    }]);
+    _createClass(MinimalHeaderSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          window.removeEventListener("resize", this._setupCssVariablesListener);
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._setupCssVariablesListener = this._setupCssVariables.bind(this);
+          window.addEventListener("resize", this._setupCssVariablesListener);
+        },
+        /**
+         * We have some positioning that is based on the CSS variables, so we must make sure to update them whenever
+         * the section is reloaded into the editor
+         */
+      },
+      {
+        key: "_setupCssVariables",
+        value: function _setupCssVariables() {
+          document.documentElement.style.setProperty(
+            "--header-height",
+            this.element.parentNode.clientHeight + "px"
+          );
+        },
+      },
+    ]);
 
     return MinimalHeaderSection;
-  }();
+  })();
 
   var QuickLinksSection = function QuickLinksSection(element) {
     _classCallCheck(this, QuickLinksSection);
@@ -11100,7 +13150,7 @@
     this.element = element; // Make sure that the section is always visible in the editor, even if the option to hide it on desktop is checked
 
     if (Shopify.designMode) {
-      this.element.classList.remove('hidden-lap-and-up');
+      this.element.classList.remove("hidden-lap-and-up");
     }
   };
 
@@ -11108,66 +13158,78 @@
    * This class handles both the newsletter popup and exit popup
    */
 
-  var PopupsSection = /*#__PURE__*/function () {
+  var PopupsSection = /*#__PURE__*/ (function () {
     function PopupsSection(element) {
       var _this = this;
 
       _classCallCheck(this, PopupsSection);
 
-      element.querySelectorAll('[data-popup-type]').forEach(function (popup) {
-        if (popup.getAttribute('data-popup-type') === 'exit') {
+      element.querySelectorAll("[data-popup-type]").forEach(function (popup) {
+        if (popup.getAttribute("data-popup-type") === "exit") {
           _this.exitPopup = new ExitPopup(popup);
-        } else if (popup.getAttribute('data-popup-type') === 'newsletter') {
+        } else if (popup.getAttribute("data-popup-type") === "newsletter") {
           _this.newsletterPopup = new NewsletterPopup(popup);
         }
       });
     }
 
-    _createClass(PopupsSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        if (this.exitPopup) {
-          this.exitPopup.destroy();
-        }
+    _createClass(PopupsSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          if (this.exitPopup) {
+            this.exitPopup.destroy();
+          }
 
-        if (this.newsletterPopup) {
-          this.newsletterPopup.destroy();
-        }
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        if (event.target.getAttribute('data-popup-type') === 'exit' && this.exitPopup) {
-          this.exitPopup._openPopup();
-        } else if (event.target.getAttribute('data-popup-type') === 'newsletter' && this.newsletterPopup) {
-          this.newsletterPopup._openPopup();
-        }
-      }
-    }, {
-      key: "onBlockDeselect",
-      value: function onBlockDeselect() {
-        if (this.exitPopup) {
-          this.exitPopup._closePopup();
-        }
+          if (this.newsletterPopup) {
+            this.newsletterPopup.destroy();
+          }
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          if (
+            event.target.getAttribute("data-popup-type") === "exit" &&
+            this.exitPopup
+          ) {
+            this.exitPopup._openPopup();
+          } else if (
+            event.target.getAttribute("data-popup-type") === "newsletter" &&
+            this.newsletterPopup
+          ) {
+            this.newsletterPopup._openPopup();
+          }
+        },
+      },
+      {
+        key: "onBlockDeselect",
+        value: function onBlockDeselect() {
+          if (this.exitPopup) {
+            this.exitPopup._closePopup();
+          }
 
-        if (this.newsletterPopup) {
-          this.newsletterPopup._closePopup();
-        }
-      }
-    }]);
+          if (this.newsletterPopup) {
+            this.newsletterPopup._closePopup();
+          }
+        },
+      },
+    ]);
 
     return PopupsSection;
-  }();
+  })();
 
-  var ProductRecommendationsSection = /*#__PURE__*/function () {
+  var ProductRecommendationsSection = /*#__PURE__*/ (function () {
     function ProductRecommendationsSection(element) {
       _classCallCheck(this, ProductRecommendationsSection);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
 
-      if (this.options['useRecommendations']) {
+      if (this.options["useRecommendations"]) {
         this._loadRecommendations().then(this._createSlideshow.bind(this));
       } else {
         this._createSlideshow();
@@ -11180,191 +13242,247 @@
       this._attachListeners();
     }
 
-    _createClass(ProductRecommendationsSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        if (!this.options['stackable']) {
-          this.flickityInstance.destroy();
-        }
-
-        window.removeEventListener('resize', this._fixSafariListener);
-        this.delegateElement.off('change');
-        this.productItemColorSwatch.destroy();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this._fixSafariListener = this._fixSafari.bind(this);
-        window.addEventListener('resize', this._fixSafariListener);
-        this.delegateElement.on('click', '[data-action="add-to-cart"]', this._addToCart.bind(this));
-        this.delegateElement.on('click', '[data-secondary-action="open-quick-view"]', this._openQuickView.bind(this));
-      }
-      /**
-       * On Safari 11.1 and lower, the browser incorrectly calculate the height of flex and grid items due to a bug
-       * on how padding percentage is calculated (that we use for allocating image space). This is solved in Safari 11.1 and higher.
-       *
-       * For those browsers, we fix that in JavaScript by setting the height directly for each aspect ratio image
-       *
-       * @private
-       */
-
-    }, {
-      key: "_fixSafari",
-      value: function _fixSafari() {
-        var userAgent = window.navigator.userAgent.toLowerCase();
-
-        if (userAgent.includes('safari') && (userAgent.includes('version/10.1') || userAgent.includes('version/10.3') || userAgent.includes('version/11.0'))) {
-          var isPhone = Responsive.matchesBreakpoint('phone');
-          this.element.querySelectorAll('.product-item__image-wrapper .aspect-ratio, .product-item__image-wrapper .placeholder-svg').forEach(function (image) {
-            if (isPhone) {
-              image.parentNode.style.height = null;
-            } else {
-              image.parentNode.style.height = "".concat(image.clientHeight, "px");
-            }
-          });
-        }
-      }
-      /**
-       * This section uses the native product recommendations feature of Shopify (https://help.shopify.com/en/themes/liquid/objects/recommendations)
-       */
-
-    }, {
-      key: "_loadRecommendations",
-      value: function _loadRecommendations() {
-        var _this = this;
-
-        var url = "".concat(window.routes.productRecommendationsUrl, "?section_id=product-recommendations&product_id=").concat(this.options['productId'], "&limit=").concat(this.options['recommendationsCount']);
-        return fetch(url).then(function (response) {
-          return response.text().then(function (content) {
-            var container = document.createElement('div');
-            container.innerHTML = content;
-            _this.element.querySelector('.product-recommendations').innerHTML = container.querySelector('.product-recommendations').innerHTML;
-
-            _this.productItemColorSwatch.recalculateSwatches();
-
-            if (Shopify.designMode && window.SPR) {
-              window.SPR.initDomEls();
-              window.SPR.loadBadges();
-            }
-          });
-        });
-      }
-    }, {
-      key: "_createSlideshow",
-      value: function _createSlideshow() {
-        if (!this.options['stackable']) {
-          this.flickityInstance = new js(this.element.querySelector('.product-list'), {
-            watchCSS: true,
-            pageDots: false,
-            prevNextButtons: true,
-            contain: true,
-            groupCells: true,
-            cellAlign: 'left',
-            draggable: !window.matchMedia('(-moz-touch-enabled: 0), (hover: hover)').matches
-          });
-        }
-
-        if (Shopify.designMode && window.SPR) {
-          window.SPR.initDomEls();
-          window.SPR.loadBadges();
-        }
-      }
-    }, {
-      key: "_openQuickView",
-      value: function _openQuickView(event, target) {
-        var productUrl = new URL("".concat(window.location.origin).concat(target.getAttribute('data-product-url'))); // If we are on mobile or tablet, we redirect to product page directly
-
-        if (Responsive.matchesBreakpoint('phone') || Responsive.matchesBreakpoint('tablet')) {
-          window.location.href = productUrl.href;
-          return false;
-        }
-
-        var modal = document.getElementById(target.getAttribute('aria-controls'));
-        modal.classList.add('is-loading');
-        productUrl.searchParams.set('view', 'quick-view');
-        fetch(productUrl.href, {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            modal.querySelector('.modal__inner').innerHTML = content;
-            modal.classList.remove('is-loading'); // Register a new section to power the JS
-
-            var modalProductSection = new ProductSection(modal.querySelector('[data-section-type="product"]')); // We set a listener so we can cleanup on close
-
-            var doCleanUp = function doCleanUp() {
-              modalProductSection.onUnload();
-              modal.removeEventListener('modal:closed', doCleanUp);
-            };
-
-            modal.addEventListener('modal:closed', doCleanUp);
-          });
-        });
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
-       * ---------------------------------------------------------------------------------------------------
-       */
-
-    }, {
-      key: "_addToCart",
-      value: function _addToCart(event, target) {
-        var _this2 = this;
-
-        if (window.theme.cartType === 'page') {
-          return; // When using a cart type of page, we just simply redirect to the cart page
-        }
-
-        event.preventDefault(); // Prevent form to be submitted
-
-        event.stopPropagation(); // First, we switch the status of the button
-
-        target.setAttribute('disabled', 'disabled');
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // Then we add the product in Ajax
-
-        var formElement = target.closest('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
+    _createClass(ProductRecommendationsSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          if (!this.options["stackable"]) {
+            this.flickityInstance.destroy();
           }
-        }).then(function (response) {
-          target.removeAttribute('disabled');
 
-          if (response.ok) {
-            // We simply trigger an event so the mini-cart can re-render
-            _this2.element.dispatchEvent(new CustomEvent('product:added', {
-              bubbles: true,
-              detail: {
-                variant: null,
-                quantity: parseInt(formElement.querySelector('[name="quantity"]').value)
+          window.removeEventListener("resize", this._fixSafariListener);
+          this.delegateElement.off("change");
+          this.productItemColorSwatch.destroy();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this._fixSafariListener = this._fixSafari.bind(this);
+          window.addEventListener("resize", this._fixSafariListener);
+          this.delegateElement.on(
+            "click",
+            '[data-action="add-to-cart"]',
+            this._addToCart.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-secondary-action="open-quick-view"]',
+            this._openQuickView.bind(this)
+          );
+        },
+        /**
+         * On Safari 11.1 and lower, the browser incorrectly calculate the height of flex and grid items due to a bug
+         * on how padding percentage is calculated (that we use for allocating image space). This is solved in Safari 11.1 and higher.
+         *
+         * For those browsers, we fix that in JavaScript by setting the height directly for each aspect ratio image
+         *
+         * @private
+         */
+      },
+      {
+        key: "_fixSafari",
+        value: function _fixSafari() {
+          var userAgent = window.navigator.userAgent.toLowerCase();
+
+          if (
+            userAgent.includes("safari") &&
+            (userAgent.includes("version/10.1") ||
+              userAgent.includes("version/10.3") ||
+              userAgent.includes("version/11.0"))
+          ) {
+            var isPhone = Responsive.matchesBreakpoint("phone");
+            this.element
+              .querySelectorAll(
+                ".product-item__image-wrapper .aspect-ratio, .product-item__image-wrapper .placeholder-svg"
+              )
+              .forEach(function (image) {
+                if (isPhone) {
+                  image.parentNode.style.height = null;
+                } else {
+                  image.parentNode.style.height = "".concat(
+                    image.clientHeight,
+                    "px"
+                  );
+                }
+              });
+          }
+        },
+        /**
+         * This section uses the native product recommendations feature of Shopify (https://help.shopify.com/en/themes/liquid/objects/recommendations)
+         */
+      },
+      {
+        key: "_loadRecommendations",
+        value: function _loadRecommendations() {
+          var _this = this;
+
+          var url = ""
+            .concat(
+              window.routes.productRecommendationsUrl,
+              "?section_id=product-recommendations&product_id="
+            )
+            .concat(this.options["productId"], "&limit=")
+            .concat(this.options["recommendationsCount"]);
+          return fetch(url).then(function (response) {
+            return response.text().then(function (content) {
+              var container = document.createElement("div");
+              container.innerHTML = content;
+              _this.element.querySelector(
+                ".product-recommendations"
+              ).innerHTML = container.querySelector(
+                ".product-recommendations"
+              ).innerHTML;
+
+              _this.productItemColorSwatch.recalculateSwatches();
+
+              if (Shopify.designMode && window.SPR) {
+                window.SPR.initDomEls();
+                window.SPR.loadBadges();
               }
-            }));
-          } else {
-            document.dispatchEvent(new CustomEvent('theme:loading:end'));
+            });
+          });
+        },
+      },
+      {
+        key: "_createSlideshow",
+        value: function _createSlideshow() {
+          if (!this.options["stackable"]) {
+            this.flickityInstance = new js(
+              this.element.querySelector(".product-list"),
+              {
+                watchCSS: true,
+                pageDots: false,
+                prevNextButtons: true,
+                contain: true,
+                groupCells: true,
+                cellAlign: "left",
+                draggable: !window.matchMedia(
+                  "(-moz-touch-enabled: 0), (hover: hover)"
+                ).matches,
+              }
+            );
           }
-        });
-        event.preventDefault();
-      }
-    }]);
+
+          if (Shopify.designMode && window.SPR) {
+            window.SPR.initDomEls();
+            window.SPR.loadBadges();
+          }
+        },
+      },
+      {
+        key: "_openQuickView",
+        value: function _openQuickView(event, target) {
+          var productUrl = new URL(
+            ""
+              .concat(window.location.origin)
+              .concat(target.getAttribute("data-product-url"))
+          ); // If we are on mobile or tablet, we redirect to product page directly
+
+          if (
+            Responsive.matchesBreakpoint("phone") ||
+            Responsive.matchesBreakpoint("tablet")
+          ) {
+            window.location.href = productUrl.href;
+            return false;
+          }
+
+          var modal = document.getElementById(
+            target.getAttribute("aria-controls")
+          );
+          modal.classList.add("is-loading");
+          productUrl.searchParams.set("view", "quick-view");
+          fetch(productUrl.href, {
+            credentials: "same-origin",
+            method: "GET",
+          }).then(function (response) {
+            response.text().then(function (content) {
+              modal.querySelector(".modal__inner").innerHTML = content;
+              modal.classList.remove("is-loading"); // Register a new section to power the JS
+
+              var modalProductSection = new ProductSection(
+                modal.querySelector('[data-section-type="product"]')
+              ); // We set a listener so we can cleanup on close
+
+              var doCleanUp = function doCleanUp() {
+                modalProductSection.onUnload();
+                modal.removeEventListener("modal:closed", doCleanUp);
+              };
+
+              modal.addEventListener("modal:closed", doCleanUp);
+            });
+          });
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
+         * ---------------------------------------------------------------------------------------------------
+         */
+      },
+      {
+        key: "_addToCart",
+        value: function _addToCart(event, target) {
+          var _this2 = this;
+
+          if (window.theme.cartType === "page") {
+            return; // When using a cart type of page, we just simply redirect to the cart page
+          }
+
+          event.preventDefault(); // Prevent form to be submitted
+
+          event.stopPropagation(); // First, we switch the status of the button
+
+          target.setAttribute("disabled", "disabled");
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // Then we add the product in Ajax
+
+          var formElement = target.closest('form[action*="/cart/add"]');
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function (response) {
+            target.removeAttribute("disabled");
+
+            if (response.ok) {
+              // We simply trigger an event so the mini-cart can re-render
+              _this2.element.dispatchEvent(
+                new CustomEvent("product:added", {
+                  bubbles: true,
+                  detail: {
+                    variant: null,
+                    quantity: parseInt(
+                      formElement.querySelector('[name="quantity"]').value
+                    ),
+                  },
+                })
+              );
+            } else {
+              document.dispatchEvent(new CustomEvent("theme:loading:end"));
+            }
+          });
+          event.preventDefault();
+        },
+      },
+    ]);
 
     return ProductRecommendationsSection;
-  }();
+  })();
 
-  var RecentlyViewedProductsSection = /*#__PURE__*/function () {
+  var RecentlyViewedProductsSection = /*#__PURE__*/ (function () {
     function RecentlyViewedProductsSection(element) {
       _classCallCheck(this, RecentlyViewedProductsSection);
 
       this.element = element;
       this.delegateElement = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
 
-      if (this.options['currentProductId']) {
+      if (this.options["currentProductId"]) {
         this._saveCurrentProduct();
       }
 
@@ -11375,193 +13493,246 @@
       this._attachListeners();
     }
 
-    _createClass(RecentlyViewedProductsSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        if (this.flickityInstance) {
-          this.flickityInstance.destroy();
-        }
+    _createClass(RecentlyViewedProductsSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          if (this.flickityInstance) {
+            this.flickityInstance.destroy();
+          }
 
-        this.productItemColorSwatch.destroy();
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.delegateElement.on('click', '[data-action="add-to-cart"]', this._addToCart.bind(this));
-        this.delegateElement.on('click', '[data-secondary-action="open-quick-view"]', this._openQuickView.bind(this));
-      }
-      /**
-       * When we are on a product page, we need to save the current product ID into local storage
-       */
+          this.productItemColorSwatch.destroy();
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.delegateElement.on(
+            "click",
+            '[data-action="add-to-cart"]',
+            this._addToCart.bind(this)
+          );
+          this.delegateElement.on(
+            "click",
+            '[data-secondary-action="open-quick-view"]',
+            this._openQuickView.bind(this)
+          );
+        },
+        /**
+         * When we are on a product page, we need to save the current product ID into local storage
+         */
+      },
+      {
+        key: "_saveCurrentProduct",
+        value: function _saveCurrentProduct() {
+          var items = JSON.parse(
+              localStorage.getItem("recentlyViewedProducts") || "[]"
+            ),
+            currentProductId = this.options["currentProductId"]; // We check if the current product already exists, and if it does not, we add it at the start
 
-    }, {
-      key: "_saveCurrentProduct",
-      value: function _saveCurrentProduct() {
-        var items = JSON.parse(localStorage.getItem('recentlyViewedProducts') || '[]'),
-            currentProductId = this.options['currentProductId']; // We check if the current product already exists, and if it does not, we add it at the start
+          if (!items.includes(currentProductId)) {
+            items.unshift(currentProductId);
+          } // Then, we save the current product into the local storage, by keeping only the 18 most recent
 
-        if (!items.includes(currentProductId)) {
-          items.unshift(currentProductId);
-        } // Then, we save the current product into the local storage, by keeping only the 18 most recent
+          try {
+            localStorage.setItem(
+              "recentlyViewedProducts",
+              JSON.stringify(items.slice(0, 18))
+            );
+          } catch (error) {
+            // Do nothing, this may happen in Safari in incognito mode
+          }
+        },
+        /**
+         * In order to get the products to display, we hit the search template with the given IDs.
+         */
+      },
+      {
+        key: "_fetchProducts",
+        value: function _fetchProducts() {
+          var _this = this;
 
+          var queryString = this._getSearchQueryString();
 
-        try {
-          localStorage.setItem('recentlyViewedProducts', JSON.stringify(items.slice(0, 18)));
-        } catch (error) {// Do nothing, this may happen in Safari in incognito mode
-        }
-      }
-      /**
-       * In order to get the products to display, we hit the search template with the given IDs.
-       */
+          if (queryString === "") {
+            return;
+          }
 
-    }, {
-      key: "_fetchProducts",
-      value: function _fetchProducts() {
-        var _this = this;
+          var template =
+            window.theme.pageType === "index"
+              ? "recently-viewed-products"
+              : "static-recently-viewed-products";
+          fetch(
+            ""
+              .concat(window.routes.searchUrl, "?view=")
+              .concat(template, "&type=product&q=")
+              .concat(queryString),
+            {
+              credentials: "same-origin",
+              method: "GET",
+            }
+          ).then(function (response) {
+            response.text().then(function (content) {
+              var tempElement = document.createElement("div");
+              tempElement.innerHTML = content; // Set the content
 
-        var queryString = this._getSearchQueryString();
+              _this.element.querySelector(
+                ".recently-viewed-products-placeholder"
+              ).innerHTML = tempElement.querySelector(
+                '[data-section-type="recently-viewed-products"] .recently-viewed-products-placeholder'
+              ).innerHTML; // By default the section hide the products, so we force the section to be visible
 
-        if (queryString === '') {
-          return;
-        }
+              _this.element.parentNode.style.display = "block";
 
-        var template = window.theme.pageType === 'index' ? 'recently-viewed-products' : 'static-recently-viewed-products';
-        fetch("".concat(window.routes.searchUrl, "?view=").concat(template, "&type=product&q=").concat(queryString), {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            var tempElement = document.createElement('div');
-            tempElement.innerHTML = content; // Set the content
+              _this.productItemColorSwatch.recalculateSwatches();
 
-            _this.element.querySelector('.recently-viewed-products-placeholder').innerHTML = tempElement.querySelector('[data-section-type="recently-viewed-products"] .recently-viewed-products-placeholder').innerHTML; // By default the section hide the products, so we force the section to be visible
+              if (Shopify.designMode && window.SPR) {
+                window.SPR.initDomEls();
+                window.SPR.loadBadges();
+              } // Create the slideshow
 
-            _this.element.parentNode.style.display = 'block';
-
-            _this.productItemColorSwatch.recalculateSwatches();
-
-            if (Shopify.designMode && window.SPR) {
-              window.SPR.initDomEls();
-              window.SPR.loadBadges();
-            } // Create the slideshow
-
-
-            _this.flickityInstance = new js(_this.element.querySelector('.product-list'), {
-              watchCSS: true,
-              pageDots: false,
-              prevNextButtons: true,
-              contain: true,
-              groupCells: true,
-              cellAlign: 'left',
-              draggable: !window.matchMedia('(-moz-touch-enabled: 0), (hover: hover)').matches
+              _this.flickityInstance = new js(
+                _this.element.querySelector(".product-list"),
+                {
+                  watchCSS: true,
+                  pageDots: false,
+                  prevNextButtons: true,
+                  contain: true,
+                  groupCells: true,
+                  cellAlign: "left",
+                  draggable: !window.matchMedia(
+                    "(-moz-touch-enabled: 0), (hover: hover)"
+                  ).matches,
+                }
+              );
             });
           });
-        });
-      }
-    }, {
-      key: "_getSearchQueryString",
-      value: function _getSearchQueryString() {
-        var items = JSON.parse(localStorage.getItem('recentlyViewedProducts') || '[]'); // If we are on a product template, we make sure to remove the main product from the related product
+        },
+      },
+      {
+        key: "_getSearchQueryString",
+        value: function _getSearchQueryString() {
+          var items = JSON.parse(
+            localStorage.getItem("recentlyViewedProducts") || "[]"
+          ); // If we are on a product template, we make sure to remove the main product from the related product
 
-        if (items.includes(this.options['currentProductId'])) {
-          items.splice(items.indexOf(this.options['currentProductId']), 1);
-        }
+          if (items.includes(this.options["currentProductId"])) {
+            items.splice(items.indexOf(this.options["currentProductId"]), 1);
+          }
 
-        return items.map(function (item) {
-          return 'id:' + item;
-        }).join(' OR ');
-      }
-    }, {
-      key: "_openQuickView",
-      value: function _openQuickView(event, target) {
-        var productUrl = new URL("".concat(window.location.origin).concat(target.getAttribute('data-product-url'))); // If we are on mobile or tablet, we redirect to product page directly
+          return items
+            .map(function (item) {
+              return "id:" + item;
+            })
+            .join(" OR ");
+        },
+      },
+      {
+        key: "_openQuickView",
+        value: function _openQuickView(event, target) {
+          var productUrl = new URL(
+            ""
+              .concat(window.location.origin)
+              .concat(target.getAttribute("data-product-url"))
+          ); // If we are on mobile or tablet, we redirect to product page directly
 
-        if (Responsive.matchesBreakpoint('phone') || Responsive.matchesBreakpoint('tablet')) {
-          window.location.href = productUrl.href;
-          return false;
-        }
+          if (
+            Responsive.matchesBreakpoint("phone") ||
+            Responsive.matchesBreakpoint("tablet")
+          ) {
+            window.location.href = productUrl.href;
+            return false;
+          }
 
-        var modal = document.getElementById(target.getAttribute('aria-controls'));
-        modal.classList.add('is-loading');
-        productUrl.searchParams.set('view', 'quick-view');
-        fetch(productUrl.href, {
-          credentials: 'same-origin',
-          method: 'GET'
-        }).then(function (response) {
-          response.text().then(function (content) {
-            modal.querySelector('.modal__inner').innerHTML = content;
-            modal.classList.remove('is-loading'); // Register a new section to power the JS
+          var modal = document.getElementById(
+            target.getAttribute("aria-controls")
+          );
+          modal.classList.add("is-loading");
+          productUrl.searchParams.set("view", "quick-view");
+          fetch(productUrl.href, {
+            credentials: "same-origin",
+            method: "GET",
+          }).then(function (response) {
+            response.text().then(function (content) {
+              modal.querySelector(".modal__inner").innerHTML = content;
+              modal.classList.remove("is-loading"); // Register a new section to power the JS
 
-            var modalProductSection = new ProductSection(modal.querySelector('[data-section-type="product"]')); // We set a listener so we can cleanup on close
+              var modalProductSection = new ProductSection(
+                modal.querySelector('[data-section-type="product"]')
+              ); // We set a listener so we can cleanup on close
 
-            var doCleanUp = function doCleanUp() {
-              modalProductSection.onUnload();
-              modal.removeEventListener('modal:closed', doCleanUp);
-            };
+              var doCleanUp = function doCleanUp() {
+                modalProductSection.onUnload();
+                modal.removeEventListener("modal:closed", doCleanUp);
+              };
 
-            modal.addEventListener('modal:closed', doCleanUp);
+              modal.addEventListener("modal:closed", doCleanUp);
+            });
           });
-        });
-      }
-      /**
-       * ---------------------------------------------------------------------------------------------------
-       * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
-       * ---------------------------------------------------------------------------------------------------
-       */
+        },
+        /**
+         * ---------------------------------------------------------------------------------------------------
+         * INTERNAL CODE THAT HANDLE PRODUCT ADD TO CART
+         * ---------------------------------------------------------------------------------------------------
+         */
+      },
+      {
+        key: "_addToCart",
+        value: function _addToCart(event, target) {
+          var _this2 = this;
 
-    }, {
-      key: "_addToCart",
-      value: function _addToCart(event, target) {
-        var _this2 = this;
-
-        if (window.theme.cartType === 'page') {
-          return; // When using a cart type of page, we just simply redirect to the cart page
-        }
-
-        event.preventDefault(); // Prevent form to be submitted
-
-        event.stopPropagation(); // First, we switch the status of the button
-
-        target.setAttribute('disabled', 'disabled');
-        document.dispatchEvent(new CustomEvent('theme:loading:start')); // Then we add the product in Ajax
-
-        var formElement = target.closest('form[action*="/cart/add"]');
-        fetch("".concat(window.routes.cartAddUrl, ".js"), {
-          body: JSON.stringify(Form.serialize(formElement)),
-          credentials: 'same-origin',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
-
+          if (window.theme.cartType === "page") {
+            return; // When using a cart type of page, we just simply redirect to the cart page
           }
-        }).then(function (response) {
-          target.removeAttribute('disabled');
 
-          if (response.ok) {
-            // We simply trigger an event so the mini-cart can re-render
-            _this2.element.dispatchEvent(new CustomEvent('product:added', {
-              bubbles: true,
-              detail: {
-                variant: null,
-                quantity: parseInt(formElement.querySelector('[name="quantity"]').value)
-              }
-            }));
-          } else {
-            document.dispatchEvent(new CustomEvent('theme:loading:end'));
-          }
-        });
-        event.preventDefault();
-      }
-    }]);
+          event.preventDefault(); // Prevent form to be submitted
+
+          event.stopPropagation(); // First, we switch the status of the button
+
+          target.setAttribute("disabled", "disabled");
+          document.dispatchEvent(new CustomEvent("theme:loading:start")); // Then we add the product in Ajax
+
+          var formElement = target.closest('form[action*="/cart/add"]');
+          fetch("".concat(window.routes.cartAddUrl, ".js"), {
+            body: JSON.stringify(Form.serialize(formElement)),
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest", // This is needed as currently there is a bug in Shopify that assumes this header
+            },
+          }).then(function (response) {
+            target.removeAttribute("disabled");
+
+            if (response.ok) {
+              // We simply trigger an event so the mini-cart can re-render
+              _this2.element.dispatchEvent(
+                new CustomEvent("product:added", {
+                  bubbles: true,
+                  detail: {
+                    variant: null,
+                    quantity: parseInt(
+                      formElement.querySelector('[name="quantity"]').value
+                    ),
+                  },
+                })
+              );
+            } else {
+              document.dispatchEvent(new CustomEvent("theme:loading:end"));
+            }
+          });
+          event.preventDefault();
+        },
+      },
+    ]);
 
     return RecentlyViewedProductsSection;
-  }();
+  })();
 
   /**
    * This code is extracted from Slate
    */
-  var SectionContainer = /*#__PURE__*/function () {
+  var SectionContainer = /*#__PURE__*/ (function () {
     function SectionContainer() {
       _classCallCheck(this, SectionContainer);
 
@@ -11571,279 +13742,378 @@
       this._attachListeners();
     }
 
-    _createClass(SectionContainer, [{
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        document.addEventListener('shopify:section:load', this._onSectionLoad.bind(this));
-        document.addEventListener('shopify:section:unload', this._onSectionUnload.bind(this));
-        document.addEventListener('shopify:section:select', this._onSelect.bind(this));
-        document.addEventListener('shopify:section:deselect', this._onDeselect.bind(this));
-        document.addEventListener('shopify:section:reorder', this._onReorder.bind(this));
-        document.addEventListener('shopify:block:select', this._onBlockSelect.bind(this));
-        document.addEventListener('shopify:block:deselect', this._onBlockDeselect.bind(this));
-      }
-    }, {
-      key: "register",
-      value: function register(type, constructor) {
-        var _this = this;
+    _createClass(SectionContainer, [
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          document.addEventListener(
+            "shopify:section:load",
+            this._onSectionLoad.bind(this)
+          );
+          document.addEventListener(
+            "shopify:section:unload",
+            this._onSectionUnload.bind(this)
+          );
+          document.addEventListener(
+            "shopify:section:select",
+            this._onSelect.bind(this)
+          );
+          document.addEventListener(
+            "shopify:section:deselect",
+            this._onDeselect.bind(this)
+          );
+          document.addEventListener(
+            "shopify:section:reorder",
+            this._onReorder.bind(this)
+          );
+          document.addEventListener(
+            "shopify:block:select",
+            this._onBlockSelect.bind(this)
+          );
+          document.addEventListener(
+            "shopify:block:deselect",
+            this._onBlockDeselect.bind(this)
+          );
+        },
+      },
+      {
+        key: "register",
+        value: function register(type, constructor) {
+          var _this = this;
 
-        this.constructors[type] = constructor;
-        document.querySelectorAll("[data-section-type=".concat(type, "]")).forEach(function (container) {
-          _this._createInstance(container, constructor);
-        });
-      }
-      /**
-       * Return an object from an array of objects that matches the provided key and value
-       */
-
-    }, {
-      key: "_findInstance",
-      value: function _findInstance(array, key, value) {
-        for (var i = 0; i < array.length; i++) {
-          if (array[i][key] === value) {
-            return array[i];
+          this.constructors[type] = constructor;
+          document
+            .querySelectorAll("[data-section-type=".concat(type, "]"))
+            .forEach(function (container) {
+              _this._createInstance(container, constructor);
+            });
+        },
+        /**
+         * Return an object from an array of objects that matches the provided key and value
+         */
+      },
+      {
+        key: "_findInstance",
+        value: function _findInstance(array, key, value) {
+          for (var i = 0; i < array.length; i++) {
+            if (array[i][key] === value) {
+              return array[i];
+            }
           }
-        }
-      }
-      /**
-       * Remove an object from an array of objects by matching the provided key and value
-       */
+        },
+        /**
+         * Remove an object from an array of objects by matching the provided key and value
+         */
+      },
+      {
+        key: "_removeInstance",
+        value: function _removeInstance(array, key, value) {
+          var i = array.length;
 
-    }, {
-      key: "_removeInstance",
-      value: function _removeInstance(array, key, value) {
-        var i = array.length;
-
-        while (i--) {
-          if (array[i][key] === value) {
-            array.splice(i, 1);
-            break;
+          while (i--) {
+            if (array[i][key] === value) {
+              array.splice(i, 1);
+              break;
+            }
           }
-        }
 
-        return array;
-      }
-    }, {
-      key: "_onSectionLoad",
-      value: function _onSectionLoad(event) {
-        var container = event.target.querySelector('[data-section-id]');
+          return array;
+        },
+      },
+      {
+        key: "_onSectionLoad",
+        value: function _onSectionLoad(event) {
+          var container = event.target.querySelector("[data-section-id]");
 
-        if (container) {
-          this._createInstance(container);
-        }
-      }
-    }, {
-      key: "_onSectionUnload",
-      value: function _onSectionUnload(event) {
-        var instance = this._findInstance(this.instances, 'id', event.detail.sectionId);
+          if (container) {
+            this._createInstance(container);
+          }
+        },
+      },
+      {
+        key: "_onSectionUnload",
+        value: function _onSectionUnload(event) {
+          var instance = this._findInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
 
-        if (!instance) {
-          return;
-        }
+          if (!instance) {
+            return;
+          }
 
-        if (typeof instance.onUnload === 'function') {
-          instance.onUnload(event);
-        }
+          if (typeof instance.onUnload === "function") {
+            instance.onUnload(event);
+          }
 
-        this.instances = this._removeInstance(this.instances, 'id', event.detail.sectionId);
-      }
-    }, {
-      key: "_onSelect",
-      value: function _onSelect(event) {
-        var instance = this._findInstance(this.instances, 'id', event.detail.sectionId);
+          this.instances = this._removeInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
+        },
+      },
+      {
+        key: "_onSelect",
+        value: function _onSelect(event) {
+          var instance = this._findInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
 
-        if (instance && typeof instance.onSelect === 'function') {
-          instance.onSelect(event);
-        }
-      }
-    }, {
-      key: "_onDeselect",
-      value: function _onDeselect(event) {
-        var instance = this._findInstance(this.instances, 'id', event.detail.sectionId);
+          if (instance && typeof instance.onSelect === "function") {
+            instance.onSelect(event);
+          }
+        },
+      },
+      {
+        key: "_onDeselect",
+        value: function _onDeselect(event) {
+          var instance = this._findInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
 
-        if (instance && typeof instance.onDeselect === 'function') {
-          instance.onDeselect(event);
-        }
-      }
-    }, {
-      key: "_onReorder",
-      value: function _onReorder(event) {
-        var instance = this._findInstance(this.instances, 'id', event.detail.sectionId);
+          if (instance && typeof instance.onDeselect === "function") {
+            instance.onDeselect(event);
+          }
+        },
+      },
+      {
+        key: "_onReorder",
+        value: function _onReorder(event) {
+          var instance = this._findInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
 
-        if (instance && typeof instance.onReorder === 'function') {
-          instance.onReorder(event);
-        }
-      }
-    }, {
-      key: "_onBlockSelect",
-      value: function _onBlockSelect(event) {
-        var instance = this._findInstance(this.instances, 'id', event.detail.sectionId);
+          if (instance && typeof instance.onReorder === "function") {
+            instance.onReorder(event);
+          }
+        },
+      },
+      {
+        key: "_onBlockSelect",
+        value: function _onBlockSelect(event) {
+          var instance = this._findInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
 
-        if (instance && typeof instance.onBlockSelect === 'function') {
-          instance.onBlockSelect(event);
-        }
-      }
-    }, {
-      key: "_onBlockDeselect",
-      value: function _onBlockDeselect(event) {
-        var instance = this._findInstance(this.instances, 'id', event.detail.sectionId);
+          if (instance && typeof instance.onBlockSelect === "function") {
+            instance.onBlockSelect(event);
+          }
+        },
+      },
+      {
+        key: "_onBlockDeselect",
+        value: function _onBlockDeselect(event) {
+          var instance = this._findInstance(
+            this.instances,
+            "id",
+            event.detail.sectionId
+          );
 
-        if (instance && typeof instance.onBlockDeselect === 'function') {
-          instance.onBlockDeselect(event);
-        }
-      }
-    }, {
-      key: "_createInstance",
-      value: function _createInstance(container, constructor) {
-        var id = container.getAttribute('data-section-id'),
-            type = container.getAttribute('data-section-type');
-        constructor = constructor || this.constructors[type];
+          if (instance && typeof instance.onBlockDeselect === "function") {
+            instance.onBlockDeselect(event);
+          }
+        },
+      },
+      {
+        key: "_createInstance",
+        value: function _createInstance(container, constructor) {
+          var id = container.getAttribute("data-section-id"),
+            type = container.getAttribute("data-section-type");
+          constructor = constructor || this.constructors[type];
 
-        if (typeof constructor === 'undefined') {
-          return;
-        }
+          if (typeof constructor === "undefined") {
+            return;
+          }
 
-        var instance = Object.assign(new constructor(container), {
-          id: id,
-          type: type,
-          container: container
-        });
-        this.instances.push(instance);
-      }
-    }]);
+          var instance = Object.assign(new constructor(container), {
+            id: id,
+            type: type,
+            container: container,
+          });
+          this.instances.push(instance);
+        },
+      },
+    ]);
 
     return SectionContainer;
-  }();
+  })();
 
-  var SlideshowSection = /*#__PURE__*/function () {
+  var SlideshowSection = /*#__PURE__*/ (function () {
     function SlideshowSection(element) {
       _classCallCheck(this, SlideshowSection);
 
       this.element = element;
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
-      this.flickityInstance = new flickityFade(element.querySelector('.slideshow'), {
-        pageDots: this.options['pageDots'],
-        prevNextButtons: this.options['prevNextButtons'],
-        wrapAround: true,
-        dragThreshold: 12,
-        draggable: '>1',
-        fade: this.options['transitionEffect'] === 'fade',
-        setGallerySize: this.options['setGallerySize'],
-        adaptiveHeight: this.options['adaptiveHeight'],
-        autoPlay: this.options['autoPlay'] ? this.options['cycleSpeed'] : false
-      });
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
+      this.flickityInstance = new flickityFade(
+        element.querySelector(".slideshow"),
+        {
+          pageDots: this.options["pageDots"],
+          prevNextButtons: this.options["prevNextButtons"],
+          wrapAround: true,
+          dragThreshold: 12,
+          draggable: ">1",
+          fade: this.options["transitionEffect"] === "fade",
+          setGallerySize: this.options["setGallerySize"],
+          adaptiveHeight: this.options["adaptiveHeight"],
+          autoPlay: this.options["autoPlay"]
+            ? this.options["cycleSpeed"]
+            : false,
+        }
+      );
     }
 
-    _createClass(SlideshowSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.flickityInstance.destroy();
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        if (this.flickityInstance.isActive) {
-          this.flickityInstance.selectCell(parseInt(event.target.getAttribute('data-block-index')), false, event.detail.load);
-          this.flickityInstance.pausePlayer();
-        }
-      }
-    }, {
-      key: "onBlockDeselect",
-      value: function onBlockDeselect() {
-        if (this.flickityInstance.isActive) {
-          this.flickityInstance.unpausePlayer();
-        }
-      }
-    }]);
+    _createClass(SlideshowSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.flickityInstance.destroy();
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          if (this.flickityInstance.isActive) {
+            this.flickityInstance.selectCell(
+              parseInt(event.target.getAttribute("data-block-index")),
+              false,
+              event.detail.load
+            );
+            this.flickityInstance.pausePlayer();
+          }
+        },
+      },
+      {
+        key: "onBlockDeselect",
+        value: function onBlockDeselect() {
+          if (this.flickityInstance.isActive) {
+            this.flickityInstance.unpausePlayer();
+          }
+        },
+      },
+    ]);
 
     return SlideshowSection;
-  }();
+  })();
 
-  var TextWithIconsSection = /*#__PURE__*/function () {
+  var TextWithIconsSection = /*#__PURE__*/ (function () {
     function TextWithIconsSection(element) {
       _classCallCheck(this, TextWithIconsSection);
 
-      this.flickityInstance = new js(element.querySelector('.text-with-icons'), {
-        pageDots: true,
-        prevNextButtons: false,
-        wrapAround: true,
-        autoPlay: 5000,
-        watchCSS: true
-      });
+      this.flickityInstance = new js(
+        element.querySelector(".text-with-icons"),
+        {
+          pageDots: true,
+          prevNextButtons: false,
+          wrapAround: true,
+          autoPlay: 5000,
+          watchCSS: true,
+        }
+      );
     }
 
-    _createClass(TextWithIconsSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.flickityInstance.destroy();
-      }
-    }, {
-      key: "onBlockSelect",
-      value: function onBlockSelect(event) {
-        if (this.flickityInstance.isActive) {
-          this.flickityInstance.selectCell(parseInt(event.target.getAttribute('data-block-index')), false, event.detail.load);
-          this.flickityInstance.pausePlayer();
-        }
-      }
-    }, {
-      key: "onBlockDeselect",
-      value: function onBlockDeselect() {
-        if (this.flickityInstance.isActive) {
-          this.flickityInstance.unpausePlayer();
-        }
-      }
-    }]);
+    _createClass(TextWithIconsSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.flickityInstance.destroy();
+        },
+      },
+      {
+        key: "onBlockSelect",
+        value: function onBlockSelect(event) {
+          if (this.flickityInstance.isActive) {
+            this.flickityInstance.selectCell(
+              parseInt(event.target.getAttribute("data-block-index")),
+              false,
+              event.detail.load
+            );
+            this.flickityInstance.pausePlayer();
+          }
+        },
+      },
+      {
+        key: "onBlockDeselect",
+        value: function onBlockDeselect() {
+          if (this.flickityInstance.isActive) {
+            this.flickityInstance.unpausePlayer();
+          }
+        },
+      },
+    ]);
 
     return TextWithIconsSection;
-  }();
+  })();
 
-  var VideoSection = /*#__PURE__*/function () {
+  var VideoSection = /*#__PURE__*/ (function () {
     function VideoSection(element) {
       _classCallCheck(this, VideoSection);
 
       this.element = element;
       this.domDelegate = new Delegate(this.element);
-      this.options = JSON.parse(this.element.getAttribute('data-section-settings'));
+      this.options = JSON.parse(
+        this.element.getAttribute("data-section-settings")
+      );
 
       this._attachListeners();
     }
 
-    _createClass(VideoSection, [{
-      key: "onUnload",
-      value: function onUnload() {
-        this.domDelegate.off('click');
-      }
-    }, {
-      key: "_attachListeners",
-      value: function _attachListeners() {
-        this.domDelegate.on('click', '[data-action="play-video"]', this._playVideo.bind(this));
-      }
-    }, {
-      key: "_playVideo",
-      value: function _playVideo(event, target) {
-        // To start the video, we simply replace the iframe source
-        var iframe = target.querySelector('iframe');
-        iframe.src = iframe.getAttribute('data-src');
-        target.classList.add('is-playing');
-      }
-    }]);
+    _createClass(VideoSection, [
+      {
+        key: "onUnload",
+        value: function onUnload() {
+          this.domDelegate.off("click");
+        },
+      },
+      {
+        key: "_attachListeners",
+        value: function _attachListeners() {
+          this.domDelegate.on(
+            "click",
+            '[data-action="play-video"]',
+            this._playVideo.bind(this)
+          );
+        },
+      },
+      {
+        key: "_playVideo",
+        value: function _playVideo(event, target) {
+          // To start the video, we simply replace the iframe source
+          var iframe = target.querySelector("iframe");
+          iframe.src = iframe.getAttribute("data-src");
+          target.classList.add("is-playing");
+        },
+      },
+    ]);
 
     return VideoSection;
-  }();
+  })();
 
   var smoothscroll = createCommonjsModule(function (module, exports) {
     /* smoothscroll v0.4.4 - 2019 - Dustan Kasten, Jeremias Menichelli - MIT License */
     (function () {
-
       function polyfill() {
         // aliases
         var w = window;
         var d = document; // return if scroll behavior is supported and polyfill is not forced
 
-        if ('scrollBehavior' in d.documentElement.style && w.__forceSmoothScrollPolyfill__ !== true) {
+        if (
+          "scrollBehavior" in d.documentElement.style &&
+          w.__forceSmoothScrollPolyfill__ !== true
+        ) {
           return;
         } // globals
-
 
         var Element = w.HTMLElement || w.Element;
         var SCROLL_TIME = 468; // object gathering original scroll methods
@@ -11852,10 +14122,13 @@
           scroll: w.scroll || w.scrollTo,
           scrollBy: w.scrollBy,
           elementScroll: Element.prototype.scroll || scrollElement,
-          scrollIntoView: Element.prototype.scrollIntoView
+          scrollIntoView: Element.prototype.scrollIntoView,
         }; // define timing method
 
-        var now = w.performance && w.performance.now ? w.performance.now.bind(w.performance) : Date.now;
+        var now =
+          w.performance && w.performance.now
+            ? w.performance.now.bind(w.performance)
+            : Date.now;
         /**
          * indicates if a the current browser is made by Microsoft
          * @method isMicrosoftBrowser
@@ -11864,8 +14137,8 @@
          */
 
         function isMicrosoftBrowser(userAgent) {
-          var userAgentPatterns = ['MSIE ', 'Trident/', 'Edge/'];
-          return new RegExp(userAgentPatterns.join('|')).test(userAgent);
+          var userAgentPatterns = ["MSIE ", "Trident/", "Edge/"];
+          return new RegExp(userAgentPatterns.join("|")).test(userAgent);
         }
         /*
          * IE has rounding bug rounding down clientHeight and clientWidth and
@@ -11873,8 +14146,9 @@
          * on hasScrollableSpace
          */
 
-
-        var ROUNDING_TOLERANCE = isMicrosoftBrowser(w.navigator.userAgent) ? 1 : 0;
+        var ROUNDING_TOLERANCE = isMicrosoftBrowser(w.navigator.userAgent)
+          ? 1
+          : 0;
         /**
          * changes scroll position inside an element
          * @method scrollElement
@@ -11894,7 +14168,6 @@
          * @returns {Number}
          */
 
-
         function ease(k) {
           return 0.5 * (1 - Math.cos(Math.PI * k));
         }
@@ -11905,21 +14178,32 @@
          * @returns {Boolean}
          */
 
-
         function shouldBailOut(firstArg) {
-          if (firstArg === null || _typeof(firstArg) !== 'object' || firstArg.behavior === undefined || firstArg.behavior === 'auto' || firstArg.behavior === 'instant') {
+          if (
+            firstArg === null ||
+            _typeof(firstArg) !== "object" ||
+            firstArg.behavior === undefined ||
+            firstArg.behavior === "auto" ||
+            firstArg.behavior === "instant"
+          ) {
             // first argument is not an object/null
             // or behavior is auto, instant or undefined
             return true;
           }
 
-          if (_typeof(firstArg) === 'object' && firstArg.behavior === 'smooth') {
+          if (
+            _typeof(firstArg) === "object" &&
+            firstArg.behavior === "smooth"
+          ) {
             // first argument is an object and behavior is smooth
             return false;
           } // throw error when behavior is not supported
 
-
-          throw new TypeError('behavior member of ScrollOptions ' + firstArg.behavior + ' is not a valid value for enumeration ScrollBehavior.');
+          throw new TypeError(
+            "behavior member of ScrollOptions " +
+              firstArg.behavior +
+              " is not a valid value for enumeration ScrollBehavior."
+          );
         }
         /**
          * indicates if an element has scrollable space in the provided axis
@@ -11929,13 +14213,12 @@
          * @returns {Boolean}
          */
 
-
         function hasScrollableSpace(el, axis) {
-          if (axis === 'Y') {
+          if (axis === "Y") {
             return el.clientHeight + ROUNDING_TOLERANCE < el.scrollHeight;
           }
 
-          if (axis === 'X') {
+          if (axis === "X") {
             return el.clientWidth + ROUNDING_TOLERANCE < el.scrollWidth;
           }
         }
@@ -11947,10 +14230,9 @@
          * @returns {Boolean}
          */
 
-
         function canOverflow(el, axis) {
-          var overflowValue = w.getComputedStyle(el, null)['overflow' + axis];
-          return overflowValue === 'auto' || overflowValue === 'scroll';
+          var overflowValue = w.getComputedStyle(el, null)["overflow" + axis];
+          return overflowValue === "auto" || overflowValue === "scroll";
         }
         /**
          * indicates if an element can be scrolled in either axis
@@ -11960,10 +14242,11 @@
          * @returns {Boolean}
          */
 
-
         function isScrollable(el) {
-          var isScrollableY = hasScrollableSpace(el, 'Y') && canOverflow(el, 'Y');
-          var isScrollableX = hasScrollableSpace(el, 'X') && canOverflow(el, 'X');
+          var isScrollableY =
+            hasScrollableSpace(el, "Y") && canOverflow(el, "Y");
+          var isScrollableX =
+            hasScrollableSpace(el, "X") && canOverflow(el, "X");
           return isScrollableY || isScrollableX;
         }
         /**
@@ -11972,7 +14255,6 @@
          * @param {Node} el
          * @returns {Node} el
          */
-
 
         function findScrollableParent(el) {
           while (el !== d.body && isScrollable(el) === false) {
@@ -11987,7 +14269,6 @@
          * @param {Object} context
          * @returns {undefined}
          */
-
 
         function step(context) {
           var time = now();
@@ -12016,7 +14297,6 @@
          * @returns {undefined}
          */
 
-
         function smoothScroll(el, x, y) {
           var scrollable;
           var startX;
@@ -12036,7 +14316,6 @@
             method = scrollElement;
           } // scroll looping over a frame
 
-
           step({
             scrollable: scrollable,
             method: method,
@@ -12044,11 +14323,10 @@
             startX: startX,
             startY: startY,
             x: x,
-            y: y
+            y: y,
           });
         } // ORIGINAL METHODS OVERRIDES
         // w.scroll and w.scrollTo
-
 
         w.scroll = w.scrollTo = function () {
           // avoid action when no arguments are passed
@@ -12056,17 +14334,34 @@
             return;
           } // avoid smooth behavior if not required
 
-
           if (shouldBailOut(arguments[0]) === true) {
-            original.scroll.call(w, arguments[0].left !== undefined ? arguments[0].left : _typeof(arguments[0]) !== 'object' ? arguments[0] : w.scrollX || w.pageXOffset, // use top prop, second argument if present or fallback to scrollY
-            arguments[0].top !== undefined ? arguments[0].top : arguments[1] !== undefined ? arguments[1] : w.scrollY || w.pageYOffset);
+            original.scroll.call(
+              w,
+              arguments[0].left !== undefined
+                ? arguments[0].left
+                : _typeof(arguments[0]) !== "object"
+                ? arguments[0]
+                : w.scrollX || w.pageXOffset, // use top prop, second argument if present or fallback to scrollY
+              arguments[0].top !== undefined
+                ? arguments[0].top
+                : arguments[1] !== undefined
+                ? arguments[1]
+                : w.scrollY || w.pageYOffset
+            );
             return;
           } // LET THE SMOOTHNESS BEGIN!
 
-
-          smoothScroll.call(w, d.body, arguments[0].left !== undefined ? ~~arguments[0].left : w.scrollX || w.pageXOffset, arguments[0].top !== undefined ? ~~arguments[0].top : w.scrollY || w.pageYOffset);
+          smoothScroll.call(
+            w,
+            d.body,
+            arguments[0].left !== undefined
+              ? ~~arguments[0].left
+              : w.scrollX || w.pageXOffset,
+            arguments[0].top !== undefined
+              ? ~~arguments[0].top
+              : w.scrollY || w.pageYOffset
+          );
         }; // w.scrollBy
-
 
         w.scrollBy = function () {
           // avoid action when no arguments are passed
@@ -12074,16 +14369,30 @@
             return;
           } // avoid smooth behavior if not required
 
-
           if (shouldBailOut(arguments[0])) {
-            original.scrollBy.call(w, arguments[0].left !== undefined ? arguments[0].left : _typeof(arguments[0]) !== 'object' ? arguments[0] : 0, arguments[0].top !== undefined ? arguments[0].top : arguments[1] !== undefined ? arguments[1] : 0);
+            original.scrollBy.call(
+              w,
+              arguments[0].left !== undefined
+                ? arguments[0].left
+                : _typeof(arguments[0]) !== "object"
+                ? arguments[0]
+                : 0,
+              arguments[0].top !== undefined
+                ? arguments[0].top
+                : arguments[1] !== undefined
+                ? arguments[1]
+                : 0
+            );
             return;
           } // LET THE SMOOTHNESS BEGIN!
 
-
-          smoothScroll.call(w, d.body, ~~arguments[0].left + (w.scrollX || w.pageXOffset), ~~arguments[0].top + (w.scrollY || w.pageYOffset));
+          smoothScroll.call(
+            w,
+            d.body,
+            ~~arguments[0].left + (w.scrollX || w.pageXOffset),
+            ~~arguments[0].top + (w.scrollY || w.pageYOffset)
+          );
         }; // Element.prototype.scroll and Element.prototype.scrollTo
-
 
         Element.prototype.scroll = Element.prototype.scrollTo = function () {
           // avoid action when no arguments are passed
@@ -12091,25 +14400,41 @@
             return;
           } // avoid smooth behavior if not required
 
-
           if (shouldBailOut(arguments[0]) === true) {
             // if one number is passed, throw error to match Firefox implementation
-            if (typeof arguments[0] === 'number' && arguments[1] === undefined) {
-              throw new SyntaxError('Value could not be converted');
+            if (
+              typeof arguments[0] === "number" &&
+              arguments[1] === undefined
+            ) {
+              throw new SyntaxError("Value could not be converted");
             }
 
-            original.elementScroll.call(this, // use left prop, first number argument or fallback to scrollLeft
-            arguments[0].left !== undefined ? ~~arguments[0].left : _typeof(arguments[0]) !== 'object' ? ~~arguments[0] : this.scrollLeft, // use top prop, second argument or fallback to scrollTop
-            arguments[0].top !== undefined ? ~~arguments[0].top : arguments[1] !== undefined ? ~~arguments[1] : this.scrollTop);
+            original.elementScroll.call(
+              this, // use left prop, first number argument or fallback to scrollLeft
+              arguments[0].left !== undefined
+                ? ~~arguments[0].left
+                : _typeof(arguments[0]) !== "object"
+                ? ~~arguments[0]
+                : this.scrollLeft, // use top prop, second argument or fallback to scrollTop
+              arguments[0].top !== undefined
+                ? ~~arguments[0].top
+                : arguments[1] !== undefined
+                ? ~~arguments[1]
+                : this.scrollTop
+            );
             return;
           }
 
           var left = arguments[0].left;
           var top = arguments[0].top; // LET THE SMOOTHNESS BEGIN!
 
-          smoothScroll.call(this, this, typeof left === 'undefined' ? this.scrollLeft : ~~left, typeof top === 'undefined' ? this.scrollTop : ~~top);
+          smoothScroll.call(
+            this,
+            this,
+            typeof left === "undefined" ? this.scrollLeft : ~~left,
+            typeof top === "undefined" ? this.scrollTop : ~~top
+          );
         }; // Element.prototype.scrollBy
-
 
         Element.prototype.scrollBy = function () {
           // avoid action when no arguments are passed
@@ -12117,27 +14442,35 @@
             return;
           } // avoid smooth behavior if not required
 
-
           if (shouldBailOut(arguments[0]) === true) {
-            original.elementScroll.call(this, arguments[0].left !== undefined ? ~~arguments[0].left + this.scrollLeft : ~~arguments[0] + this.scrollLeft, arguments[0].top !== undefined ? ~~arguments[0].top + this.scrollTop : ~~arguments[1] + this.scrollTop);
+            original.elementScroll.call(
+              this,
+              arguments[0].left !== undefined
+                ? ~~arguments[0].left + this.scrollLeft
+                : ~~arguments[0] + this.scrollLeft,
+              arguments[0].top !== undefined
+                ? ~~arguments[0].top + this.scrollTop
+                : ~~arguments[1] + this.scrollTop
+            );
             return;
           }
 
           this.scroll({
             left: ~~arguments[0].left + this.scrollLeft,
             top: ~~arguments[0].top + this.scrollTop,
-            behavior: arguments[0].behavior
+            behavior: arguments[0].behavior,
           });
         }; // Element.prototype.scrollIntoView
-
 
         Element.prototype.scrollIntoView = function () {
           // avoid smooth behavior if not required
           if (shouldBailOut(arguments[0]) === true) {
-            original.scrollIntoView.call(this, arguments[0] === undefined ? true : arguments[0]);
+            original.scrollIntoView.call(
+              this,
+              arguments[0] === undefined ? true : arguments[0]
+            );
             return;
           } // LET THE SMOOTHNESS BEGIN!
-
 
           var scrollableParent = findScrollableParent(this);
           var parentRects = scrollableParent.getBoundingClientRect();
@@ -12145,13 +14478,18 @@
 
           if (scrollableParent !== d.body) {
             // reveal element inside parent
-            smoothScroll.call(this, scrollableParent, scrollableParent.scrollLeft + clientRects.left - parentRects.left, scrollableParent.scrollTop + clientRects.top - parentRects.top); // reveal parent in viewport unless is fixed
+            smoothScroll.call(
+              this,
+              scrollableParent,
+              scrollableParent.scrollLeft + clientRects.left - parentRects.left,
+              scrollableParent.scrollTop + clientRects.top - parentRects.top
+            ); // reveal parent in viewport unless is fixed
 
-            if (w.getComputedStyle(scrollableParent).position !== 'fixed') {
+            if (w.getComputedStyle(scrollableParent).position !== "fixed") {
               w.scrollBy({
                 left: parentRects.left,
                 top: parentRects.top,
-                behavior: 'smooth'
+                behavior: "smooth",
               });
             }
           } else {
@@ -12159,7 +14497,7 @@
             w.scrollBy({
               left: clientRects.left,
               top: clientRects.top,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
           }
         };
@@ -12168,7 +14506,7 @@
       {
         // commonjs
         module.exports = {
-          polyfill: polyfill
+          polyfill: polyfill,
         };
       }
     })();
@@ -12179,34 +14517,50 @@
   var mouseoverTimer;
   var lastTouchTimestamp;
   var prefetches = new Set();
-  var prefetchElement = document.createElement('link');
-  var isSupported = prefetchElement.relList && prefetchElement.relList.supports && prefetchElement.relList.supports('prefetch') && window.IntersectionObserver && 'isIntersecting' in IntersectionObserverEntry.prototype;
-  var allowQueryString = ('instantAllowQueryString' in document.body.dataset);
-  var allowExternalLinks = ('instantAllowExternalLinks' in document.body.dataset);
-  var useWhitelist = ('instantWhitelist' in document.body.dataset);
-  var mousedownShortcut = ('instantMousedownShortcut' in document.body.dataset);
+  var prefetchElement = document.createElement("link");
+  var isSupported =
+    prefetchElement.relList &&
+    prefetchElement.relList.supports &&
+    prefetchElement.relList.supports("prefetch") &&
+    window.IntersectionObserver &&
+    "isIntersecting" in IntersectionObserverEntry.prototype;
+  var allowQueryString = "instantAllowQueryString" in document.body.dataset;
+  var allowExternalLinks = "instantAllowExternalLinks" in document.body.dataset;
+  var useWhitelist = "instantWhitelist" in document.body.dataset;
+  var mousedownShortcut = "instantMousedownShortcut" in document.body.dataset;
   var DELAY_TO_NOT_BE_CONSIDERED_A_TOUCH_INITIATED_ACTION = 1111;
   var delayOnHover = 65;
   var useMousedown = false;
   var useMousedownOnly = false;
   var useViewport = false;
 
-  if ('instantIntensity' in document.body.dataset) {
+  if ("instantIntensity" in document.body.dataset) {
     var intensity = document.body.dataset.instantIntensity;
 
-    if (intensity.substr(0, 'mousedown'.length) == 'mousedown') {
+    if (intensity.substr(0, "mousedown".length) == "mousedown") {
       useMousedown = true;
 
-      if (intensity == 'mousedown-only') {
+      if (intensity == "mousedown-only") {
         useMousedownOnly = true;
       }
-    } else if (intensity.substr(0, 'viewport'.length) == 'viewport') {
-      if (!(navigator.connection && (navigator.connection.saveData || navigator.connection.effectiveType && navigator.connection.effectiveType.includes('2g')))) {
+    } else if (intensity.substr(0, "viewport".length) == "viewport") {
+      if (
+        !(
+          navigator.connection &&
+          (navigator.connection.saveData ||
+            (navigator.connection.effectiveType &&
+              navigator.connection.effectiveType.includes("2g")))
+        )
+      ) {
         if (intensity == "viewport") {
           /* Biggest iPhone resolution (which we want): 414 × 896 = 370944
            * Small 7" tablet resolution (which we don’t want): 600 × 1024 = 614400
            * Note that the viewport (which we check here) is smaller than the resolution due to the UI’s chrome */
-          if (document.documentElement.clientWidth * document.documentElement.clientHeight < 450000) {
+          if (
+            document.documentElement.clientWidth *
+              document.documentElement.clientHeight <
+            450000
+          ) {
             useViewport = true;
           }
         } else if (intensity == "viewport-all") {
@@ -12225,21 +14579,37 @@
   if (isSupported) {
     var eventListenersOptions = {
       capture: true,
-      passive: true
+      passive: true,
     };
 
     if (!useMousedownOnly) {
-      document.addEventListener('touchstart', touchstartListener, eventListenersOptions);
+      document.addEventListener(
+        "touchstart",
+        touchstartListener,
+        eventListenersOptions
+      );
     }
 
     if (!useMousedown) {
-      document.addEventListener('mouseover', mouseoverListener, eventListenersOptions);
+      document.addEventListener(
+        "mouseover",
+        mouseoverListener,
+        eventListenersOptions
+      );
     } else if (!mousedownShortcut) {
-      document.addEventListener('mousedown', mousedownListener, eventListenersOptions);
+      document.addEventListener(
+        "mousedown",
+        mousedownListener,
+        eventListenersOptions
+      );
     }
 
     if (mousedownShortcut) {
-      document.addEventListener('mousedown', mousedownShortcutListener, eventListenersOptions);
+      document.addEventListener(
+        "mousedown",
+        mousedownShortcutListener,
+        eventListenersOptions
+      );
     }
 
     if (useViewport) {
@@ -12248,7 +14618,7 @@
       if (window.requestIdleCallback) {
         triggeringFunction = function triggeringFunction(callback) {
           requestIdleCallback(callback, {
-            timeout: 1500
+            timeout: 1500,
           });
         };
       } else {
@@ -12267,7 +14637,7 @@
             }
           });
         });
-        document.querySelectorAll('a').forEach(function (linkElement) {
+        document.querySelectorAll("a").forEach(function (linkElement) {
           if (isPreloadable(linkElement)) {
             intersectionObserver.observe(linkElement);
           }
@@ -12280,7 +14650,7 @@
     /* Chrome on Android calls mouseover before touchcancel so `lastTouchTimestamp`
      * must be assigned on touchstart to be measured on mouseover. */
     lastTouchTimestamp = performance.now();
-    var linkElement = event.target.closest('a');
+    var linkElement = event.target.closest("a");
 
     if (!isPreloadable(linkElement)) {
       return;
@@ -12290,18 +14660,21 @@
   }
 
   function mouseoverListener(event) {
-    if (performance.now() - lastTouchTimestamp < DELAY_TO_NOT_BE_CONSIDERED_A_TOUCH_INITIATED_ACTION) {
+    if (
+      performance.now() - lastTouchTimestamp <
+      DELAY_TO_NOT_BE_CONSIDERED_A_TOUCH_INITIATED_ACTION
+    ) {
       return;
     }
 
-    var linkElement = event.target.closest('a');
+    var linkElement = event.target.closest("a");
 
     if (!isPreloadable(linkElement)) {
       return;
     }
 
-    linkElement.addEventListener('mouseout', mouseoutListener, {
-      passive: true
+    linkElement.addEventListener("mouseout", mouseoutListener, {
+      passive: true,
     });
     mouseoverTimer = setTimeout(function () {
       preload(linkElement.href);
@@ -12310,7 +14683,7 @@
   }
 
   function mousedownListener(event) {
-    var linkElement = event.target.closest('a');
+    var linkElement = event.target.closest("a");
 
     if (!isPreloadable(linkElement)) {
       return;
@@ -12320,7 +14693,10 @@
   }
 
   function mouseoutListener(event) {
-    if (event.relatedTarget && event.target.closest('a') == event.relatedTarget.closest('a')) {
+    if (
+      event.relatedTarget &&
+      event.target.closest("a") == event.relatedTarget.closest("a")
+    ) {
       return;
     }
 
@@ -12331,11 +14707,14 @@
   }
 
   function mousedownShortcutListener(event) {
-    if (performance.now() - lastTouchTimestamp < DELAY_TO_NOT_BE_CONSIDERED_A_TOUCH_INITIATED_ACTION) {
+    if (
+      performance.now() - lastTouchTimestamp <
+      DELAY_TO_NOT_BE_CONSIDERED_A_TOUCH_INITIATED_ACTION
+    ) {
       return;
     }
 
-    var linkElement = event.target.closest('a');
+    var linkElement = event.target.closest("a");
 
     if (event.which > 1 || event.metaKey || event.ctrlKey) {
       return;
@@ -12345,22 +14724,26 @@
       return;
     }
 
-    linkElement.addEventListener('click', function (event) {
-      if (event.detail == 1337) {
-        return;
-      }
+    linkElement.addEventListener(
+      "click",
+      function (event) {
+        if (event.detail == 1337) {
+          return;
+        }
 
-      event.preventDefault();
-    }, {
-      capture: true,
-      passive: false,
-      once: true
-    });
-    var customEvent = new MouseEvent('click', {
+        event.preventDefault();
+      },
+      {
+        capture: true,
+        passive: false,
+        once: true,
+      }
+    );
+    var customEvent = new MouseEvent("click", {
       view: window,
       bubbles: true,
       cancelable: false,
-      detail: 1337
+      detail: 1337,
     });
     linkElement.dispatchEvent(customEvent);
   }
@@ -12370,31 +14753,43 @@
       return;
     }
 
-    if (useWhitelist && !('instant' in linkElement.dataset)) {
+    if (useWhitelist && !("instant" in linkElement.dataset)) {
       return;
     }
 
-    if (!allowExternalLinks && linkElement.origin != location.origin && !('instant' in linkElement.dataset)) {
+    if (
+      !allowExternalLinks &&
+      linkElement.origin != location.origin &&
+      !("instant" in linkElement.dataset)
+    ) {
       return;
     }
 
-    if (!['http:', 'https:'].includes(linkElement.protocol)) {
+    if (!["http:", "https:"].includes(linkElement.protocol)) {
       return;
     }
 
-    if (linkElement.protocol == 'http:' && location.protocol == 'https:') {
+    if (linkElement.protocol == "http:" && location.protocol == "https:") {
       return;
     }
 
-    if (!allowQueryString && linkElement.search && !('instant' in linkElement.dataset)) {
+    if (
+      !allowQueryString &&
+      linkElement.search &&
+      !("instant" in linkElement.dataset)
+    ) {
       return;
     }
 
-    if (linkElement.hash && linkElement.pathname + linkElement.search == location.pathname + location.search) {
+    if (
+      linkElement.hash &&
+      linkElement.pathname + linkElement.search ==
+        location.pathname + location.search
+    ) {
       return;
     }
 
-    if ('noInstant' in linkElement.dataset) {
+    if ("noInstant" in linkElement.dataset) {
       return;
     }
 
@@ -12406,8 +14801,8 @@
       return;
     }
 
-    var prefetcher = document.createElement('link');
-    prefetcher.rel = 'prefetch';
+    var prefetcher = document.createElement("link");
+    prefetcher.rel = "prefetch";
     prefetcher.href = url;
     document.head.appendChild(prefetcher);
     prefetches.add(url);
@@ -12418,10 +14813,14 @@
       var lazySizes = factory(window, window.document, Date);
       window.lazySizes = lazySizes;
 
-      if ( module.exports) {
+      if (module.exports) {
         module.exports = lazySizes;
       }
-    })(typeof window != 'undefined' ? window : {}, function l(window, document, Date) {
+    })(typeof window != "undefined" ? window : {}, function l(
+      window,
+      document,
+      Date
+    ) {
       /*jshint eqnull:true */
 
       var lazysizes, lazySizesCfg;
@@ -12429,16 +14828,16 @@
       (function () {
         var prop;
         var lazySizesDefaults = {
-          lazyClass: 'lazyload',
-          loadedClass: 'lazyloaded',
-          loadingClass: 'lazyloading',
-          preloadClass: 'lazypreload',
-          errorClass: 'lazyerror',
+          lazyClass: "lazyload",
+          loadedClass: "lazyloaded",
+          loadingClass: "lazyloading",
+          preloadClass: "lazypreload",
+          errorClass: "lazyerror",
           //strictClass: 'lazystrict',
-          autosizesClass: 'lazyautosizes',
-          srcAttr: 'data-src',
-          srcsetAttr: 'data-srcset',
-          sizesAttr: 'data-sizes',
+          autosizesClass: "lazyautosizes",
+          srcAttr: "data-src",
+          srcsetAttr: "data-srcset",
+          sizesAttr: "data-sizes",
           //preloadAfterLoad: false,
           minSize: 40,
           customMedia: {},
@@ -12448,7 +14847,7 @@
           loadMode: 2,
           loadHidden: true,
           ricTimeout: 0,
-          throttleDelay: 125
+          throttleDelay: 125,
         };
         lazySizesCfg = window.lazySizesConfig || window.lazysizesConfig || {};
 
@@ -12463,14 +14862,14 @@
         return {
           init: function init() {},
           cfg: lazySizesCfg,
-          noSupport: true
+          noSupport: true,
         };
       }
 
       var docElem = document.documentElement;
       var supportPicture = window.HTMLPictureElement;
-      var _addEventListener = 'addEventListener';
-      var _getAttribute = 'getAttribute';
+      var _addEventListener = "addEventListener";
+      var _getAttribute = "getAttribute";
       /**
        * Update to bind to window because 'this' becomes null during SSR
        * builds.
@@ -12482,34 +14881,43 @@
       var requestAnimationFrame = window.requestAnimationFrame || setTimeout;
       var requestIdleCallback = window.requestIdleCallback;
       var regPicture = /^picture$/i;
-      var loadEvents = ['load', 'error', 'lazyincluded', '_lazyloaded'];
+      var loadEvents = ["load", "error", "lazyincluded", "_lazyloaded"];
       var regClassCache = {};
       var forEach = Array.prototype.forEach;
 
       var hasClass = function hasClass(ele, cls) {
         if (!regClassCache[cls]) {
-          regClassCache[cls] = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+          regClassCache[cls] = new RegExp("(\\s|^)" + cls + "(\\s|$)");
         }
 
-        return regClassCache[cls].test(ele[_getAttribute]('class') || '') && regClassCache[cls];
+        return (
+          regClassCache[cls].test(ele[_getAttribute]("class") || "") &&
+          regClassCache[cls]
+        );
       };
 
       var addClass = function addClass(ele, cls) {
         if (!hasClass(ele, cls)) {
-          ele.setAttribute('class', (ele[_getAttribute]('class') || '').trim() + ' ' + cls);
+          ele.setAttribute(
+            "class",
+            (ele[_getAttribute]("class") || "").trim() + " " + cls
+          );
         }
       };
 
       var removeClass = function removeClass(ele, cls) {
         var reg;
 
-        if (reg = hasClass(ele, cls)) {
-          ele.setAttribute('class', (ele[_getAttribute]('class') || '').replace(reg, ' '));
+        if ((reg = hasClass(ele, cls))) {
+          ele.setAttribute(
+            "class",
+            (ele[_getAttribute]("class") || "").replace(reg, " ")
+          );
         }
       };
 
       var addRemoveLoadEvents = function addRemoveLoadEvents(dom, fn, add) {
-        var action = add ? _addEventListener : 'removeEventListener';
+        var action = add ? _addEventListener : "removeEventListener";
 
         if (add) {
           addRemoveLoadEvents(dom, fn);
@@ -12520,8 +14928,14 @@
         });
       };
 
-      var triggerEvent = function triggerEvent(elem, name, detail, noBubbles, noCancelable) {
-        var event = document.createEvent('Event');
+      var triggerEvent = function triggerEvent(
+        elem,
+        name,
+        detail,
+        noBubbles,
+        noCancelable
+      ) {
+        var event = document.createEvent("Event");
 
         if (!detail) {
           detail = {};
@@ -12537,14 +14951,17 @@
       var updatePolyfill = function updatePolyfill(el, full) {
         var polyfill;
 
-        if (!supportPicture && (polyfill = window.picturefill || lazySizesCfg.pf)) {
-          if (full && full.src && !el[_getAttribute]('srcset')) {
-            el.setAttribute('srcset', full.src);
+        if (
+          !supportPicture &&
+          (polyfill = window.picturefill || lazySizesCfg.pf)
+        ) {
+          if (full && full.src && !el[_getAttribute]("srcset")) {
+            el.setAttribute("srcset", full.src);
           }
 
           polyfill({
             reevaluate: true,
-            elements: [el]
+            elements: [el],
           });
         } else if (full && full.src) {
           el.src = full.src;
@@ -12558,7 +14975,11 @@
       var getWidth = function getWidth(elem, parent, width) {
         width = width || elem.offsetWidth;
 
-        while (width < lazySizesCfg.minSize && parent && !elem._lazysizesWidth) {
+        while (
+          width < lazySizesCfg.minSize &&
+          parent &&
+          !elem._lazysizesWidth
+        ) {
           width = parent.offsetWidth;
           parent = parent.parentNode;
         }
@@ -12566,7 +14987,7 @@
         return width;
       };
 
-      var rAF = function () {
+      var rAF = (function () {
         var running, waiting;
         var firstFns = [];
         var secondFns = [];
@@ -12600,18 +15021,20 @@
 
         rafBatch._lsFlush = run;
         return rafBatch;
-      }();
+      })();
 
       var rAFIt = function rAFIt(fn, simple) {
-        return simple ? function () {
-          rAF(fn);
-        } : function () {
-          var that = this;
-          var args = arguments;
-          rAF(function () {
-            fn.apply(that, args);
-          });
-        };
+        return simple
+          ? function () {
+              rAF(fn);
+            }
+          : function () {
+              var that = this;
+              var args = arguments;
+              rAF(function () {
+                fn.apply(that, args);
+              });
+            };
       };
 
       var throttle = function throttle(fn) {
@@ -12626,21 +15049,24 @@
           fn();
         };
 
-        var idleCallback = requestIdleCallback && rICTimeout > 49 ? function () {
-          requestIdleCallback(run, {
-            timeout: rICTimeout
-          });
+        var idleCallback =
+          requestIdleCallback && rICTimeout > 49
+            ? function () {
+                requestIdleCallback(run, {
+                  timeout: rICTimeout,
+                });
 
-          if (rICTimeout !== lazySizesCfg.ricTimeout) {
-            rICTimeout = lazySizesCfg.ricTimeout;
-          }
-        } : rAFIt(function () {
-          setTimeout(run);
-        }, true);
+                if (rICTimeout !== lazySizesCfg.ricTimeout) {
+                  rICTimeout = lazySizesCfg.ricTimeout;
+                }
+              }
+            : rAFIt(function () {
+                setTimeout(run);
+              }, true);
         return function (isPriority) {
           var delay;
 
-          if (isPriority = isPriority === true) {
+          if ((isPriority = isPriority === true)) {
             rICTimeout = 33;
           }
 
@@ -12662,7 +15088,6 @@
           }
         };
       }; //based on http://modernjavascript.blogspot.de/2013/08/building-better-debounce.html
-
 
       var debounce = function debounce(func) {
         var timeout, timestamp;
@@ -12692,12 +15117,13 @@
         };
       };
 
-      var loader = function () {
+      var loader = (function () {
         var preloadElems, isCompleted, resetPreloadingTimer, loadMode, started;
         var eLvW, elvH, eLtop, eLleft, eLright, eLbottom, isBodyHidden;
         var regImg = /^img$/i;
         var regIframe = /^iframe$/i;
-        var supportScroll = 'onscroll' in window && !/(gle|ing)bot/.test(navigator.userAgent);
+        var supportScroll =
+          "onscroll" in window && !/(gle|ing)bot/.test(navigator.userAgent);
         var shrinkExpand = 0;
         var currentExpand = 0;
         var isLoading = 0;
@@ -12713,10 +15139,16 @@
 
         var isVisible = function isVisible(elem) {
           if (isBodyHidden == null) {
-            isBodyHidden = getCSS(document.body, 'visibility') == 'hidden';
+            isBodyHidden = getCSS(document.body, "visibility") == "hidden";
           }
 
-          return isBodyHidden || !(getCSS(elem.parentNode, 'visibility') == 'hidden' && getCSS(elem, 'visibility') == 'hidden');
+          return (
+            isBodyHidden ||
+            !(
+              getCSS(elem.parentNode, "visibility") == "hidden" &&
+              getCSS(elem, "visibility") == "hidden"
+            )
+          );
         };
 
         var isNestedVisible = function isNestedVisible(elem, elemExpand) {
@@ -12728,12 +15160,21 @@
           eLleft -= elemExpand;
           eLright += elemExpand;
 
-          while (visible && (parent = parent.offsetParent) && parent != document.body && parent != docElem) {
-            visible = (getCSS(parent, 'opacity') || 1) > 0;
+          while (
+            visible &&
+            (parent = parent.offsetParent) &&
+            parent != document.body &&
+            parent != docElem
+          ) {
+            visible = (getCSS(parent, "opacity") || 1) > 0;
 
-            if (visible && getCSS(parent, 'overflow') != 'visible') {
+            if (visible && getCSS(parent, "overflow") != "visible") {
               outerRect = parent.getBoundingClientRect();
-              visible = eLright > outerRect.left && eLleft < outerRect.right && eLbottom > outerRect.top - 1 && eLtop < outerRect.bottom + 1;
+              visible =
+                eLright > outerRect.left &&
+                eLleft < outerRect.right &&
+                eLbottom > outerRect.top - 1 &&
+                eLtop < outerRect.bottom + 1;
             }
           }
 
@@ -12741,10 +15182,25 @@
         };
 
         var checkElements = function checkElements() {
-          var eLlen, i, rect, autoLoadElem, loadedSomething, elemExpand, elemNegativeExpand, elemExpandVal, beforeExpandVal, defaultExpand, preloadExpand, hFac;
+          var eLlen,
+            i,
+            rect,
+            autoLoadElem,
+            loadedSomething,
+            elemExpand,
+            elemNegativeExpand,
+            elemExpandVal,
+            beforeExpandVal,
+            defaultExpand,
+            preloadExpand,
+            hFac;
           var lazyloadElems = lazysizes.elements;
 
-          if ((loadMode = lazySizesCfg.loadMode) && isLoading < 8 && (eLlen = lazyloadElems.length)) {
+          if (
+            (loadMode = lazySizesCfg.loadMode) &&
+            isLoading < 8 &&
+            (eLlen = lazyloadElems.length)
+          ) {
             i = 0;
             lowRuns++;
 
@@ -12753,23 +15209,43 @@
                 continue;
               }
 
-              if (!supportScroll || lazysizes.prematureUnveil && lazysizes.prematureUnveil(lazyloadElems[i])) {
+              if (
+                !supportScroll ||
+                (lazysizes.prematureUnveil &&
+                  lazysizes.prematureUnveil(lazyloadElems[i]))
+              ) {
                 unveilElement(lazyloadElems[i]);
                 continue;
               }
 
-              if (!(elemExpandVal = lazyloadElems[i][_getAttribute]('data-expand')) || !(elemExpand = elemExpandVal * 1)) {
+              if (
+                !(elemExpandVal = lazyloadElems[i][_getAttribute](
+                  "data-expand"
+                )) ||
+                !(elemExpand = elemExpandVal * 1)
+              ) {
                 elemExpand = currentExpand;
               }
 
               if (!defaultExpand) {
-                defaultExpand = !lazySizesCfg.expand || lazySizesCfg.expand < 1 ? docElem.clientHeight > 500 && docElem.clientWidth > 500 ? 500 : 370 : lazySizesCfg.expand;
+                defaultExpand =
+                  !lazySizesCfg.expand || lazySizesCfg.expand < 1
+                    ? docElem.clientHeight > 500 && docElem.clientWidth > 500
+                      ? 500
+                      : 370
+                    : lazySizesCfg.expand;
                 lazysizes._defEx = defaultExpand;
                 preloadExpand = defaultExpand * lazySizesCfg.expFactor;
                 hFac = lazySizesCfg.hFac;
                 isBodyHidden = null;
 
-                if (currentExpand < preloadExpand && isLoading < 1 && lowRuns > 2 && loadMode > 2 && !document.hidden) {
+                if (
+                  currentExpand < preloadExpand &&
+                  isLoading < 1 &&
+                  lowRuns > 2 &&
+                  loadMode > 2 &&
+                  !document.hidden
+                ) {
                   currentExpand = preloadExpand;
                   lowRuns = 0;
                 } else if (loadMode > 1 && lowRuns > 1 && isLoading < 6) {
@@ -12788,14 +15264,42 @@
 
               rect = lazyloadElems[i].getBoundingClientRect();
 
-              if ((eLbottom = rect.bottom) >= elemNegativeExpand && (eLtop = rect.top) <= elvH && (eLright = rect.right) >= elemNegativeExpand * hFac && (eLleft = rect.left) <= eLvW && (eLbottom || eLright || eLleft || eLtop) && (lazySizesCfg.loadHidden || isVisible(lazyloadElems[i])) && (isCompleted && isLoading < 3 && !elemExpandVal && (loadMode < 3 || lowRuns < 4) || isNestedVisible(lazyloadElems[i], elemExpand))) {
+              if (
+                (eLbottom = rect.bottom) >= elemNegativeExpand &&
+                (eLtop = rect.top) <= elvH &&
+                (eLright = rect.right) >= elemNegativeExpand * hFac &&
+                (eLleft = rect.left) <= eLvW &&
+                (eLbottom || eLright || eLleft || eLtop) &&
+                (lazySizesCfg.loadHidden || isVisible(lazyloadElems[i])) &&
+                ((isCompleted &&
+                  isLoading < 3 &&
+                  !elemExpandVal &&
+                  (loadMode < 3 || lowRuns < 4)) ||
+                  isNestedVisible(lazyloadElems[i], elemExpand))
+              ) {
                 unveilElement(lazyloadElems[i]);
                 loadedSomething = true;
 
                 if (isLoading > 9) {
                   break;
                 }
-              } else if (!loadedSomething && isCompleted && !autoLoadElem && isLoading < 4 && lowRuns < 4 && loadMode > 2 && (preloadElems[0] || lazySizesCfg.preloadAfterLoad) && (preloadElems[0] || !elemExpandVal && (eLbottom || eLright || eLleft || eLtop || lazyloadElems[i][_getAttribute](lazySizesCfg.sizesAttr) != 'auto'))) {
+              } else if (
+                !loadedSomething &&
+                isCompleted &&
+                !autoLoadElem &&
+                isLoading < 4 &&
+                lowRuns < 4 &&
+                loadMode > 2 &&
+                (preloadElems[0] || lazySizesCfg.preloadAfterLoad) &&
+                (preloadElems[0] ||
+                  (!elemExpandVal &&
+                    (eLbottom ||
+                      eLright ||
+                      eLleft ||
+                      eLtop ||
+                      lazyloadElems[i][_getAttribute](lazySizesCfg.sizesAttr) !=
+                        "auto")))
+              ) {
                 autoLoadElem = preloadElems[0] || lazyloadElems[i];
               }
             }
@@ -12820,14 +15324,14 @@
           addClass(elem, lazySizesCfg.loadedClass);
           removeClass(elem, lazySizesCfg.loadingClass);
           addRemoveLoadEvents(elem, rafSwitchLoadingClass);
-          triggerEvent(elem, 'lazyloaded');
+          triggerEvent(elem, "lazyloaded");
         };
 
         var rafedSwitchLoadingClass = rAFIt(switchLoadingClass);
 
         var rafSwitchLoadingClass = function rafSwitchLoadingClass(e) {
           rafedSwitchLoadingClass({
-            target: e.target
+            target: e.target,
           });
         };
 
@@ -12844,24 +15348,33 @@
 
           var sourceSrcset = source[_getAttribute](lazySizesCfg.srcsetAttr);
 
-          if (customMedia = lazySizesCfg.customMedia[source[_getAttribute]('data-media') || source[_getAttribute]('media')]) {
-            source.setAttribute('media', customMedia);
+          if (
+            (customMedia =
+              lazySizesCfg.customMedia[
+                source[_getAttribute]("data-media") ||
+                  source[_getAttribute]("media")
+              ])
+          ) {
+            source.setAttribute("media", customMedia);
           }
 
           if (sourceSrcset) {
-            source.setAttribute('srcset', sourceSrcset);
+            source.setAttribute("srcset", sourceSrcset);
           }
         };
 
         var lazyUnveil = rAFIt(function (elem, detail, isAuto, sizes, isImg) {
           var src, srcset, parent, isPicture, event, firesLoad;
 
-          if (!(event = triggerEvent(elem, 'lazybeforeunveil', detail)).defaultPrevented) {
+          if (
+            !(event = triggerEvent(elem, "lazybeforeunveil", detail))
+              .defaultPrevented
+          ) {
             if (sizes) {
               if (isAuto) {
                 addClass(elem, lazySizesCfg.autosizesClass);
               } else {
-                elem.setAttribute('sizes', sizes);
+                elem.setAttribute("sizes", sizes);
               }
             }
 
@@ -12870,12 +15383,14 @@
 
             if (isImg) {
               parent = elem.parentNode;
-              isPicture = parent && regPicture.test(parent.nodeName || '');
+              isPicture = parent && regPicture.test(parent.nodeName || "");
             }
 
-            firesLoad = detail.firesLoad || 'src' in elem && (srcset || src || isPicture);
+            firesLoad =
+              detail.firesLoad ||
+              ("src" in elem && (srcset || src || isPicture));
             event = {
-              target: elem
+              target: elem,
             };
             addClass(elem, lazySizesCfg.loadingClass);
 
@@ -12886,11 +15401,14 @@
             }
 
             if (isPicture) {
-              forEach.call(parent.getElementsByTagName('source'), handleSources);
+              forEach.call(
+                parent.getElementsByTagName("source"),
+                handleSources
+              );
             }
 
             if (srcset) {
-              elem.setAttribute('srcset', srcset);
+              elem.setAttribute("srcset", srcset);
             } else if (src && !isPicture) {
               if (regIframe.test(elem.nodeName)) {
                 changeIframeSrc(elem, src);
@@ -12901,7 +15419,7 @@
 
             if (isImg && (srcset || isPicture)) {
               updatePolyfill(elem, {
-                src: src
+                src: src,
               });
             }
           }
@@ -12917,19 +15435,19 @@
 
             if (!firesLoad || isLoaded) {
               if (isLoaded) {
-                addClass(elem, 'ls-is-cached');
+                addClass(elem, "ls-is-cached");
               }
 
               switchLoadingClass(event);
               elem._lazyCache = true;
               setTimeout(function () {
-                if ('_lazyCache' in elem) {
+                if ("_lazyCache" in elem) {
                   delete elem._lazyCache;
                 }
               }, 9);
             }
 
-            if (elem.loading == 'lazy') {
+            if (elem.loading == "lazy") {
               isLoading--;
             }
           }, true);
@@ -12943,15 +15461,25 @@
           var detail;
           var isImg = regImg.test(elem.nodeName); //allow using sizes="auto", but don't use. it's invalid. Use data-sizes="auto" or a valid value for sizes instead (i.e.: sizes="80vw")
 
-          var sizes = isImg && (elem[_getAttribute](lazySizesCfg.sizesAttr) || elem[_getAttribute]('sizes'));
+          var sizes =
+            isImg &&
+            (elem[_getAttribute](lazySizesCfg.sizesAttr) ||
+              elem[_getAttribute]("sizes"));
 
-          var isAuto = sizes == 'auto';
+          var isAuto = sizes == "auto";
 
-          if ((isAuto || !isCompleted) && isImg && (elem[_getAttribute]('src') || elem.srcset) && !elem.complete && !hasClass(elem, lazySizesCfg.errorClass) && hasClass(elem, lazySizesCfg.lazyClass)) {
+          if (
+            (isAuto || !isCompleted) &&
+            isImg &&
+            (elem[_getAttribute]("src") || elem.srcset) &&
+            !elem.complete &&
+            !hasClass(elem, lazySizesCfg.errorClass) &&
+            hasClass(elem, lazySizesCfg.lazyClass)
+          ) {
             return;
           }
 
-          detail = triggerEvent(elem, 'lazyunveilread').detail;
+          detail = triggerEvent(elem, "lazyunveilread").detail;
 
           if (isAuto) {
             autoSizer.updateElem(elem, true, elem.offsetWidth);
@@ -12988,19 +15516,25 @@
           isCompleted = true;
           lazySizesCfg.loadMode = 3;
           throttledCheckElements();
-          addEventListener('scroll', altLoadmodeScrollListner, true);
+          addEventListener("scroll", altLoadmodeScrollListner, true);
         };
 
         return {
           _: function _() {
             started = Date.now();
-            lazysizes.elements = document.getElementsByClassName(lazySizesCfg.lazyClass);
-            preloadElems = document.getElementsByClassName(lazySizesCfg.lazyClass + ' ' + lazySizesCfg.preloadClass);
-            addEventListener('scroll', throttledCheckElements, true);
-            addEventListener('resize', throttledCheckElements, true);
-            addEventListener('pageshow', function (e) {
+            lazysizes.elements = document.getElementsByClassName(
+              lazySizesCfg.lazyClass
+            );
+            preloadElems = document.getElementsByClassName(
+              lazySizesCfg.lazyClass + " " + lazySizesCfg.preloadClass
+            );
+            addEventListener("scroll", throttledCheckElements, true);
+            addEventListener("resize", throttledCheckElements, true);
+            addEventListener("pageshow", function (e) {
               if (e.persisted) {
-                var loadingElements = document.querySelectorAll('.' + lazySizesCfg.loadingClass);
+                var loadingElements = document.querySelectorAll(
+                  "." + lazySizesCfg.loadingClass
+                );
 
                 if (loadingElements.length && loadingElements.forEach) {
                   requestAnimationFrame(function () {
@@ -13018,28 +15552,46 @@
               new MutationObserver(throttledCheckElements).observe(docElem, {
                 childList: true,
                 subtree: true,
-                attributes: true
+                attributes: true,
               });
             } else {
-              docElem[_addEventListener]('DOMNodeInserted', throttledCheckElements, true);
+              docElem[_addEventListener](
+                "DOMNodeInserted",
+                throttledCheckElements,
+                true
+              );
 
-              docElem[_addEventListener]('DOMAttrModified', throttledCheckElements, true);
+              docElem[_addEventListener](
+                "DOMAttrModified",
+                throttledCheckElements,
+                true
+              );
 
               setInterval(throttledCheckElements, 999);
             }
 
-            addEventListener('hashchange', throttledCheckElements, true); //, 'fullscreenchange'
+            addEventListener("hashchange", throttledCheckElements, true); //, 'fullscreenchange'
 
-            ['focus', 'mouseover', 'click', 'load', 'transitionend', 'animationend'].forEach(function (name) {
+            [
+              "focus",
+              "mouseover",
+              "click",
+              "load",
+              "transitionend",
+              "animationend",
+            ].forEach(function (name) {
               document[_addEventListener](name, throttledCheckElements, true);
             });
 
             if (/d$|^c/.test(document.readyState)) {
               onload();
             } else {
-              addEventListener('load', onload);
+              addEventListener("load", onload);
 
-              document[_addEventListener]('DOMContentLoaded', throttledCheckElements);
+              document[_addEventListener](
+                "DOMContentLoaded",
+                throttledCheckElements
+              );
 
               setTimeout(onload, 20000);
             }
@@ -13054,23 +15606,23 @@
           },
           checkElems: throttledCheckElements,
           unveil: unveilElement,
-          _aLSL: altLoadmodeScrollListner
+          _aLSL: altLoadmodeScrollListner,
         };
-      }();
+      })();
 
-      var autoSizer = function () {
+      var autoSizer = (function () {
         var autosizesElems;
         var sizeElement = rAFIt(function (elem, parent, event, width) {
           var sources, i, len;
           elem._lazysizesWidth = width;
-          width += 'px';
-          elem.setAttribute('sizes', width);
+          width += "px";
+          elem.setAttribute("sizes", width);
 
-          if (regPicture.test(parent.nodeName || '')) {
-            sources = parent.getElementsByTagName('source');
+          if (regPicture.test(parent.nodeName || "")) {
+            sources = parent.getElementsByTagName("source");
 
             for (i = 0, len = sources.length; i < len; i++) {
-              sources[i].setAttribute('sizes', width);
+              sources[i].setAttribute("sizes", width);
             }
           }
 
@@ -13085,9 +15637,9 @@
 
           if (parent) {
             width = getWidth(elem, parent, width);
-            event = triggerEvent(elem, 'lazybeforesizes', {
+            event = triggerEvent(elem, "lazybeforesizes", {
               width: width,
-              dataAttr: !!dataAttr
+              dataAttr: !!dataAttr,
             });
 
             if (!event.defaultPrevented) {
@@ -13116,13 +15668,15 @@
         var debouncedUpdateElementsSizes = debounce(updateElementsSizes);
         return {
           _: function _() {
-            autosizesElems = document.getElementsByClassName(lazySizesCfg.autosizesClass);
-            addEventListener('resize', debouncedUpdateElementsSizes);
+            autosizesElems = document.getElementsByClassName(
+              lazySizesCfg.autosizesClass
+            );
+            addEventListener("resize", debouncedUpdateElementsSizes);
           },
           checkElems: debouncedUpdateElementsSizes,
-          updateElem: getSizeElement
+          updateElem: getSizeElement,
         };
-      }();
+      })();
 
       var init = function init() {
         if (!init.i && document.getElementsByClassName) {
@@ -13150,7 +15704,7 @@
         hC: hasClass,
         fire: triggerEvent,
         gW: getWidth,
-        rAF: rAF
+        rAF: rAF,
       };
       return lazysizes;
     });
@@ -13160,36 +15714,35 @@
     (function (window, factory) {
       var globalInstall = function globalInstall() {
         factory(window.lazySizes);
-        window.removeEventListener('lazyunveilread', globalInstall, true);
+        window.removeEventListener("lazyunveilread", globalInstall, true);
       };
 
       factory = factory.bind(null, window, window.document);
 
-      if ( module.exports) {
+      if (module.exports) {
         factory(lazysizes);
       } else if (window.lazySizes) {
         globalInstall();
       } else {
-        window.addEventListener('lazyunveilread', globalInstall, true);
+        window.addEventListener("lazyunveilread", globalInstall, true);
       }
     })(window, function (window, document, lazySizes) {
-
       var config, riasCfg;
       var lazySizesCfg = lazySizes.cfg;
       var replaceTypes = {
         string: 1,
-        number: 1
+        number: 1,
       };
       var regNumber = /^\-*\+*\d+\.*\d*$/;
       var regPicture = /^picture$/i;
       var regWidth = /\s*\{\s*width\s*\}\s*/i;
       var regHeight = /\s*\{\s*height\s*\}\s*/i;
-      var regPlaceholder = /\s*\{\s*([a-z0-9]+)\s*\}\s*/ig;
+      var regPlaceholder = /\s*\{\s*([a-z0-9]+)\s*\}\s*/gi;
       var regObj = /^\[.*\]|\{.*\}$/;
       var regAllowedSizes = /^(?:auto|\d+(px)?)$/;
-      var anchor = document.createElement('a');
-      var img = document.createElement('img');
-      var buggySizes = 'srcset' in img && !('sizes' in img);
+      var anchor = document.createElement("a");
+      var img = document.createElement("img");
+      var buggySizes = "srcset" in img && !("sizes" in img);
       var supportPicture = !!window.HTMLPictureElement && !buggySizes;
 
       (function () {
@@ -13198,21 +15751,22 @@
         var noop = function noop() {};
 
         var riasDefaults = {
-          prefix: '',
-          postfix: '',
-          srcAttr: 'data-src',
+          prefix: "",
+          postfix: "",
+          srcAttr: "data-src",
           absUrl: false,
           modifyOptions: noop,
           widthmap: {},
           ratio: false,
           traditionalRatio: false,
-          aspectratio: false
+          aspectratio: false,
         };
         config = lazySizes && lazySizes.cfg;
 
         if (!config.supportsType) {
-          config.supportsType = function (type
-          /*, elem*/
+          config.supportsType = function (
+            type
+            /*, elem*/
           ) {
             return !type;
           };
@@ -13224,7 +15778,7 @@
 
         riasCfg = config.rias;
 
-        if (!('widths' in riasCfg)) {
+        if (!("widths" in riasCfg)) {
           riasCfg.widths = [];
 
           (function (widths) {
@@ -13256,15 +15810,15 @@
         var elemStyles = window.getComputedStyle(elem);
         parent = elem.parentNode;
         options = {
-          isPicture: !!(parent && regPicture.test(parent.nodeName || ''))
+          isPicture: !!(parent && regPicture.test(parent.nodeName || "")),
         };
 
         setOption = function setOption(attr, run) {
-          var attrVal = elem.getAttribute('data-' + attr);
+          var attrVal = elem.getAttribute("data-" + attr);
 
           if (!attrVal) {
             // no data- attr, get value from the CSS
-            var styles = elemStyles.getPropertyValue('--ls-' + attr); // at least Safari 9 returns null rather than
+            var styles = elemStyles.getPropertyValue("--ls-" + attr); // at least Safari 9 returns null rather than
             // an empty string for getPropertyValue causing
             // .trim() to fail
 
@@ -13274,13 +15828,13 @@
           }
 
           if (attrVal) {
-            if (attrVal == 'true') {
+            if (attrVal == "true") {
               attrVal = true;
-            } else if (attrVal == 'false') {
+            } else if (attrVal == "false") {
               attrVal = false;
             } else if (regNumber.test(attrVal)) {
               attrVal = parseFloat(attrVal);
-            } else if (typeof riasCfg[attr] == 'function') {
+            } else if (typeof riasCfg[attr] == "function") {
               attrVal = riasCfg[attr](elem, attrVal);
             } else if (regObj.test(attrVal)) {
               try {
@@ -13289,9 +15843,9 @@
             }
 
             options[attr] = attrVal;
-          } else if (attr in riasCfg && typeof riasCfg[attr] != 'function') {
+          } else if (attr in riasCfg && typeof riasCfg[attr] != "function") {
             options[attr] = riasCfg[attr];
-          } else if (run && typeof riasCfg[attr] == 'function') {
+          } else if (run && typeof riasCfg[attr] == "function") {
             options[attr] = riasCfg[attr](elem, attrVal);
           }
         };
@@ -13318,21 +15872,36 @@
         candidates.srcset = [];
 
         if (options.absUrl) {
-          anchor.setAttribute('href', url);
+          anchor.setAttribute("href", url);
           url = anchor.href;
         }
 
-        url = ((options.prefix || '') + url + (options.postfix || '')).replace(regPlaceholder, replaceFn);
+        url = ((options.prefix || "") + url + (options.postfix || "")).replace(
+          regPlaceholder,
+          replaceFn
+        );
         options.widths.forEach(function (width) {
           var widthAlias = options.widthmap[width] || width;
           var ratio = options.aspectratio || options.ratio;
-          var traditionalRatio = !options.aspectratio && riasCfg.traditionalRatio;
+          var traditionalRatio =
+            !options.aspectratio && riasCfg.traditionalRatio;
           var candidate = {
-            u: url.replace(regWidth, widthAlias).replace(regHeight, ratio ? traditionalRatio ? Math.round(width * ratio) : Math.round(width / ratio) : ''),
-            w: width
+            u: url
+              .replace(regWidth, widthAlias)
+              .replace(
+                regHeight,
+                ratio
+                  ? traditionalRatio
+                    ? Math.round(width * ratio)
+                    : Math.round(width / ratio)
+                  : ""
+              ),
+            w: width,
           };
           candidates.push(candidate);
-          candidates.srcset.push(candidate.c = candidate.u + ' ' + width + 'w');
+          candidates.srcset.push(
+            (candidate.c = candidate.u + " " + width + "w")
+          );
         });
         return candidates;
       }
@@ -13346,7 +15915,7 @@
           return;
         }
 
-        if (opts.ratio === 'container') {
+        if (opts.ratio === "container") {
           // calculate image or parent ratio
           elemW = sizeElement.scrollWidth;
           elemH = sizeElement.scrollHeight;
@@ -13365,15 +15934,15 @@
         src = replaceUrlProps(src, opts);
         src.isPicture = opts.isPicture;
 
-        if (buggySizes && elem.nodeName.toUpperCase() == 'IMG') {
+        if (buggySizes && elem.nodeName.toUpperCase() == "IMG") {
           elem.removeAttribute(config.srcsetAttr);
         } else {
-          elem.setAttribute(config.srcsetAttr, src.srcset.join(', '));
+          elem.setAttribute(config.srcsetAttr, src.srcset.join(", "));
         }
 
-        Object.defineProperty(elem, '_lazyrias', {
+        Object.defineProperty(elem, "_lazyrias", {
           value: src,
-          writable: true
+          writable: true,
         });
       }
 
@@ -13382,72 +15951,109 @@
         riasCfg.modifyOptions.call(elem, {
           target: elem,
           details: opts,
-          detail: opts
+          detail: opts,
         });
-        lazySizes.fire(elem, 'lazyriasmodifyoptions', opts);
+        lazySizes.fire(elem, "lazyriasmodifyoptions", opts);
         return opts;
       }
 
       function getSrc(elem) {
-        return elem.getAttribute(elem.getAttribute('data-srcattr') || riasCfg.srcAttr) || elem.getAttribute(config.srcsetAttr) || elem.getAttribute(config.srcAttr) || elem.getAttribute('data-pfsrcset') || '';
+        return (
+          elem.getAttribute(
+            elem.getAttribute("data-srcattr") || riasCfg.srcAttr
+          ) ||
+          elem.getAttribute(config.srcsetAttr) ||
+          elem.getAttribute(config.srcAttr) ||
+          elem.getAttribute("data-pfsrcset") ||
+          ""
+        );
       }
 
-      addEventListener('lazybeforesizes', function (e) {
-        if (e.detail.instance != lazySizes) {
-          return;
-        }
+      addEventListener(
+        "lazybeforesizes",
+        function (e) {
+          if (e.detail.instance != lazySizes) {
+            return;
+          }
 
-        var elem, src, elemOpts, parent, sources, i, len, sourceSrc, sizes, detail, hasPlaceholder, modified, emptyList;
-        elem = e.target;
+          var elem,
+            src,
+            elemOpts,
+            parent,
+            sources,
+            i,
+            len,
+            sourceSrc,
+            sizes,
+            detail,
+            hasPlaceholder,
+            modified,
+            emptyList;
+          elem = e.target;
 
-        if (!e.detail.dataAttr || e.defaultPrevented || riasCfg.disabled || !((sizes = elem.getAttribute(config.sizesAttr) || elem.getAttribute('sizes')) && regAllowedSizes.test(sizes))) {
-          return;
-        }
+          if (
+            !e.detail.dataAttr ||
+            e.defaultPrevented ||
+            riasCfg.disabled ||
+            !(
+              (sizes =
+                elem.getAttribute(config.sizesAttr) ||
+                elem.getAttribute("sizes")) && regAllowedSizes.test(sizes)
+            )
+          ) {
+            return;
+          }
 
-        src = getSrc(elem);
-        elemOpts = createAttrObject(elem, src);
-        hasPlaceholder = regWidth.test(elemOpts.prefix) || regWidth.test(elemOpts.postfix);
+          src = getSrc(elem);
+          elemOpts = createAttrObject(elem, src);
+          hasPlaceholder =
+            regWidth.test(elemOpts.prefix) || regWidth.test(elemOpts.postfix);
 
-        if (elemOpts.isPicture && (parent = elem.parentNode)) {
-          sources = parent.getElementsByTagName('source');
+          if (elemOpts.isPicture && (parent = elem.parentNode)) {
+            sources = parent.getElementsByTagName("source");
 
-          for (i = 0, len = sources.length; i < len; i++) {
-            if (hasPlaceholder || regWidth.test(sourceSrc = getSrc(sources[i]))) {
-              setSrc(sourceSrc, elemOpts, sources[i]);
-              modified = true;
+            for (i = 0, len = sources.length; i < len; i++) {
+              if (
+                hasPlaceholder ||
+                regWidth.test((sourceSrc = getSrc(sources[i])))
+              ) {
+                setSrc(sourceSrc, elemOpts, sources[i]);
+                modified = true;
+              }
             }
           }
-        }
 
-        if (hasPlaceholder || regWidth.test(src)) {
-          setSrc(src, elemOpts, elem);
-          modified = true;
-        } else if (modified) {
-          emptyList = [];
-          emptyList.srcset = [];
-          emptyList.isPicture = true;
-          Object.defineProperty(elem, '_lazyrias', {
-            value: emptyList,
-            writable: true
-          });
-        }
-
-        if (modified) {
-          if (supportPicture) {
-            elem.removeAttribute(config.srcAttr);
-          } else if (sizes != 'auto') {
-            detail = {
-              width: parseInt(sizes, 10)
-            };
-            polyfill({
-              target: elem,
-              detail: detail
+          if (hasPlaceholder || regWidth.test(src)) {
+            setSrc(src, elemOpts, elem);
+            modified = true;
+          } else if (modified) {
+            emptyList = [];
+            emptyList.srcset = [];
+            emptyList.isPicture = true;
+            Object.defineProperty(elem, "_lazyrias", {
+              value: emptyList,
+              writable: true,
             });
           }
-        }
-      }, true); // partial polyfill
 
-      var polyfill = function () {
+          if (modified) {
+            if (supportPicture) {
+              elem.removeAttribute(config.srcAttr);
+            } else if (sizes != "auto") {
+              detail = {
+                width: parseInt(sizes, 10),
+              };
+              polyfill({
+                target: elem,
+                detail: detail,
+              });
+            }
+          }
+        },
+        true
+      ); // partial polyfill
+
+      var polyfill = (function () {
         var ascendingSort = function ascendingSort(a, b) {
           return a.w - b.w;
         };
@@ -13463,14 +16069,21 @@
             candidate.d = candidate.w / srces.w;
 
             if (candidate.d >= srces.d) {
-              if (!candidate.cached && (lowerCandidate = srces[i - 1]) && lowerCandidate.d > srces.d - 0.13 * Math.pow(srces.d, 2.2)) {
+              if (
+                !candidate.cached &&
+                (lowerCandidate = srces[i - 1]) &&
+                lowerCandidate.d > srces.d - 0.13 * Math.pow(srces.d, 2.2)
+              ) {
                 bonusFactor = Math.pow(lowerCandidate.d - 0.6, 1.6);
 
                 if (lowerCandidate.cached) {
                   lowerCandidate.d += 0.15 * bonusFactor;
                 }
 
-                if (lowerCandidate.d + (candidate.d - srces.d) * bonusFactor > srces.d) {
+                if (
+                  lowerCandidate.d + (candidate.d - srces.d) * bonusFactor >
+                  srces.d
+                ) {
                   candidate = lowerCandidate;
                 }
               }
@@ -13485,14 +16098,20 @@
         var getWSet = function getWSet(elem, testPicture) {
           var src;
 
-          if (!elem._lazyrias && lazySizes.pWS && (src = lazySizes.pWS(elem.getAttribute(config.srcsetAttr || ''))).length) {
-            Object.defineProperty(elem, '_lazyrias', {
+          if (
+            !elem._lazyrias &&
+            lazySizes.pWS &&
+            (src = lazySizes.pWS(elem.getAttribute(config.srcsetAttr || "")))
+              .length
+          ) {
+            Object.defineProperty(elem, "_lazyrias", {
               value: src,
-              writable: true
+              writable: true,
             });
 
             if (testPicture && elem.parentNode) {
-              src.isPicture = elem.parentNode.nodeName.toUpperCase() == 'PICTURE';
+              src.isPicture =
+                elem.parentNode.nodeName.toUpperCase() == "PICTURE";
             }
           }
 
@@ -13510,8 +16129,19 @@
           srces = elem._lazyrias;
 
           if (srces.isPicture && window.matchMedia) {
-            for (i = 0, sources = elem.parentNode.getElementsByTagName('source'), len = sources.length; i < len; i++) {
-              if (getWSet(sources[i]) && !sources[i].getAttribute('type') && (!(media = sources[i].getAttribute('media')) || (matchMedia(media) || {}).matches)) {
+            for (
+              i = 0,
+                sources = elem.parentNode.getElementsByTagName("source"),
+                len = sources.length;
+              i < len;
+              i++
+            ) {
+              if (
+                getWSet(sources[i]) &&
+                !sources[i].getAttribute("type") &&
+                (!(media = sources[i].getAttribute("media")) ||
+                  (matchMedia(media) || {}).matches)
+              ) {
                 srces = sources[i]._lazyrias;
                 break;
               }
@@ -13535,12 +16165,18 @@
           var candidate;
           var elem = e.target;
 
-          if (!buggySizes && (window.respimage || window.picturefill || lazySizesCfg.pf)) {
-            document.removeEventListener('lazybeforesizes', _polyfill);
+          if (
+            !buggySizes &&
+            (window.respimage || window.picturefill || lazySizesCfg.pf)
+          ) {
+            document.removeEventListener("lazybeforesizes", _polyfill);
             return;
           }
 
-          if (!('_lazyrias' in elem) && (!e.detail.dataAttr || !getWSet(elem, true))) {
+          if (
+            !("_lazyrias" in elem) &&
+            (!e.detail.dataAttr || !getWSet(elem, true))
+          ) {
             return;
           }
 
@@ -13551,19 +16187,19 @@
             candidate.cached = true;
             lazySizes.rAF(function () {
               elem.setAttribute(config.srcAttr, candidate.u);
-              elem.setAttribute('src', candidate.u);
+              elem.setAttribute("src", candidate.u);
             });
           }
         };
 
         if (!supportPicture) {
-          addEventListener('lazybeforesizes', _polyfill);
+          addEventListener("lazybeforesizes", _polyfill);
         } else {
           _polyfill = function _polyfill() {};
         }
 
         return _polyfill;
-      }();
+      })();
     });
   });
 
@@ -13604,20 +16240,19 @@
     (function (window, factory) {
       var globalInstall = function globalInstall() {
         factory(window.lazySizes);
-        window.removeEventListener('lazyunveilread', globalInstall, true);
+        window.removeEventListener("lazyunveilread", globalInstall, true);
       };
 
       factory = factory.bind(null, window, window.document);
 
-      if ( module.exports) {
+      if (module.exports) {
         factory(lazysizes);
       } else if (window.lazySizes) {
         globalInstall();
       } else {
-        window.addEventListener('lazyunveilread', globalInstall, true);
+        window.addEventListener("lazyunveilread", globalInstall, true);
       }
     })(window, function (window, document, lazySizes) {
-
       var bgLoad, regBgUrlEscape;
       var uniqueUrls = {};
 
@@ -13625,7 +16260,7 @@
         regBgUrlEscape = /\(|\)|\s|'/;
 
         bgLoad = function bgLoad(url, cb) {
-          var img = document.createElement('img');
+          var img = document.createElement("img");
 
           img.onload = function () {
             img.onload = null;
@@ -13642,88 +16277,91 @@
           }
         };
 
-        addEventListener('lazybeforeunveil', function (e) {
-          if (e.detail.instance != lazySizes) {
-            return;
-          }
-
-          var tmp, load, bg, poster;
-
-          if (!e.defaultPrevented) {
-            var target = e.target;
-
-            if (target.preload == 'none') {
-              target.preload = target.getAttribute('data-preload') || 'auto';
+        addEventListener(
+          "lazybeforeunveil",
+          function (e) {
+            if (e.detail.instance != lazySizes) {
+              return;
             }
 
-            if (target.getAttribute('data-autoplay') != null) {
-              if (target.getAttribute('data-expand') && !target.autoplay) {
-                try {
-                  target.play();
-                } catch (er) {}
-              } else {
-                requestAnimationFrame(function () {
-                  target.setAttribute('data-expand', '-10');
-                  lazySizes.aC(target, lazySizes.cfg.lazyClass);
-                });
+            var tmp, load, bg, poster;
+
+            if (!e.defaultPrevented) {
+              var target = e.target;
+
+              if (target.preload == "none") {
+                target.preload = target.getAttribute("data-preload") || "auto";
               }
-            }
 
-            tmp = target.getAttribute('data-link');
+              if (target.getAttribute("data-autoplay") != null) {
+                if (target.getAttribute("data-expand") && !target.autoplay) {
+                  try {
+                    target.play();
+                  } catch (er) {}
+                } else {
+                  requestAnimationFrame(function () {
+                    target.setAttribute("data-expand", "-10");
+                    lazySizes.aC(target, lazySizes.cfg.lazyClass);
+                  });
+                }
+              }
 
-            if (tmp) {
-              addStyleScript(tmp, true);
-            } // handle data-script
+              tmp = target.getAttribute("data-link");
 
+              if (tmp) {
+                addStyleScript(tmp, true);
+              } // handle data-script
 
-            tmp = target.getAttribute('data-script');
+              tmp = target.getAttribute("data-script");
 
-            if (tmp) {
-              addStyleScript(tmp);
-            } // handle data-require
-
-
-            tmp = target.getAttribute('data-require');
-
-            if (tmp) {
-              if (lazySizes.cfg.requireJs) {
-                lazySizes.cfg.requireJs([tmp]);
-              } else {
+              if (tmp) {
                 addStyleScript(tmp);
+              } // handle data-require
+
+              tmp = target.getAttribute("data-require");
+
+              if (tmp) {
+                if (lazySizes.cfg.requireJs) {
+                  lazySizes.cfg.requireJs([tmp]);
+                } else {
+                  addStyleScript(tmp);
+                }
+              } // handle data-bg
+
+              bg = target.getAttribute("data-bg");
+
+              if (bg) {
+                e.detail.firesLoad = true;
+
+                load = function load() {
+                  target.style.backgroundImage =
+                    "url(" +
+                    (regBgUrlEscape.test(bg) ? JSON.stringify(bg) : bg) +
+                    ")";
+                  e.detail.firesLoad = false;
+                  lazySizes.fire(target, "_lazyloaded", {}, true, true);
+                };
+
+                bgLoad(bg, load);
+              } // handle data-poster
+
+              poster = target.getAttribute("data-poster");
+
+              if (poster) {
+                e.detail.firesLoad = true;
+
+                load = function load() {
+                  target.poster = poster;
+                  e.detail.firesLoad = false;
+                  lazySizes.fire(target, "_lazyloaded", {}, true, true);
+                };
+
+                bgLoad(poster, load);
               }
-            } // handle data-bg
-
-
-            bg = target.getAttribute('data-bg');
-
-            if (bg) {
-              e.detail.firesLoad = true;
-
-              load = function load() {
-                target.style.backgroundImage = 'url(' + (regBgUrlEscape.test(bg) ? JSON.stringify(bg) : bg) + ')';
-                e.detail.firesLoad = false;
-                lazySizes.fire(target, '_lazyloaded', {}, true, true);
-              };
-
-              bgLoad(bg, load);
-            } // handle data-poster
-
-
-            poster = target.getAttribute('data-poster');
-
-            if (poster) {
-              e.detail.firesLoad = true;
-
-              load = function load() {
-                target.poster = poster;
-                e.detail.firesLoad = false;
-                lazySizes.fire(target, '_lazyloaded', {}, true, true);
-              };
-
-              bgLoad(poster, load);
             }
-          }
-        }, false);
+          },
+          false
+        );
       }
 
       function addStyleScript(src, style) {
@@ -13731,11 +16369,11 @@
           return;
         }
 
-        var elem = document.createElement(style ? 'link' : 'script');
-        var insertElem = document.getElementsByTagName('script')[0];
+        var elem = document.createElement(style ? "link" : "script");
+        var insertElem = document.getElementsByTagName("script")[0];
 
         if (style) {
-          elem.rel = 'stylesheet';
+          elem.rel = "stylesheet";
           elem.href = src;
         } else {
           elem.src = src;
@@ -13752,20 +16390,19 @@
     (function (window, factory) {
       var globalInstall = function globalInstall() {
         factory(window.lazySizes);
-        window.removeEventListener('lazyunveilread', globalInstall, true);
+        window.removeEventListener("lazyunveilread", globalInstall, true);
       };
 
       factory = factory.bind(null, window, window.document);
 
-      if ( module.exports) {
+      if (module.exports) {
         factory(lazysizes);
       } else if (window.lazySizes) {
         globalInstall();
       } else {
-        window.addEventListener('lazyunveilread', globalInstall, true);
+        window.addEventListener("lazyunveilread", globalInstall, true);
       }
     })(window, function (window, document, lazySizes) {
-
       if (!window.addEventListener) {
         return;
       }
@@ -13778,7 +16415,7 @@
       var regBgUrlEscape = /\(|\)|'/;
       var allowedBackgroundSize = {
         contain: 1,
-        cover: 1
+        cover: 1,
       };
 
       var proxyWidth = function proxyWidth(elem) {
@@ -13793,11 +16430,16 @@
 
       var getBgSize = function getBgSize(elem) {
         var bgSize;
-        bgSize = (getComputedStyle(elem) || {
-          getPropertyValue: function getPropertyValue() {}
-        }).getPropertyValue('background-size');
+        bgSize = (
+          getComputedStyle(elem) || {
+            getPropertyValue: function getPropertyValue() {},
+          }
+        ).getPropertyValue("background-size");
 
-        if (!allowedBackgroundSize[bgSize] && allowedBackgroundSize[elem.style.backgroundSize]) {
+        if (
+          !allowedBackgroundSize[bgSize] &&
+          allowedBackgroundSize[elem.style.backgroundSize]
+        ) {
           bgSize = elem.style.backgroundSize;
         }
 
@@ -13809,48 +16451,51 @@
           var typeMatch = match.match(regType);
 
           if (typeMatch && typeMatch[1]) {
-            source.setAttribute('type', typeMatch[1]);
+            source.setAttribute("type", typeMatch[1]);
           } else {
-            source.setAttribute('media', lazySizesCfg.customMedia[match] || match);
+            source.setAttribute(
+              "media",
+              lazySizesCfg.customMedia[match] || match
+            );
           }
         }
       };
 
       var createPicture = function createPicture(sets, elem, img) {
-        var picture = document.createElement('picture');
+        var picture = document.createElement("picture");
         var sizes = elem.getAttribute(lazySizesCfg.sizesAttr);
-        var ratio = elem.getAttribute('data-ratio');
-        var optimumx = elem.getAttribute('data-optimumx');
+        var ratio = elem.getAttribute("data-ratio");
+        var optimumx = elem.getAttribute("data-optimumx");
 
         if (elem._lazybgset && elem._lazybgset.parentNode == elem) {
           elem.removeChild(elem._lazybgset);
         }
 
-        Object.defineProperty(img, '_lazybgset', {
+        Object.defineProperty(img, "_lazybgset", {
           value: elem,
-          writable: true
+          writable: true,
         });
-        Object.defineProperty(elem, '_lazybgset', {
+        Object.defineProperty(elem, "_lazybgset", {
           value: picture,
-          writable: true
+          writable: true,
         });
-        sets = sets.replace(regWhite, ' ').split(regSplitSet);
-        picture.style.display = 'none';
+        sets = sets.replace(regWhite, " ").split(regSplitSet);
+        picture.style.display = "none";
         img.className = lazySizesCfg.lazyClass;
 
         if (sets.length == 1 && !sizes) {
-          sizes = 'auto';
+          sizes = "auto";
         }
 
         sets.forEach(function (set) {
           var match;
-          var source = document.createElement('source');
+          var source = document.createElement("source");
 
-          if (sizes && sizes != 'auto') {
-            source.setAttribute('sizes', sizes);
+          if (sizes && sizes != "auto") {
+            source.setAttribute("sizes", sizes);
           }
 
-          if (match = set.match(regSource)) {
+          if ((match = set.match(regSource))) {
             source.setAttribute(lazySizesCfg.srcsetAttr, match[1]);
             setTypeOrMedia(source, match[2]);
             setTypeOrMedia(source, match[3]);
@@ -13864,15 +16509,15 @@
         if (sizes) {
           img.setAttribute(lazySizesCfg.sizesAttr, sizes);
           elem.removeAttribute(lazySizesCfg.sizesAttr);
-          elem.removeAttribute('sizes');
+          elem.removeAttribute("sizes");
         }
 
         if (optimumx) {
-          img.setAttribute('data-optimumx', optimumx);
+          img.setAttribute("data-optimumx", optimumx);
         }
 
         if (ratio) {
-          img.setAttribute('data-ratio', ratio);
+          img.setAttribute("data-ratio", ratio);
         }
 
         picture.appendChild(img);
@@ -13889,72 +16534,85 @@
         var bg = image.currentSrc || image.src;
 
         if (bg) {
-          var event = lazySizes.fire(elem, 'bgsetproxy', {
+          var event = lazySizes.fire(elem, "bgsetproxy", {
             src: bg,
-            useSrc: regBgUrlEscape.test(bg) ? JSON.stringify(bg) : bg
+            useSrc: regBgUrlEscape.test(bg) ? JSON.stringify(bg) : bg,
           });
 
           if (!event.defaultPrevented) {
-            elem.style.backgroundImage = 'url(' + event.detail.useSrc + ')';
+            elem.style.backgroundImage = "url(" + event.detail.useSrc + ")";
           }
         }
 
         if (image._lazybgsetLoading) {
-          lazySizes.fire(elem, '_lazyloaded', {}, false, true);
+          lazySizes.fire(elem, "_lazyloaded", {}, false, true);
           delete image._lazybgsetLoading;
         }
       };
 
-      addEventListener('lazybeforeunveil', function (e) {
+      addEventListener("lazybeforeunveil", function (e) {
         var set, image, elem;
 
-        if (e.defaultPrevented || !(set = e.target.getAttribute('data-bgset'))) {
+        if (
+          e.defaultPrevented ||
+          !(set = e.target.getAttribute("data-bgset"))
+        ) {
           return;
         }
 
         elem = e.target;
-        image = document.createElement('img');
-        image.alt = '';
+        image = document.createElement("img");
+        image.alt = "";
         image._lazybgsetLoading = true;
         e.detail.firesLoad = true;
         createPicture(set, elem, image);
         setTimeout(function () {
           lazySizes.loader.unveil(image);
           lazySizes.rAF(function () {
-            lazySizes.fire(image, '_lazyloaded', {}, true, true);
+            lazySizes.fire(image, "_lazyloaded", {}, true, true);
 
             if (image.complete) {
               proxyLoad({
-                target: image
+                target: image,
               });
             }
           });
         });
       });
-      document.addEventListener('load', proxyLoad, true);
-      window.addEventListener('lazybeforesizes', function (e) {
-        if (e.detail.instance != lazySizes) {
-          return;
-        }
-
-        if (e.target._lazybgset && e.detail.dataAttr) {
-          var elem = e.target._lazybgset;
-          var bgSize = getBgSize(elem);
-
-          if (allowedBackgroundSize[bgSize]) {
-            e.target._lazysizesParentFit = bgSize;
-            lazySizes.rAF(function () {
-              e.target.setAttribute('data-parent-fit', bgSize);
-
-              if (e.target._lazysizesParentFit) {
-                delete e.target._lazysizesParentFit;
-              }
-            });
+      document.addEventListener("load", proxyLoad, true);
+      window.addEventListener(
+        "lazybeforesizes",
+        function (e) {
+          if (e.detail.instance != lazySizes) {
+            return;
           }
-        }
-      }, true);
-      document.documentElement.addEventListener('lazybeforesizes', function (e) {
-        if (e.defaultPrevented || !e.target._lazybgset || e.detail.instance != lazySizes) {
+
+          if (e.target._lazybgset && e.detail.dataAttr) {
+            var elem = e.target._lazybgset;
+            var bgSize = getBgSize(elem);
+
+            if (allowedBackgroundSize[bgSize]) {
+              e.target._lazysizesParentFit = bgSize;
+              lazySizes.rAF(function () {
+                e.target.setAttribute("data-parent-fit", bgSize);
+
+                if (e.target._lazysizesParentFit) {
+                  delete e.target._lazysizesParentFit;
+                }
+              });
+            }
+          }
+        },
+        true
+      );
+      document.documentElement.addEventListener("lazybeforesizes", function (
+        e
+      ) {
+        if (
+          e.defaultPrevented ||
+          !e.target._lazybgset ||
+          e.detail.instance != lazySizes
+        ) {
           return;
         }
 
@@ -13971,20 +16629,23 @@
 
       var globalInstall = function globalInstall() {
         factory(window.lazySizes);
-        window.removeEventListener('lazyunveilread', globalInstall, true);
+        window.removeEventListener("lazyunveilread", globalInstall, true);
       };
 
       factory = factory.bind(null, window, window.document);
 
-      if ( module.exports) {
+      if (module.exports) {
         factory(lazysizes);
       } else if (window.lazySizes) {
         globalInstall();
       } else {
-        window.addEventListener('lazyunveilread', globalInstall, true);
+        window.addEventListener("lazyunveilread", globalInstall, true);
       }
-    })(typeof window != 'undefined' ? window : 0, function (window, document, lazySizes) {
-
+    })(typeof window != "undefined" ? window : 0, function (
+      window,
+      document,
+      lazySizes
+    ) {
       if (!window.addEventListener) {
         return;
       }
@@ -13993,15 +16654,24 @@
       var regPicture = /^picture$/i;
       var docElem = document.documentElement;
 
-      var parseWsrcset = function () {
+      var parseWsrcset = (function () {
         var candidates;
         var reg = /(([^,\s].[^\s]+)\s+(\d+)(w|h)(\s+(\d+)(w|h))?)/g;
 
-        var addCandidate = function addCandidate(match, candidate, url, descNumber1, descType1, fullDesc, descNumber2, descType2) {
+        var addCandidate = function addCandidate(
+          match,
+          candidate,
+          url,
+          descNumber1,
+          descType1,
+          fullDesc,
+          descNumber2,
+          descType2
+        ) {
           candidates.push({
             c: candidate,
             u: url,
-            w: (descType2 == 'w' ? descNumber2 : descNumber1) * 1
+            w: (descType2 == "w" ? descNumber2 : descNumber1) * 1,
           });
         };
 
@@ -14010,21 +16680,21 @@
           input.replace(reg, addCandidate);
           return candidates;
         };
-      }();
+      })();
 
-      var parseImg = function () {
+      var parseImg = (function () {
         var ascendingSort = function ascendingSort(a, b) {
           return a.w - b.w;
         };
 
         var parseSets = function parseSets(elem, dataName) {
           var lazyData = {
-            srcset: elem.getAttribute(lazySizes.cfg.srcsetAttr) || ''
+            srcset: elem.getAttribute(lazySizes.cfg.srcsetAttr) || "",
           };
           var cands = parseWsrcset(lazyData.srcset);
           Object.defineProperty(elem, dataName, {
             value: lazyData,
-            writable: true
+            writable: true,
           });
           lazyData.cands = cands;
           lazyData.index = 0;
@@ -14049,9 +16719,9 @@
             elem[dataName] = parseSets(elem, dataName);
             elem[dataName].isImg = true;
 
-            if (regPicture.test(parent.nodeName || '')) {
+            if (regPicture.test(parent.nodeName || "")) {
               elem[dataName].picture = true;
-              sources = parent.getElementsByTagName('source');
+              sources = parent.getElementsByTagName("source");
 
               for (i = 0, len = sources.length; i < len; i++) {
                 parseSets(sources[i], dataName).isImg = false;
@@ -14061,11 +16731,15 @@
 
           return elem[dataName];
         };
-      }();
+      })();
 
       var constraintFns = {
-        _lazyOptimumx: function () {
-          var takeHighRes = function takeHighRes(lowerCandidate, higherCandidateResolution, optimumx) {
+        _lazyOptimumx: (function () {
+          var takeHighRes = function takeHighRes(
+            lowerCandidate,
+            higherCandidateResolution,
+            optimumx
+          ) {
             var low, bonusFactor, substract;
 
             if (!lowerCandidate || !lowerCandidate.d) {
@@ -14086,7 +16760,9 @@
               bonusFactor = 3;
             }
 
-            low = lowerCandidate.d + (higherCandidateResolution - optimumx) * bonusFactor;
+            low =
+              lowerCandidate.d +
+              (higherCandidateResolution - optimumx) * bonusFactor;
             return low < optimumx;
           };
 
@@ -14101,7 +16777,10 @@
                 continue;
               }
 
-              if (can.d <= optimumx || takeHighRes(data.cands[i - 1], can.d, optimumx)) {
+              if (
+                can.d <= optimumx ||
+                takeHighRes(data.cands[i - 1], can.d, optimumx)
+              ) {
                 data.cSrcset.push(can.c);
                 data.index = i;
               } else {
@@ -14109,11 +16788,17 @@
               }
             }
           };
-        }()
+        })(),
       };
 
-      var constrainSets = function () {
-        var constrainSet = function constrainSet(elem, displayWidth, optimumx, attr, dataName) {
+      var constrainSets = (function () {
+        var constrainSet = function constrainSet(
+          elem,
+          displayWidth,
+          optimumx,
+          attr,
+          dataName
+        ) {
           var curIndex;
           var lazyData = elem[dataName];
 
@@ -14125,8 +16810,8 @@
           constraintFns[dataName](lazyData, displayWidth, optimumx);
 
           if (!lazyData.dirty || curIndex != lazyData.index) {
-            lazyData.cSrcset.join(', ');
-            elem.setAttribute(attr, lazyData.cSrcset.join(', '));
+            lazyData.cSrcset.join(", ");
+            elem.setAttribute(attr, lazyData.cSrcset.join(", "));
             lazyData.dirty = true;
           }
         };
@@ -14137,7 +16822,7 @@
           lazyData.width = displayWidth;
 
           if (lazyData.picture && (parent = image.parentNode)) {
-            sources = parent.getElementsByTagName('source');
+            sources = parent.getElementsByTagName("source");
 
             for (i = 0, len = sources.length; i < len; i++) {
               constrainSet(sources[i], displayWidth, optimumx, attr, dataName);
@@ -14146,17 +16831,19 @@
 
           constrainSet(image, displayWidth, optimumx, attr, dataName);
         };
-      }();
+      })();
 
       var getOptimumX = function getOptimumX(element) {
-        var optimumx = element.getAttribute('data-optimumx') || element.getAttribute('data-maxdpr');
+        var optimumx =
+          element.getAttribute("data-optimumx") ||
+          element.getAttribute("data-maxdpr");
 
         if (!optimumx && config.constrainPixelDensity) {
-          optimumx = 'auto';
+          optimumx = "auto";
         }
 
         if (optimumx) {
-          if (optimumx == 'auto') {
+          if (optimumx == "auto") {
             optimumx = config.getOptimumX(element);
           } else {
             optimumx = parseFloat(optimumx, 10);
@@ -14170,17 +16857,16 @@
         if (lazySizes && !lazySizes.getOptimumX) {
           lazySizes.getX = getOptimumX;
           lazySizes.pWS = parseWsrcset;
-          docElem.removeEventListener('lazybeforeunveil', extentLazySizes);
+          docElem.removeEventListener("lazybeforeunveil", extentLazySizes);
         }
       };
 
-      docElem.addEventListener('lazybeforeunveil', extentLazySizes);
+      docElem.addEventListener("lazybeforeunveil", extentLazySizes);
       setTimeout(extentLazySizes);
       config = lazySizes && lazySizes.cfg;
 
-      if (typeof config.getOptimumX != 'function') {
-        config.getOptimumX = function ()
-        /*element*/
+      if (typeof config.getOptimumX != "function") {
+        config.getOptimumX = function () /*element*/
         {
           var dpr = window.devicePixelRatio || 1;
 
@@ -14200,7 +16886,7 @@
         return;
       }
 
-      addEventListener('lazybeforesizes', function (e) {
+      addEventListener("lazybeforesizes", function (e) {
         if (e.detail.instance != lazySizes) {
           return;
         }
@@ -14210,21 +16896,30 @@
         var detail = e.detail;
         var dataAttr = detail.dataAttr;
 
-        if (e.defaultPrevented || !(optimumx = getOptimumX(elem)) || optimumx >= devicePixelRatio) {
+        if (
+          e.defaultPrevented ||
+          !(optimumx = getOptimumX(elem)) ||
+          optimumx >= devicePixelRatio
+        ) {
           return;
         }
 
-        if (dataAttr && elem._lazyOptimumx && !detail.reloaded && (!config.unloadedClass || !lazySizes.hC(elem, config.unloadedClass))) {
+        if (
+          dataAttr &&
+          elem._lazyOptimumx &&
+          !detail.reloaded &&
+          (!config.unloadedClass || !lazySizes.hC(elem, config.unloadedClass))
+        ) {
           elem._lazyOptimumx = null;
         }
 
-        lazyData = parseImg(elem, '_lazyOptimumx');
+        lazyData = parseImg(elem, "_lazyOptimumx");
         width = detail.width;
 
         if (width && (lazyData.width || 0) < width) {
-          attr = dataAttr ? lazySizes.cfg.srcsetAttr : 'srcset';
+          attr = dataAttr ? lazySizes.cfg.srcsetAttr : "srcset";
           lazySizes.rAF(function () {
-            constrainSets(elem, width, optimumx, attr, '_lazyOptimumx');
+            constrainSets(elem, width, optimumx, attr, "_lazyOptimumx");
           });
         }
       });
@@ -14239,49 +16934,55 @@
 
       var globalInstall = function globalInstall() {
         factory(window.lazySizes);
-        window.removeEventListener('lazyunveilread', globalInstall, true);
+        window.removeEventListener("lazyunveilread", globalInstall, true);
       };
 
       factory = factory.bind(null, window, window.document);
 
-      if ( module.exports) {
+      if (module.exports) {
         factory(lazysizes);
       } else if (window.lazySizes) {
         globalInstall();
       } else {
-        window.addEventListener('lazyunveilread', globalInstall, true);
+        window.addEventListener("lazyunveilread", globalInstall, true);
       }
-    })(typeof window != 'undefined' ? window : 0, function (window, document, lazySizes) {
-
+    })(typeof window != "undefined" ? window : 0, function (
+      window,
+      document,
+      lazySizes
+    ) {
       var polyfill;
       var lazySizesCfg = lazySizes.cfg;
-      var img = document.createElement('img');
-      var supportSrcset = 'sizes' in img && 'srcset' in img;
+      var img = document.createElement("img");
+      var supportSrcset = "sizes" in img && "srcset" in img;
       var regHDesc = /\s+\d+h/g;
 
-      var fixEdgeHDescriptor = function () {
+      var fixEdgeHDescriptor = (function () {
         var regDescriptors = /\s+(\d+)(w|h)\s+(\d+)(w|h)/;
         var forEach = Array.prototype.forEach;
         return function () {
-          var img = document.createElement('img');
+          var img = document.createElement("img");
 
           var removeHDescriptors = function removeHDescriptors(source) {
             var ratio, match;
             var srcset = source.getAttribute(lazySizesCfg.srcsetAttr);
 
             if (srcset) {
-              if (match = srcset.match(regDescriptors)) {
-                if (match[2] == 'w') {
+              if ((match = srcset.match(regDescriptors))) {
+                if (match[2] == "w") {
                   ratio = match[1] / match[3];
                 } else {
                   ratio = match[3] / match[1];
                 }
 
                 if (ratio) {
-                  source.setAttribute('data-aspectratio', ratio);
+                  source.setAttribute("data-aspectratio", ratio);
                 }
 
-                source.setAttribute(lazySizesCfg.srcsetAttr, srcset.replace(regHDesc, ''));
+                source.setAttribute(
+                  lazySizesCfg.srcsetAttr,
+                  srcset.replace(regHDesc, "")
+                );
               }
             }
           };
@@ -14293,8 +16994,11 @@
 
             var picture = e.target.parentNode;
 
-            if (picture && picture.nodeName == 'PICTURE') {
-              forEach.call(picture.getElementsByTagName('source'), removeHDescriptors);
+            if (picture && picture.nodeName == "PICTURE") {
+              forEach.call(
+                picture.getElementsByTagName("source"),
+                removeHDescriptors
+              );
             }
 
             removeHDescriptors(e.target);
@@ -14302,24 +17006,25 @@
 
           var test = function test() {
             if (!!img.currentSrc) {
-              document.removeEventListener('lazybeforeunveil', handler);
+              document.removeEventListener("lazybeforeunveil", handler);
             }
           };
 
-          document.addEventListener('lazybeforeunveil', handler);
+          document.addEventListener("lazybeforeunveil", handler);
           img.onload = test;
           img.onerror = test;
-          img.srcset = 'data:,a 1w 1h';
+          img.srcset = "data:,a 1w 1h";
 
           if (img.complete) {
             test();
           }
         };
-      }();
+      })();
 
       if (!lazySizesCfg.supportsType) {
-        lazySizesCfg.supportsType = function (type
-        /*, elem*/
+        lazySizesCfg.supportsType = function (
+          type
+          /*, elem*/
         ) {
           return !type;
         };
@@ -14350,8 +17055,7 @@
         }
       }; // partial polyfill
 
-
-      polyfill = function () {
+      polyfill = (function () {
         var ascendingSort = function ascendingSort(a, b) {
           return a.w - b.w;
         };
@@ -14369,14 +17073,21 @@
             candidate.d = candidate.w / srces.w;
 
             if (candidate.d >= srces.d) {
-              if (!candidate.cached && (lowerCandidate = srces[i - 1]) && lowerCandidate.d > srces.d - 0.13 * Math.pow(srces.d, 2.2)) {
+              if (
+                !candidate.cached &&
+                (lowerCandidate = srces[i - 1]) &&
+                lowerCandidate.d > srces.d - 0.13 * Math.pow(srces.d, 2.2)
+              ) {
                 bonusFactor = Math.pow(lowerCandidate.d - 0.6, 1.6);
 
                 if (lowerCandidate.cached) {
                   lowerCandidate.d += 0.15 * bonusFactor;
                 }
 
-                if (lowerCandidate.d + (candidate.d - srces.d) * bonusFactor > srces.d) {
+                if (
+                  lowerCandidate.d + (candidate.d - srces.d) * bonusFactor >
+                  srces.d
+                ) {
                   candidate = lowerCandidate;
                 }
               }
@@ -14388,35 +17099,40 @@
           return candidate;
         };
 
-        var parseWsrcset = function () {
+        var parseWsrcset = (function () {
           var candidates;
           var regWCandidates = /(([^,\s].[^\s]+)\s+(\d+)w)/g;
           var regMultiple = /\s/;
 
-          var addCandidate = function addCandidate(match, candidate, url, wDescriptor) {
+          var addCandidate = function addCandidate(
+            match,
+            candidate,
+            url,
+            wDescriptor
+          ) {
             candidates.push({
               c: candidate,
               u: url,
-              w: wDescriptor * 1
+              w: wDescriptor * 1,
             });
           };
 
           return function (input) {
             candidates = [];
             input = input.trim();
-            input.replace(regHDesc, '').replace(regWCandidates, addCandidate);
+            input.replace(regHDesc, "").replace(regWCandidates, addCandidate);
 
             if (!candidates.length && input && !regMultiple.test(input)) {
               candidates.push({
                 c: input,
                 u: input,
-                w: 99
+                w: 99,
               });
             }
 
             return candidates;
           };
-        }();
+        })();
 
         var runMatchMedia = function runMatchMedia() {
           if (runMatchMedia.init) {
@@ -14424,51 +17140,62 @@
           }
 
           runMatchMedia.init = true;
-          addEventListener('resize', function () {
-            var timer;
-            var matchMediaElems = document.getElementsByClassName('lazymatchmedia');
+          addEventListener(
+            "resize",
+            (function () {
+              var timer;
+              var matchMediaElems = document.getElementsByClassName(
+                "lazymatchmedia"
+              );
 
-            var run = function run() {
-              var i, len;
+              var run = function run() {
+                var i, len;
 
-              for (i = 0, len = matchMediaElems.length; i < len; i++) {
-                polyfill(matchMediaElems[i]);
-              }
-            };
+                for (i = 0, len = matchMediaElems.length; i < len; i++) {
+                  polyfill(matchMediaElems[i]);
+                }
+              };
 
-            return function () {
-              clearTimeout(timer);
-              timer = setTimeout(run, 66);
-            };
-          }());
+              return function () {
+                clearTimeout(timer);
+                timer = setTimeout(run, 66);
+              };
+            })()
+          );
         };
 
         var createSrcset = function createSrcset(elem, isImage) {
           var parsedSet;
-          var srcSet = elem.getAttribute('srcset') || elem.getAttribute(lazySizesCfg.srcsetAttr);
+          var srcSet =
+            elem.getAttribute("srcset") ||
+            elem.getAttribute(lazySizesCfg.srcsetAttr);
 
           if (!srcSet && isImage) {
-            srcSet = !elem._lazypolyfill ? elem.getAttribute(lazySizesCfg.srcAttr) || elem.getAttribute('src') : elem._lazypolyfill._set;
+            srcSet = !elem._lazypolyfill
+              ? elem.getAttribute(lazySizesCfg.srcAttr) ||
+                elem.getAttribute("src")
+              : elem._lazypolyfill._set;
           }
 
           if (!elem._lazypolyfill || elem._lazypolyfill._set != srcSet) {
-            parsedSet = parseWsrcset(srcSet || '');
+            parsedSet = parseWsrcset(srcSet || "");
 
             if (isImage && elem.parentNode) {
-              parsedSet.isPicture = elem.parentNode.nodeName.toUpperCase() == 'PICTURE';
+              parsedSet.isPicture =
+                elem.parentNode.nodeName.toUpperCase() == "PICTURE";
 
               if (parsedSet.isPicture) {
                 if (window.matchMedia) {
-                  lazySizes.aC(elem, 'lazymatchmedia');
+                  lazySizes.aC(elem, "lazymatchmedia");
                   runMatchMedia();
                 }
               }
             }
 
             parsedSet._set = srcSet;
-            Object.defineProperty(elem, '_lazypolyfill', {
+            Object.defineProperty(elem, "_lazypolyfill", {
               value: parsedSet,
-              writable: true
+              writable: true,
             });
           }
         };
@@ -14498,8 +17225,20 @@
           srces = source._lazypolyfill;
 
           if (srces.isPicture) {
-            for (i = 0, sources = elem.parentNode.getElementsByTagName('source'), len = sources.length; i < len; i++) {
-              if (lazySizesCfg.supportsType(sources[i].getAttribute('type'), elem) && _matchesMedia(sources[i].getAttribute('media'))) {
+            for (
+              i = 0,
+                sources = elem.parentNode.getElementsByTagName("source"),
+                len = sources.length;
+              i < len;
+              i++
+            ) {
+              if (
+                lazySizesCfg.supportsType(
+                  sources[i].getAttribute("type"),
+                  elem
+                ) &&
+                _matchesMedia(sources[i].getAttribute("media"))
+              ) {
                 source = sources[i];
                 createSrcset(source);
                 srces = source._lazypolyfill;
@@ -14509,8 +17248,10 @@
           }
 
           if (srces.length > 1) {
-            width = source.getAttribute('sizes') || '';
-            width = regPxLength.test(width) && parseInt(width, 10) || lazySizes.gW(elem, elem.parentNode);
+            width = source.getAttribute("sizes") || "";
+            width =
+              (regPxLength.test(width) && parseInt(width, 10)) ||
+              lazySizes.gW(elem, elem.parentNode);
             srces.d = getX(elem);
 
             if (!srces.src || !srces.w || srces.w < width) {
@@ -14528,33 +17269,43 @@
         };
 
         var p = function p(elem) {
-          if (supportSrcset && elem.parentNode && elem.parentNode.nodeName.toUpperCase() != 'PICTURE') {
+          if (
+            supportSrcset &&
+            elem.parentNode &&
+            elem.parentNode.nodeName.toUpperCase() != "PICTURE"
+          ) {
             return;
           }
 
           var candidate = getCandidate(elem);
 
-          if (candidate && candidate.u && elem._lazypolyfill.cur != candidate.u) {
+          if (
+            candidate &&
+            candidate.u &&
+            elem._lazypolyfill.cur != candidate.u
+          ) {
             elem._lazypolyfill.cur = candidate.u;
             candidate.cached = true;
             elem.setAttribute(lazySizesCfg.srcAttr, candidate.u);
-            elem.setAttribute('src', candidate.u);
+            elem.setAttribute("src", candidate.u);
           }
         };
 
         p.parse = parseWsrcset;
         return p;
-      }();
+      })();
 
       if (lazySizesCfg.loadedClass && lazySizesCfg.loadingClass) {
         (function () {
           var sels = [];
-          ['img[sizes$="px"][srcset].', 'picture > img:not([srcset]).'].forEach(function (sel) {
-            sels.push(sel + lazySizesCfg.loadedClass);
-            sels.push(sel + lazySizesCfg.loadingClass);
-          });
+          ['img[sizes$="px"][srcset].', "picture > img:not([srcset])."].forEach(
+            function (sel) {
+              sels.push(sel + lazySizesCfg.loadedClass);
+              sels.push(sel + lazySizesCfg.loadingClass);
+            }
+          );
           lazySizesCfg.pf({
-            elements: document.querySelectorAll(sels.join(', '))
+            elements: document.querySelectorAll(sels.join(", ")),
           });
         })();
       }
@@ -14573,7 +17324,6 @@
       };
     } // Use for the smooth scroll polyfill
 
-
     smoothscroll.polyfill(); // Instantiate global plugins
 
     new CollapsibleManager();
@@ -14582,29 +17332,32 @@
     new PopoverManager(); // Then, we instantiate specific sections that may appear in all pages, and then only the template specific sections
 
     var sections = new SectionContainer();
-    sections.register('account', AccountSection);
-    sections.register('announcement-bar', AnnouncementBarSection);
-    sections.register('blog', BlogSection);
-    sections.register('blog-sidebar', BlogSidebarSection);
-    sections.register('blog-post', BlogPostSection);
-    sections.register('cart', CartSection);
-    sections.register('collection-list', CollectionListSection);
-    sections.register('collection', CollectionSection);
-    sections.register('featured-collection', FeaturedCollectionSection);
-    sections.register('footer', FooterSection);
-    sections.register('gift-card', GiftCardSection);
-    sections.register('header', HeaderSection);
-    sections.register('login', LoginSection);
-    sections.register('map', MapSection);
-    sections.register('minimal-header', MinimalHeaderSection);
-    sections.register('popups', PopupsSection);
-    sections.register('product-recommendations', ProductRecommendationsSection);
-    sections.register('product', ProductSection);
-    sections.register('quick-links', QuickLinksSection);
-    sections.register('recently-viewed-products', RecentlyViewedProductsSection);
-    sections.register('slideshow', SlideshowSection);
-    sections.register('text-with-icons', TextWithIconsSection);
-    sections.register('video', VideoSection);
+    sections.register("account", AccountSection);
+    sections.register("announcement-bar", AnnouncementBarSection);
+    sections.register("blog", BlogSection);
+    sections.register("blog-sidebar", BlogSidebarSection);
+    sections.register("blog-post", BlogPostSection);
+    sections.register("cart", CartSection);
+    sections.register("collection-list", CollectionListSection);
+    sections.register("collection", CollectionSection);
+    sections.register("featured-collection", FeaturedCollectionSection);
+    sections.register("footer", FooterSection);
+    sections.register("gift-card", GiftCardSection);
+    sections.register("header", HeaderSection);
+    sections.register("login", LoginSection);
+    sections.register("map", MapSection);
+    sections.register("minimal-header", MinimalHeaderSection);
+    sections.register("popups", PopupsSection);
+    sections.register("product-recommendations", ProductRecommendationsSection);
+    sections.register("product", ProductSection);
+    sections.register("quick-links", QuickLinksSection);
+    sections.register(
+      "recently-viewed-products",
+      RecentlyViewedProductsSection
+    );
+    sections.register("slideshow", SlideshowSection);
+    sections.register("text-with-icons", TextWithIconsSection);
+    sections.register("video", VideoSection);
     /**
      * ----------------------------------------------------------------------------
      * RTE
@@ -14613,13 +17366,19 @@
 
     (function () {
       // We wrap each RTE table by a specific class to allow wrapping
-      document.querySelectorAll('.rte table').forEach(function (table) {
-        table.outerHTML = '<div class="table-wrapper">' + table.outerHTML + '</div>';
+      document.querySelectorAll(".rte table").forEach(function (table) {
+        table.outerHTML =
+          '<div class="table-wrapper">' + table.outerHTML + "</div>";
       });
-      document.querySelectorAll('.rte iframe').forEach(function (iframe) {
+      document.querySelectorAll(".rte iframe").forEach(function (iframe) {
         // We scope the wrapping only for YouTube and Vimeo
-        if (iframe.src.indexOf('youtube') !== -1 || iframe.src.indexOf('youtu.be') !== -1 || iframe.src.indexOf('vimeo') !== -1) {
-          iframe.outerHTML = '<div class="video-wrapper">' + iframe.outerHTML + '</div>'; // Re-set the src attribute on each iframe after page load for Chrome's "incorrect iFrame content on 'back'" bug.
+        if (
+          iframe.src.indexOf("youtube") !== -1 ||
+          iframe.src.indexOf("youtu.be") !== -1 ||
+          iframe.src.indexOf("vimeo") !== -1
+        ) {
+          iframe.outerHTML =
+            '<div class="video-wrapper">' + iframe.outerHTML + "</div>"; // Re-set the src attribute on each iframe after page load for Chrome's "incorrect iFrame content on 'back'" bug.
           // https://code.google.com/p/chromium/issues/detail?id=395791. Need to specifically target video and admin bar
 
           iframe.src = iframe.src;
@@ -14641,15 +17400,16 @@
      * ----------------------------------------------------------------------------
      */
 
-
     (function () {
       var touchingCarousel = false,
-          touchStartCoords;
-      document.body.addEventListener('touchstart', function (e) {
-        var flickitySliderElement = e.target.closest('.flickity-slider');
+        touchStartCoords;
+      document.body.addEventListener("touchstart", function (e) {
+        var flickitySliderElement = e.target.closest(".flickity-slider");
 
         if (flickitySliderElement) {
-          var flickity = Flickity.data(flickitySliderElement.closest('.flickity-enabled'));
+          var flickity = Flickity.data(
+            flickitySliderElement.closest(".flickity-enabled")
+          );
 
           if (flickity.isDraggable) {
             touchingCarousel = true;
@@ -14664,22 +17424,26 @@
 
         touchStartCoords = {
           x: e.touches[0].pageX,
-          y: e.touches[0].pageY
+          y: e.touches[0].pageY,
         };
       });
-      document.body.addEventListener('touchmove', function (e) {
-        if (!(touchingCarousel && e.cancelable)) {
-          return;
-        }
+      document.body.addEventListener(
+        "touchmove",
+        function (e) {
+          if (!(touchingCarousel && e.cancelable)) {
+            return;
+          }
 
-        var moveVector = {
-          x: e.touches[0].pageX - touchStartCoords.x,
-          y: e.touches[0].pageY - touchStartCoords.y
-        };
-        if (Math.abs(moveVector.x) > 8) e.preventDefault();
-      }, {
-        passive: false
-      });
+          var moveVector = {
+            x: e.touches[0].pageX - touchStartCoords.x,
+            y: e.touches[0].pageY - touchStartCoords.y,
+          };
+          if (Math.abs(moveVector.x) > 8) e.preventDefault();
+        },
+        {
+          passive: false,
+        }
+      );
     })();
     /**
      * ----------------------------------------------------------------------------
@@ -14693,62 +17457,86 @@
      *       cleaner code!
      */
 
-
     (function () {
       // In card, elements that have a "card__section" with a [aria-expanded] attribute can be clickable to open the content
       // of the card itself
       var documentDelegate = new Delegate(document.body);
-      documentDelegate.on('click', '.expandable-content__toggle', function (item, expandableButton) {
-        var parentSection = expandableButton.closest('.expandable-content');
+      documentDelegate.on("click", ".expandable-content__toggle", function (
+        item,
+        expandableButton
+      ) {
+        var parentSection = expandableButton.closest(".expandable-content");
 
-        if (parentSection.getAttribute('aria-expanded') === 'true') {
+        if (parentSection.getAttribute("aria-expanded") === "true") {
           // Previously expanded, so we have to close it
-          parentSection.setAttribute('aria-expanded', 'false');
-          parentSection.style['max-height'] = "".concat(parentSection.offsetHeight, "px");
+          parentSection.setAttribute("aria-expanded", "false");
+          parentSection.style["max-height"] = "".concat(
+            parentSection.offsetHeight,
+            "px"
+          );
           parentSection.offsetHeight; // Use to force a redraw
 
-          parentSection.style['max-height'] = null; // Remove the attribute to let the CSS decide the max-height
+          parentSection.style["max-height"] = null; // Remove the attribute to let the CSS decide the max-height
 
-          var expandableText = expandableButton.querySelector('.expandable-content__toggle-text');
-          expandableText.innerHTML = expandableText.getAttribute('data-view-more'); // We also have to scroll back to the top to preserve scroll position
+          var expandableText = expandableButton.querySelector(
+            ".expandable-content__toggle-text"
+          );
+          expandableText.innerHTML = expandableText.getAttribute(
+            "data-view-more"
+          ); // We also have to scroll back to the top to preserve scroll position
 
-          var parentCard = parentSection.closest('.card');
+          var parentCard = parentSection.closest(".card");
 
           if (parentCard) {
-            var amountToScroll = parentCard.getBoundingClientRect().top - 15 - parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'));
+            var amountToScroll =
+              parentCard.getBoundingClientRect().top -
+              15 -
+              parseInt(
+                getComputedStyle(document.documentElement).getPropertyValue(
+                  "--header-height"
+                )
+              );
             window.scrollBy({
               top: amountToScroll,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
           }
         } else {
           // Previously collapsed, so we have to open it
-          parentSection.setAttribute('aria-expanded', 'true'); // Because the expandable button is still positioned absolutely, we need to add margin to the sibling
+          parentSection.setAttribute("aria-expanded", "true"); // Because the expandable button is still positioned absolutely, we need to add margin to the sibling
           // text to account the button. It's a bit ugly and hacky but this was the simplest I've found
 
           if (expandableButton.previousElementSibling) {
-            expandableButton.previousElementSibling.style['margin-bottom'] = "".concat(parseInt(expandableButton.clientHeight / 1.5), "px");
+            expandableButton.previousElementSibling.style[
+              "margin-bottom"
+            ] = "".concat(parseInt(expandableButton.clientHeight / 1.5), "px");
           }
 
-          Animation.slideDown(parentSection, null, 'max-height');
+          Animation.slideDown(parentSection, null, "max-height");
 
-          var _expandableText = expandableButton.querySelector('.expandable-content__toggle-text');
+          var _expandableText = expandableButton.querySelector(
+            ".expandable-content__toggle-text"
+          );
 
-          _expandableText.innerHTML = _expandableText.getAttribute('data-view-less');
+          _expandableText.innerHTML = _expandableText.getAttribute(
+            "data-view-less"
+          );
         }
       });
 
       var processCollapsibles = function processCollapsibles() {
-        document.querySelectorAll('.expandable-content[aria-expanded]').forEach(function (item) {
-          if (item.scrollHeight > item.clientHeight) {
-            item.classList.add('expandable-content--expandable');
-          } else {
-            item.setAttribute('aria-expanded', 'true');
-          }
-        });
+        document
+          .querySelectorAll(".expandable-content[aria-expanded]")
+          .forEach(function (item) {
+            if (item.scrollHeight > item.clientHeight) {
+              item.classList.add("expandable-content--expandable");
+            } else {
+              item.setAttribute("aria-expanded", "true");
+            }
+          });
       };
 
-      document.addEventListener('shopify:section:load', function (event) {
+      document.addEventListener("shopify:section:load", function (event) {
         processCollapsibles();
       });
       processCollapsibles();
@@ -14757,22 +17545,27 @@
     (function () {
       // Mobile browsers (like iOS) do not support opening keyboard, so we simply prevent the autofocus by unblurring
       // all the fields
-      if (Responsive.getCurrentBreakpoint() === 'phone') {
-        var autoFocusedElements = document.querySelectorAll('input[autofocus]');
+      if (Responsive.getCurrentBreakpoint() === "phone") {
+        var autoFocusedElements = document.querySelectorAll("input[autofocus]");
 
         for (var i = 0; i < autoFocusedElements.length; i++) {
           autoFocusedElements[i].blur();
-          autoFocusedElements[i].removeAttribute('autofocus');
+          autoFocusedElements[i].removeAttribute("autofocus");
         }
       }
     })();
 
     (function () {
       var documentDelegate = new Delegate(document.body);
-      documentDelegate.on('click', '[href^="#"], [data-href]', function (event, target) {
-        var selector = target.hasAttribute('href') ? target.getAttribute('href') : target.getAttribute('data-href');
+      documentDelegate.on("click", '[href^="#"], [data-href]', function (
+        event,
+        target
+      ) {
+        var selector = target.hasAttribute("href")
+          ? target.getAttribute("href")
+          : target.getAttribute("data-href");
 
-        if (selector === '#') {
+        if (selector === "#") {
           return;
         }
 
@@ -14785,18 +17578,18 @@
           return;
         }
 
-        var offset = parseInt(target.getAttribute('data-offset') || 0),
-            toTop = 0;
+        var offset = parseInt(target.getAttribute("data-offset") || 0),
+          toTop = 0;
 
-        while (element.offsetParent.tagName !== 'BODY') {
+        while (element.offsetParent.tagName !== "BODY") {
           toTop += element.offsetTop;
           element = element.offsetParent;
         }
 
         toTop += element.offsetTop;
         window.scrollTo({
-          behavior: 'smooth',
-          top: toTop - offset
+          behavior: "smooth",
+          top: toTop - offset,
         });
         event.preventDefault();
       });
@@ -14805,36 +17598,34 @@
     (function () {
       function handleFirstTab(event) {
         if (event.keyCode === 9) {
-          document.body.classList.add('is-tabbing');
-          window.removeEventListener('keydown', handleFirstTab);
+          document.body.classList.add("is-tabbing");
+          window.removeEventListener("keydown", handleFirstTab);
         }
       }
 
-      window.addEventListener('keydown', handleFirstTab);
+      window.addEventListener("keydown", handleFirstTab);
     })();
 
     (function () {
       var documentDelegate = new Delegate(document.body);
-      documentDelegate.on('keyup', 'input, textarea', function (event, target) {
-        target.classList.toggle('is-filled', target.value !== '');
+      documentDelegate.on("keyup", "input, textarea", function (event, target) {
+        target.classList.toggle("is-filled", target.value !== "");
       });
-      documentDelegate.on('change', 'select', function (event, target) {
-        target.parentNode.classList.toggle('is-filled', target.value !== '');
+      documentDelegate.on("change", "select", function (event, target) {
+        target.parentNode.classList.toggle("is-filled", target.value !== "");
       });
     })(); // This snippet allows to automatically adds a target="_blank" to any link that is external. This is actually
     // somewhat always desired by merchant and will allow to reduce support
-
 
     (function () {
       var links = document.links;
       fastdom.mutate(function () {
         for (var i = 0, linksLength = links.length; i < linksLength; i++) {
           if (links[i].hostname !== window.location.hostname) {
-            links[i].target = '_blank';
+            links[i].target = "_blank";
           }
         }
       });
     })();
   })();
-
-})));
+});
