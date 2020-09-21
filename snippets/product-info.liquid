@@ -398,7 +398,9 @@
           <a href="mailto:{{ shop.email }}" class="button button--primary">{{ 'product.form.contact_us' | t }}</a>
         {%- endif -%}
       </div>
-    {%- endform -%}
+    {%- endform -%}                        
+    {% render 'aaa_giftregistry_btn' %}
+
 
     {%- if request.page_type == 'index' and section.settings.show_description and product.description != blank and section.settings.description_below_add_to_cart -%}
       <div class="product-meta__description rte">
