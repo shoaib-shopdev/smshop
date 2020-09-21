@@ -145,9 +145,10 @@
       }
     </style>
 
-        <!-- start fill city of shopify field automatically --><script>
+<!-- start fill city of shopify field automatically -->
+      <script>
       $(document).ready(function () {
-
+        $('#checkout_shipping_address_address1').prop('maxLength', 200);
         // Add checkout_shipping_address_city input if not exist
         const isCityElementAvailable = $("#checkout_shipping_address_city");
         if(!isCityElementAvailable || isCityElementAvailable.length === 0){
