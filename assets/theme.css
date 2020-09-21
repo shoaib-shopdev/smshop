@@ -13641,6 +13641,9 @@ hr {
   }
 }
 
+#shopify-section-1600690283205 .flickity-slider .collection-item {
+  pointer-events: none;
+}
 
 @media (max-width: 641px) {
   .template-index .featured-collection__header {
@@ -13654,4 +13657,11 @@ hr {
     padding: 5px;
   }
 
+  .footer__title {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  .quick-links .quick-links__link {
+    width: 50%;
+  }
 }

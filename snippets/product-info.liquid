@@ -385,7 +385,10 @@
             {%- if product.template_suffix == 'pre-order' -%}
               <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">{{ 'product.form.pre_order' | t }}</button>
             {%- else -%}
-              <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">{{ 'product.form.add_to_cart' | t }}</button>
+              <button type="submit" class="product-form__add-button button button--primary" data-action="add-to-cart">Add To Bag</button>
+
+              {%- comment -%} {{ 'product.form.add_to_cart' | t }} {%- endcomment -%}
+
             {%- endif -%}
           {%- else -%}
             <button type="submit" class="product-form__add-button button button--disabled" disabled>{{ 'product.form.sold_out' | t }}</button>
