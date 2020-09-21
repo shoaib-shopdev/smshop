@@ -34,6 +34,13 @@
  * }));
  */
 
+$(document).ready(() => {
+  activeNavList();
+  $(".logout-link").on("click", function (e) {
+    clearCartOnLogout(e);
+  });
+});
+
 /* Redirect to SSO Login if theme login visited */
 if (window.location.pathname === "/account/login") {
   redirectMethod();
@@ -41,6 +48,41 @@ if (window.location.pathname === "/account/login") {
 
 if (window.location.pathname.indexOf("faqs-category") !== -1) {
   executeFaqsScript();
+}
+
+/**
+ * Clear cart on logout
+ */
+function clearCartOnLogout(e) {
+  e.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: "/cart/clear.js",
+    success: function () {
+      window.location.href = "/account/logout";
+    },
+    dataType: "json",
+  });
+}
+
+/**
+ * Active nav tab from nav list once the user is logged-in and viewing one of the nav item i.e. My Addresses, My Loyalty Cards, My Orders etc.
+ */
+function activeNavList() {
+  let currentPathName = window.location.pathname;
+  const navList = $(".card__linklist-item");
+  navList.removeClass("text--strong");
+  let foundNavAnchor;
+  for (let i = 0; i < navList.length; i++) {
+    let item = navList[i];
+    if ($(item).attr("href") === currentPathName) {
+      foundNavAnchor = item;
+      break;
+    }
+  }
+  if (foundNavAnchor) {
+    $(foundNavAnchor).addClass("text--strong");
+  }
 }
 
 /* FAQs related custom script */
