@@ -142,6 +142,9 @@
         font-weight: 700;
         text-transform: uppercase;
       }
+      label[for=checkout_shipping_address_id] {
+        visibility: hidden;
+      }
     </style>
 
         <!-- start fill city of shopify field automatically --><script>
@@ -226,7 +229,7 @@
           $('#cit').val(selectedCity);
           $('#city').val(selectedCity);
           $('#checkout_shipping_address_city').val(selectedCity);
-          $('select#barangay').val( );
+          $('select#barangay').val();
         });
       });
     </script>
@@ -298,10 +301,10 @@
         }
       })();
 
-      // $('#checkout_shipping_address_city')
-      //   .parent()
-      //   .parent()
-      //   .css('display', 'none');
+      $('#checkout_shipping_address_city')
+        .parent()
+        .parent()
+        .css('display', 'none');
     </script>
     <!-- End appending fields in shopify liquid checkout -->
 
