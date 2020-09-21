@@ -13521,7 +13521,7 @@ select::-ms-expand {
 .confirm > div:last-of-type {
   padding: 20px;
   background: white;
-  position: absolute;
+  position: fixed;
   width: auto;
   height: auto;
   left: 50%;
