@@ -7,7 +7,7 @@
 
 {%- capture section_settings -%}
     {
-                                                                      "showShippingEstimator":
+                                                                                  "showShippingEstimator":
     {% if cart.item_count == 0 %}false
     {% else %}
         {{ section.settings.show_shipping_estimator | json }}
@@ -578,10 +578,7 @@
 
                                 {%- if upsell_products != blank -%}
                                     {%- capture section_settings -%}
-                                        {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "stackable": false,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "layout": "vertical"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          }
+                                        {"stackable": false,"layout": "vertical"}
                                     {%- endcapture -%}
 
                                     <div class="section" data-section-id="{{ section.id }}-upsell" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
@@ -882,9 +879,9 @@
           "id": "content",
           "label": "Content",
           "default": "<p>Short content about your store</p>"
-                                                                            }
-                                                                          ]
-                                                                        }
-                                                                      ]
-                                                                    }
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                }
 {% endschema %}

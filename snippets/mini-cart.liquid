@@ -194,14 +194,13 @@
 
                 <div class="mini-cart__button-container">
                     <div class="button-group button-group--loose button-group--fit">
-                        <a href="{{ routes.cart_url }}" class="button button--secondary">{{ 'cart.general.view_cart' | t }}</a>
-                        <button class="button button--primary" name="checkout" onclick="redirectMethod()" type="submit">
+                        <a href="{%- if customer -%} {{ routes.cart_url }} {%- else -%} javascript:void(0) {%- endif -%}" {%- unless customer -%} onclick="redirectMethod()" {%- endunless -%} class="button button--primary">
                             {%- if customer -%}
-                                {{ 'cart.general.checkout' | t }}
+                                {{ 'cart.general.proceed_to_checkout' | t }}
                             {%- else -%}
                                 {{ 'cart.general.login_to_checkout' | t }}
                             {%- endif -%}
-                        </button>
+                        </a>
                     </div>
                 </div>
 
