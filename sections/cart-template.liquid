@@ -7,7 +7,7 @@
 
 {%- capture section_settings -%}
     {
-                                                                                  "showShippingEstimator":
+                                                                                          "showShippingEstimator":
     {% if cart.item_count == 0 %}false
     {% else %}
         {{ section.settings.show_shipping_estimator | json }}
@@ -60,7 +60,7 @@
                         {%- endif -%}
                     {%- endif -%}
 
-                    <button class="page__button-action button button--primary button--full button--large hidden-phone hidden-tablet" name="checkout" type="submit">{{ 'cart.general.checkout' | t }}</button>
+                    {%- comment -%}<button class="page__button-action button button--primary button--full button--large hidden-phone hidden-tablet" name="checkout" type="submit">{{ 'cart.general.checkout' | t }}</button>{%- endcomment -%}
                 </header>
             </div>
         </form>
@@ -879,9 +879,9 @@
           "id": "content",
           "label": "Content",
           "default": "<p>Short content about your store</p>"
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
                                                                                         }
-                                                                                      ]
-                                                                                    }
-                                                                                  ]
-                                                                                }
 {% endschema %}

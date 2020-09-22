@@ -50,7 +50,7 @@
       "account": "My account",
       "login": "Login / Signup",
       "welcome": "Hello {{first_name}}",
-      "cart": "Cart",
+      "cart": "Bag",
       "hi_shopper": "HI, SHOPPER"
     },
     "navigation": {
@@ -188,7 +188,7 @@
     },
     "product": {
       "from_price_html": "From {{price_min}}",
-      "add_to_cart": "Add to cart",
+      "add_to_cart": "Add to Bag",
       "pre_order": "Pre-order",
       "quick_view": "Quick view",
       "choose_options": "Choose options",
@@ -321,11 +321,11 @@
   },
   "cart": {
     "general": {
-      "title": "My cart",
-      "empty": "Your cart is empty",
+      "title": "My Bag",
+      "empty": "Your Bag is empty",
       "empty_button": "Shop our products",
       "search": "Search...",
-      "view_cart": "View cart",
+      "view_cart": "View Bag",
       "note_title": "Order instructions",
       "edit_note": "Edit",
       "save_note": "Save",
@@ -401,7 +401,7 @@
         "one": "In stock ({{count}} unit), ready to be shipped",
         "other": "In stock ({{count}} units), ready to be shipped"
       },
-      "add_to_cart": "Add to cart",
+      "add_to_cart": "Add to Bag",
       "sold_out": "Sold out",
       "pre_order": "Pre-order",
       "unavailable": "Unavailable",

@@ -257,38 +257,6 @@ function showToast(message, delay) {
   }, delay || 2000);
 }
 
-/**
- * Removes cart item when item is removed through Remove button click or through minus(-) icon.
- * @param e = event
- * @param productKey = product id
- * */
-// function removeCartItem(e, productKey) {
-//   const $target = $(e.currentTarget);
-//   const parent = $target.closest(".line-item__quantity");
-//   const qty = $(parent).find(".quantity-selector__value").val();
-//   e.preventDefault();
-//   showConfirmDialog("You sure?", true, removeCartApi);
-//   function removeCartApi() {
-//     try {
-//       jQuery
-//         .post(
-//           "/cart/change.js",
-//           { id: productKey, quantity: qty },
-//           null,
-//           "json"
-//         )
-//         .done((cart) => {
-//           console.log("item removed successfully", cart);
-//           showToast("Item removed", 100);
-//         });
-//     } catch (err) {
-//       console.log("Err", err);
-//     } finally {
-//       // close loader if any
-//     }
-//   }
-// }
-
 /* Continue developing this method if we have to display schedules for each store in Our Stores page.sca-storelocator.liquid. If this functionality not needed remove it. */
 function showLocatorInfo(e) {
   let target = e.currentTarget;
