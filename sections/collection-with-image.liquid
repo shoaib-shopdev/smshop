@@ -1,8 +1,8 @@
 {%- capture section_settings -%}
     {
-                  "stackable": false,
-                  "layout": "vertical"
-                }
+                          "stackable": false,
+                          "layout": "vertical"
+                        }
 {%- endcapture -%}
 
 <section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
@@ -64,9 +64,10 @@
     }
     #shopify-section-{{ section.id }} .featured-collection__header {
       background-image: url({{ section.settings.image_mobile | img_url: '1000x' }});
+      background-size: contain;
+      background-position: right;
     }
   }
-
 </style>
 
 {% schema %}
