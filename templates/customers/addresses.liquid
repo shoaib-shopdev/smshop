@@ -27,7 +27,7 @@
               <a href="{{ routes.account_addresses_url }}" class="card__linklist-item link text--strong">{{ 'customer.general.addresses' | t }}</a>
               <a href="/pages/loyalty-cards" class="card__linklist-item link">{{ 'customer.general.loyalty_cards' | t }}</a>
               <a target="_blank" href="https://shopsm.returnscenter.com" class="card__linklist-item link">{{ 'customer.general.returns_and_exchange' | t }}</a>
-              <a href="{{ routes.account_logout_url }}" class="card__linklist-item link" data-no-instant>{{ 'customer.general.logout' | t }}</a>
+              <a href="{{ routes.account_logout_url }}" class="card__linklist-item link logout-link" data-no-instant>{{ 'customer.general.logout' | t }}</a>
             </div>
           </div>
         </div>
@@ -629,5 +629,3 @@
 
 {% section 'static-promotion-list' %}
 {% section 'static-recently-viewed-products' %}
-
-
