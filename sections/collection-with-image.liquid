@@ -1,80 +1,72 @@
 {%- capture section_settings -%}
-{
-  "stackable": false,
-  "layout": "vertical"
-}
+    {
+                  "stackable": false,
+                  "layout": "vertical"
+                }
 {%- endcapture -%}
 
 <section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
-  <div class="container container--flush">
-    {%- assign collection = collections[section.settings.collection] -%}
-    <script>
-      // if( $(window).width() < 767 ) {
-      //   {%- assign main_image_url = section.settings.image_mobile -%}
-      //   console.log("in mobile ","{{main_image_url}}")  
-      // }else {
-      //   {% assign main_image_url = section.settings.image %}
-      //   console.log("in web ","{{main_image_url}}")
-      // }
-      // setTimeout(()=>{
-      //   // console.log("changing bg", "{{ section.id }}")
-      //   console.log("bg", "{{ main_image_url | img_url: '1000x' }}")
-      //   // $('#shopify-section-'+"{{ section.id }}"+' .featured-collection').css('background-color', 'red');
-      //   // $('#shopify-section-'+"{{ section.id }}"+' .featured-collection__header').css('background-image', 'url(https:'+"{{ main_image_url | img_url: '1000x' }}"+')');
-      // }, 3000)
-    </script>
-    <div class="featured-collection lazyload" {% if main_image_url %}data-bgset="{{ main_image_url | img_url: '1000x' }} [--lap]"{% endif %}>
-      {% comment %}<header class="featured-collection__header lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--tablet]"{% endif %}> {% endcomment %}
-      <header class="featured-collection__header lazyload" {% if main_image_url %}data-bgset="{{ main_image_url | img_url: '1000x' }}"{% endif %}>
-        {%- if section.settings.title != blank -%}
-          <h2 class="featured-collection__title heading h2">{{ section.settings.title | escape }}</h2>
-        {%- endif -%}
+    <div class="container container--flush">
+        {%- assign collection = collections[section.settings.collection] -%}
+        <div class="featured-collection lazyload" data-bgset="{{ section.settings.image | img_url: '1000x' }} [--lap]">
+            <header class="featured-collection__header lazyload">
+                {%- if section.settings.title != blank -%}
+                    <h2 class="featured-collection__title heading h2">{{ section.settings.title | escape }}</h2>
+                {%- endif -%}
 
-        {%- if section.settings.content != blank -%}
-          <p class="featured-collection__text">{{ section.settings.content | escape | newline_to_br }}</p>
-        {%- endif -%}
+                {%- if section.settings.content != blank -%}
+                    <p class="featured-collection__text">{{ section.settings.content | escape | newline_to_br }}</p>
+                {%- endif -%}
 
-        {%- if section.settings.button_text != blank -%}
-          <a href="{{ section.settings.button_link | default: collection.url | default: '#' }}" class="featured-collection__cta button button--floating">{{ section.settings.button_text | escape }}</a>
-        {%- endif -%}
-      </header>
+                {%- if section.settings.button_text != blank -%}
+                    <a href="{{ section.settings.button_link | default: collection.url | default: '#' }}" class="featured-collection__cta button button--floating">{{ section.settings.button_text | escape }}</a>
+                {%- endif -%}
+            </header>
 
-      <div class="featured-collection__content">
-        <div class="scroller scroller--flush">
-          <div class="scroller__inner">
-            <div class="product-list product-list--scrollable">
-              {%- assign grid_classes = '1/2--lap 1/3--desk 1/4--wide' -%}
+            <div class="featured-collection__content">
+                <div class="scroller scroller--flush">
+                    <div class="scroller__inner">
+                        <div class="product-list product-list--scrollable">
+                            {%- assign grid_classes = '1/2--lap 1/3--desk 1/4--wide' -%}
 
-              {%- unless collection.empty? -%}
-                {%- for product in collection.products limit: section.settings.products_count -%}
-                  {%- render 'product-item', product: product, grid_classes: grid_classes -%}
-                {%- endfor -%}
-              {%- else -%}
-                {%- for i in (1..section.settings.products_count) -%}
-                  {%- render 'product-item-placeholder', grid_classes: grid_classes -%}
-                {%- endfor -%}
-              {%- endunless -%}
+                            {%- unless collection.empty? -%}
+                                {%- for product in collection.products limit: section.settings.products_count -%}
+                                    {%- render 'product-item', product: product, grid_classes: grid_classes -%}
+                                {%- endfor -%}
+                            {%- else -%}
+                                {%- for i in (1..section.settings.products_count) -%}
+                                    {%- render 'product-item-placeholder', grid_classes: grid_classes -%}
+                                {%- endfor -%}
+                            {%- endunless -%}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </section>
 
 <style>
   #shopify-section-{{ section.id }} .featured-collection {
     background-color: {{ section.settings.background }};
   }
-
+  
   #shopify-section-{{ section.id }} .featured-collection__header {
     color: {{ section.settings.text_color }};
   }
-
   #shopify-section-{{ section.id }} .button {
     color: {{ section.settings.button_text_color }};
     background-color: {{ section.settings.button_background }};
   }
+  @media screen and (max-width: 641px) {
+    #shopify-section-{{ section.id }} .featured-collection {
+      background-image: none;
+    }
+    #shopify-section-{{ section.id }} .featured-collection__header {
+      background-image: url({{ section.settings.image_mobile | img_url: '1000x' }});
+    }
+  }
+
 </style>
 
 {% schema %}
