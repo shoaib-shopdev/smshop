@@ -2412,7 +2412,7 @@
               cart.json().then(function (content) {
                 _this.itemCount = content["item_count"];
                 _this._rerender(false).then(function () {
-                  showToast("Item(s) removed from your bag", 1);
+                  showToast("Bag updated", 1);
                   document.dispatchEvent(new CustomEvent("theme:loading:end"));
                 });
               });

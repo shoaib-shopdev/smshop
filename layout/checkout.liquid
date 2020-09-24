@@ -18,9 +18,9 @@
         {{
       checkout_scripts
     }}
-    
-  {% render 'shogun-head' %}
-</head>
+
+        {% render 'shogun-head' %}
+    </head>
     <body>
 
         {% assign currentPageName =  Shopify.Checkout.page  %}
@@ -147,13 +147,24 @@
       }
     </style>
 
-<!-- start fill city of shopify field automatically -->
-      <script>
+        <!-- start fill city of shopify field automatically --><script>
       $(document).ready(function () {
+        let citySelector = "select#city";
+        let provinceSelector = "select#province";
+        let barangaySelector = "select#barangay";
         $('#checkout_shipping_address_address1').prop('maxLength', 200);
+
+        setTimeout(function(){
+          $(provinceSelector + ' ' + 'option')[$(provinceSelector + ' ' + 'option').length-1].remove();
+        },1000)
+
+        //Hide Logout button
+        let logoutAnchor = $('.logged-in-customer-information .logged-in-customer-information__paragraph > a')
+        if(logoutAnchor.length>0) logoutAnchor.remove();
+
         // Add checkout_shipping_address_city input if not exist
         const isCityElementAvailable = $("#checkout_shipping_address_city");
-        if(!isCityElementAvailable || isCityElementAvailable.length === 0){
+        if(!isCityElementAvailable || isCityElementAvailable.length === 0) {
           const searchParams = new URLSearchParams(window.location.search);
           const breadCrumbs = $('.breadcrumb .breadcrumb__item');
           let foundBreadcrumb;
@@ -169,15 +180,15 @@
           }
         }
 
-        const provinceElement=$("#province");
-        console.log("Province element: ",provinceElement);
-        $("#barangay").after(`<div id="provinceCheepi"></div>`);
-        
-        if(provinceElement && Object.keys(provinceElement).length > 0){
+        const $provinceElement = $(provinceSelector);
+        console.log("Province element: ", $provinceElement);
+        $(barangaySelector).after(`<div id="provinceCheepi"></div>`);
+       
+        if($provinceElement && Object.keys($provinceElement).length > 0){
           $("form")[0].onsubmit = function(e){
-			      const province = provinceElement.val();
-            const city = $("#city").val();
-            const barangay = $("#barangay").val();
+			      const province = $provinceElement.val();
+            const city = $(citySelector).val();
+            const barangay = $(barangaySelector).val();
             
             $("#provinceCheepi").html(`
                 <input type="hidden" name="checkout[shipping_address][province]" id="checkout_shipping_address_province" value="${province}">
@@ -185,19 +196,19 @@
              $("#checkout_shipping_address_province").prop("type", "hidden").val(province);
             
             if(!province) {
-              provinceElement.css("border","2px solid red");
+              $provinceElement.css("border","2px solid red");
             } else {
-              provinceElement.css("border","1px solid #e2e2e2");
+              $provinceElement.css("border","1px solid #e2e2e2");
             }
             if(!city) {
-              $("#city").css("border","2px solid red");
+              $(citySelector).css("border","2px solid red");
             } else {
-              $("#city").css("border","1px solid #e2e2e2");
+              $(citySelector).css("border","1px solid #e2e2e2");
             }
             if(!barangay) {
-              $("#barangay").css("border","2px solid red");
+              $(barangaySelector).css("border","2px solid red");
             } else {
-              $("#barangay").css("border","1px solid #e2e2e2");
+              $(barangaySelector).css("border","1px solid #e2e2e2");
             }
             console.log(`province: ${province}, city: ${city}, barangay: ${barangay}`);
             
@@ -218,19 +229,31 @@
           console.log("Province element DO NOT exists");
         }
 
-        $('select#province').val($('select#province option:first').val());
-        $('select#province').change(function () {
+        $(provinceSelector).val($(provinceSelector + 'option:first').val());
+        $(provinceSelector).change(function () {
           var selectedCountry = $(this).children('option:selected').text();
-          $('select#city').val($('select#city option:first').val());
+          $(citySelector).val($(citySelector + ' '  +'option:first').val());
           $('#prov').val(selectedCountry);
-          $('#province').val(selectedCountry);
+          $(provinceSelector).val(selectedCountry);
         });
-        $('select#city').change(function () {
+
+        $(citySelector).change(function () {
           var selectedCity = $(this).children('option:selected').text();
           $('#cit').val(selectedCity);
-          $('#city').val(selectedCity);
+          $(citySelector).val(selectedCity);
           $('#checkout_shipping_address_city').val(selectedCity);
-          $('select#barangay').val();
+          $(barangaySelector).val();
+          
+          setTimeout(function(){
+            $(citySelector + ' ' + 'option')[$(citySelector + ' ' + 'option').length-1].remove();
+          }, 1000)
+
+          // Set all Barangy option values as capitalized
+          setTimeout(function() {
+            $(barangaySelector + ' ' + 'option').each(function() {
+              $(this).text($(this).html().toLowerCase().replace(/\b[a-z]/g, (letter) => letter.toUpperCase()));
+            });
+          }, 10);
         });
       });
     </script>
@@ -314,6 +337,8 @@
     {{ tracking_code }}
   </body>
 </html>
+    </body>
+    </body>
     </body>
     </body>
 </html> 
